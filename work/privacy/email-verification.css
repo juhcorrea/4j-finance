@@ -1,0 +1,10 @@
+.email-verification-title{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.email-verification-address{overflow-wrap:anywhere;color:var(--muted);font-size:12px;margin:8px 0}
+.email-verification-actions{margin-top:16px;gap:10px;flex-wrap:wrap}
+.email-verification-actions .button{white-space:normal;line-height:1.5;min-height:46px}
+.email-verification-banner{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:15px 38px;background:var(--pale);border-bottom:1px solid var(--line);color:var(--ink)}
+.email-verification-banner b,.email-verification-banner span{display:block;font-size:12px}
+.email-verification-banner span{color:var(--muted);margin-top:2px}
+.email-verification-banner .button{flex-shrink:0}
+@media(max-width:650px){.email-verification-banner{padding:15px 18px;align-items:flex-start;flex-direction:column;gap:10px}.email-verification-banner .button{min-height:44px;font-size:12px}.email-verification-actions{flex-direction:column}.email-verification-actions .button{width:100%}.email-verification-title h3{font-size:16px}}
+@media print{.email-verification-banner{display:none!important}}

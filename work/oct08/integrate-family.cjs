@@ -1,0 +1,26 @@
+const fs=require('node:fs'),path=require('node:path');const file=path.join(__dirname,'script-1.js');let s=fs.readFileSync(file,'utf8').replace(/\r\n/g,'\n');
+function replace(a,b){if(!s.includes(a))throw Error('Missing family anchor: '+a.slice(0,120));s=s.replace(a,b);}
+if(s.includes('const Family='))throw Error('Already integrated');
+replace('const allRows=',fs.readFileSync(path.join(__dirname,'family-engine.js'),'utf8')+'\nFamily.install();\nconst allRows=');
+replace('function expenseMode(',fs.readFileSync(path.join(__dirname,'family-ui.js'),'utf8')+'\nfunction expenseMode(');
+replace("['metas','Metas','target']","['acertos','Acertos','users'],['metas','Metas','target']");
+replace('metas:typeof goalsPage', 'acertos:familyPage,metas:typeof goalsPage');
+replace('...Store.data.despesas.filter(d=>Money.validDate(d.data)).flatMap',"...Store.data.despesas.filter(d=>d.family?.direction!=='receive'&&Money.validDate(d.data)).flatMap");
+replace('    <label class="amount-field">',"    ${expense?familyFields(r):''}\n    <label class=\"amount-field\">");
+replace("if(state.page==='lancamentos')syncEntrySchedule();","if(state.page==='lancamentos'){syncEntrySchedule();syncFamilyFields();}");
+replace('  return data;\n}\n\nfunction categoryData(',"  return expense?familyFromForm(data,f,existing):data;\n}\n\nfunction categoryData(");
+replace("  const answer=(text,scope=period)=>({text,scope});","  const answer=(text,scope=period)=>({text,scope});\n  if(/\\b(acerto|acertos|repassar|repasse|repasses|porto|cartao de|cartao do|cartao da|receber da familia)\\b/.test(q))return answer(familyAdvice(month),period+' · Acertos da família');");
+replace("const catatauSuggestions=[","const catatauSuggestions=['Como estão meus acertos da família?',");
+replace("if(action==='pay-record'){const r=", "if(action==='pay-record'&&Store.data.despesas.find(r=>r.id===el.dataset.id)?.family){const proxy={dataset:{...el.dataset,action:'family-paid'}};const button=document.createElement('button');Object.assign(button.dataset,proxy.dataset);button.hidden=true;document.body.append(button);button.click();button.remove();return;}\n  if(action==='pay-record'){const r=");
+replace("${Recurrence.is(r)?' Para apenas encerrar", "${r?.family?.linkedProfileId?' O acerto correspondente também será excluído do outro perfil.':''}${Recurrence.is(r)?' Para apenas encerrar");
+replace("${r.reembolsavel?' · '+", "${r.family?' · Repasse para '+esc(r.family.person):''}${r.reembolsavel?' · '+");
+replace('>Marcar pago</button>',">${r.family?'Confirmar repasse':'Marcar pago'}</button>");
+replace("function badges(r){return r.type", "function badges(r){if(r.family)return `<span class=\"badge ${r.paid?'paid':r.date<Money.today()?'late':'pending'}\">${r.paid?'Acertado':r.date<Money.today()?'Repasse atrasado':'A repassar'}</span>`;return r.type");
+replace('  async remove(store,snapshot,confirmation){',"  async remove(store,snapshot,confirmation){\n    if(snapshot.despesas.some(r=>r.family?.linkedRecordId))throw new Error('Este perfil tem acertos sincronizados. Encerre a sincronização em Acertos antes de excluir o perfil; assim os registros da outra pessoa são preservados.');");
+replace('    const payload=this.payload(snapshot,selection);',"    if(selection.despesas&&snapshot.despesas.some(r=>r.family?.linkedRecordId))throw new Error('Há acertos sincronizados nas despesas. Encerre a sincronização em Acertos antes de transferir estes registros.');\n    const payload=this.payload(snapshot,selection);");
+replace('    return result;\n  });',"    if(expense&&r.family){result.family=Family.manual(r.family);if(Family.validate(result,{pending:false}))fail();}\n    return result;\n  });");
+replace('O plano e as reservas mensais da cópia também são recuperados:', 'Acertos restaurados ficam como controles manuais, sem reativar vínculos com outros perfis. O plano e as reservas mensais da cópia também são recuperados:');
+replace('Orçamento e reservas mensais serão recuperados apenas', 'Acertos serão restaurados sem sincronização. Orçamento e reservas mensais serão recuperados apenas');
+replace('<li><b>Metas:</b>', '<li><b>Acertos:</b> acompanhe os repasses da família, inclusive compras no cartão de outra pessoa.</li><li><b>Metas:</b>');
+fs.writeFileSync(file,s);const template=path.join(__dirname,'template.html');fs.writeFileSync(template,fs.readFileSync(template,'utf8').replace('</head>','<style>\n__4J_SOURCE_style-8.css__\n</style>\n</head>'));
+console.log('Family settlements integrated.');

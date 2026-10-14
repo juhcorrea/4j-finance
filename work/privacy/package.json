@@ -1,0 +1,1 @@
+{"name":"4j-privacy-local-tests","private":true,"type":"module","scripts":{"test":"firebase emulators:exec --project demo-4j-privacy --only firestore \"node rules.test.mjs\""},"dependencies":{"@firebase/rules-unit-testing":"latest","firebase":"latest","firebase-tools":"latest"}}

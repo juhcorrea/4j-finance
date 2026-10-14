@@ -1,0 +1,21 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const source=fs.readFileSync(__dirname+'/profile-preference.js','utf8');
+const storage=new Map(),ctx=vm.createContext({document:{addEventListener(){}},localStorage:{getItem:k=>storage.get(k)??null,setItem:(k,v)=>storage.set(k,v),removeItem:k=>storage.delete(k)}});
+vm.runInContext(source+'\nglobalThis.pref=ProfilePreference',ctx);const pref=ctx.pref;
+const store=(uid='juliana')=>({demo:false,user:{uid,email:uid+'@example.test'},userDoc:{status:'approved',role:'admin'},profiles:[{id:'Jairson',ownerUid:'pai'},{id:'Juliana',ownerUid:'juliana'},{id:'Viagem',ownerUid:'juliana'}]});
+let passed=0;const test=async(name,fn)=>{await fn();passed++;console.log('PASS '+name);};
+const backend=(s,code)=>{const writes=[];s.db={collection:name=>({doc:id=>({path:name+'/'+id})}),runTransaction:async task=>{if(code)throw Object.assign(Error('blocked'),{code});await task({get:async ref=>({exists:true,data:()=>ref.path.startsWith('users/')?{status:'approved',role:'admin'}:{ownerUid:'juliana'}}),update:(ref,patch)=>writes.push({path:ref.path,patch})});}};return writes;};
+(async()=>{
+ await test('Admin opens own profile before alphabetical father profile',()=>{assert.equal(pref.pick(store()),'Juliana');});
+ await test('Legacy browser-global selection cannot choose father on login',()=>{storage.set('activeProfileView','Jairson');assert.equal(pref.pick(store()),'Juliana');});
+ await test('Explicit preference wins over current visit and owner ordering',()=>{const s=store();s.userDoc.defaultProfileId='Viagem';pref.remember(s,'Jairson');assert.equal(pref.pick(s),'Viagem');});
+ await test('Preferences do not leak to another email/UID',()=>{pref.write(store(),{id:'Viagem',pending:true});const dad=store('pai');assert.equal(pref.pick(dad),'Jairson');});
+ await test('Unavailable preferred profile falls back to own accessible profile',()=>{const s=store();pref.write(s,{id:'removed',pending:true});assert.equal(pref.pick(s),'Juliana');});
+ await test('Save touches only own default field, not permissions or profile data',async()=>{const s=store(),writes=backend(s);assert.equal(await pref.save(s,'Viagem'),'account');assert.equal(writes[0].path,'users/juliana');assert.deepEqual(JSON.parse(JSON.stringify(writes[0].patch)),{defaultProfileId:'Viagem'});assert.equal(pref.pick(s),'Viagem');});
+ await test('Server preference from another device takes precedence over synced cache',()=>{const s=store();s.userDoc.defaultProfileId='Juliana';assert.equal(pref.pick(s),'Juliana');});
+ await test('Permission denial keeps explicit device fallback without widening access',async()=>{const s=store();backend(s,'permission-denied');assert.equal(await pref.save(s,'Viagem'),'device');assert.equal(pref.pick(s),'Viagem');assert.equal(pref.read(s).pending,true);});
+ await test('Automatic clears choice and prioritizes own profile',async()=>{const s=store();backend(s);assert.equal(await pref.save(s,''),'account');assert.equal(pref.pick(s),'Juliana');});
+ await test('Cannot save inaccessible profile',async()=>{const s=store();backend(s);await assert.rejects(pref.save(s,'secret'),/acesso/);});
+ await test('Demo preferences stay separate and never touch backend',async()=>{const s=store('demo');s.demo=true;assert.equal(await pref.save(s,'Jairson'),'demo');assert.equal(pref.pick(s),'Jairson');assert.equal(pref.pick(store()),'Juliana');});
+ console.log(JSON.stringify({passed,total:11}));
+})().catch(e=>{console.error(e);process.exitCode=1;});

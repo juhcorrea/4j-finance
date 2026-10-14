@@ -1,0 +1,98 @@
+/* Monthly spending plan: readable cards, explicit status and comfortable touch controls. */
+.budget-section{margin-bottom:28px;overflow:hidden}
+.budget-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:14px}
+.budget-head>div{min-width:0;flex:1 1 280px}
+.budget-head h2{font-size:21px;letter-spacing:-.55px;line-height:1.4}
+.budget-head .button{flex-shrink:0}
+.budget-intro{color:var(--muted);font-size:14px;line-height:1.8;max-width:850px;margin:7px 0 18px}
+.budget-split{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 22px}
+.budget-split>span{display:flex;gap:7px;align-items:center;min-height:37px;padding:7px 13px;border:1px solid var(--line);border-radius:9px;background:var(--pale);font-size:12px;color:var(--ink)}
+.budget-split b{font-size:14px;font-variant-numeric:tabular-nums;color:var(--blue)}
+.budget-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin:19px 0}
+.budget-card{--budget-accent:var(--blue);min-width:0;padding:20px 19px 17px;border:1px solid var(--line);border-top:4px solid var(--budget-accent);border-radius:13px;background:var(--paper);display:flex;flex-direction:column;align-items:stretch}
+.budget-card.reserve{--budget-accent:var(--green)}
+.budget-card.variable{--budget-accent:var(--gold)}
+.budget-card.is-over{border-color:var(--red);--budget-accent:var(--red)}
+.budget-kicker{font-size:14px;font-weight:700;color:var(--ink);line-height:1.5;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:13px}
+.budget-kicker small{font-size:13px;color:var(--muted);font-weight:600}
+.budget-amount{display:block;font-size:27px;line-height:1.3;letter-spacing:-.8px;font-weight:750;color:var(--ink);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.budget-meta{font-size:12px;line-height:1.75;color:var(--muted);margin-top:6px}
+.budget-meta b{color:var(--ink);font-weight:650}
+.budget-track{height:9px;background:var(--pale);border-radius:20px;overflow:hidden;margin:18px 0 12px;border:1px solid var(--line)}
+.budget-track>span{height:100%;display:block;background:var(--budget-accent);border-radius:20px;max-width:100%;min-width:0}
+.budget-status{margin-top:auto;font-size:13px;line-height:1.65;font-weight:650;color:var(--ink);overflow-wrap:anywhere}
+.budget-card.is-over .budget-status{color:#ac2636}
+.budget-coach{display:flex;align-items:flex-start;gap:17px;padding:20px 22px;background:var(--gold-pale);border:1px solid var(--line);border-radius:13px;margin:21px 0}
+.budget-coach>img{width:80px;height:100px;object-fit:contain;flex:0 0 80px}
+.budget-coach>div{flex:1;min-width:0}
+.budget-coach h3{font-size:15px;color:var(--ink);margin:2px 0 8px}
+.budget-coach p{white-space:pre-line;font-size:14px;line-height:1.85;color:var(--ink);overflow-wrap:anywhere}
+.budget-coach .text-button{margin-top:10px;font-size:13px}
+.budget-source,.budget-review{border-top:1px solid var(--line);margin-top:18px;padding-top:10px;min-width:0}
+.budget-source summary,.budget-review summary{cursor:pointer;min-height:44px;padding:10px 0;color:var(--blue);font-weight:650;font-size:13px;line-height:1.75}
+.budget-source p{font-size:12px;color:var(--muted);line-height:1.9;max-width:870px;margin:5px 0 10px}
+.budget-source a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+.budget-review>p{color:var(--muted);font-size:13px;line-height:1.8;margin:6px 0 13px}
+.budget-review-row{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(160px,210px);gap:14px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line)}
+.budget-review-row:last-child{border-bottom:0}
+.budget-review-row>div{min-width:0;overflow-wrap:anywhere}
+.budget-review-row>div b{font-size:13px;color:var(--ink)}
+.budget-review-row small{display:block;font-size:12px;color:var(--muted);line-height:1.7;margin-top:3px}
+.budget-review-row>b{font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.budget-review-row select{width:100%;min-height:44px;font-size:14px;margin:0}
+.budget-controls{margin-top:16px}
+.budget-form label{font-size:14px}
+.budget-form :is(input,select){min-height:46px;font-size:16px}
+.budget-form .field-grid{gap:18px 14px}
+.budget-form .field-grid>label{min-width:0}
+.budget-note{font-size:12px;line-height:1.9;color:var(--muted);margin:12px 0}
+.budget-form .budget-note{font-size:13px}
+.large-text :is(.budget-intro,.budget-kicker,.budget-meta,.budget-status,.budget-coach p,.budget-source p,.budget-source summary,.budget-review summary,.budget-review-row>div b,.budget-review-row>b,.budget-note){font-size:16px}
+.large-text .budget-amount{font-size:30px}
+@media screen{
+  .dark .budget-card.is-over .budget-status{color:#ffadb0}
+  .dark .budget-coach{border-color:#65553b}
+  .dark .budget-track{background:#122431}
+  .dark .budget-card{background:var(--paper)}
+}
+@media(max-width:1150px) and (min-width:961px){
+  .budget-cards{gap:10px}
+  .budget-card{padding:17px 13px}
+  .budget-amount{font-size:23px}
+}
+@media(max-width:760px){
+  .budget-cards{grid-template-columns:1fr;gap:13px}
+  .budget-card{padding:18px 19px}
+  .budget-kicker{margin-bottom:9px}
+  .budget-amount{font-size:28px}
+  .budget-track{margin:15px 0 10px}
+}
+@media(max-width:650px){
+  .budget-head{gap:13px;margin-bottom:10px}
+  .budget-head h2{font-size:20px}
+  .budget-head>div{flex-basis:100%}
+  .budget-head>.button{width:100%}
+  .budget-intro{font-size:13px}
+  .budget-split{gap:6px;margin:16px 0}
+  .budget-split>span{padding:7px 9px;font-size:11px}
+  .budget-split b{font-size:13px}
+  .budget-coach{padding:17px 15px;gap:12px}
+  .budget-coach>img{width:55px;height:76px;flex-basis:55px}
+  .budget-coach p{font-size:13px;line-height:1.9}
+  .budget-review-row{grid-template-columns:minmax(0,1fr) auto;gap:10px}
+  .budget-review-row select{grid-column:1/-1;font-size:16px}
+  .budget-controls.field-grid,.budget-form .field-grid{grid-template-columns:1fr}
+  .budget-source summary,.budget-review summary{font-size:13px}
+}
+@media(max-width:360px){
+  .budget-coach{flex-direction:column;gap:5px}
+  .budget-coach>img{width:66px;height:70px;flex-basis:auto}
+  .budget-split>span{flex:1 1 100%;justify-content:space-between}
+}
+@media print{
+  .budget-section{overflow:visible;break-inside:auto}
+  .budget-cards{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .budget-card,.budget-coach{break-inside:avoid}
+  .budget-review select,.budget-head>.button,.budget-coach .text-button{display:none!important}
+  .budget-card.is-over .budget-status{color:#8c2631}
+}

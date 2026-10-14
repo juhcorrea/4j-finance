@@ -1,0 +1,13 @@
+
+/* 4J identity: the same mark on every screen and on the home screen. */
+.brand-symbol{display:block;object-fit:contain;flex-shrink:0;width:76px;height:45px;border-radius:8px}
+.brand{gap:7px}.brand>span{font-size:23px;letter-spacing:-1px}.brand small{letter-spacing:1.1px}
+.sidebar>.brand{margin:0 0 27px}.brand-mark{letter-spacing:normal}.auth-brand{margin:0 0 30px}.auth-story>.brand{position:relative;z-index:2}
+.footer-signature{display:flex;align-items:center;gap:5px}.footer-signature img{object-fit:contain}.boot>.brand-symbol{width:122px;height:73px}
+.mobile-brand .brand-symbol{width:60px;height:35px}.mobile-brand span{font-size:18px;letter-spacing:-.7px}.mobile-brand{align-items:center;gap:3px}
+.dark .brand-symbol,.dark .footer-signature img{background:#fffaf0}
+.welcome{border-top:3px solid var(--gold)}.account-summary{background:var(--pale);padding:14px;border-radius:13px}
+.modal-actions{flex-wrap:wrap}.modal-copy{overflow-wrap:anywhere}.restore-preview{background:var(--pale);border-radius:12px;padding:16px;margin:16px 0}.restore-preview strong{color:var(--blue)}
+.privacy-active .metric strong,.privacy-active .row-value b,.privacy-active .goal-amount,.privacy-active .annual-total{filter:blur(8px);user-select:none}
+@media(max-width:960px){.mobile-brand{display:flex}.auth-brand{justify-content:center;margin-bottom:32px}}
+@media(max-width:390px){.mobile-brand .brand-symbol{width:47px}.mobile-brand span{font-size:15px}.top-actions .icon-button{width:30px}.topbar{padding:0 12px}}

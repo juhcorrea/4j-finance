@@ -1,0 +1,40 @@
+const fs=require('node:fs'),path=require('node:path');const dir=__dirname;
+let s=fs.readFileSync(path.join(dir,'script-1.js'),'utf8').replace(/\r\n?/g,'\n');
+const replace=(a,b)=>{if(!s.includes(a))throw Error('Missing '+a.slice(0,100));s=s.replace(a,()=>b);};
+const line=(prefix,value)=>{const old=s.split(/\r?\n/).find(l=>l.startsWith(prefix));if(!old)throw Error('Missing line '+prefix);replace(old,value);};
+replace("const allRows=",fs.readFileSync(path.join(dir,'recurrence-engine.js'),'utf8')+'\nconst allRows=');
+line('const allRows=',`const allRows=(fromMonth,toMonth)=>{
+  const horizon=[Money.addMonth(Money.today(),1).slice(0,7),Money.addMonth(state.month+'-01',1).slice(0,7),state.year+'-12'].sort().at(-1);
+  const recurring=d=>{const last=toMonth||horizon,first=fromMonth||d.data.slice(0,7);let start=first,rows=[];
+    while(start<=last){const end=[Money.addMonth(start+'-01',1199).slice(0,7),last].sort()[0];rows.push(...Recurrence.occurrences(d,start,end));if(end===last)break;start=Money.addMonth(end+'-01',1).slice(0,7);}return rows;};
+  return [...Store.data.receitas.filter(r=>Money.validDate(r.data)).map(r=>({...r,type:'receita',date:r.data,value:Number(r.valor),paid:true})),...Store.data.despesas.filter(d=>Money.validDate(d.data)).flatMap(d=>Recurrence.is(d)?recurring(d):Money.occurrences(d))];
+};`);
+line('const monthRows=',"const monthRows=(month=state.month)=>allRows(month,month).filter(r=>r.date.startsWith(month));");
+const oldEntries=s.slice(s.indexOf('function entriesPage(){'),s.indexOf('function categoryData('));
+replace(oldEntries,fs.readFileSync(path.join(dir,'entry-ui.js'),'utf8')+'\n');
+replace("render.wasRendered=true;}paintIcons();","render.wasRendered=true;}paintIcons();if(state.page==='lancamentos')syncEntrySchedule();");
+replace("this.data[cat][i]={...record,id};","this.data[cat][i]={...this.data[cat][i],...record,id};");
+replace("colors=['#2e5372','#f2a900'","colors=['var(--blue)','#f2a900'");
+replace("t=totals(allRows().filter(r=>r.date.startsWith(state.year)))","t=totals(allRows(state.year+'-01',state.year+'-12').filter(r=>r.date.startsWith(state.year)))");
+replace("topcat=categoryData(allRows().filter(r=>r.date.startsWith(state.year)))","topcat=categoryData(allRows(state.year+'-01',state.year+'-12').filter(r=>r.date.startsWith(state.year)))");
+replace("...allRows().map(r=>r.date.slice(0,4)),state.year","...allRows().map(r=>r.date.slice(0,4)),...Store.data.despesas.filter(Recurrence.is).flatMap(d=>[d.data.slice(0,4),...(d.recurrence.until?[d.recurrence.until.slice(0,4)]:[]),...Array.from({length:5},(_,i)=>String(Number(Money.today().slice(0,4))+i+1))]),state.year");
+replace("${r.total>1?' · '+(r.idx+1)+'/'+r.total:''}</small>","${r.total>1?' · '+(r.idx+1)+'/'+r.total:''}${r.recurring?' · Todo mês':''}</small>");
+replace("${r.total>1?' · Parcela '+(r.idx+1)+' de '+r.total:''}${r.reembolsavel?", "${r.total>1?' · Parcela '+(r.idx+1)+' de '+r.total:''}${r.recurring?' · Recorrente mensal':''}${r.purchaseDate?' · Compra em '+esc(Money.date(r.purchaseDate)):''}${r.reembolsavel?");
+replace('data-idx="${r.idx}">Marcar pago','data-idx="${r.idx}" data-month="${esc(r.monthKey||\'\')}">Marcar pago');
+line("  if(action==='pay-record')",`  if(action==='pay-record'){const r=Store.data.despesas.find(x=>x.id===el.dataset.id),idx=Number(el.dataset.idx);if(!r){toast('Lançamento não encontrado.');return;}if(Recurrence.is(r)){const month=el.dataset.month;if(!/^\\d{4}-(0[1-9]|1[0-2])$/.test(month))return;confirmAction('Confirmar esta mensalidade',\`Marcar <b>\${esc(r.desc)}</b> de <b>\${esc(monthName(month))}</b> como paga? Os outros meses continuam como estão.\`,'Confirmar pagamento',async()=>{await Recurrence.markPaid(r.id,month);toast('Mensalidade marcada como paga.');});}else confirmAction('Confirmar o pagamento',idx>0?\`Marcar até a parcela \${idx+1} de <b>\${esc(r.desc)}</b> como pagas? Esse registro considera as parcelas em sequência.\`:\`Marcar <b>\${esc(r.desc)}</b> como pago?\`,'Confirmar pagamento',async()=>{await Store.saveRecord('despesa',{jaPagas:idx+1},r.id);toast('Pagamento atualizado.');});}`);
+replace("${r?.parcelas>1?' e todas as suas parcelas':''} será excluído. Essa ação não pode ser desfeita.","${Recurrence.is(r)?' e todas as suas mensalidades, inclusive as já pagas':r?.parcelas>1?' e todas as suas parcelas':''} será excluído. Essa ação não pode ser desfeita.${Recurrence.is(r)?' Para apenas encerrar as próximas cobranças, cancele e edite o último mês da recorrência.':''}");
+line("  if(e.target.id==='entry-form')",`  if(e.target.id==='entry-form'){e.preventDefault();const form=e.target,f=new FormData(form),id=state.editId,type=state.type,mode=f.get('expenseMode');runForm(form,'#entry-error',async()=>{const data=entryRecordFromForm(f,type,id);await Store.saveRecord(type,data,id);},()=>{state.editId=null;if(mode!=='installments'&&mode!=='monthly')state.month=String(f.get('date')).slice(0,7);document.activeElement?.blur();render.wasRendered=false;render();toast(id?'Alterações salvas.':mode==='monthly'?'Despesa recorrente cadastrada. Os meses seguintes já estão previstos.':mode==='installments'?'Compra registrada. As parcelas foram distribuídas desde o primeiro vencimento.':'Pronto! Lançamento registrado.');});}`);
+replace("['Data','Descrição','Categoria','Tipo','Valor','Status','Parcela']","['Vencimento/Recebimento','Descrição','Categoria','Tipo','Valor','Status','Parcela','Recorrência','Data da compra']");
+replace("r.total>1?(r.idx+1)+'/'+r.total:''])","r.total>1?(r.idx+1)+'/'+r.total:'',r.recurring?'Mensal':'',r.purchaseDate||''])");
+replace("    return result;\n  });",`    if(expense){if(r.purchaseDate){if(!Money.validDate(r.purchaseDate)||r.purchaseDate>r.data)fail();result.purchaseDate=r.purchaseDate;}
+      if(r.recurrence!=null){if(!Recurrence.is(r))fail();result.recurrence={frequency:'monthly',until:r.recurrence.until??''};result.recurrencePaid=r.recurrencePaid??[];if(result.parcelas!==1||result.jaPagas!==0||Recurrence.validate(result))fail();}
+    }
+    return result;\r\n  });`);
+replace("  if(/\\b(transferir|transferencia",`  if(/\\b(recorrente|recorrentes|recorrencia|todo mes|mensalidade|mensalidades)\\b/.test(q))return answer('Em Lançamentos, escolha Despesa → Todo mês. Informe o valor mensal (por exemplo, VIVO: R$ 135), o primeiro vencimento e se quer repetir sem prazo ou até um mês específico. A cobrança aparecerá automaticamente em cada mês. Em Relatórios, marque cada mensalidade como paga separadamente. Para encerrar, edite a despesa e escolha o último mês.','Despesas recorrentes');
+  if(/\\b(compra antiga|compras antigas|parcelado antigo|parcelas antigas|data da compra)\\b/.test(q))return answer('Cadastre em Lançamentos → Despesa → Parcelada, sem precisar ir ao mês da compra. Informe o valor total, a data da compra (opcional), o vencimento original da primeira parcela, o total de parcelas e quantas já foram pagas. A prévia mostra a próxima parcela não paga. O relatório considera o mês de vencimento de cada parcela.','Compras anteriores');
+  if(/\\b(transferir|transferencia`);
+replace('Se parcelou, informe o valor total da compra e abra Parcelamento e reembolso para indicar o número de parcelas e quantas já foram pagas. O app divide os centavos entre as parcelas.','Se parcelou, escolha Parcelada e informe o valor total da compra, a data da compra (opcional), o vencimento original da primeira parcela, o número de parcelas e quantas já foram pagas. Para uma conta fixa, escolha Todo mês. O 4J organiza os meses e distribui os centavos das parcelas.');
+replace("const catatauSuggestions=['Como está meu saldo?'","const catatauSuggestions=['Como cadastrar uma despesa recorrente?','Como registrar uma compra antiga?','Como está meu saldo?'");
+fs.writeFileSync(path.join(dir,'script-1.js'),s);
+let template=fs.readFileSync(path.join(dir,'template.html'),'utf8');template=template.replace('</head>','<style>__4J_SOURCE_style-5.css__</style>\n<style>__4J_SOURCE_style-6.css__</style>\n</head>');fs.writeFileSync(path.join(dir,'template.html'),template);
+console.log('Recurrence, historical installments, backups, reports and dark theme integrated.');

@@ -1,0 +1,12 @@
+const fs=require('node:fs'),path=require('node:path'),dir=__dirname;
+let s=fs.readFileSync(path.join(dir,'script-1.js'),'utf8');
+const replace=(a,b)=>{if(!s.includes(a))throw Error('Missing '+a.slice(0,100));s=s.replace(a,()=>b);};
+replace('const originalProfileStore=',fs.readFileSync(path.join(dir,'profile-preference.js'),'utf8')+'\nconst originalProfileStore=');
+replace("const saved=localStorage.getItem('activeProfileView');if(this.profiles.length)this.selectProfile(this.profiles.find(p=>p.id===saved)?.id||this.profiles[0].id);","if(this.profiles.length)this.selectProfile(ProfilePreference.pick(this));");
+replace("localStorage.setItem('activeProfileView',id);this.emit();if(this.demo)","ProfilePreference.remember(this,id);this.emit();if(this.demo)");
+replace("if(id)localStorage.setItem('activeProfileView',id);else localStorage.removeItem('activeProfileView');","ProfilePreference.remember(this,id);");
+replace("if(localStorage.getItem('activeProfileView')===snapshot.id)localStorage.removeItem('activeProfileView');","if(ProfilePreference.last(store)===snapshot.id)ProfilePreference.remember(store,'');");
+const seed=s.split(/\r?\n/).find(l=>l.trimStart().startsWith('seed(){if(this.demoSpaces)'));
+replace(seed,seed.replace('this.refreshDemoProfiles();','this.refreshDemoProfiles();this.loadDemoProfile(ProfilePreference.pick(this));'));
+replace('<div class="settings-group"><h3>Deixe confortável para você</h3>','${defaultProfileSettings()}<div class="settings-group"><h3>Deixe confortável para você</h3>');
+fs.writeFileSync(path.join(dir,'script-1.js'),s);console.log('Account-scoped default profile integrated.');

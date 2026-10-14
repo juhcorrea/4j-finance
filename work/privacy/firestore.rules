@@ -1,0 +1,135 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function active() {
+      return signedIn()
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.status == 'approved';
+    }
+    function platformAdmin() {
+      return active()
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    function email() { return request.auth.token.email.lower(); }
+    function verified() { return signedIn() && request.auth.token.email_verified == true; }
+    function owner(data) { return signedIn() && data.ownerUid == request.auth.uid; }
+    function familyMember(data) {
+      return owner(data) || (verified() && email() in data.memberEmails);
+    }
+    function familyManager(data) {
+      return owner(data) || (verified() && email() in data.adminEmails);
+    }
+    function familyMemberById(id) {
+      return id is string && id.size() > 0
+        && familyMember(get(/databases/$(database)/documents/families/$(id)).data);
+    }
+    function profileFamilyAccess(data, edit) {
+      return data.get('familyId', '') != ''
+        && data.get('familyAccess', '') in (edit ? ['edit'] : ['view', 'edit'])
+        && familyMemberById(data.familyId);
+    }
+    function canReadProfile(data) {
+      return active() && (owner(data)
+        || (verified() && (email() in data.get('sharedView', []) || email() in data.get('sharedEdit', [])))
+        || profileFamilyAccess(data, false));
+    }
+    function canEditProfile(data) {
+      return active() && (owner(data)
+        || (verified() && email() in data.get('sharedEdit', []))
+        || profileFamilyAccess(data, true));
+    }
+    function validName(value) { return value is string && value.size() > 0 && value.size() <= 80; }
+    function validFamily(data) {
+      return validName(data.name) && data.name.size() <= 60
+        && data.memberEmails is list && data.memberEmails.size() <= 50
+        && data.adminEmails is list && data.adminEmails.size() <= 50
+        && data.memberEmails.toSet().size() == data.memberEmails.size()
+        && data.adminEmails.toSet().size() == data.adminEmails.size()
+        && data.memberEmails.hasAll(data.adminEmails)
+        && data.memberEmails.hasAll([data.ownerEmail]);
+    }
+    function validProfileSharing(data) {
+      return data.get('sharedView', []) is list && data.get('sharedView', []).size() <= 50
+        && data.get('sharedEdit', []) is list && data.get('sharedEdit', []).size() <= 50;
+    }
+    function validFamilyLink(data) {
+      return (data.get('familyId', '') == '' && data.get('familyAccess', '') == '')
+        || (data.get('familyId', '') is string && data.get('familyAccess', '') in ['view', 'edit']
+          && familyMemberById(data.familyId));
+    }
+
+    match /users/{uid} {
+      // Missing self-documents are readable so first-login provisioning can use a transaction.
+      allow get: if signedIn() && (request.auth.uid == uid || platformAdmin());
+      allow list: if platformAdmin();
+      allow create: if signedIn() && request.auth.uid == uid
+        && request.resource.data.keys().hasAll(['name', 'email', 'role', 'status', 'createdAt'])
+        && request.resource.data.keys().hasOnly(['name', 'email', 'role', 'status', 'createdAt'])
+        && validName(request.resource.data.name)
+        && request.resource.data.email == email()
+        && request.resource.data.role == 'member'
+        && request.resource.data.status == 'approved'
+        && request.resource.data.createdAt == request.time;
+      allow update: if (active() && request.auth.uid == uid
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['name', 'defaultProfileId'])
+          && validName(request.resource.data.name)
+          && request.resource.data.get('defaultProfileId', '') is string
+          && request.resource.data.get('defaultProfileId', '').size() <= 1500)
+        || (platformAdmin() && request.auth.uid != uid
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['role', 'status'])
+          && request.resource.data.role in ['member', 'admin']
+          && request.resource.data.status in ['approved', 'pending']);
+      // No client delete: deletion + re-creation must not bypass suspension.
+      allow delete: if false;
+    }
+
+    match /families/{familyId} {
+      allow read: if active() && familyMember(resource.data);
+      allow create: if active()
+        && request.resource.data.keys().hasAll(['name', 'ownerUid', 'ownerEmail', 'memberEmails', 'adminEmails', 'createdAt'])
+        && request.resource.data.keys().hasOnly(['name', 'ownerUid', 'ownerEmail', 'memberEmails', 'adminEmails', 'createdAt'])
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.ownerEmail == email()
+        && request.resource.data.createdAt == request.time
+        && validFamily(request.resource.data);
+      allow update: if active() && familyManager(resource.data)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['name', 'memberEmails', 'adminEmails'])
+        && validFamily(request.resource.data);
+      // Keep linked profiles intact; dissolution needs a dedicated migration flow.
+      allow delete: if false;
+    }
+
+    match /profiles/{profileId} {
+      allow read: if canReadProfile(resource.data);
+      allow create: if active()
+        && request.resource.data.keys().hasAll(['ownerUid', 'ownerEmail', 'sharedView', 'sharedEdit', 'displayName', 'createdAt'])
+        && request.resource.data.keys().hasOnly(['ownerUid', 'ownerEmail', 'sharedView', 'sharedEdit', 'displayName', 'createdAt', 'familyId', 'familyAccess'])
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.ownerEmail == email()
+        && request.resource.data.sharedView == [] && request.resource.data.sharedEdit == []
+        && validName(request.resource.data.displayName)
+        && request.resource.data.displayName.size() <= 60
+        && request.resource.data.createdAt == request.time
+        && validFamilyLink(request.resource.data);
+      allow update: if canEditProfile(resource.data)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(owner(resource.data)
+          ? ['displayName', 'sharedView', 'sharedEdit', 'familyId', 'familyAccess', 'goalsV2', 'budgetPlan', 'budgetMonths', 'customCatReceita', 'customCatDespesa', 'customFormaPg', 'lastUpdatedAt', 'lastUpdatedBy']
+          : ['goalsV2', 'budgetPlan', 'budgetMonths', 'customCatReceita', 'customCatDespesa', 'customFormaPg', 'lastUpdatedAt', 'lastUpdatedBy'])
+        && validProfileSharing(request.resource.data)
+        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['familyId', 'familyAccess']) || validFamilyLink(request.resource.data))
+        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['displayName'])
+          || (validName(request.resource.data.displayName) && request.resource.data.displayName.size() <= 60));
+      allow delete: if active() && owner(resource.data);
+
+      match /{collection}/{recordId} {
+        allow read: if collection in ['receitas', 'despesas']
+          && canReadProfile(get(/databases/$(database)/documents/profiles/$(profileId)).data);
+        allow write: if collection in ['receitas', 'despesas']
+          && canEditProfile(get(/databases/$(database)/documents/profiles/$(profileId)).data);
+      }
+    }
+
+    // No broad authenticated-user or global-admin financial bypass exists.
+    match /{document=**} { allow read, write: if false; }
+  }
+}

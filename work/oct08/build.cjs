@@ -1,0 +1,10 @@
+const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+const dir=__dirname;
+let html=fs.readFileSync(path.join(dir,'template.html'),'utf8');
+html=html.replace(/__4J_SOURCE_([\w.-]+)__/g,(_,f)=>fs.readFileSync(path.join(dir,f),'utf8'));
+const assets=JSON.parse(fs.readFileSync(path.join(dir,'assets.json'),'utf8'));
+html=html.replace(/__4J_ASSET_(\d+)__/g,(_,i)=>assets[Number(i)]);
+for(const[,code]of html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g))if(code.trim())new vm.Script(code);
+if(/__4J_(SOURCE|ASSET)_/.test(html))throw Error('Unresolved embedded source');
+const out=path.resolve(dir,'../../outputs/index.html');fs.writeFileSync(out,html);
+console.log(JSON.stringify({file:out,bytes:Buffer.byteLength(html),syntax:'valid'}));
