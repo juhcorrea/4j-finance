@@ -1,6 +1,6 @@
 # 4J Finance
 
-Backup privado dos arquivos originais locais, organizado em 14/10/2026.
+Repositório público dos arquivos originais locais e da configuração de publicação, organizado em 14/10/2026.
 
 **A versão final foi indicada expressamente pela usuária: `C:/Users/juliana.correa/Downloads/index.html`.** Esse arquivo foi copiado byte a byte para `index.html` na raiz e para `outputs/index.html`, sem reconstrução nem alterações. Os dois têm o mesmo SHA-256 registrado em `source-manifest.json`.
 
@@ -36,7 +36,7 @@ node work/oct08/build.cjs
 
 **Esse comando substitui `outputs/index.html` por uma versão histórica reconstruída, diferente do final confirmado. Não é necessário executá-lo para utilizar o HTML final.** Para estudar os fontes antigos, use outra cópia de trabalho. Os scripts de integração e atualização são utilitários históricos, não uma sequência automática obrigatória de build.
 
-Para visualizar a cópia final em `outputs` localmente:
+Para visualizar o arquivo autoritativo `index.html` da raiz localmente:
 
 ```sh
 node work/serve-final.cjs
@@ -48,4 +48,16 @@ A prévia usa http://127.0.0.1:4174/?demo=1. Os testes `*-test.cjs` em `work/oct
 
 Não foram incluídos credenciais de conta de serviço, tokens, senhas, sessões de navegador, exportações financeiras, conversas, capturas de tela ou binários de ferramentas. A auditoria do arquivo final não encontrou padrões de credenciais privadas nem blocos de exportação financeira; seus scripts incorporados passaram por conferência de sintaxe sem execução.
 
-O repositório é uma cópia de segurança. Este trabalho não configurou publicação automática no Netlify nem reconstruiu o site. Uma publicação futura deve usar o arquivo final confirmado e ser validada separadamente.
+## Publicação no Netlify
+
+O `netlify.toml` prepara a integração com o projeto existente `4jfinance`. A conexão do repositório e a ativação da publicação automática são configuradas no painel do Netlify, usando a branch `main`.
+
+- Para atualizar a versão atual, edite o `index.html` da raiz. Ele é o arquivo autoritativo usado na publicação e na prévia local.
+- `outputs/index.html` guarda a cópia do backup inicial; não é a entrada do deploy.
+- Comando de build: `node work/prepare-netlify.cjs`.
+- Pasta publicada: `work/netlify-deploy`, contendo apenas `index.html`.
+- Node.js 22; o empacotamento usa módulos nativos e verifica que o HTML foi copiado sem alterações.
+
+Depois de conectar o GitHub e ativar a publicação no Netlify, cada alteração enviada para `main` prepara e publica o HTML final. A publicação exige créditos disponíveis na conta. Uma publicação bloqueada mantém a versão anterior no ar.
+
+O build histórico `work/oct08/build.cjs` não é executado neste fluxo. Os rascunhos e as fontes históricas permanecem guardados sem substituir o arquivo final confirmado.

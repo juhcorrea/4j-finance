@@ -16,3 +16,4 @@ emulators/
 *.zip
 .DS_Store
 Thumbs.db
+work/netlify-deploy/

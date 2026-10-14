@@ -1,0 +1,6 @@
+[build]
+  command = "node work/prepare-netlify.cjs"
+  publish = "work/netlify-deploy"
+
+[build.environment]
+  NODE_VERSION = "22"
