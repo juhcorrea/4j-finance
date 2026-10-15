@@ -1,6 +1,8 @@
+# Hospedagem atual: Cloudflare Pages. Preservar a pausa do Netlify.
+# Builds disparados pelo Git sao ignorados; nenhum hook de deploy e chamado.
 [build]
-  command = "node work/prepare-netlify.cjs"
-  publish = "work/netlify-deploy"
-
+  ignore = "exit 0"
+  command = "node scripts/check.cjs"
+  publish = "public"
 [build.environment]
   NODE_VERSION = "22"

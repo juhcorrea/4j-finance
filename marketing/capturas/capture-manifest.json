@@ -1,0 +1,459 @@
+{
+  "created": "2026-10-15",
+  "source": "4j-finance-monetizacao/public/index.html?demo=1",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "data": "Somente dados fictícios da demonstração; nenhum acesso a contas reais.",
+  "screens": {
+    "overview": {
+      "file": "capturas/overview.png",
+      "caption": "Resumo do mês no celular e Catatau.",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "demoOnly": true,
+      "bytes": 117580
+    },
+    "overview-metrics": {
+      "file": "capturas/overview-metrics.png",
+      "caption": "Receitas, despesas, saldo e metas da demonstração.",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "demoOnly": true,
+      "bytes": 83877
+    },
+    "recurring": {
+      "file": "capturas/recurring.png",
+      "caption": "Uma despesa recorrente de R$ 135.",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "demoOnly": true,
+      "bytes": 53007
+    },
+    "recurring-end": {
+      "file": "capturas/recurring-end.png",
+      "caption": "Escolha até quando uma conta se repete.",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "demoOnly": true,
+      "bytes": 55616
+    },
+    "installments": {
+      "file": "capturas/installments.png",
+      "caption": "Data da compra anterior e primeiro vencimento.",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "demoOnly": true,
+      "bytes": 56459
+    },
+    "installments-paid": {
+      "file": "capturas/installments-paid.png",
+      "caption": "Seis parcelas e histórico da primeira parcela já paga.",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "demoOnly": true,
+      "bytes": 55925
+    },
+    "budget": {
+      "file": "capturas/budget.png",
+      "caption": "Divisão inicial de 50% fixas, 20% reserva e 30% variáveis.",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "demoOnly": true,
+      "bytes": 57988
+    },
+    "budget-edit": {
+      "file": "capturas/budget-edit.png",
+      "caption": "Percentuais ajustáveis conforme a realidade da pessoa.",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "demoOnly": true,
+      "bytes": 72172
+    },
+    "family": {
+      "file": "capturas/family.png",
+      "caption": "Repasse de R$ 300 em uma viagem fictícia parcelada.",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "demoOnly": true,
+      "bytes": 56599
+    },
+    "family-entry": {
+      "file": "capturas/family-entry.png",
+      "caption": "Acerto fictício com pessoa da família e cartão compartilhado.",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "demoOnly": true,
+      "bytes": 48955
+    },
+    "reports": {
+      "file": "capturas/reports.png",
+      "caption": "Relatórios com resumo financeiro e filtros.",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "demoOnly": true,
+      "bytes": 54701
+    },
+    "reports-chart": {
+      "file": "capturas/reports-chart.png",
+      "caption": "Gráfico com as categorias da demonstração.",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "demoOnly": true,
+      "bytes": 48901
+    },
+    "catatau": {
+      "file": "capturas/catatau.png",
+      "caption": "Catatau explica o orçamento com base nos lançamentos fictícios.",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "demoOnly": true,
+      "bytes": 87731
+    },
+    "transactions": {
+      "file": "capturas/transactions.png",
+      "caption": "Receita fictícia com descrição, valor, data e categoria.",
+      "width": 390,
+      "height": 844,
+      "overflow": false,
+      "demoOnly": true,
+      "bytes": 44832
+    }
+  },
+  "clips": [
+    {
+      "key": "overview",
+      "file": "capturas/overview.webm",
+      "caption": "Visão geral das finanças com valores fictícios e Catatau.",
+      "steps": [
+        "Abrir Início no modo demonstração",
+        "Ver o resumo do mês",
+        "Rolar para os indicadores"
+      ],
+      "usefulStartMs": 1303,
+      "elapsedMs": 6863,
+      "usableSeconds": 5.6,
+      "blockedRequests": [
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        },
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        },
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        },
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        }
+      ],
+      "networkWriteAttempts": 0,
+      "firebaseInitialized": false,
+      "pageErrors": [],
+      "bytes": 321052
+    },
+    {
+      "key": "recurring",
+      "file": "capturas/recurring.webm",
+      "caption": "Conta recorrente de R$ 135 com último mês opcional.",
+      "steps": [
+        "Selecionar Todo mês",
+        "Informar R$ 135 e Plano de celular",
+        "Selecionar até um mês específico",
+        "Definir dezembro de 2026; sem salvar"
+      ],
+      "usefulStartMs": 2169,
+      "elapsedMs": 9876,
+      "usableSeconds": 7.7,
+      "blockedRequests": [
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        },
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        },
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        },
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        }
+      ],
+      "networkWriteAttempts": 0,
+      "firebaseInitialized": false,
+      "pageErrors": [],
+      "bytes": 489128
+    },
+    {
+      "key": "installments",
+      "file": "capturas/installments.webm",
+      "caption": "Compra anterior em parcelas, com histórico de pagamentos.",
+      "steps": [
+        "Selecionar Parcelada",
+        "Preencher uma compra fictícia de R$ 1.800",
+        "Informar compra de agosto e primeira parcela em setembro",
+        "Definir seis parcelas e marcar a primeira paga; sem salvar"
+      ],
+      "usefulStartMs": 2153,
+      "elapsedMs": 7332,
+      "usableSeconds": 5.2,
+      "blockedRequests": [
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        },
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        },
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        },
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        }
+      ],
+      "networkWriteAttempts": 0,
+      "firebaseInitialized": false,
+      "pageErrors": [],
+      "bytes": 375270
+    },
+    {
+      "key": "budget",
+      "file": "capturas/budget.webm",
+      "caption": "Plano mensal 50% fixas, 20% reserva, 30% variáveis, ajustável.",
+      "steps": [
+        "Abrir Metas",
+        "Ver divisão padrão da renda",
+        "Abrir Ajustar percentuais",
+        "Conferir os valores ajustáveis"
+      ],
+      "usefulStartMs": 2133,
+      "elapsedMs": 7125,
+      "usableSeconds": 5,
+      "blockedRequests": [
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        },
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        },
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        },
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        }
+      ],
+      "networkWriteAttempts": 0,
+      "firebaseInitialized": false,
+      "pageErrors": [],
+      "bytes": 290753
+    },
+    {
+      "key": "family",
+      "file": "capturas/family.webm",
+      "caption": "Acertos: controle do valor a repassar para quem pagou sua parte.",
+      "steps": [
+        "Abrir Acertos",
+        "Criar acerto fictício de viagem no modo demonstração",
+        "Informar pessoa e cartão compartilhado",
+        "Conferir o repasse mensal na lista"
+      ],
+      "usefulStartMs": 6931,
+      "elapsedMs": 12507,
+      "usableSeconds": 5.6,
+      "blockedRequests": [
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        },
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        },
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        },
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        }
+      ],
+      "networkWriteAttempts": 0,
+      "firebaseInitialized": false,
+      "pageErrors": [],
+      "bytes": 714734
+    },
+    {
+      "key": "reports",
+      "file": "capturas/reports.webm",
+      "caption": "Resumo, filtros e gráficos para entender o mês.",
+      "steps": [
+        "Abrir Relatórios",
+        "Conferir receitas e despesas",
+        "Abrir gráficos e comparação",
+        "Ver distribuição por categoria"
+      ],
+      "usefulStartMs": 1943,
+      "elapsedMs": 8250,
+      "usableSeconds": 6.3,
+      "blockedRequests": [
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        },
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        },
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        },
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        }
+      ],
+      "networkWriteAttempts": 0,
+      "firebaseInitialized": false,
+      "pageErrors": [],
+      "bytes": 381356
+    },
+    {
+      "key": "catatau",
+      "file": "capturas/catatau.webm",
+      "caption": "Catatau responde perguntas sobre o orçamento registrado.",
+      "steps": [
+        "Abrir o ícone do Catatau",
+        "Perguntar Como está meu orçamento?",
+        "Ler a resposta local com base na demonstração"
+      ],
+      "usefulStartMs": 1091,
+      "elapsedMs": 8492,
+      "usableSeconds": 7.4,
+      "blockedRequests": [
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        },
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        },
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        },
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        }
+      ],
+      "networkWriteAttempts": 0,
+      "firebaseInitialized": false,
+      "pageErrors": [],
+      "bytes": 491318
+    },
+    {
+      "key": "transactions",
+      "file": "capturas/transactions.webm",
+      "caption": "Lançar receitas e despesas com descrição, valor e data.",
+      "steps": [
+        "Abrir Lançamentos no modo demo",
+        "Ver as opções Despesa e Receita",
+        "Selecionar Receita",
+        "Preencher R$ 3.500 e Salário de exemplo sem salvar"
+      ],
+      "usefulStartMs": 2279,
+      "elapsedMs": 8765,
+      "usableSeconds": 6.5,
+      "blockedRequests": [
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        },
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        },
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        },
+        {
+          "host": "www.gstatic.com",
+          "method": "GET"
+        }
+      ],
+      "networkWriteAttempts": 0,
+      "firebaseInitialized": false,
+      "pageErrors": [],
+      "bytes": 293839
+    }
+  ],
+  "failures": [],
+  "visualQA": {
+    "reviewedScreens": [
+      "overview",
+      "overview-metrics",
+      "recurring",
+      "recurring-end",
+      "installments",
+      "installments-paid",
+      "budget",
+      "budget-edit",
+      "family",
+      "family-entry",
+      "reports",
+      "reports-chart",
+      "catatau",
+      "transactions"
+    ],
+    "method": "Cada PNG foi aberto e inspecionado visualmente. Rótulos importantes aparecem abaixo da barra fixa; documentos sem overflow horizontal.",
+    "date": "2026-10-15"
+  },
+  "recordingNotes": "Clipes brutos de interações reais, sem trilha ou narração. usefulStartMs marca o início sugerido após carregar/preparar a demonstração; ajustar no editor por frame quando necessário. No clipe family, o acerto foi criado somente na memória da demonstração antes do trecho sugerido.",
+  "security": {
+    "realCredentialsUsed": false,
+    "realProfilesAccessed": false,
+    "allContextsIsolated": true,
+    "firebaseGlobalType": "undefined",
+    "firebaseSDKRequests": "Bloqueados pela rota; nenhuma conexão a banco ou Auth.",
+    "networkWriteAttempts": 0,
+    "allowedNetwork": "Servidor local somente leitura e fontes Google; demais requests abortadas.",
+    "sourceModified": false,
+    "productionChanged": false
+  },
+  "sourceSHA256": "65ba6a9da9e58156a6d04bc94c8f45188e71ab4c12752135e60faedaf0d8a703"
+}

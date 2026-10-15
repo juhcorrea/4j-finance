@@ -1,63 +1,54 @@
 # 4J Finance
 
-Repositório público dos arquivos originais locais e da configuração de publicação, organizado em 14/10/2026.
+Organizacao financeira pessoal e familiar, com receitas, despesas recorrentes, parcelas, metas, relatorios e o Catatau. Identidade visual em Montserrat, com as cores originais da marca.
 
-**A versão final foi indicada expressamente pela usuária: `C:/Users/juliana.correa/Downloads/index.html`.** Esse arquivo foi copiado byte a byte para `index.html` na raiz e para `outputs/index.html`, sem reconstrução nem alterações. Os dois têm o mesmo SHA-256 registrado em `source-manifest.json`.
+**Site:** https://4jfinance.com.br/ · **Hospedagem:** Cloudflare Pages · **Login e dados:** Firebase.
 
-Este backup não altera o site já publicado no Netlify, as regras ativas do Firebase nem os dados das contas.
+## Estado em 15/10/2026
 
-## Arquivo final
+- Dominio oficial e www com HTTPS ativos; dominio autorizado no Firebase Authentication.
+- Cadastro aberto e compartilhamento opcional. Administrar uma familia nao concede acesso financeiro a outras familias.
+- Paginas publicas e preferencias de cookies publicadas.
+- AdSense: propriedade verificada e revisao solicitada em 15/10 as 14h05 (America/Sao_Paulo); aprovacao ainda pendente.
+- Mensagem Google CMP publicada no painel. Integracao e exibicao real no site ainda precisam ser concluidas e testadas; veja ADSENSE-PREPARACAO.txt.
+- **Anuncios e Pix desativados.** O plano futuro e R$ 5 em pagamento unico, com beneficio permanente para a conta compradora.
+- O Netlify anterior permanece pausado. Atualizar este repositorio nao publica o site automaticamente no Cloudflare.
 
-- `index.html`: versão final confirmada, preservada como arquivo estático.
-- `outputs/index.html`: cópia idêntica da versão final, mantendo a estrutura da prévia local.
-- `source-manifest.json`: origem, destino, tamanho e SHA-256 de cada arquivo original copiado; a seção `authoritativeFinal` identifica a decisão da usuária.
+## Estrutura atual
 
-O HTML final inclui recursos visuais em dados incorporados. A conferência de referências não encontrou arquivos locais auxiliares ausentes. O navegador ainda utiliza serviços e bibliotecas externos, incluindo Google Fonts, Firebase e cdnjs; os dados e a autenticação dependem dos serviços configurados no aplicativo. A configuração pública do SDK web Firebase existente foi preservada.
+| Caminho | Conteudo |
+| --- | --- |
+| public/ | Unicos arquivos destinados a hospedagem estatica |
+| source/base.html | Fonte de entrada anterior as transformacoes; nunca hospedar diretamente |
+| frontend/ | Modulos de interface e testes de consentimento/monetizacao |
+| privacy/ | Transformacoes, regras Firestore e testes de isolamento |
+| functions/ | Integracao Pix preparada, desativada e sem credenciais |
+| qa/ | Testes de navegador com dados sinteticos |
+| scripts/ | Validacao, reproducao do build e sincronizacao do workspace |
+| marketing/ | Portfolio, seis videos, posts, stories, carrossel, legendas e ativos finais |
+| branding/ | Logotipo PNG preparado para a mensagem AdSense |
+| 4j-finance-portfolio-compartilhar.html | Portfolio em arquivo unico, com imagens, fonte e videos incorporados |
 
-## Fontes e versões históricas
+index.html e outputs/index.html sao copias de compatibilidade do HTML atual. Os arquivos anteriores em work/ e snapshots/ foram preservados para consulta historica; nao sao a fonte atual nem devem ser publicados. O historico de commits conserva as versoes anteriores.
 
-Os arquivos abaixo são mantidos para recuperar o trabalho anterior. **Eles não são os fontes comprovados da versão final confirmada acima.**
+## Validar e reconstruir
 
-- `work/oct08/`: fontes editáveis históricos, montador, módulos, testes e documentação técnica.
-- `snapshots/previous-local-output/index.html`: antigo HTML de entrega da pasta de trabalho, antes da indicação do arquivo final.
-- `snapshots/downloads/index.html`: versão anterior encontrada em `Downloads/4J Finance/index.html`; é um arquivo diferente do final `Downloads/index.html`.
-- `work/privacy/`: fontes e testes de privacidade e grupos familiares, preservados como rascunhos. Sua presença não comprova integração, validação ou publicação.
-- `work/4j-finance/dist/assets/`: imagens originais da marca, do ícone e do Catatau.
+Requer Node.js 22 ou superior. Os testes de logica usam apenas os modulos nativos do Node:
 
-O antigo HTML de entrega foi salvo em 09/10/2026 às 03:30 (São Paulo), enquanto o script editável principal e os rascunhos de privacidade foram alterados depois. A versão histórica da subpasta Downloads/4J Finance também é diferente. Nenhuma dessas versões históricas substitui a decisão da usuária sobre o HTML final.
+~~~sh
+node scripts/check.cjs
+node scripts/verify-build.cjs
+node build.cjs
+~~~
 
-## Desenvolvimento e prévia
+O build usa source/base.html e os modulos locais, sem depender da pasta Downloads. verify-build compara o resultado em uma pasta temporaria com public/index.html, sem alterar a entrega publicada.
 
-O montador histórico usa somente módulos padrão do Node.js:
+Para os testes visuais, instale as dependencias com pnpm install --frozen-lockfile, execute pnpm exec playwright install chromium e pnpm test:ui. Opcionalmente, PLAYWRIGHT_EXECUTABLE_PATH seleciona outro Chromium instalado. Os testes de regras usam o emulador e dependencias de privacy/; nao executar testes contra dados reais sem escopo explicito.
 
-```sh
-node work/oct08/build.cjs
-```
+## Manter atualizado
 
-**Esse comando substitui `outputs/index.html` por uma versão histórica reconstruída, diferente do final confirmado. Não é necessário executá-lo para utilizar o HTML final.** Para estudar os fontes antigos, use outra cópia de trabalho. Os scripts de integração e atualização são utilitários históricos, não uma sequência automática obrigatória de build.
+Ao concluir uma alteracao do 4J Finance: validar, revisar o diff, criar um commit e enviar ao GitHub. Essa e a preferencia permanente definida pela responsavel pelo projeto. Consulte AGENTS.md e docs/SINCRONIZACAO.md.
 
-Para visualizar o arquivo autoritativo `index.html` da raiz localmente:
+A workflow de verificacao executa testes de logica e reproducao do build; nao faz deploy, nao acessa contas Firebase e nao gera pagamentos. Configuracoes feitas nos paineis externos sao registradas na documentacao. Segredos, tokens, auditorias privadas e dados financeiros ficam fora do Git.
 
-```sh
-node work/serve-final.cjs
-```
-
-A prévia usa http://127.0.0.1:4174/?demo=1. Os testes `*-test.cjs` em `work/oct08` se referem aos fontes históricos. Os testes de regras de `work/privacy` exigem suas dependências declaradas e o emulador Firestore; binários e caches não foram incluídos.
-
-## Escopo da cópia
-
-Não foram incluídos credenciais de conta de serviço, tokens, senhas, sessões de navegador, exportações financeiras, conversas, capturas de tela ou binários de ferramentas. A auditoria do arquivo final não encontrou padrões de credenciais privadas nem blocos de exportação financeira; seus scripts incorporados passaram por conferência de sintaxe sem execução.
-
-## Publicação no Netlify
-
-O `netlify.toml` prepara a integração com o projeto existente `4jfinance`. A conexão do repositório e a ativação da publicação automática são configuradas no painel do Netlify, usando a branch `main`.
-
-- Para atualizar a versão atual, edite o `index.html` da raiz. Ele é o arquivo autoritativo usado na publicação e na prévia local.
-- `outputs/index.html` guarda a cópia do backup inicial; não é a entrada do deploy.
-- Comando de build: `node work/prepare-netlify.cjs`.
-- Pasta publicada: `work/netlify-deploy`, contendo apenas `index.html`.
-- Node.js 22; o empacotamento usa módulos nativos e verifica que o HTML foi copiado sem alterações.
-
-Depois de conectar o GitHub e ativar a publicação no Netlify, cada alteração enviada para `main` prepara e publica o HTML final. A publicação exige créditos disponíveis na conta. Uma publicação bloqueada mantém a versão anterior no ar.
-
-O build histórico `work/oct08/build.cjs` não é executado neste fluxo. Os rascunhos e as fontes históricas permanecem guardados sem substituir o arquivo final confirmado.
+Veja COMECE-AQUI.md, PUBLICAR-NO-CLOUDFLARE.md e ADSENSE-PREPARACAO.txt para operacao e pendencias.

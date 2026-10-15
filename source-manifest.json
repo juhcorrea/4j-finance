@@ -1,456 +1,344 @@
 {
   "createdForDate": "2026-10-14",
   "timezone": "America/Sao_Paulo",
-  "purpose": "Private backup of original 4J Finance code; no deploy or source rebuild",
+  "purpose": "Historical source inventory from 2026-10-14; current files are listed in sync-manifest.json",
   "copiedWithoutModification": true,
   "sourceFiles": [
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/assets.json",
       "destination": "work/oct08/assets.json",
       "role": "historical-editable-source",
       "bytes": 2482757,
-      "sha256": "fb2f8ff88bf4d8b232446bf10a0a04f05fc6b73d791f2bf05ddd6ad52f33738b",
-      "modifiedUtc": "2026-10-08T11:04:06.898Z"
+      "sha256": "fb2f8ff88bf4d8b232446bf10a0a04f05fc6b73d791f2bf05ddd6ad52f33738b"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/budget-engine.js",
       "destination": "work/oct08/budget-engine.js",
       "role": "historical-editable-source",
       "bytes": 6034,
-      "sha256": "16f3b88cc90eb956d836cea5c21f994b5f6dac71e69452f5590ca817819a849e",
-      "modifiedUtc": "2026-10-08T17:43:28.371Z"
+      "sha256": "16f3b88cc90eb956d836cea5c21f994b5f6dac71e69452f5590ca817819a849e"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/budget-test.cjs",
       "destination": "work/oct08/budget-test.cjs",
       "role": "historical-editable-source",
       "bytes": 12386,
-      "sha256": "6e80805678582c90a529e8e02347e7111027e17ab9455356e6d9198835e0132c",
-      "modifiedUtc": "2026-10-09T06:26:41.796Z"
+      "sha256": "6e80805678582c90a529e8e02347e7111027e17ab9455356e6d9198835e0132c"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/budget-ui.js",
       "destination": "work/oct08/budget-ui.js",
       "role": "historical-editable-source",
       "bytes": 8347,
-      "sha256": "168f581aa8668893c1fd8757e06884797c1b3405a6621fc4c76190d0be877985",
-      "modifiedUtc": "2026-10-08T17:43:28.374Z"
+      "sha256": "168f581aa8668893c1fd8757e06884797c1b3405a6621fc4c76190d0be877985"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/build.cjs",
       "destination": "work/oct08/build.cjs",
       "role": "historical-editable-source",
       "bytes": 760,
-      "sha256": "f62fa98125f85e092dee62b904daccc6a12678d0479153e4225f5bb5dd39cc1f",
-      "modifiedUtc": "2026-10-08T11:04:03.097Z"
+      "sha256": "f62fa98125f85e092dee62b904daccc6a12678d0479153e4225f5bb5dd39cc1f"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/entry-ui.js",
       "destination": "work/oct08/entry-ui.js",
       "role": "historical-editable-source",
       "bytes": 13267,
-      "sha256": "0fd1815c58c452217b1ef4dc767c168ea4549e73c738845c787bf570c06c6eab",
-      "modifiedUtc": "2026-10-08T11:09:21.565Z"
+      "sha256": "0fd1815c58c452217b1ef4dc767c168ea4549e73c738845c787bf570c06c6eab"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/family-engine.js",
       "destination": "work/oct08/family-engine.js",
       "role": "historical-editable-source",
       "bytes": 11825,
-      "sha256": "8122e709842343c51c32a93f29ba6748ee93d6e3cd369c723901ec5204044a91",
-      "modifiedUtc": "2026-10-09T06:28:29.787Z"
+      "sha256": "8122e709842343c51c32a93f29ba6748ee93d6e3cd369c723901ec5204044a91"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/family-test.cjs",
       "destination": "work/oct08/family-test.cjs",
       "role": "historical-editable-source",
       "bytes": 13007,
-      "sha256": "aed19f62588f1a1946a7a8d9b33ef1c987aa9236ee2c7fa40e5f5dc7ac6cdac6",
-      "modifiedUtc": "2026-10-09T06:32:16.541Z"
+      "sha256": "aed19f62588f1a1946a7a8d9b33ef1c987aa9236ee2c7fa40e5f5dc7ac6cdac6"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/family-ui.js",
       "destination": "work/oct08/family-ui.js",
       "role": "historical-editable-source",
       "bytes": 10329,
-      "sha256": "4546e077c1f86b19b9ddc05d76e43a9f36a306b0603db647fb34eb34efa9304c",
-      "modifiedUtc": "2026-10-08T22:43:55.409Z"
+      "sha256": "4546e077c1f86b19b9ddc05d76e43a9f36a306b0603db647fb34eb34efa9304c"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/finish-enhancements.cjs",
       "destination": "work/oct08/finish-enhancements.cjs",
       "role": "historical-editable-source",
       "bytes": 4084,
-      "sha256": "ee7cdc4402191b98e6e53252d8b66b1de1960c5bc26f6f84c10e63cda0ad3740",
-      "modifiedUtc": "2026-10-08T22:43:17.708Z"
+      "sha256": "ee7cdc4402191b98e6e53252d8b66b1de1960c5bc26f6f84c10e63cda0ad3740"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/firebase-cadastro-instrucoes.md",
       "destination": "work/oct08/firebase-cadastro-instrucoes.md",
       "role": "historical-editable-source",
       "bytes": 3566,
-      "sha256": "7ee1f76e7712ae0d097a592d0bee33516ad50d0f8c77ea5ca604436f2920fc74",
-      "modifiedUtc": "2026-10-08T22:39:51.555Z"
+      "sha256": "7ee1f76e7712ae0d097a592d0bee33516ad50d0f8c77ea5ca604436f2920fc74"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/fix-family-draft.cjs",
       "destination": "work/oct08/fix-family-draft.cjs",
       "role": "historical-editable-source",
       "bytes": 1224,
-      "sha256": "339b7de45eba48e41af744cc3ab3e1e2607bb77445cc88c6a0f44b48016363b6",
-      "modifiedUtc": "2026-10-08T22:43:53.682Z"
+      "sha256": "339b7de45eba48e41af744cc3ab3e1e2607bb77445cc88c6a0f44b48016363b6"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/integrate-budget.cjs",
       "destination": "work/oct08/integrate-budget.cjs",
       "role": "historical-editable-source",
       "bytes": 6074,
-      "sha256": "2d1bb4da655aae8c3be4d691be24fcaa5ab33847bb3d26cf2b57e09712211723",
-      "modifiedUtc": "2026-10-08T17:44:40.054Z"
+      "sha256": "2d1bb4da655aae8c3be4d691be24fcaa5ab33847bb3d26cf2b57e09712211723"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/integrate-family.cjs",
       "destination": "work/oct08/integrate-family.cjs",
       "role": "historical-editable-source",
       "bytes": 4520,
-      "sha256": "612c5bfd67dac5027c9b8f87fe9f575f5067650464465f6728f520e0bd6454e7",
-      "modifiedUtc": "2026-10-08T22:42:00.628Z"
+      "sha256": "612c5bfd67dac5027c9b8f87fe9f575f5067650464465f6728f520e0bd6454e7"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/integrate-preference.cjs",
       "destination": "work/oct08/integrate-preference.cjs",
       "role": "historical-editable-source",
       "bytes": 1635,
-      "sha256": "deb2c5959fcb1abee5b2126dcc28cc29e02486c2831d17985899da10a2450f2e",
-      "modifiedUtc": "2026-10-08T17:16:48.963Z"
+      "sha256": "deb2c5959fcb1abee5b2126dcc28cc29e02486c2831d17985899da10a2450f2e"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/integrate-signup.cjs",
       "destination": "work/oct08/integrate-signup.cjs",
       "role": "historical-editable-source",
       "bytes": 4671,
-      "sha256": "205afc0c596c6cff8bd38c144105eaa8972bd10b9aa83f8a315c2eae9f649eb3",
-      "modifiedUtc": "2026-10-08T22:38:26.407Z"
+      "sha256": "205afc0c596c6cff8bd38c144105eaa8972bd10b9aa83f8a315c2eae9f649eb3"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/integrate.cjs",
       "destination": "work/oct08/integrate.cjs",
       "role": "historical-editable-source",
       "bytes": 8191,
-      "sha256": "3bb3bfe2704accd8e01f06b4d0c59a7d03ce29a325765d1fb1ee67e031b2b2b4",
-      "modifiedUtc": "2026-10-08T11:11:00.834Z"
+      "sha256": "3bb3bfe2704accd8e01f06b4d0c59a7d03ce29a325765d1fb1ee67e031b2b2b4"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/integration-test.cjs",
       "destination": "work/oct08/integration-test.cjs",
       "role": "historical-editable-source",
       "bytes": 10934,
-      "sha256": "69ae0797d69add124d8f76db760ab3cb7dd1a2ba38300f66eb4c5781872ba74f",
-      "modifiedUtc": "2026-10-09T06:28:29.795Z"
+      "sha256": "69ae0797d69add124d8f76db760ab3cb7dd1a2ba38300f66eb4c5781872ba74f"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/preference-test.cjs",
       "destination": "work/oct08/preference-test.cjs",
       "role": "historical-editable-source",
       "bytes": 3520,
-      "sha256": "a129100b534681e77922b422d44edd184868ae12faf8c30c75cf3db7ff51eb24",
-      "modifiedUtc": "2026-10-08T17:17:53.957Z"
+      "sha256": "a129100b534681e77922b422d44edd184868ae12faf8c30c75cf3db7ff51eb24"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/profile-preference.js",
       "destination": "work/oct08/profile-preference.js",
       "role": "historical-editable-source",
       "bytes": 5075,
-      "sha256": "26d3ec820f1253c2cf317597b0805a605ee9b7fac7cc4c117eab1c716054d7ee",
-      "modifiedUtc": "2026-10-08T17:20:33.910Z"
+      "sha256": "26d3ec820f1253c2cf317597b0805a605ee9b7fac7cc4c117eab1c716054d7ee"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/recurrence-engine.js",
       "destination": "work/oct08/recurrence-engine.js",
       "role": "historical-editable-source",
       "bytes": 4892,
-      "sha256": "956b377634ca553b7e517bf21b47ed691adf009645f9c308a7cfb04874811516",
-      "modifiedUtc": "2026-10-08T11:07:12.021Z"
+      "sha256": "956b377634ca553b7e517bf21b47ed691adf009645f9c308a7cfb04874811516"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/recurrence-test.cjs",
       "destination": "work/oct08/recurrence-test.cjs",
       "role": "historical-editable-source",
       "bytes": 8411,
-      "sha256": "374dffe7ec4466c3fe281e97db662010a167eb065695d1e28e8bc2829a9b8884",
-      "modifiedUtc": "2026-10-08T11:08:43.672Z"
+      "sha256": "374dffe7ec4466c3fe281e97db662010a167eb065695d1e28e8bc2829a9b8884"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/script-0.js",
       "destination": "work/oct08/script-0.js",
       "role": "historical-editable-source",
       "bytes": 873,
-      "sha256": "08b5db9da2d0b5796eeb37c787bd899535460d67634c64c5bc85309e39086bf3",
-      "modifiedUtc": "2026-10-08T11:04:06.875Z"
+      "sha256": "08b5db9da2d0b5796eeb37c787bd899535460d67634c64c5bc85309e39086bf3"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/script-1.js",
       "destination": "work/oct08/script-1.js",
       "role": "historical-editable-source",
       "bytes": 200028,
-      "sha256": "0852030ee67f3ef3922628657dddc4421578523ace1067afddaa57f9a166a4ea",
-      "modifiedUtc": "2026-10-09T11:46:49.963Z"
+      "sha256": "0852030ee67f3ef3922628657dddc4421578523ace1067afddaa57f9a166a4ea"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/signup-access.js",
       "destination": "work/oct08/signup-access.js",
       "role": "historical-editable-source",
       "bytes": 6770,
-      "sha256": "d329cfd68cf937532a4fcd4133f4c633e2e3974dd62fa4e1a86f50974ab2beff",
-      "modifiedUtc": "2026-10-08T22:38:26.405Z"
+      "sha256": "d329cfd68cf937532a4fcd4133f4c633e2e3974dd62fa4e1a86f50974ab2beff"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/signup-test.cjs",
       "destination": "work/oct08/signup-test.cjs",
       "role": "historical-editable-source",
       "bytes": 7753,
-      "sha256": "4d4cf6a401f64e63fd4ac4bf9669687dcc4914fde0c631329511f93ffa2a2250",
-      "modifiedUtc": "2026-10-08T22:40:20.692Z"
+      "sha256": "4d4cf6a401f64e63fd4ac4bf9669687dcc4914fde0c631329511f93ffa2a2250"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/style-0.css",
       "destination": "work/oct08/style-0.css",
       "role": "historical-editable-source",
       "bytes": 30900,
-      "sha256": "1adf009b7f97ed89282977199abbe23da81694bb3b2b3baa7e16e30405644262",
-      "modifiedUtc": "2026-10-08T11:04:06.867Z"
+      "sha256": "1adf009b7f97ed89282977199abbe23da81694bb3b2b3baa7e16e30405644262"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/style-1.css",
       "destination": "work/oct08/style-1.css",
       "role": "historical-editable-source",
       "bytes": 8371,
-      "sha256": "14fabe1f5d439b2b8f18f4fd5295e835d60ea0a4740757c81e8814ec4d88c21d",
-      "modifiedUtc": "2026-10-08T11:04:06.868Z"
+      "sha256": "14fabe1f5d439b2b8f18f4fd5295e835d60ea0a4740757c81e8814ec4d88c21d"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/style-2.css",
       "destination": "work/oct08/style-2.css",
       "role": "historical-editable-source",
       "bytes": 1505,
-      "sha256": "4b7f5badb781926faa2dd52006f09493a423653dcea61623ea239c36b2e10338",
-      "modifiedUtc": "2026-10-08T11:04:06.869Z"
+      "sha256": "4b7f5badb781926faa2dd52006f09493a423653dcea61623ea239c36b2e10338"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/style-3.css",
       "destination": "work/oct08/style-3.css",
       "role": "historical-editable-source",
       "bytes": 3453,
-      "sha256": "4c11c35eec4f2ee4dafe296aa1d6a2f93b1ece81ad7e0b823a141cac95de4ec9",
-      "modifiedUtc": "2026-10-08T11:04:06.871Z"
+      "sha256": "4c11c35eec4f2ee4dafe296aa1d6a2f93b1ece81ad7e0b823a141cac95de4ec9"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/style-4.css",
       "destination": "work/oct08/style-4.css",
       "role": "historical-editable-source",
       "bytes": 260,
-      "sha256": "49653ffb57da67eeaca9b9f03d37c3b11c5a56731d6c999cbfedf8667ed38e67",
-      "modifiedUtc": "2026-10-08T11:04:06.872Z"
+      "sha256": "49653ffb57da67eeaca9b9f03d37c3b11c5a56731d6c999cbfedf8667ed38e67"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/style-5.css",
       "destination": "work/oct08/style-5.css",
       "role": "historical-editable-source",
       "bytes": 10040,
-      "sha256": "4625fc2c8e16d7c5eaafc69dd7324963aa6bd4749a76adeb9cae088113bbad9b",
-      "modifiedUtc": "2026-10-08T11:08:11.494Z"
+      "sha256": "4625fc2c8e16d7c5eaafc69dd7324963aa6bd4749a76adeb9cae088113bbad9b"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/style-6.css",
       "destination": "work/oct08/style-6.css",
       "role": "historical-editable-source",
       "bytes": 2647,
-      "sha256": "c151dd227bed686aa5d54769a4b23b5f48340b89621d6bf43cf056f2380b5dc6",
-      "modifiedUtc": "2026-10-08T11:09:21.567Z"
+      "sha256": "c151dd227bed686aa5d54769a4b23b5f48340b89621d6bf43cf056f2380b5dc6"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/style-7.css",
       "destination": "work/oct08/style-7.css",
       "role": "historical-editable-source",
       "bytes": 6496,
-      "sha256": "95d5628a8a2c4f1673dd0e0c26393d71e4f7388bb9a52f6543fd91a1c5fd5839",
-      "modifiedUtc": "2026-10-08T17:42:32.406Z"
+      "sha256": "95d5628a8a2c4f1673dd0e0c26393d71e4f7388bb9a52f6543fd91a1c5fd5839"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/style-8.css",
       "destination": "work/oct08/style-8.css",
       "role": "historical-editable-source",
       "bytes": 2849,
-      "sha256": "635b1d7e7e2a48134bf16db10257292f4b162d063b036676413f0877205dd73b",
-      "modifiedUtc": "2026-10-08T22:43:19.351Z"
+      "sha256": "635b1d7e7e2a48134bf16db10257292f4b162d063b036676413f0877205dd73b"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/oct08/template.html",
       "destination": "work/oct08/template.html",
       "role": "historical-editable-source",
       "bytes": 11844,
-      "sha256": "1444a4cd340cd76564b09816fc9ed4ce67756be3c0f0000bc492e3f6cbceaa4a",
-      "modifiedUtc": "2026-10-08T22:42:06.485Z"
+      "sha256": "1444a4cd340cd76564b09816fc9ed4ce67756be3c0f0000bc492e3f6cbceaa4a"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/privacy/email-verification-test.cjs",
       "destination": "work/privacy/email-verification-test.cjs",
       "role": "draft-privacy-source",
       "bytes": 7696,
-      "sha256": "65d9a0eaa0f040a198996ffb108af64174b7da1e800f606cb1685e4b6caeb861",
-      "modifiedUtc": "2026-10-09T11:47:25.080Z"
+      "sha256": "65d9a0eaa0f040a198996ffb108af64174b7da1e800f606cb1685e4b6caeb861"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/privacy/email-verification.css",
       "destination": "work/privacy/email-verification.css",
       "role": "draft-privacy-source",
       "bytes": 1167,
-      "sha256": "1181623321281aaa8367943add8e33192b03bb6e599bb5293452a2a18833e459",
-      "modifiedUtc": "2026-10-09T11:45:43.958Z"
+      "sha256": "1181623321281aaa8367943add8e33192b03bb6e599bb5293452a2a18833e459"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/privacy/email-verification.js",
       "destination": "work/privacy/email-verification.js",
       "role": "draft-privacy-source",
       "bytes": 7687,
-      "sha256": "d5fe47e5cffe6734eb2f0c65565907a3fa853a66c6302db32c94aa1eb808e324",
-      "modifiedUtc": "2026-10-09T11:47:25.079Z"
+      "sha256": "d5fe47e5cffe6734eb2f0c65565907a3fa853a66c6302db32c94aa1eb808e324"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/privacy/family-groups.css",
       "destination": "work/privacy/family-groups.css",
       "role": "draft-privacy-source",
       "bytes": 2153,
-      "sha256": "2724729dd8aafef78334981f0bbdf3effb58daac86e09206df2f75e99a44fc34",
-      "modifiedUtc": "2026-10-09T11:46:29.720Z"
+      "sha256": "2724729dd8aafef78334981f0bbdf3effb58daac86e09206df2f75e99a44fc34"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/privacy/family-groups.js",
       "destination": "work/privacy/family-groups.js",
       "role": "draft-privacy-source",
       "bytes": 19676,
-      "sha256": "bb1c368a4b30514bf7c588c38d28ef5462c110320d37f36c440d5b5837c37161",
-      "modifiedUtc": "2026-10-09T11:47:39.947Z"
+      "sha256": "bb1c368a4b30514bf7c588c38d28ef5462c110320d37f36c440d5b5837c37161"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/privacy/firebase.json",
       "destination": "work/privacy/firebase.json",
       "role": "draft-privacy-source",
       "bytes": 176,
-      "sha256": "d69e41199119adefb82220468563d7a17e9052fd4feffc85a9f23ec5d54b72a1",
-      "modifiedUtc": "2026-10-09T11:45:17.544Z"
+      "sha256": "d69e41199119adefb82220468563d7a17e9052fd4feffc85a9f23ec5d54b72a1"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/privacy/firestore.rules",
       "destination": "work/privacy/firestore.rules",
       "role": "draft-privacy-source",
       "bytes": 7652,
-      "sha256": "2a539b990852c7c7af930b4a80ac5c2f7f29f2a8ce157dd8b72d0fc60acbec61",
-      "modifiedUtc": "2026-10-09T11:45:41.087Z"
+      "sha256": "2a539b990852c7c7af930b4a80ac5c2f7f29f2a8ce157dd8b72d0fc60acbec61"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/privacy/package.json",
       "destination": "work/privacy/package.json",
       "role": "draft-privacy-source",
       "bytes": 281,
-      "sha256": "3c38db7f82844e8bbefdc3d661ea856a1140ec24268d85c2cc2e5500e7aee1e6",
-      "modifiedUtc": "2026-10-09T11:44:12.877Z"
+      "sha256": "3c38db7f82844e8bbefdc3d661ea856a1140ec24268d85c2cc2e5500e7aee1e6"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/privacy/pnpm-lock.yaml",
       "destination": "work/privacy/pnpm-lock.yaml",
       "role": "draft-privacy-source",
       "bytes": 185671,
-      "sha256": "b0487571c489b6b06944dcca11c7a86b4eba8807e2b3b871f2764404478338ef",
-      "modifiedUtc": "2026-10-09T11:44:56.135Z"
+      "sha256": "b0487571c489b6b06944dcca11c7a86b4eba8807e2b3b871f2764404478338ef"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/privacy/privacy-access.js",
       "destination": "work/privacy/privacy-access.js",
       "role": "draft-privacy-source",
       "bytes": 989,
-      "sha256": "53918dd13e853e05dd83cc97a013b64dc870c15feaa8e035730f8b9013c7e61f",
-      "modifiedUtc": "2026-10-09T11:45:16.166Z"
+      "sha256": "53918dd13e853e05dd83cc97a013b64dc870c15feaa8e035730f8b9013c7e61f"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/privacy/rules.test.mjs",
       "destination": "work/privacy/rules.test.mjs",
       "role": "draft-privacy-source",
       "bytes": 13074,
-      "sha256": "1e41f2acc8b77442be874cb961bfaffe4f1bebe6dff8b47655d34a438c4cffac",
-      "modifiedUtc": "2026-10-09T11:47:03.312Z"
+      "sha256": "1e41f2acc8b77442be874cb961bfaffe4f1bebe6dff8b47655d34a438c4cffac"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/privacy/update-main.cjs",
       "destination": "work/privacy/update-main.cjs",
       "role": "draft-privacy-source",
       "bytes": 6551,
-      "sha256": "5324947721c9276070b7344085999b76037adf6ebb5a3b576591766a3d742c83",
-      "modifiedUtc": "2026-10-09T11:46:49.346Z"
+      "sha256": "5324947721c9276070b7344085999b76037adf6ebb5a3b576591766a3d742c83"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/4j-finance/dist/assets/apple-touch-icon.png",
       "destination": "work/4j-finance/dist/assets/apple-touch-icon.png",
       "role": "original-asset",
       "bytes": 32675,
-      "sha256": "91020cb918e4923340d9d34685ef1ef84d5aad8f4f41566380e7249d9047260e",
-      "modifiedUtc": "2026-10-06T18:01:09.866Z"
+      "sha256": "91020cb918e4923340d9d34685ef1ef84d5aad8f4f41566380e7249d9047260e"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/4j-finance/dist/assets/brand.png",
       "destination": "work/4j-finance/dist/assets/brand.png",
       "role": "original-asset",
       "bytes": 32675,
-      "sha256": "91020cb918e4923340d9d34685ef1ef84d5aad8f4f41566380e7249d9047260e",
-      "modifiedUtc": "2026-10-06T18:01:09.866Z"
+      "sha256": "91020cb918e4923340d9d34685ef1ef84d5aad8f4f41566380e7249d9047260e"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/4j-finance/dist/assets/catatau.png",
       "destination": "work/4j-finance/dist/assets/catatau.png",
       "role": "original-asset",
       "bytes": 1832753,
-      "sha256": "12119e0d60d20f4273aeae84ae48a8f540f82dfa043571a212efd78234873b8c",
-      "modifiedUtc": "2026-10-06T17:56:06.680Z"
+      "sha256": "12119e0d60d20f4273aeae84ae48a8f540f82dfa043571a212efd78234873b8c"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/work/serve-final.cjs",
       "destination": "work/serve-final.cjs",
       "role": "local-preview-tool",
       "bytes": 561,
-      "sha256": "e9fb462f8f670925774dbeabf8b3c452029ca00ac03cc7a131b91cc76ae9d201",
-      "modifiedUtc": "2026-10-07T16:40:09.598Z"
+      "sha256": "e9fb462f8f670925774dbeabf8b3c452029ca00ac03cc7a131b91cc76ae9d201"
     },
     {
-      "source": "C:/Users/juliana.correa/Documents/Codex/2026-10-06/boa/outputs/index.html",
       "destination": "snapshots/previous-local-output/index.html",
       "role": "historical-local-output-snapshot",
       "bytes": 2793708,
-      "sha256": "a00434996cb97e3170e484d7a0f647d2dafa0a5b767377f6ca955dc884d3a1c1",
-      "modifiedUtc": "2026-10-09T06:30:15.593Z"
+      "sha256": "a00434996cb97e3170e484d7a0f647d2dafa0a5b767377f6ca955dc884d3a1c1"
     },
     {
-      "source": "C:/Users/juliana.correa/Downloads/4J Finance/index.html",
       "destination": "snapshots/downloads/index.html",
       "role": "historical-download-folder-snapshot",
       "bytes": 2794428,
-      "sha256": "cd4794276ba86c9cd4e4cecd3b52793755ccd3af73e902a0a22ae93435970db8",
-      "modifiedUtc": "2026-10-09T17:44:27.669Z"
+      "sha256": "cd4794276ba86c9cd4e4cecd3b52793755ccd3af73e902a0a22ae93435970db8"
     },
     {
-      "source": "C:/Users/juliana.correa/Downloads/index.html",
       "destination": "index.html",
       "role": "user-confirmed-final-html",
       "bytes": 2752211,
-      "sha256": "252f277cffe0f64a6664fca93c9d85a817797487a6ffac8d9aa8e146f6057e5e",
-      "modifiedUtc": "2026-10-14T13:07:49.900Z"
+      "sha256": "252f277cffe0f64a6664fca93c9d85a817797487a6ffac8d9aa8e146f6057e5e"
     },
     {
-      "source": "C:/Users/juliana.correa/Downloads/index.html",
       "destination": "outputs/index.html",
       "role": "user-confirmed-final-html",
       "bytes": 2752211,
-      "sha256": "252f277cffe0f64a6664fca93c9d85a817797487a6ffac8d9aa8e146f6057e5e",
-      "modifiedUtc": "2026-10-14T13:07:49.900Z"
+      "sha256": "252f277cffe0f64a6664fca93c9d85a817797487a6ffac8d9aa8e146f6057e5e"
     }
   ],
   "excluded": [
@@ -474,7 +362,7 @@
   "authoritativeFinal": {
     "confirmedByUser": true,
     "confirmationDate": "2026-10-14",
-    "source": "C:/Users/juliana.correa/Downloads/index.html",
+    "source": "[historical local path omitted]",
     "destinations": [
       "index.html",
       "outputs/index.html"

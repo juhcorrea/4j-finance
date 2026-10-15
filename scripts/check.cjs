@@ -1,0 +1,10 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),cp=require('node:child_process');
+const root=path.resolve(__dirname,'..');
+const run=args=>cp.execFileSync(process.execPath,args,{cwd:root,stdio:'inherit',windowsHide:true});
+run(['finalize.cjs']);
+const tests=['frontend','functions/test'].flatMap(dir=>fs.readdirSync(path.join(root,dir)).filter(name=>/\.test\.(cjs|js)$/.test(name)).sort().map(name=>path.join(dir,name)));
+run(['--test',...tests]);
+run(['privacy/privacy.test.cjs']);
+for(const file of ['build.cjs','scripts/check.cjs','scripts/verify-build.cjs','scripts/sync-workspace.cjs','functions/index.js','functions/payment-core.js'])run(['--check',file]);
+console.log('Verificacoes locais concluidas; nenhum servico real foi acessado.');

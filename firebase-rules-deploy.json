@@ -1,0 +1,5 @@
+{
+  "firestore": {
+    "rules": "privacy/firestore.rules"
+  }
+}

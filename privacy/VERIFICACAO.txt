@@ -1,0 +1,19 @@
+Privacidade e cadastro público — versão preparada em 15/10/2026
+
+Transformação: apply-privacy.cjs aceita um HTML como entrada e devolve { html, report, scripts }. Não altera o original. Execute antes da transformação de monetização. Foram aplicadas 50 substituições verificadas ao HTML-base versionado em source/base.html e compilados os 2 scripts inline.
+
+Testes executados: privacy.test.cjs, 16 verificações PASS. Incluem ADMIN sem acesso financeiro implícito, proprietário, editor/verificador, visualizador, conta suspensa, consultas filtradas, cadastro público e preservação de contas existentes. São testes VM/mocks de código real extraído do HTML, não simulação do motor de regras Firebase.
+
+Testes Firestore executados: firestore-emulator.test.cjs, 34 verificações PASS no emulador v1.22.0, projeto demo-4j-privacy, host 127.0.0.1:8094. Incluem consultas isoladas, cadastro público, criação de perfil pessoal/família, metas/orçamento, bloqueio do ADMIN sobre finanças, convite verificado, revogação, suspensão, prevenção de elevação de privilégios e todas as coleções de cobrança negadas aos clientes. Usamos Java 21 portátil já existente. O runtime Windows exigiu fallback TCP via -Djdk.net.unixdomain.tmpdir apontando para diretório inexistente (equivalente portátil: ./work/no-unix-sockets) e locale inglês (-Duser.language=en -Duser.country=US); nenhuma pasta foi criada nesse caminho de fallback. A execução usou apenas dados fictícios. O log está em emulator-test-result.txt.
+
+firestore.rules é uma substituição completa proposta: contas novas como member/approved; nenhuma permissão ADMIN financeira; proprietário por UID; convite por e-mail apenas verificado; editor não muda ACL, ownerUid ou tipo; coleções de cobrança negadas aos clientes. Campos financeiros têm validação básica de formato. A consistência de espelhos de acertos depende também das transações do aplicativo.
+
+Antes de publicar: salvar cópia das regras atuais e dos dados; revisar se todos os perfis antigos têm ownerUid correto; os donos devem conceder compartilhamentos explícitos necessários. O ADMIN perderá o acesso automático aos perfis que não são dele. Nenhum dado foi migrado, apagado, acessado ou publicado por esta preparação. Usuários já suspensos/pendentes continuam inativos; novos usuários são ativados automaticamente.
+
+As regras reais de produção não foram fornecidas nem alteradas. A proteção passa a valer somente após publicar regras compatíveis e testar contas diferentes. Uma regra permissiva antiga em paralelo anula a restrição: substitua/revise o conjunto completo.
+
+Quem administra o projeto Firebase pelo console/IAM mantém o acesso técnico concedido pelo Google Cloud. O papel ADMIN dentro do 4J é separado e passa a gerenciar somente contas. Isso não é criptografia ponta a ponta.
+
+Famílias opcionais: o modelo atual usa um perfil kind=family, cujo proprietário administra os membros. Os perfis pessoais não são incorporados automaticamente. Delegar administração da família a outra pessoa não foi acrescentado nesta correção; compartilhamento atual continua visualizar/editar.
+
+Fontes: https://firebase.google.com/docs/firestore/security/rules-query ; https://firebase.google.com/docs/firestore/solutions/role-based-access ; https://firebase.google.com/docs/emulator-suite/connect_firestore

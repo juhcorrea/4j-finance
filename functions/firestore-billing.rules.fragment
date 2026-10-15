@@ -1,0 +1,7 @@
+// INSERT these matches INSIDE match /databases/{database}/documents.
+// This is NOT a replacement for the application's complete Firestore rules.
+// IMPORTANT: remove any broader wildcard allowing access to these paths.
+// Firestore combines overlapping allow clauses with OR; a deny cannot override an allow.
+match /billingOrders/{document=**} { allow read, write: if false; }
+match /billingAccounts/{document=**} { allow read, write: if false; }
+match /billingLocks/{document=**} { allow read, write: if false; }

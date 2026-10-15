@@ -1,0 +1,15 @@
+4J Finance — domínio oficial
+Atualização: 15/10/2026, 14h01 (America/Sao_Paulo).
+
+https://4jfinance.com.br e https://www.4jfinance.com.br estão ativos no Cloudflare Pages.
+DNS público confirmado em Google e Cloudflare; nameservers jacqueline.ns.cloudflare.com e john.ns.cloudflare.com.
+HTTPS validado normalmente com SNI e certificados Google Trust Services corretos para cada nome.
+Raiz, /sobre, /guia, /privacidade, /contato e /ads.txt responderam HTTP200 em ambos os nomes. Metatag e publisher AdSense confirmados.
+Firebase Authentication já autoriza ambos os endereços, preservando os anteriores.
+
+Há uma diferença no resolvedor da rede local, que respondeu com endereço privado/certificado alheio ao domínio. Por isso a confirmação pública usou os IPs reais retornados pelo DNS público, com validação TLS completa (sem ignorar certificados).
+
+A usuária informou Ativo e enviou a confirmação visual do painel Cloudflare. A API Pages confirmou status/validation/verification active nos dois domínios.
+
+AdSense: propriedade verificada e revisão solicitada em 15/10/2026 às 14h05, conforme confirmação da usuária e captura do painel. Aguardando análise; aprovação ainda não confirmada. Restam configuração da CMP, formatos dos anúncios e ativação técnica após aprovação.
+Anúncios e Pix continuam desativados. CMP certificada ainda deve ser configurada antes de anúncios reais. Nenhuma regra financeira, usuário ou plano de cobrança foi alterado.

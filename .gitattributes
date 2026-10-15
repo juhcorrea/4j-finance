@@ -1,0 +1,9 @@
+# Preservar os bytes da entrega e os hashes do manifesto em todos os sistemas.
+* -text
+*.png binary
+*.jpg binary
+*.webp binary
+*.mp4 binary
+*.webm binary
+*.wav binary
+*.ttf binary

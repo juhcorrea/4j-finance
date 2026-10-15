@@ -1,0 +1,11 @@
+4J FINANCE — KIT DE DIVULGAÇÃO
+
+1. Extraia a pasta inteira do arquivo ZIP.
+2. Abra ABRA-O-PORTFOLIO.html no navegador.
+3. Assista aos vídeos e escolha as publicações. As legendas estão também em legendas/.
+4. Use GUIA-DE-PUBLICACAO.txt para preparar os perfis e seguir o calendário.
+
+Vídeos: MP4 H.264/AAC, 1080 x 1920, 30 fps, 27–33 segundos, narração sintética pt-BR, legendas embutidas.
+Posts e carrossel: PNG 1080 x 1350. Capas e Stories: PNG 1080 x 1920. Fotos de perfil: PNG 1080 x 1080.
+
+Nenhuma conta foi criada e nenhum material foi publicado nas redes. As telas usam somente exemplos fictícios.

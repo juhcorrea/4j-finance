@@ -1,0 +1,6 @@
+/* Let the grid login column shrink to the available phone width. */
+.auth-form-wrap{min-width:0}
+.auth-form{width:min(390px,100%);min-width:0}
+.auth-form .text-button{white-space:normal;overflow-wrap:anywhere}
+
+.auth-public-links{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 18px;margin-top:18px}.auth-public-links a{display:inline-flex;align-items:center;min-height:44px;text-align:center;font-size:12px}

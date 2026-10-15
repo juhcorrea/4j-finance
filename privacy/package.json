@@ -1,0 +1,13 @@
+{
+  "name": "4j-privacy-checks",
+  "private": true,
+  "scripts": {
+    "test:logic": "node privacy.test.cjs",
+    "test:rules": "firebase emulators:exec --only firestore --config firebase-emulator.json --project demo-4j-privacy \"node firestore-emulator.test.cjs\""
+  },
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "6.0.0",
+    "firebase": "13.0.0",
+    "firebase-tools": "15.33.0"
+  }
+}

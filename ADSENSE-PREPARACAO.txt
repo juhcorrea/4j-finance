@@ -1,0 +1,48 @@
+4J Finance — preparação do AdSense (15/10/2026)
+
+ENTREGA DESTA ETAPA
+Páginas públicas: sobre.html, guia.html, privacidade.html, contato.html.
+Identidade preservada: Montserrat, paleta original, Catatau original otimizado.
+Preferências locais: aceitar opcionais, recusar opcionais, personalizar e reabrir no rodapé.
+Somente necessários e publicidade; não foi instalado Analytics.
+Escolha local versionada por até 180 dias neste navegador; armazenamento indisponível é explicado ao visitante.
+Recusa, expiração, corrupção ou ausência de escolha impedem publicidade.
+O painel financeiro privado permanece sem publicidade. Cadastro e regras financeiras não foram alterados nesta etapa.
+
+BENEFÍCIO DEFINIDO PELA USUÁRIA
+R$ 5,00 em pagamento único, permanente por conta, para retirar TODOS os anúncios Google AdSense do 4J Finance enquanto a pessoa estiver conectada com a conta compradora, em qualquer dispositivo.
+Não é benefício da família inteira. Não remove anúncios de outros sites ou inseridos por extensões.
+Pix fica para uma etapa posterior: nenhuma cobrança ou mudança de plano foi ativada.
+
+CONTROLES PREPARADOS
+public-ads.js exige simultaneamente enabled=true, approvalConfirmed=true e certifiedCmpConfigured=true, além da preferência local, sinal da CMP e estado da conta verificado. Todas as flags permanecem false.
+Atualmente somente /guia e /guia.html são rotas candidatas a anúncios. Sobre, contato, privacidade e painel privado não carregam o AdSense.
+Falhas de autenticação ou consulta do benefício bloqueiam anúncios. Pagamento, troca de conta e revogação retiram os anúncios já carregados por recarregamento da página.
+A comunicação entre abas usa BroadcastChannel e, para o pagamento, um sinal de horário no armazenamento. Esse sinal não concede benefício; a conta continua sendo conferida no servidor.
+O adaptador TCF é conservador, permite somente os propósitos expressamente consentidos e não implementa anúncios limitados/não personalizados como alternativa à recusa.
+
+PENDÊNCIAS ANTES DE MOSTRAR ANÚNCIOS REAIS
+1. CONCLUÍDO em 15/10/2026 às 14h00: DNS e HTTPS de 4jfinance.com.br e www.4jfinance.com.br confirmados; páginas públicas, metatag e ads.txt acessíveis.
+2. SOLICITADO em 15/10/2026 às 14h05: propriedade verificada e revisão de 4jfinance.com.br solicitada, conforme captura enviada pela usuária. Aguardar resultado do Google; aprovação ainda não confirmada.
+3. Mensagem da CMP Google PUBLICADA no painel em 15/10/2026, conforme captura da usuária, para 4jfinance.com.br. Idioma visível: português (pt-PT) e mais 1. Publicação no painel confirmada; integração/veiculação no site ainda NÃO verificadas. O painel de preferências próprio NÃO substitui a CMP.
+4. Integrar o carregamento oficial da CMP Google antes de ativar anúncios. O controlador atual aguarda __tcfapi antes de carregar adsbygoogle, mas a CMP Google é carregada pela própria tag: corrigir essa dependência circular. Avaliar bootstrap documentado com pauseAdRequests=1 e callback CONSENT_API_READY; somente liberar solicitações após aprovação, consentimento válido e elegibilidade da conta. A pausa ainda permite carregar scripts e ler cookies Google existentes; respeitar a preferência local antes desse carregamento. Não inventar snippet Funding Choices. Referências: https://support.google.com/adsense/answer/7670312?hl=pt-BR e https://developers.google.com/funding-choices/fc-api-docs.
+5. Validar consentimento/revogação de ponta a ponta, inclusive armazenamento bloqueado e múltiplas abas, com a CMP real. A preferência própria não substitui obrigações regionais nem revoga sozinha registros do provedor.
+6. Quando Pix for ativado, validar benefício pago no servidor antes de qualquer anúncio. As funções de pagamento/status ainda estão desativadas.
+7. Só então habilitar explicitamente a publicidade nas páginas selecionadas.
+
+ADBLOCK
+Opção recomendada: mensagem oficial de recuperação de bloqueio do AdSense nas páginas públicas, dispensável, sem impedir o acesso a registros financeiros.
+Não há promessa de detecção infalível. Recusa de cookies não é prova de Adblock.
+Não foi criado bloqueador do aplicativo, detector por isca, nem carregado código de recuperação.
+Para a futura integração, configurar googlefc.controlledMessagingFunction antes dos scripts Google. Suprimir somente AD_BLOCKING para conta paga, benefício desconhecido ou rota sem anúncios; não bloquear a própria mensagem de consentimento.
+A alternativa personalizada do Pix só deve aparecer quando o checkout real estiver disponível.
+Documentação: https://developers.google.com/funding-choices/fc-api-docs
+https://support.google.com/adsense/answer/11576797?hl=pt-BR
+
+FONTES CONSULTADAS
+Conteúdo e navegação: https://support.google.com/adsense/answer/7299563?hl=pt-BR
+Privacidade: https://support.google.com/adsense/answer/1348695?hl=pt-BR
+CMP: https://support.google.com/adsense/answer/13554116
+TCF: https://support.google.com/adsense/answer/9804260
+Cookies: https://www.gov.br/anpd/pt-br/centrais-de-conteudo/materiais-educativos-e-publicacoes/guia-orientativo-cookies-e-protecao-de-dados-pessoais.pdf
+

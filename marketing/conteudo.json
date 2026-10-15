@@ -1,0 +1,934 @@
+{
+  "version": "1.0",
+  "language": "pt-BR",
+  "brand": "4J Finance",
+  "campaign": "Seu dinheiro mais claro. Um passo de cada vez.",
+  "presentation": "Catatau + gravações da tela, sem a criadora aparecer",
+  "createdOn": "2026-10-15",
+  "links": {
+    "currentSite": "https://4jfinance.pages.dev/",
+    "demo": "https://4jfinance.pages.dev/?demo=1",
+    "futureDomain": "https://4jfinance.com.br/",
+    "futureDomainStatus": "Usar somente depois de confirmar DNS, HTTPS, páginas públicas e login.",
+    "videoCta": "Conheça pelo link na bio."
+  },
+  "brandVoice": {
+    "tone": "Próximo, claro, acolhedor e profissional. Falar com pessoas, sem culpa ou julgamento.",
+    "font": "Montserrat",
+    "colors": [
+      "azul",
+      "dourado",
+      "coral",
+      "bege"
+    ],
+    "mascot": "Catatau, o castor do 4J Finance",
+    "centralMessage": "Você registra. O 4J Finance organiza a visão. O Catatau ajuda a acompanhar.",
+    "demoLabel": "Demonstração • dados fictícios"
+  },
+  "truthChecks": [
+    "O 4J Finance é uma ferramenta web de registros manuais; não é banco nem faz movimentações de dinheiro.",
+    "Não apresentar conexão automática com bancos, leitura de extratos ou pagamento automático de contas.",
+    "Catatau comenta os registros e metas do usuário; não apresentá-lo como consultor de investimentos ou IA que conversa sobre qualquer assunto.",
+    "50% fixas, 20% reserva e 30% variáveis são metas iniciais ajustáveis, não uma divisão universal.",
+    "Compartilhamento em família é opcional e depende das permissões escolhidas; ADMIN não significa acesso a todas as famílias.",
+    "Pix e anúncios estão desativados nesta etapa: não anunciar cobrança, aprovação do Google ou plano sem anúncios já disponível.",
+    "Não prometer economia, enriquecimento, rentabilidade ou resultados garantidos.",
+    "Capturar somente o modo de demonstração com dados fictícios; nunca abrir perfis reais em gravações.",
+    "Nenhum perfil social foi criado, nenhum conteúdo foi publicado e os nomes sugeridos não tiveram disponibilidade confirmada."
+  ],
+  "profiles": {
+    "displayName": "4J Finance | Finanças em família",
+    "handles": [
+      "4jfinance",
+      "4j.finance",
+      "4jfinancebr"
+    ],
+    "handleNote": "Sugestões: confirmar disponibilidade no Instagram e no TikTok antes de escolher.",
+    "tiktokBio": "Seu dinheiro mais claro, com o Catatau 🦫\nConheça o 4J Finance ↓",
+    "instagramBio": "Finanças pessoais e em família, no seu ritmo.\nReceitas, despesas, metas e o Catatau 🦫\nExperimente a demonstração ↓",
+    "avatar": "Duas opções prontas: assets/perfil-catatau.png traz Catatau sobre círculo dourado e fundo creme; assets/perfil-marca.png destaca a marca 4J em azul, branco e dourado sobre fundo creme. Confira o recorte circular antes de usar.",
+    "instagramHighlights": [
+      "Comece aqui",
+      "Como usar",
+      "Catatau",
+      "Família",
+      "Dúvidas"
+    ],
+    "pinned": [
+      {
+        "assetId": "video-01",
+        "reason": "Apresenta o 4J Finance e para quem ele foi criado."
+      },
+      {
+        "assetId": "carrossel-01",
+        "reason": "Mostra um primeiro uso simples, em cinco passos."
+      },
+      {
+        "assetId": "video-06",
+        "reason": "Apresenta Catatau e a rotina de acompanhamento."
+      }
+    ],
+    "tiktokLinkNote": "O campo de link de site depende da elegibilidade da conta. Confirmar a opção no perfil antes de publicar um CTA de link na bio."
+  },
+  "screenDefinitions": {
+    "overview": "Visão inicial e lançamentos do modo demo; dados fictícios.",
+    "recurring": "Formulário de despesa com recorrência mensal e término opcional.",
+    "installments": "Formulário de compra parcelada com data, primeiro vencimento, total e parcelas já pagas.",
+    "budget": "Metas do mês e divisão ajustável entre fixas, reserva e variáveis.",
+    "family": "Acertos familiares de cartão; apenas registros fictícios de repasse.",
+    "family-entry": "Entrada da área de família disponível na demonstração; não simular convites concluídos.",
+    "catatau": "Painel do Catatau com orientação existente baseada nos registros fictícios.",
+    "reports": "Relatórios mensais ou anuais com dados fictícios."
+  },
+  "videos": [
+    {
+      "id": "video-01",
+      "title": "Conheça o 4J Finance",
+      "hook": "Seu dinheiro merece uma visão mais clara.",
+      "duration": 22,
+      "scenes": [
+        {
+          "duration": 5,
+          "title": "Para onde foi?",
+          "body": "Comece a enxergar seu mês com mais clareza.",
+          "screenKey": "overview",
+          "narration": "Já terminou o mês sem entender para onde foi o dinheiro?"
+        },
+        {
+          "duration": 6,
+          "title": "Tudo começa no registro",
+          "body": "Receitas e despesas, no seu ritmo.",
+          "screenKey": "overview",
+          "narration": "No 4J Finance, você registra receitas e despesas e acompanha seu mês."
+        },
+        {
+          "duration": 6,
+          "title": "Metas com companhia",
+          "body": "O Catatau ajuda a acompanhar seus registros.",
+          "screenKey": "catatau",
+          "narration": "Depois, olha as metas e recebe uma ajuda do Catatau para acompanhar."
+        },
+        {
+          "duration": 5,
+          "title": "Conheça o 4J Finance",
+          "body": "Experimente a demonstração. Link na bio.",
+          "screenKey": "overview",
+          "narration": "Conheça a demonstração pelo link na bio. Um passo de cada vez."
+        }
+      ],
+      "demoSteps": [
+        "Abrir o link de demonstração e capturar a visão inicial.",
+        "Abrir Lançamentos e mostrar as opções de receita e despesa.",
+        "Abrir o Catatau sobre os dados fictícios.",
+        "Encerrar com a marca, Catatau e o CTA; não mostrar login real."
+      ],
+      "caption": "Você não precisa organizar a vida inteira de uma vez. 🦫\n\nO 4J Finance reúne receitas, despesas, metas e relatórios para ajudar você a entender os próprios registros. E o Catatau acompanha essa rotina com orientações baseadas no que você cadastrou.\n\nFunciona pelo navegador. O preenchimento é manual: a ferramenta não acessa sua conta bancária nem movimenta dinheiro.\n\nComece pela demonstração no link da bio. As telas deste vídeo usam dados fictícios.\n\n#4JFinance #OrganizaçãoFinanceira #FinançasPessoais #Catatau",
+      "alt": "Catatau apresenta telas de demonstração do 4J Finance. O vídeo mostra a visão do mês, o formulário de lançamentos e o assistente, com convite para conhecer pelo link na bio.",
+      "hashtags": [
+        "#4JFinance",
+        "#OrganizaçãoFinanceira",
+        "#FinançasPessoais",
+        "#Catatau"
+      ]
+    },
+    {
+      "id": "video-02",
+      "title": "Cadastre uma despesa recorrente",
+      "hook": "A mesma conta, todo mês?",
+      "duration": 23,
+      "scenes": [
+        {
+          "duration": 5,
+          "title": "Todo mês de novo?",
+          "body": "Internet, assinatura, mensalidade…",
+          "screenKey": "overview",
+          "narration": "Tem aquela conta que aparece todo mês? Veja como deixar o registro preparado."
+        },
+        {
+          "duration": 6,
+          "title": "Marque como recorrente",
+          "body": "Informe valor, categoria e vencimento.",
+          "screenKey": "recurring",
+          "narration": "Cadastre a despesa, informe o valor e escolha a opção de recorrência."
+        },
+        {
+          "duration": 7,
+          "title": "Até quando ela continua?",
+          "body": "Defina o término, se houver. Acompanhe cada mês.",
+          "screenKey": "recurring",
+          "narration": "Se houver uma data para terminar, informe. Depois, acompanhe e marque os pagamentos de cada mês."
+        },
+        {
+          "duration": 5,
+          "title": "Menos repetição na rotina",
+          "body": "Veja como funciona. Link na bio.",
+          "screenKey": "overview",
+          "narration": "É o registro que se repete. Conheça o 4J Finance no link da bio."
+        }
+      ],
+      "demoSteps": [
+        "No modo demo, abrir uma nova despesa.",
+        "Usar a descrição fictícia Internet, valor R$ 120 e vencimento compatível com o mês de demonstração.",
+        "Selecionar recorrência mensal e mostrar que o término é opcional.",
+        "Mostrar os lançamentos mensais fictícios e o controle individual de pagamento."
+      ],
+      "caption": "Internet, assinatura ou mensalidade: algumas despesas fazem parte da rotina.\n\nNo 4J Finance, você pode cadastrar uma despesa recorrente, informar o valor e definir um término, se houver. Assim, acompanha os registros dos meses seguintes e atualiza cada pagamento.\n\nImportante para entender o recurso: ele organiza os lançamentos. O pagamento da conta continua sendo feito por você, fora do site.\n\nVeja a demonstração no link da bio. Valores e registros do vídeo são fictícios.\n\n#4JFinance #DespesasRecorrentes #ControleDeGastos #OrganizaçãoFinanceira",
+      "alt": "Tela de despesa do 4J Finance com um exemplo fictício de internet de 120 reais. O vídeo destaca valor, vencimento, recorrência mensal e a opção de término.",
+      "hashtags": [
+        "#4JFinance",
+        "#DespesasRecorrentes",
+        "#ControleDeGastos",
+        "#OrganizaçãoFinanceira"
+      ]
+    },
+    {
+      "id": "video-03",
+      "title": "Traga suas parcelas antigas",
+      "hook": "Começou agora, mas as parcelas são de antes?",
+      "duration": 24,
+      "scenes": [
+        {
+          "duration": 5,
+          "title": "A compra veio antes?",
+          "body": "Suas parcelas também podem entrar no controle.",
+          "screenKey": "installments",
+          "narration": "Começou a se organizar agora, mas ainda tem parcelas de uma compra antiga?"
+        },
+        {
+          "duration": 7,
+          "title": "Conte quando começou",
+          "body": "Data da compra, primeiro vencimento e total de parcelas.",
+          "screenKey": "installments",
+          "narration": "Informe a data da compra, o primeiro vencimento e a quantidade total de parcelas."
+        },
+        {
+          "duration": 7,
+          "title": "O que você já pagou?",
+          "body": "Informe as parcelas pagas e acompanhe as próximas.",
+          "screenKey": "installments",
+          "narration": "Conte também quantas já foram pagas. Assim, você acompanha as próximas no seu controle."
+        },
+        {
+          "duration": 5,
+          "title": "Comece de onde está",
+          "body": "Conheça a demonstração. Link na bio.",
+          "screenKey": "overview",
+          "narration": "Você pode começar de onde está. Veja a demonstração no link da bio."
+        }
+      ],
+      "demoSteps": [
+        "No modo demo, abrir uma despesa parcelada.",
+        "Criar um exemplo fictício de compra de R$ 600 em 6 parcelas de R$ 100.",
+        "Escolher uma data de compra passada e informar o primeiro vencimento correspondente.",
+        "Marcar 2 parcelas já pagas e mostrar as próximas no controle; conferir o resultado antes de gravar."
+      ],
+      "caption": "Você pode começar seu controle hoje, mesmo com compras parceladas de meses anteriores.\n\nAo cadastrar a compra no 4J Finance, informe a data original, o primeiro vencimento, a quantidade de parcelas e quantas já foram pagas. Depois, confira os lançamentos para acompanhar o que ainda vem pela frente.\n\nO objetivo é trazer sua realidade para o controle, sem fingir que tudo começou neste mês.\n\nConheça no link da bio. Exemplo demonstrativo com dados fictícios.\n\n#4JFinance #ComprasParceladas #FinançasPessoais #OrganizaçãoFinanceira",
+      "alt": "Formulário de compra parcelada do 4J Finance. Um exemplo fictício de 600 reais em seis parcelas destaca a data da compra, o primeiro vencimento e duas parcelas já pagas.",
+      "hashtags": [
+        "#4JFinance",
+        "#ComprasParceladas",
+        "#FinançasPessoais",
+        "#OrganizaçãoFinanceira"
+      ]
+    },
+    {
+      "id": "video-04",
+      "title": "Metas que cabem na sua vida",
+      "hook": "Seu orçamento não precisa caber numa fórmula.",
+      "duration": 24,
+      "scenes": [
+        {
+          "duration": 5,
+          "title": "Uma direção para começar",
+          "body": "Metas ajudam a comparar intenção e rotina.",
+          "screenKey": "budget",
+          "narration": "Como saber se os gastos estão seguindo o que você planejou?"
+        },
+        {
+          "duration": 7,
+          "title": "50% • 20% • 30%",
+          "body": "Fixas • reserva • variáveis. Um ponto de partida.",
+          "screenKey": "budget",
+          "narration": "Comece com cinquenta por cento para fixas, vinte para reserva e trinta para variáveis."
+        },
+        {
+          "duration": 7,
+          "title": "Ajuste à sua realidade",
+          "body": "Você escolhe os percentuais e revê o plano.",
+          "screenKey": "budget",
+          "narration": "Essa divisão é ajustável. Adapte os percentuais à sua realidade e confira seus registros."
+        },
+        {
+          "duration": 5,
+          "title": "Planeje um próximo passo",
+          "body": "Conheça as metas. Link na bio.",
+          "screenKey": "catatau",
+          "narration": "O Catatau ajuda a acompanhar. Conheça as metas no link da bio."
+        }
+      ],
+      "demoSteps": [
+        "Abrir Metas no modo demo.",
+        "Mostrar a divisão inicial: 50% despesas fixas, 20% reserva e 30% despesas variáveis.",
+        "Destacar o controle para editar os percentuais sem salvar um valor inconsistente.",
+        "Mostrar a comparação com registros fictícios e uma orientação do Catatau sem promessa de resultado."
+      ],
+      "caption": "Uma meta precisa conversar com a sua vida.\n\nNo 4J Finance, você pode começar com 50% para despesas fixas, 20% para reserva e 30% para despesas variáveis. Essa é uma divisão inicial ajustável, não uma regra que serve para todo mundo.\n\nRevise os percentuais conforme sua renda, seus compromissos e suas prioridades. O Catatau ajuda a comparar o planejamento com os registros que você cadastrou.\n\nVeja as metas na demonstração: link na bio. Dados fictícios nas telas.\n\n#4JFinance #MetasFinanceiras #OrçamentoPessoal #Catatau",
+      "alt": "Página de metas do 4J Finance com três grupos: 50 por cento para despesas fixas, 20 para reserva e 30 para variáveis. O vídeo ressalta que os percentuais são ajustáveis.",
+      "hashtags": [
+        "#4JFinance",
+        "#MetasFinanceiras",
+        "#OrçamentoPessoal",
+        "#Catatau"
+      ]
+    },
+    {
+      "id": "video-05",
+      "title": "Cartão em família, contas combinadas",
+      "hook": "Compra no cartão de outra pessoa?",
+      "duration": 23,
+      "scenes": [
+        {
+          "duration": 5,
+          "title": "Usou o cartão de alguém?",
+          "body": "A compra também entra no seu controle.",
+          "screenKey": "family",
+          "narration": "A compra ficou no cartão de alguém da família, mas você vai ajudar a pagar?"
+        },
+        {
+          "duration": 6,
+          "title": "Registre o que vai repassar",
+          "body": "Valor, pessoa e mês do combinado.",
+          "screenKey": "family",
+          "narration": "No 4J Finance, registre o valor que precisa repassar e acompanhe esse combinado."
+        },
+        {
+          "duration": 7,
+          "title": "Acompanhe o acerto",
+          "body": "Um registro para lembrar o que foi combinado.",
+          "screenKey": "family",
+          "narration": "Assim fica mais claro o que você deve acertar. O repasse é feito fora do site."
+        },
+        {
+          "duration": 5,
+          "title": "Em família, com clareza",
+          "body": "Conheça os acertos. Link na bio.",
+          "screenKey": "family",
+          "narration": "Compartilhar é opcional. Conheça os acertos do 4J Finance pelo link na bio."
+        }
+      ],
+      "demoSteps": [
+        "Abrir a área de acertos familiares no modo de demonstração.",
+        "Mostrar apenas um exemplo fictício de viagem no cartão de outra pessoa e o valor combinado para repasse.",
+        "Destacar o registro do acerto e o mês, sem simular transferência ou pagamento.",
+        "Não mostrar cliques de permissões ou envio de convite que não estejam disponíveis na captura."
+      ],
+      "caption": "A compra está no cartão de alguém da família, mas uma parte será paga por você?\n\nNo 4J Finance, registre o que precisa repassar e acompanhe esse combinado junto com seu controle. Isso ajuda a lembrar de quem recebe o acerto e do valor previsto para aquele mês.\n\nA ferramenta registra o combinado; ela não faz Pix nem transfere dinheiro. Compartilhar acesso com a família é opcional e depende das permissões escolhidas.\n\nConheça os acertos na demonstração, pelo link da bio. Os exemplos da divulgação usam dados fictícios.\n\n#4JFinance #FinançasEmFamília #CartãoEmFamília #OrganizaçãoFinanceira",
+      "alt": "Tela demonstrativa de acertos do 4J Finance mostra o registro de um valor a repassar por uma compra no cartão de outra pessoa. Catatau explica que o dinheiro é transferido fora do site.",
+      "hashtags": [
+        "#4JFinance",
+        "#FinançasEmFamília",
+        "#CartãoEmFamília",
+        "#OrganizaçãoFinanceira"
+      ]
+    },
+    {
+      "id": "video-06",
+      "title": "Uma conversa com seus registros",
+      "hook": "O Catatau ajuda você a olhar para o seu mês.",
+      "duration": 23,
+      "scenes": [
+        {
+          "duration": 5,
+          "title": "Oi, eu sou o Catatau",
+          "body": "Vamos olhar para o seu mês?",
+          "screenKey": "catatau",
+          "narration": "Oi, eu sou o Catatau. Vamos olhar para o seu mês juntos?"
+        },
+        {
+          "duration": 6,
+          "title": "O plano e a prática",
+          "body": "Compare suas metas com os registros.",
+          "screenKey": "budget",
+          "narration": "Com seus registros, eu ajudo a acompanhar as metas e perceber diferenças no planejamento."
+        },
+        {
+          "duration": 7,
+          "title": "Veja o mês e o ano",
+          "body": "Relatórios para entender sua rotina.",
+          "screenKey": "reports",
+          "narration": "Nos relatórios, você olha o mês e o ano e escolhe o que revisar."
+        },
+        {
+          "duration": 5,
+          "title": "Um passo de cada vez",
+          "body": "Conheça o Catatau. Link na bio.",
+          "screenKey": "catatau",
+          "narration": "Sem precisar resolver tudo hoje. Venha me conhecer pelo link na bio."
+        }
+      ],
+      "demoSteps": [
+        "Abrir o Catatau no modo demo e destacar seu ícone de acesso.",
+        "Mostrar uma orientação existente baseada nos registros fictícios.",
+        "Alternar para Metas e depois Relatórios; destacar os controles de mês e ano disponíveis.",
+        "Encerrar com Catatau e CTA, sem inventar uma conversa ou resposta que a ferramenta não oferece."
+      ],
+      "caption": "O Catatau está aqui para acompanhar sua organização, um passo de cada vez. 🦫\n\nEle usa os registros e as metas do 4J Finance para ajudar você a perceber como o mês está caminhando. Nos relatórios, você também pode olhar o período e escolher o que vale revisar.\n\nQuanto mais completos estiverem seus registros, mais útil será essa comparação. O Catatau não é um consultor de investimentos e não acessa suas contas bancárias.\n\nConheça a demonstração no link da bio. As telas mostram dados fictícios.\n\n#4JFinance #Catatau #MetasFinanceiras #FinançasPessoais",
+      "alt": "Catatau, o castor do 4J Finance, aparece ao lado de telas demonstrativas de metas e relatórios. O vídeo convida a comparar o planejamento com os registros do mês e do ano.",
+      "hashtags": [
+        "#4JFinance",
+        "#Catatau",
+        "#MetasFinanceiras",
+        "#FinançasPessoais"
+      ]
+    }
+  ],
+  "posts": [
+    {
+      "id": "post-01",
+      "format": "4:5",
+      "title": "Seu dinheiro, mais claro.",
+      "hook": "Seu dinheiro, mais claro.",
+      "body": "Receitas, despesas, metas e Catatau para acompanhar sua rotina.",
+      "cta": "Conheça pelo link na bio.",
+      "screenKey": "overview",
+      "caption": "Seu controle financeiro pode começar com uma informação de cada vez.\n\nNo 4J Finance, você reúne seus registros de receitas e despesas, acompanha metas e consulta relatórios. O Catatau ajuda a olhar para essa rotina com mais clareza.\n\nÉ uma ferramenta para usar pelo navegador, com preenchimento manual. Comece conhecendo a demonstração: link na bio. 🦫\n\n#4JFinance #OrganizaçãoFinanceira #FinançasPessoais #Catatau",
+      "alt": "Catatau ao lado da frase Seu dinheiro, mais claro. O post apresenta receitas, despesas, metas e o convite para conhecer o 4J Finance pelo link na bio.",
+      "hashtags": [
+        "#4JFinance",
+        "#OrganizaçãoFinanceira",
+        "#FinançasPessoais",
+        "#Catatau"
+      ]
+    },
+    {
+      "id": "post-02",
+      "format": "4:5",
+      "title": "A conta repete. O cadastro não precisa.",
+      "hook": "A conta repete. O cadastro não precisa.",
+      "body": "Cadastre despesas recorrentes e acompanhe os próximos meses.",
+      "cta": "Veja a demonstração. Link na bio.",
+      "screenKey": "recurring",
+      "caption": "Algumas contas já fazem parte do mês: internet, mensalidade, assinatura…\n\nCadastre uma despesa recorrente no 4J Finance e informe o término, se houver. Depois, acompanhe cada lançamento e atualize o pagamento correspondente.\n\nA recorrência organiza os registros; ela não faz pagamentos por você. Conheça na demonstração, pelo link da bio.\n\n#4JFinance #DespesasRecorrentes #ControleDeGastos #FinançasPessoais",
+      "alt": "Catatau ao lado da frase A conta repete. O cadastro não precisa. Dois cartões de texto explicam: uma vez no cadastro e todos os meses no controle.",
+      "hashtags": [
+        "#4JFinance",
+        "#DespesasRecorrentes",
+        "#ControleDeGastos",
+        "#FinançasPessoais"
+      ]
+    },
+    {
+      "id": "post-03",
+      "format": "4:5",
+      "title": "Suas parcelas têm história.",
+      "hook": "Suas parcelas têm história.",
+      "body": "Informe quando comprou e o que já pagou. Acompanhe o que vem pela frente.",
+      "cta": "Comece de onde está. Link na bio.",
+      "screenKey": "installments",
+      "caption": "Uma compra antiga não precisa ficar fora do seu controle novo.\n\nO 4J Finance permite registrar a data da compra, o primeiro vencimento, o total de parcelas e quantas já foram pagas. Confira os lançamentos e acompanhe as próximas parcelas junto com os demais gastos.\n\nComece de onde você está. A demonstração está no link da bio.\n\n#4JFinance #ComprasParceladas #OrganizaçãoFinanceira #ControleDeGastos",
+      "alt": "Arte com a chamada Suas parcelas têm história e uma lista de três informações: data em que comprou, primeiro vencimento e parcelas que já foram pagas.",
+      "hashtags": [
+        "#4JFinance",
+        "#ComprasParceladas",
+        "#OrganizaçãoFinanceira",
+        "#ControleDeGastos"
+      ]
+    },
+    {
+      "id": "post-04",
+      "format": "4:5",
+      "title": "Uma meta que cabe na sua vida.",
+      "hook": "Uma meta que cabe na sua vida.",
+      "body": "50% fixas • 20% reserva • 30% variáveis. Ajuste à sua realidade.",
+      "cta": "Conheça as metas. Link na bio.",
+      "screenKey": "budget",
+      "caption": "Planejamento é uma direção que você pode revisar.\n\nNo 4J Finance, a divisão inicial é 50% para despesas fixas, 20% para reserva e 30% para despesas variáveis. Os percentuais são ajustáveis: escolha uma distribuição compatível com sua realidade.\n\nDepois, compare o plano com os registros e decida um próximo passo. Conheça pelo link da bio.\n\n#4JFinance #MetasFinanceiras #OrçamentoPessoal #OrganizaçãoFinanceira",
+      "alt": "Post com a divisão inicial ajustável de metas: 50 por cento para despesas fixas, 20 para reserva e 30 para variáveis. A chamada diz Uma meta que cabe na sua vida.",
+      "hashtags": [
+        "#4JFinance",
+        "#MetasFinanceiras",
+        "#OrçamentoPessoal",
+        "#OrganizaçãoFinanceira"
+      ]
+    },
+    {
+      "id": "post-05",
+      "format": "4:5",
+      "title": "Uma compra. Um combinado.",
+      "hook": "Uma compra. Um combinado.",
+      "body": "Registre o valor que precisa repassar a quem pagou.",
+      "cta": "Conheça os acertos. Link na bio.",
+      "screenKey": "family",
+      "caption": "A viagem foi comprada no cartão de outra pessoa, mas você combinou de ajudar a pagar?\n\nRegistre no 4J Finance o valor que precisa repassar e acompanhe o acerto por mês. Uma lembrança clara do combinado pode facilitar a conversa em família.\n\nO site organiza os registros; o dinheiro é transferido fora dele. Compartilhar acesso é opcional e depende das permissões escolhidas.\n\nVeja os acertos na demonstração, pelo link da bio. Dados fictícios nas telas.\n\n#4JFinance #FinançasEmFamília #CartãoEmFamília #OrganizaçãoFinanceira",
+      "alt": "Arte Uma compra. Um combinado. Uma lista orienta a identificar de quem é o gasto, registrar o repasse combinado e acompanhar os acertos.",
+      "hashtags": [
+        "#4JFinance",
+        "#FinançasEmFamília",
+        "#CartãoEmFamília",
+        "#OrganizaçãoFinanceira"
+      ]
+    },
+    {
+      "id": "post-06",
+      "format": "4:5",
+      "title": "Conheça o Catatau.",
+      "hook": "Conheça o Catatau.",
+      "body": "Seu companheiro para acompanhar registros e metas, um passo de cada vez.",
+      "cta": "Encontre o castor no link da bio.",
+      "screenKey": "catatau",
+      "caption": "Pode chamar de Catatau. 🦫\n\nEle acompanha os registros e as metas do 4J Finance para ajudar você a perceber diferenças entre o que planejou e o que cadastrou.\n\nNão é preciso resolver tudo de uma vez. Escolha um ponto para revisar e continue no seu ritmo.\n\nConheça o Catatau na demonstração, pelo link da bio.\n\n#4JFinance #Catatau #MetasFinanceiras #FinançasPessoais",
+      "alt": "Retrato do Catatau, o castor do 4J Finance, com o texto Seu companheiro para acompanhar registros e metas, um passo de cada vez.",
+      "hashtags": [
+        "#4JFinance",
+        "#Catatau",
+        "#MetasFinanceiras",
+        "#FinançasPessoais"
+      ]
+    },
+    {
+      "id": "post-07",
+      "format": "4:5",
+      "title": "Olhe o mês. Entenda a rotina.",
+      "hook": "Olhe o mês. Entenda a rotina.",
+      "body": "Relatórios ajudam a comparar os registros e escolher o que revisar.",
+      "cta": "Explore a demonstração. Link na bio.",
+      "screenKey": "reports",
+      "caption": "A rotina fica mais clara quando você para para olhar os registros.\n\nNos relatórios do 4J Finance, consulte o mês e o ano, compare as informações que cadastrou e escolha o que faz sentido revisar.\n\nA visão depende de registros completos e atualizados. Que tal reservar alguns minutos da semana para conferir o seu controle?\n\nConheça no link da bio. Telas demonstrativas com dados fictícios.\n\n#4JFinance #RelatórioFinanceiro #OrganizaçãoFinanceira #FinançasPessoais",
+      "alt": "Arte Olhe o mês. Entenda a rotina. Uma lista convida a acompanhar entradas e saídas, comparar categorias e revisar o que precisa mudar.",
+      "hashtags": [
+        "#4JFinance",
+        "#RelatórioFinanceiro",
+        "#OrganizaçãoFinanceira",
+        "#FinançasPessoais"
+      ]
+    },
+    {
+      "id": "post-08",
+      "format": "4:5",
+      "title": "Seu controle vai com você.",
+      "hook": "Seu controle vai com você.",
+      "body": "Abra pelo navegador do celular ou do computador e registre no seu ritmo.",
+      "cta": "Conheça pelo link na bio.",
+      "screenKey": "overview",
+      "caption": "Uma despesa acabou de acontecer? Você pode abrir o 4J Finance pelo navegador do celular e registrá-la. Se preferir, confira seu mês depois pelo computador.\n\nA ferramenta foi pensada para uma rotina de preenchimento simples, com receitas, despesas, metas e relatórios.\n\nConheça a demonstração no link da bio. Não é necessário instalar um aplicativo para experimentar.\n\n#4JFinance #FinançasNoCelular #OrganizaçãoFinanceira #FinançasPessoais",
+      "alt": "Catatau ao lado da chamada Seu controle vai com você. Três cartões de texto destacam o uso no navegador, no celular ou computador e no seu ritmo.",
+      "hashtags": [
+        "#4JFinance",
+        "#FinançasNoCelular",
+        "#OrganizaçãoFinanceira",
+        "#FinançasPessoais"
+      ]
+    }
+  ],
+  "carousel": {
+    "id": "carrossel-01",
+    "title": "Seu primeiro controle, em cinco passos",
+    "format": "4:5",
+    "slides": [
+      {
+        "number": 1,
+        "title": "1. Conheça antes de começar",
+        "body": "Abra a demonstração e explore o 4J Finance com dados fictícios.",
+        "cta": "Deslize para ver o próximo passo.",
+        "screenKey": "overview",
+        "alt": "Passo 1: conhecer a demonstração do 4J Finance usando dados fictícios, antes de começar o próprio controle."
+      },
+      {
+        "number": 2,
+        "title": "2. Registre uma receita",
+        "body": "Escolha a data, informe a descrição e confira o valor.",
+        "cta": "Um lançamento de cada vez.",
+        "screenKey": "overview",
+        "alt": "Slide 2 com o título Registre uma receita. Uma lista orienta a escolher Receita, informar descrição e valor, conferir a data e salvar."
+      },
+      {
+        "number": 3,
+        "title": "3. Traga suas despesas",
+        "body": "Inclua as contas do mês. Escolha recorrência ou parcelas quando precisar.",
+        "cta": "Confira os dados antes de salvar.",
+        "screenKey": "recurring",
+        "alt": "Passo 3: cadastrar despesas do mês e usar as opções de recorrência ou parcelas quando necessário."
+      },
+      {
+        "number": 4,
+        "title": "4. Ajuste suas metas",
+        "body": "Escolha percentuais que façam sentido para fixas, reserva e variáveis.",
+        "cta": "Seu plano pode mudar com você.",
+        "screenKey": "budget",
+        "alt": "Passo 4: ajustar os percentuais das metas para despesas fixas, reserva e despesas variáveis conforme a própria realidade."
+      },
+      {
+        "number": 5,
+        "title": "5. Volte para acompanhar",
+        "body": "Confira os relatórios e veja o que o Catatau aponta nos registros.",
+        "cta": "Comece pelo link na bio.",
+        "screenKey": "catatau",
+        "alt": "Passo 5: acompanhar os relatórios e o Catatau. O último slide convida a conhecer o 4J Finance pelo link na bio."
+      }
+    ],
+    "caption": "Seu primeiro passo não precisa ser grande. Salve este guia para consultar quando quiser começar. 🦫\n\n1. Conheça a demonstração.\n2. Registre uma receita.\n3. Cadastre suas despesas.\n4. Ajuste as metas à sua realidade.\n5. Volte para acompanhar os relatórios e o Catatau.\n\nNa demonstração, os dados são fictícios. Para organizar seus próprios registros, entre na sua conta no 4J Finance. O preenchimento é manual e a ferramenta não movimenta dinheiro.\n\nConheça pelo link da bio.\n\n#4JFinance #ComoUsar #OrganizaçãoFinanceira #FinançasPessoais",
+    "alt": "Carrossel de cinco slides ensina a começar no 4J Finance: explorar a demonstração, registrar receita, cadastrar despesas, ajustar metas e acompanhar relatórios com Catatau.",
+    "hashtags": [
+      "#4JFinance",
+      "#ComoUsar",
+      "#OrganizaçãoFinanceira",
+      "#FinançasPessoais"
+    ]
+  },
+  "reelCovers": [
+    {
+      "id": "capa-01",
+      "videoId": "video-01",
+      "title": "CONHEÇA O 4J",
+      "subtitle": "Seu dinheiro mais claro",
+      "screenKey": "overview",
+      "alt": "Capa Conheça o 4J, com Catatau sobre um círculo dourado e o subtítulo Seu dinheiro mais claro."
+    },
+    {
+      "id": "capa-02",
+      "videoId": "video-02",
+      "title": "TODO MÊS?",
+      "subtitle": "Use a recorrência",
+      "screenKey": "recurring",
+      "alt": "Capa Todo mês? Use a recorrência, com Catatau e referência a despesas mensais."
+    },
+    {
+      "id": "capa-03",
+      "videoId": "video-03",
+      "title": "PARCELAS ANTIGAS",
+      "subtitle": "Comece de onde está",
+      "screenKey": "installments",
+      "alt": "Capa Parcelas antigas, com chamada para começar o controle a partir da situação atual."
+    },
+    {
+      "id": "capa-04",
+      "videoId": "video-04",
+      "title": "METAS DO SEU JEITO",
+      "subtitle": "Percentuais ajustáveis",
+      "screenKey": "budget",
+      "alt": "Capa Metas do seu jeito, destacando percentuais ajustáveis no 4J Finance."
+    },
+    {
+      "id": "capa-05",
+      "videoId": "video-05",
+      "title": "QUEM VAI REPASSAR?",
+      "subtitle": "Acertos do cartão em família",
+      "screenKey": "family",
+      "alt": "Capa Quem vai repassar?, com Catatau e uma referência aos acertos de compras no cartão em família."
+    },
+    {
+      "id": "capa-06",
+      "videoId": "video-06",
+      "title": "OI, SOU O CATATAU",
+      "subtitle": "Vamos olhar seu mês?",
+      "screenKey": "catatau",
+      "alt": "Capa Oi, sou o Catatau, apresentando o castor que acompanha registros e metas."
+    }
+  ],
+  "stories": [
+    {
+      "id": "story-01",
+      "title": "Conheça o 4J Finance",
+      "body": "Receitas, despesas, metas e um castor para acompanhar.",
+      "cta": "Experimente a demonstração.",
+      "screenKey": "overview",
+      "sticker": "Link para a demonstração",
+      "caption": "Seu dinheiro mais claro, um passo de cada vez. Conheça o 4J Finance pelo link.",
+      "alt": "Story de apresentação do 4J Finance com Catatau e convite para experimentar a demonstração.",
+      "hashtags": [
+        "#4JFinance",
+        "#Catatau",
+        "#FinançasPessoais"
+      ]
+    },
+    {
+      "id": "story-02",
+      "title": "Qual conta sempre volta?",
+      "body": "Cadastre como recorrente e acompanhe os próximos meses.",
+      "cta": "Veja no link da bio.",
+      "screenKey": "recurring",
+      "sticker": "Enquete opcional: Internet / Assinaturas",
+      "caption": "As contas se repetem; o preenchimento pode ficar mais simples. Conheça a recorrência no 4J Finance.",
+      "alt": "Story sobre despesas recorrentes, com exemplos de internet e assinaturas.",
+      "hashtags": [
+        "#4JFinance",
+        "#DespesasRecorrentes",
+        "#ControleDeGastos"
+      ]
+    },
+    {
+      "id": "story-03",
+      "title": "Ainda paga uma compra antiga?",
+      "body": "Informe a data da compra e as parcelas já pagas.",
+      "cta": "Comece de onde está. Link na bio.",
+      "screenKey": "installments",
+      "sticker": "Link para a demonstração",
+      "caption": "Compras antigas também entram no seu controle. Conheça o cadastro de parcelas no 4J Finance.",
+      "alt": "Story apresenta o registro de uma compra anterior e das parcelas já pagas.",
+      "hashtags": [
+        "#4JFinance",
+        "#ComprasParceladas",
+        "#OrganizaçãoFinanceira"
+      ]
+    },
+    {
+      "id": "story-04",
+      "title": "Sua meta pode mudar",
+      "body": "Ajuste fixas, reserva e variáveis à sua realidade.",
+      "cta": "Conheça pelo link na bio.",
+      "screenKey": "budget",
+      "sticker": "Enquete opcional: Quero começar / Quero revisar",
+      "caption": "O planejamento pode acompanhar sua vida. Os percentuais das metas do 4J Finance são ajustáveis.",
+      "alt": "Story destaca que os percentuais das metas podem ser alterados conforme a realidade de cada pessoa.",
+      "hashtags": [
+        "#4JFinance",
+        "#MetasFinanceiras",
+        "#OrçamentoPessoal"
+      ]
+    },
+    {
+      "id": "story-05",
+      "title": "Usou o cartão de alguém?",
+      "body": "Registre o repasse combinado e acompanhe o acerto.",
+      "cta": "Conheça o 4J Finance. Link na bio.",
+      "screenKey": "family",
+      "sticker": "Link para a demonstração",
+      "caption": "A compra ficou no cartão de outra pessoa? Registre o repasse combinado no 4J Finance. O dinheiro é transferido fora do site.",
+      "alt": "Story sobre registrar o repasse de uma compra feita no cartão de outra pessoa da família.",
+      "hashtags": [
+        "#4JFinance",
+        "#FinançasEmFamília",
+        "#PlanejamentoFamiliar"
+      ]
+    },
+    {
+      "id": "story-06",
+      "title": "Vamos olhar seu mês?",
+      "body": "O Catatau acompanha seus registros e suas metas.",
+      "cta": "Conheça o Catatau. Link na bio.",
+      "screenKey": "catatau",
+      "sticker": "Caixa opcional: Qual recurso quer aprender? Não envie valores ou dados pessoais.",
+      "caption": "Reserve um momento para olhar seus registros. O Catatau acompanha você nessa rotina. 🦫",
+      "alt": "Catatau convida a acompanhar os registros e metas do mês no 4J Finance.",
+      "hashtags": [
+        "#4JFinance",
+        "#Catatau",
+        "#FinançasPessoais"
+      ]
+    }
+  ],
+  "calendar": {
+    "timezone": "America/Sao_Paulo",
+    "note": "Dias relativos ao lançamento. Faixas são hipóteses de teste, não horários garantidos para alcance. Compare as métricas disponíveis após duas semanas.",
+    "days": [
+      {
+        "day": 1,
+        "assets": [
+          "video-01",
+          "story-01"
+        ],
+        "window": "18h–20h",
+        "goal": "Apresentar o produto e levar pessoas à demonstração.",
+        "prompt": "Fixar o vídeo de apresentação."
+      },
+      {
+        "day": 2,
+        "assets": [
+          "post-08"
+        ],
+        "window": "12h–14h",
+        "goal": "Mostrar o acesso pelo celular e computador.",
+        "prompt": "Responder dúvidas sobre acesso pelo navegador."
+      },
+      {
+        "day": 3,
+        "assets": [
+          "carrossel-01"
+        ],
+        "window": "18h–20h",
+        "goal": "Ensinar o primeiro uso e estimular salvamentos.",
+        "prompt": "Fixar o tutorial; usar os cinco slides também no formato de fotos, se disponível."
+      },
+      {
+        "day": 4,
+        "assets": [
+          "video-02",
+          "story-02"
+        ],
+        "window": "12h–14h",
+        "goal": "Demonstrar um problema cotidiano: contas recorrentes.",
+        "prompt": "Usar a enquete opcional sem pedir valores pessoais."
+      },
+      {
+        "day": 5,
+        "assets": [
+          "post-02"
+        ],
+        "window": "18h–20h",
+        "goal": "Reforçar o recurso e explicar que registro não é pagamento.",
+        "prompt": "Responder a dúvidas frequentes sobre recorrência."
+      },
+      {
+        "day": 6,
+        "assets": [
+          "video-03",
+          "story-03"
+        ],
+        "window": "10h–12h",
+        "goal": "Mostrar que é possível começar com parcelas em andamento.",
+        "prompt": "Evitar perguntas sobre dívidas ou valores reais dos seguidores."
+      },
+      {
+        "day": 7,
+        "assets": [
+          "post-03"
+        ],
+        "window": "18h–20h",
+        "goal": "Reforçar a entrada de compras antigas e revisar a primeira semana.",
+        "prompt": "Anotar retenção, salvamentos, visitas ao perfil e cliques quando disponíveis."
+      },
+      {
+        "day": 8,
+        "assets": [
+          "video-04",
+          "story-04"
+        ],
+        "window": "12h–14h",
+        "goal": "Apresentar metas ajustáveis com uma explicação simples.",
+        "prompt": "Reforçar que os percentuais são um ponto de partida."
+      },
+      {
+        "day": 9,
+        "assets": [
+          "post-04"
+        ],
+        "window": "18h–20h",
+        "goal": "Estimular uma revisão do próprio planejamento sem julgamento.",
+        "prompt": "Responder dúvidas sobre edição das metas."
+      },
+      {
+        "day": 10,
+        "assets": [
+          "video-05",
+          "story-05"
+        ],
+        "window": "12h–14h",
+        "goal": "Explicar o registro de repasses de compras no cartão em família.",
+        "prompt": "Reforçar que o site não transfere dinheiro e que compartilhar acesso é opcional."
+      },
+      {
+        "day": 11,
+        "assets": [
+          "post-05"
+        ],
+        "window": "18h–20h",
+        "goal": "Reforçar os acertos combinados e o acompanhamento mensal.",
+        "prompt": "Não pedir e-mails nem nomes de familiares em comentários."
+      },
+      {
+        "day": 12,
+        "assets": [
+          "video-06",
+          "story-06"
+        ],
+        "window": "12h–14h",
+        "goal": "Apresentar Catatau e a rotina de acompanhamento.",
+        "prompt": "Fixar o vídeo do Catatau; recolher apenas dúvidas sobre recursos."
+      },
+      {
+        "day": 13,
+        "assets": [
+          "post-06"
+        ],
+        "window": "10h–12h",
+        "goal": "Fortalecer o reconhecimento do mascote.",
+        "prompt": "Responder perguntas com o tom acolhedor da marca."
+      },
+      {
+        "day": 14,
+        "assets": [
+          "post-07"
+        ],
+        "window": "18h–20h",
+        "goal": "Convidar à revisão dos registros e avaliar o que mais ajudou o público.",
+        "prompt": "Comparar formatos e escolher o próximo tutorial com base nas dúvidas reais."
+      }
+    ],
+    "bonus": "post-01 é uma apresentação estática extra para reposição, outro canal ou uma segunda rodada de divulgação."
+  },
+  "quickReplies": [
+    {
+      "question": "Preciso instalar?",
+      "reply": "Você pode usar o 4J Finance pelo navegador do celular ou do computador. A demonstração está no link da bio. 🦫"
+    },
+    {
+      "question": "Conecta com meu banco?",
+      "reply": "O preenchimento é manual. O 4J Finance organiza os dados que você registra e não acessa sua conta bancária nem movimenta dinheiro."
+    },
+    {
+      "question": "Posso testar antes?",
+      "reply": "Sim! No link da bio você encontra a demonstração com dados fictícios para conhecer as telas antes de começar seu próprio controle."
+    },
+    {
+      "question": "Preciso compartilhar com a família?",
+      "reply": "Não. Você pode usar individualmente. Compartilhar com uma família é opcional e depende das permissões escolhidas."
+    },
+    {
+      "question": "O administrador vê todas as famílias?",
+      "reply": "Não. O administrador cuida do grupo da sua família. Esse papel não dá acesso automático aos dados de outras famílias."
+    },
+    {
+      "question": "A despesa recorrente paga minha conta?",
+      "reply": "Ela prepara os registros para acompanhar os próximos meses. O pagamento continua sendo feito por você, fora do 4J Finance."
+    },
+    {
+      "question": "Tenho parcelas antigas. Posso cadastrar?",
+      "reply": "Pode. Informe a data da compra, o primeiro vencimento, o total de parcelas e quantas já foram pagas. Depois, confira os lançamentos."
+    },
+    {
+      "question": "Preciso seguir 50/20/30?",
+      "reply": "Não. É uma divisão inicial ajustável entre fixas, reserva e variáveis. Adapte os percentuais à sua realidade."
+    },
+    {
+      "question": "O Catatau é um consultor financeiro?",
+      "reply": "O Catatau ajuda a acompanhar os registros e as metas dentro da ferramenta. Ele não é consultor de investimentos nem acessa contas bancárias."
+    },
+    {
+      "question": "Quanto custa?",
+      "reply": "Você pode conhecer a demonstração pelo link da bio. As condições de uso ficam nas páginas do site; qualquer novidade de planos será informada por lá."
+    },
+    {
+      "question": "Não consegui entrar. Posso mandar meus dados aqui?",
+      "reply": "Não envie senha, código, documentos ou valores financeiros nos comentários. Use o contato indicado no site e descreva apenas a etapa em que apareceu a dificuldade."
+    },
+    {
+      "question": "Posso mandar uma sugestão?",
+      "reply": "Pode! Conte qual recurso você gostaria de ver ou qual etapa ficou confusa. Não precisa enviar valores, documentos nem dados da sua família. 🦫"
+    }
+  ],
+  "measurement": {
+    "track": [
+      "Tema e formato",
+      "Faixa de publicação",
+      "Visualizações",
+      "Retenção ou tempo médio assistido, quando disponível",
+      "Salvamentos",
+      "Compartilhamentos",
+      "Visitas ao perfil",
+      "Cliques no link, quando disponíveis",
+      "Dúvidas sobre o produto"
+    ],
+    "decisionRule": "Após 14 dias, repetir os temas que geraram dúvidas úteis, salvamentos e visitas qualificadas. Alterar um elemento por vez para aprender com o teste.",
+    "privacy": "Usar métricas agregadas. Não pedir comprovação de renda, saldos, extratos ou dados de familiares em comentários ou mensagens."
+  },
+  "productionNotes": {
+    "export": "Vídeos verticais 9:16; posts e carrossel 4:5; Stories 9:16. Manter os arquivos originais para adaptar cortes.",
+    "audio": "Os vídeos finais terão narração sintética em português brasileiro e legendas embutidas, sem música. Conferir os arquivos exportados e o manifest de áudio antes da entrega.",
+    "voice": "Voz brasileira acolhedora, sem infantilizar. Catatau fala em primeira pessoa apenas no vídeo de apresentação do mascote.",
+    "captions": "Texto essencial legível sem som. Revisar as legendas automáticas se adicionar narração no editor da plataforma.",
+    "music": "Adicionar música opcional somente pela biblioteca permitida para o tipo de conta e uso. Nenhuma trilha externa é incluída ou presumida como licenciada.",
+    "safeArea": "Manter texto essencial longe das bordas e dos controles; conferir o recorte na prévia de cada plataforma antes de publicar.",
+    "accuracy": "As telas devem ser capturas reais da versão atual em demonstração. Não inventar cliques, conversas do Catatau, convites concluídos ou pagamentos.",
+    "posting": "Os materiais são entregues para revisão e publicação pela usuária. Este kit não cria perfis, não agenda e não publica automaticamente."
+  }
+}

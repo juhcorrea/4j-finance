@@ -1,0 +1,47 @@
+4J Finance — testes registrados e estado de publicação
+Atualização documental: 15/10/2026
+
+RESULTADOS HISTÓRICOS DA PREPARAÇÃO — 15/10/2026
+
+Os resultados abaixo pertencem às verificações já realizadas durante a preparação e publicação. A atualização deste documento não executou novos testes e não transforma os testes locais em validação de serviços reais.
+
+48 testes de Pix/servidor com serviços simulados.
+20 testes da interface do plano.
+18 testes do carregador público de anúncios.
+16 verificações do código de privacidade/cadastro.
+34 testes das regras no emulador Firestore, com dados fictícios.
+Subtotal local registrado: 136 verificações aprovadas.
+
+38 verificações adicionais de acesso no projeto Firebase real, com contas e documentos sintéticos: aprovadas, sem falhas. As contas de teste e seus documentos foram removidos; a limpeza terminou sem falhas. Nenhum lançamento financeiro real foi consultado nesses testes.
+Total registrado nessa etapa: 174 verificações aprovadas.
+
+As regras publicadas foram lidas novamente e conferidas como idênticas ao arquivo testado. A regra antiga que permitia acesso global a contas aprovadas foi removida. As coleções de cobrança negam acesso direto de clientes.
+
+Navegador local: 390 x 844 e 1440 x 1000; Montserrat original carregada, simulação de pagamento concluída, anúncios bloqueados, contato presente, sem transbordamento horizontal nem erro JavaScript. Login e pagamentos reais ficaram bloqueados durante o teste visual local.
+
+Na conferência da publicação dessa etapa, os arquivos públicos responderam HTTP 200 e corresponderam aos arquivos locais. Demo no Cloudflare aprovada em 390 x 844 e 1440 x 1000. Login e cadastro aprovados em 10 cenários locais (320, 390, 430, 768 e 1440 px); conferência remota final em 390 px com Firebase inicializado, sem anúncios, sem transbordamento horizontal ou erro JavaScript. Nenhuma conta real foi utilizada na verificação visual.
+
+PREPARAÇÃO ADSENSE — TESTES REGISTRADOS EM 15/10/2026
+
+- 33 testes do carregador público: aprovados.
+- 33 testes das preferências de cookies: aprovados.
+- 21 testes da interface/benefício: aprovados.
+- 15 cenários integrados em navegador local: aprovados (quatro páginas em 320/390/1440, teclado, persistência, duas abas, expiração, armazenamento bloqueado e links do login).
+- Revisão visual independente: 16 cenários em 320/390/768/1440 aprovados.
+- Zero erros JavaScript, zero solicitações de publicidade/Analytics e zero gravações Firebase nos testes integrados.
+
+As verificações anteriores de Firestore não foram repetidas nessa etapa: as regras e o backend não foram alterados. Nenhum anúncio, CMP de terceiro em execução no site, recuperação Adblock, cobrança Pix ou plano pago foi ativado nesses testes.
+
+ESTADO CONFIRMADO POSTERIORMENTE — 15/10/2026
+
+O Cloudflare Pages, projeto 4jfinance, serve https://4jfinance.com.br e https://www.4jfinance.com.br, ambos ativos com HTTPS verificado. O endereço https://4jfinance.pages.dev continua disponível. A troca de DNS já foi concluída: não permanece pendente de transição neste registro.
+
+Os dois domínios oficiais estão autorizados no Firebase Authentication, preservando os domínios anteriores. As páginas públicas e o ads.txt foram conferidos no domínio oficial.
+
+A propriedade de 4jfinance.com.br foi verificada no AdSense e a revisão foi solicitada em 15/10/2026 às 14h05, horário de Brasília. A aprovação ainda não foi confirmada.
+
+A mensagem de regulamentações europeias aparece como publicada no painel do AdSense. A integração da CMP no site ainda não está concluída nem testada de ponta a ponta. A dependência circular do carregador entre aguardar consentimento e disponibilizar os componentes que o produzem precisa ser resolvida e validada. Publicar a mensagem no painel não comprova que ela esteja funcionando no site.
+
+Pix e anúncios permanecem desativados. Não houve cobrança real. O Pix foi adiado. A integração Mercado Pago de ponta a ponta e o funcionamento no Safari de um iPhone físico ainda precisam ser validados. Os testes simulados acima não comprovam essas etapas.
+
+A publicação antiga do Netlify não foi alterada ou reativada. A atualização documental não executou novos testes, não publicou código e não comprova um push no GitHub.

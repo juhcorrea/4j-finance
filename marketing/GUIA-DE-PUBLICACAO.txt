@@ -1,0 +1,171 @@
+4J FINANCE — KIT DE LANÇAMENTO
+Catatau + demonstrações da tela, sem você aparecer
+Preparado em 15/10/2026
+
+CONCEITO
+Seu dinheiro mais claro. Um passo de cada vez.
+
+O kit apresenta o 4J Finance como uma ferramenta para registrar receitas e despesas, acompanhar metas e olhar relatórios. O Catatau é o companheiro dessa rotina. A comunicação é acolhedora, simples e profissional, sem culpar quem ainda não começou a se organizar.
+
+CONTEÚDO DO KIT
+• 6 vídeos verticais com quatro cenas, narração sintética em português brasileiro e legendas embutidas, sem música.
+• 8 posts verticais 4:5.
+• 1 carrossel com 5 slides para ensinar o primeiro uso.
+• 6 capas para os vídeos.
+• 6 Stories.
+• Legendas completas, textos alternativos e hashtags relevantes.
+• Sugestões de perfil, calendário de 14 dias e respostas rápidas.
+
+Abra ABRA-O-PORTFOLIO.html para navegar pelas peças do kit e assistir aos vídeos. Mantenha esse arquivo junto das pastas de mídia ao mover ou extrair o material.
+
+As legendas de publicação também estão em arquivos .txt individuais, identificados pelo código de cada peça, para copiar e colar. O arquivo conteudo.json reúne todos os textos, inclusive as legendas, textos alternativos e roteiros, com códigos como video-01 e post-04. Os vídeos finais têm de 27 a 33 segundos, com o tempo ajustado à narração.
+
+1. PREPARE OS PERFIS
+
+Nome de exibição sugerido:
+4J Finance | Finanças em família
+
+Sugestões de nome de usuário:
+@4jfinance
+@4j.finance
+@4jfinancebr
+
+A disponibilidade não foi confirmada. Tente usar o mesmo nome nas duas redes. Não inclua símbolos de verificação para sugerir uma verificação que a plataforma não concedeu.
+
+Foto de perfil — duas opções prontas:
+• assets/perfil-catatau.png: Catatau sobre um círculo dourado, com fundo creme.
+• assets/perfil-marca.png: marca 4J em azul, branco e dourado, com fundo creme.
+Escolha a opção que preferir e confira o recorte circular no perfil.
+
+Bio para TikTok:
+Seu dinheiro mais claro, com o Catatau 🦫
+Conheça o 4J Finance ↓
+
+Bio para Instagram:
+Finanças pessoais e em família, no seu ritmo.
+Receitas, despesas, metas e o Catatau 🦫
+Experimente a demonstração ↓
+
+Destaques sugeridos no Instagram:
+Comece aqui | Como usar | Catatau | Família | Dúvidas
+
+Este kit não criou contas, não reservou nomes e não publicou conteúdo. A criação e os recursos disponíveis precisam ser conferidos nas próprias plataformas.
+
+2. CONFIRA O LINK ANTES DE PUBLICAR
+
+Site atual:
+https://4jfinance.pages.dev/
+
+Demonstração:
+https://4jfinance.pages.dev/?demo=1
+
+Enquanto o domínio definitivo não estiver confirmado, use o endereço que já funciona. Depois de validar DNS, HTTPS, páginas públicas e login, atualize o link para:
+https://4jfinance.com.br/
+
+Os vídeos usam “link na bio” para que você consiga trocar o destino sem refazer as peças. Antes de publicar cada vídeo, confirme que o link está visível e funciona no perfil.
+
+No TikTok, o campo de site depende da elegibilidade da conta: não é garantido que um perfil novo tenha link clicável. Confira a opção no seu perfil antes de usar esse CTA. Se o campo não estiver disponível, adapte o texto e a fala final para “Conheça o 4J Finance. Endereço no perfil” e informe um endereço que a pessoa possa copiar; não afirme que há um link clicável.
+
+3. COMECE COM ESTAS TRÊS PEÇAS FIXADAS
+
+1) video-01 — Conheça o 4J Finance.
+Apresenta o produto e o convite para experimentar a demonstração.
+
+2) carrossel-01 — Seu primeiro controle, em cinco passos.
+Ensina a explorar a demonstração, lançar receitas e despesas, ajustar metas e voltar para acompanhar.
+
+3) video-06 — Uma conversa com seus registros.
+Apresenta o Catatau e o uso de metas e relatórios.
+
+Use a opção de fixar se estiver disponível para sua conta. No TikTok, o tutorial pode ser adaptado ao formato de fotos oferecido pela plataforma.
+
+4. COMO PUBLICAR OS VÍDEOS
+
+• Escolha o vídeo e a capa com o mesmo número.
+• Confira a prévia de publicação, a capa e o recorte do perfil.
+• Cole a legenda pronta do arquivo .txt correspondente à peça, também disponível em conteudo.json. Ela já inclui de 3 a 5 hashtags pertinentes; não precisa acrescentar uma lista genérica.
+• Os vídeos incluem narração sintética em português brasileiro e legendas embutidas. Ouça e confira nomes, valores e percentuais antes de publicar.
+• Se ativar também as legendas automáticas da plataforma, revise “4J Finance”, “Catatau” e os percentuais. Evite duas camadas de legenda sobrepostas.
+• O conteúdo foi pensado para funcionar também sem som.
+• Os vídeos não têm música. Se quiser acrescentar, escolha na própria plataforma uma faixa permitida para o seu tipo de conta e finalidade comercial. Este kit não inclui licença de músicas externas.
+• Mantenha a identificação de demonstração com dados fictícios nas peças com telas do produto.
+• Se a plataforma pedir identificação do uso de voz sintética ou conteúdo alterado, preencha a informação de forma verdadeira, conforme as opções e regras apresentadas naquele momento.
+
+5. COMO PUBLICAR OS POSTS E O CARROSSEL
+
+Posts: escolha uma imagem 4:5, copie a legenda do arquivo .txt correspondente e adicione o texto alternativo quando a plataforma oferecer essa opção.
+
+Carrossel: envie os cinco slides na ordem de 1 a 5. Use a legenda do carrossel e, quando disponível, o texto alternativo específico de cada slide. Confira que nenhum slide foi duplicado ou ficou fora de ordem.
+
+As telas devem ter letras legíveis no celular. As legendas também explicam os recursos para que a informação não dependa só da imagem.
+
+6. COMO PUBLICAR OS STORIES
+
+Use um Story por tema. Adicione o link da demonstração pelo recurso da plataforma, se disponível. As enquetes e a caixa de perguntas do conteudo.json são sugestões para inserir manualmente no editor; a imagem sozinha não cria esses controles.
+
+Pergunte sobre dificuldades de uso e recursos desejados. Não peça renda, dívida, saldo, extrato, documentos, senhas ou dados de familiares. Guarde dúvidas recorrentes para novos tutoriais.
+
+7. CALENDÁRIO DE 14 DIAS
+
+Os dias começam quando você decidir lançar. As faixas abaixo são hipóteses para testar no horário de Brasília. Não representam garantia de alcance ou uma preferência comprovada do algoritmo.
+
+Dia 01 | 18h–20h | video-01 + story-01 | Apresentar o produto; fixar o vídeo.
+Dia 02 | 12h–14h | post-08 | Mostrar o acesso pelo celular e computador.
+Dia 03 | 18h–20h | carrossel-01 | Ensinar o primeiro uso; fixar o tutorial.
+Dia 04 | 12h–14h | video-02 + story-02 | Demonstrar despesas recorrentes.
+Dia 05 | 18h–20h | post-02 | Reforçar recorrência e esclarecer que não paga contas.
+Dia 06 | 10h–12h | video-03 + story-03 | Ensinar a trazer compras parceladas antigas.
+Dia 07 | 18h–20h | post-03 | Reforçar o recurso e revisar os primeiros resultados.
+Dia 08 | 12h–14h | video-04 + story-04 | Apresentar as metas ajustáveis.
+Dia 09 | 18h–20h | post-04 | Mostrar que o planejamento pode ser adaptado.
+Dia 10 | 12h–14h | video-05 + story-05 | Explicar o registro de repasses no cartão em família.
+Dia 11 | 18h–20h | post-05 | Reforçar os acertos combinados e o acompanhamento mensal.
+Dia 12 | 12h–14h | video-06 + story-06 | Apresentar Catatau e relatórios; fixar o vídeo.
+Dia 13 | 10h–12h | post-06 | Fortalecer o reconhecimento do Catatau.
+Dia 14 | 18h–20h | post-07 | Convidar à revisão dos registros e avaliar a campanha.
+
+O post-01 é uma peça extra de apresentação: use em outro canal, como reposição ou em uma segunda rodada. Se não conseguir seguir todos os dias, mantenha a sequência dos temas e adapte o ritmo à sua disponibilidade.
+
+8. CONFERÊNCIA ANTES DA PUBLICAÇÃO
+
+• A peça mostra a versão atual do produto e somente dados fictícios?
+• A letra está legível no celular? O título ficou inteiro na capa?
+• O link da bio abre o destino certo e está disponível na conta?
+• A descrição corresponde ao recurso demonstrado?
+• As metas 50/20/30 estão apresentadas como ajustáveis?
+• Recorrência é explicada como repetição de registros, sem promessa de pagamento automático?
+• Os acertos estão descritos como registros de repasse, sem dizer que o site transfere dinheiro?
+• A família é opcional, com permissões, sem afirmar que um administrador vê todas as famílias?
+• A peça evita afirmar que o Pix, o AdSense ou um plano pago já estão ativos?
+• A legenda e o texto alternativo estão prontos?
+
+9. COMO RESPONDER A QUEM CHEGAR
+
+Use as respostas prontas em quickReplies, no conteudo.json. Elas cobrem instalação, demonstração, banco, família, parcelas, recorrência, metas e Catatau.
+
+Se houver problema de acesso, oriente a pessoa a usar o contato indicado no próprio site. Não peça senhas, códigos de verificação, documentos ou telas com dados financeiros. Uma descrição da etapa em que ocorreu o problema costuma ser um começo melhor.
+
+Não prometa uma função que ainda não existe. Se surgir uma ideia, agradeça e registre como sugestão, sem confirmar prazo.
+
+10. COMO SABER O QUE REPETIR
+
+Ao final de cada semana, anote por peça:
+• Tema e formato.
+• Faixa de publicação.
+• Visualizações e retenção, quando disponíveis.
+• Salvamentos e compartilhamentos.
+• Visitas ao perfil e cliques no link, quando disponíveis.
+• Dúvidas que apareceram sobre a ferramenta.
+
+Depois de 14 dias, compare quais temas ajudaram o público e geraram interesse na demonstração. Repita os melhores temas com outro exemplo fictício. Altere um elemento por vez — título, duração ou exemplo — para aprender com o teste. Não trate visualizações como garantia de cadastro ou receita.
+
+O QUE ESTAMOS DIVULGANDO
+
+O 4J Finance é uma ferramenta web de registros manuais. Não é banco, não movimenta dinheiro e não importa automaticamente as contas bancárias. Catatau acompanha os registros e metas disponíveis na ferramenta; não é consultor de investimentos.
+
+A divisão 50% fixas / 20% reserva / 30% variáveis é uma configuração inicial ajustável. Compartilhamento em família depende das escolhas e permissões de cada grupo. Acertos familiares ajudam a registrar os repasses combinados; o dinheiro é transferido fora do site.
+
+Nesta campanha, Pix e AdSense não são anunciados como ativos. Não usar chamadas de “R$ 5 para retirar anúncios” até que a integração esteja efetivamente disponível e validada.
+
+Nenhuma rede social foi acessada para publicar, criar perfil, enviar mensagens, agendar conteúdo ou contratar anúncios. Os arquivos ficam prontos para você revisar e utilizar.
+

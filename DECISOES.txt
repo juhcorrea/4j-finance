@@ -1,0 +1,47 @@
+4J Finance — decisões confirmadas em 15/10/2026
+
+HOSPEDAGEM E DOMÍNIO
+
+A alternativa escolhida ao Netlify foi Cloudflare Pages para os arquivos públicos, mantendo Firebase para login, dados e a futura integração de pagamentos.
+
+Publicação autorizada e concluída no Cloudflare Pages, projeto 4jfinance. O domínio 4jfinance.com.br foi registrado e configurado. Os servidores jacqueline.ns.cloudflare.com e john.ns.cloudflare.com foram salvos no Registro.br; a transição DNS foi concluída. Os endereços https://4jfinance.com.br e https://www.4jfinance.com.br estão ativos com HTTPS verificado. https://4jfinance.pages.dev continua disponível.
+
+Os dois domínios oficiais estão autorizados no Firebase Authentication. As regras de privacidade do Firestore foram publicadas e verificadas. Foram aprovadas 38 verificações no projeto real com dados sintéticos, depois removidos junto com as contas de teste. Esses resultados são históricos; esta atualização documental não realizou novos testes.
+
+O site antigo do Netlify não foi alterado nem teve sua publicação automática reativada. A atualização do GitHub não autoriza reativar o Netlify.
+
+GITHUB — DECISÃO EXPLÍCITA DE 15/10/2026
+
+Ao concluir futuras alterações do 4J Finance, sincronizar também o código, a documentação e os materiais públicos de divulgação correspondentes no repositório juhcorrea/4j-finance: https://github.com/juhcorrea/4j-finance.
+
+O fluxo deve incluir revisão dos arquivos, validação apropriada à alteração, commit, push e conferência do resultado. Se o envio falhar ou depender de ação externa, registrar e informar a pendência; não declarar o repositório atualizado sem confirmação.
+
+O pacote ficará na raiz do repositório, com public/ para hospedagem, source/ como base do build e marketing/ para os materiais públicos. Não publicar credenciais, tokens, arquivos de autenticação, backups privados, logs, work/, audit/ ou dados financeiros e pessoais dos usuários.
+
+Manter a publicação do Netlify bloqueada. A sincronização do GitHub não significa publicação automática no Cloudflare; uma automação só pode ser descrita como existente depois de configurada e validada. Este registro não afirma que o push atual tenha sido concluído.
+
+ANÚNCIOS E CONSENTIMENTO
+
+O site terá opção de monetização com Google AdSense. Pix e anúncios continuam desativados até concluir suas configurações e validações.
+
+A propriedade de 4jfinance.com.br foi verificada no AdSense, e a revisão foi solicitada em 15/10/2026 às 14h05, horário de Brasília. A aprovação continua pendente de confirmação.
+
+A mensagem de regulamentações europeias foi publicada no painel do AdSense. A integração real da CMP no site ainda não foi concluída nem testada de ponta a ponta. A dependência circular do carregador precisa ser resolvida antes da ativação. A interface local de preferências de cookies não equivale a uma CMP certificada.
+
+PIX — ETAPA ADIADA
+
+Preço escolhido para retirar todos os anúncios AdSense do 4J Finance: R$5,00, em pagamento único, sem renovação mensal.
+
+O Pix deve ser gerado no próprio site e confirmado automaticamente pelo provedor. Mercado Pago é o provedor de recebimento escolhido. A chave Pix fornecida não foi copiada para o projeto: cobrança automática usa a API oficial e credenciais protegidas no servidor.
+
+O benefício será permanente na conta que comprou, identificada pelo UID do Firebase; não é uma liberação automática de outras contas da família. Nenhuma cobrança real foi realizada. A etapa de Pix foi adiada para depois da preparação do AdSense; permanece desligada e não autoriza, por si só, uma mudança de plano de infraestrutura.
+
+ACESSO E IDENTIDADE VISUAL
+
+Cadastro aberto ao público: novas contas entram como Membro ativo, sem aprovação individual; contas suspensas continuam suspensas.
+
+Compartilhamento financeiro é opcional; o papel ADMIN não concede acesso financeiro global. As regras do Firestore devem continuar impondo o isolamento entre contas e famílias.
+
+O contato público de atendimento foi autorizado em 15/10/2026 e incluído nas páginas públicas apropriadas. Dados privados dos usuários não pertencem à documentação pública.
+
+Preservar Montserrat, os pesos e tamanhos de títulos, as cores e o Catatau do site original. As prévias devem carregar a fonte real, sem fonte substituta de teste.
