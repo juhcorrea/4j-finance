@@ -111,3 +111,62 @@ test('Cloudflare server entitlement is authoritative and a later outage keeps ad
 test('Firebase remains the default callable transport',async()=>{const h=setup(),legacy=[];h.sandbox.window.firebase={functions:true};h.sandbox.firebase={app:()=>({functions:region=>({httpsCallable:name=>async data=>{legacy.push({region,name,data});return {data:account()};}})})};const value=await h.transportCall('getMonetizationStatus');assert.equal(value.price,5);assert.equal(legacy.length,1);assert.equal(legacy[0].region,'southamerica-east1');assert.equal(legacy[0].name,'getMonetizationStatus');});
 
 test('disabled configuration and demo never acquire a Cloudflare token',async()=>{for(const mode of ['disabled','demo']){const h=cloudflareSetup({enabled:mode!=='disabled'});if(mode==='demo')h.store.demo=true;let tokens=0;h.store.user.getIdToken=async()=>{tokens++;return 'synthetic';};await assert.rejects(h.m.call('createPixCheckout'));assert.equal(tokens,0);assert.equal(h.requests.length,0);}});
+
+function pollingSetup(overrides={}){
+ const h=setup(),pending=new Map(),delays=[];let time=1792400000000,serial=0;
+ h.sandbox.Date=class extends Date{constructor(...args){super(...(args.length?args:[time]));}static now(){return time;}};
+ h.sandbox.setTimeout=(fn,ms)=>{const id=++serial;pending.set(id,{fn,at:time+ms});delays.push(ms);return id;};
+ h.sandbox.clearTimeout=id=>pending.delete(id);
+ const clock={now:()=>time,pending:()=>pending.size,delays,jump:ms=>{time+=ms;},async advance(ms){const target=time+ms;let turns=0;while(true){const next=[...pending].filter(([,v])=>v.at<=target).sort((a,b)=>a[1].at-b[1].at)[0];if(!next)break;if(++turns>200)throw Error('Unexpected polling loop');pending.delete(next[0]);time=next[1].at;await next[1].fn();}time=target;}};
+ h.m.showOrder({...checkout({expiresAt:time+3600000,...overrides}),uid:h.store.user.uid});
+ return {...h,clock};
+}
+
+test('persistent failures back off and stop at thirty minutes without creating another Pix',async()=>{
+ const h=pollingSetup(),requests=[];h.m.call=async(name,data)=>{requests.push({name,data});throw Error('offline');};
+ await h.clock.advance(15*1000);assert.equal(h.clock.delays.at(-1),15000);
+ await h.clock.advance(15*1000);assert.equal(h.clock.delays.at(-1),30000);
+ await h.clock.advance(30*1000);assert.equal(h.clock.delays.at(-1),60000);
+ await h.clock.advance(29*60*1000);assert.equal(h.clock.pending(),0);assert.equal(h.m.timer,null);assert.match(h.elements.get('#pix-status').textContent,/consulta automática foi pausada/);
+ const count=requests.length;assert.ok(count<=32);await h.clock.advance(60*60*1000);assert.equal(requests.length,count);
+ assert.ok(requests.every(r=>r.name==='checkPixCheckout'&&r.data.orderId===ORDER_ID));assert.equal(h.m.adFree,false);
+});
+
+test('an automatic timer reaching expiry pauses before sending, while manual confirmation still reads the same order',async()=>{
+ const h=pollingSetup({expiresAt:1792400005000}),requests=[];h.m.call=async(name,data)=>{requests.push({name,data});return checkout({status:'approved',adFreeLifetime:true});};
+ assert.equal(h.clock.delays[0],5000);await h.clock.advance(5000);assert.equal(requests.length,0);assert.equal(h.clock.pending(),0);
+ await h.m.check();assert.equal(requests.length,1);assert.equal(requests[0].name,'checkPixCheckout');assert.equal(requests[0].data.orderId,ORDER_ID);assert.equal(h.m.adFree,true);
+});
+
+test('a failed request crossing the deadline cannot restart automatic polling',async()=>{
+ for(const expiresAt of [1792400005000,1792403600000]){
+  const h=pollingSetup({expiresAt});let reject;h.m.call=()=>new Promise((_,no)=>reject=no);const task=h.m.check(h.m.order,true);
+  h.clock.jump(expiresAt===1792400005000?5000:30*60*1000);reject(Error('offline'));await task;
+  assert.equal(h.clock.pending(),0);assert.equal(h.m.order.checking,false);assert.match(h.elements.get('#pix-status').textContent,/consulta automática foi pausada/);
+ }
+});
+
+test('successful recovery resets backoff and confirms the existing Pix without a second checkout',async()=>{
+ const h=pollingSetup(),requests=[];let failures=2,paid=false;
+ h.m.call=async(name,data)=>{requests.push({name,data});if(failures-->0)throw Error('offline');return checkout({expiresAt:1792403600000,...(paid?{status:'approved',adFreeLifetime:true}:{})});};
+ await h.clock.advance(30000);assert.equal(h.clock.delays.at(-1),30000);
+ await h.clock.advance(30000);assert.equal(h.clock.delays.at(-1),15000);assert.equal(h.m.order.failures,0);
+ paid=true;await h.clock.advance(15000);assert.equal(h.m.adFree,true);assert.equal(h.clock.pending(),0);assert.ok(requests.every(r=>r.name==='checkPixCheckout'&&r.data.orderId===ORDER_ID));
+});
+
+test('failed polling after a login profile route or dialog change cannot resume its old timer',async()=>{
+ const changes=[h=>{h.store.user={...h.store.user,uid:'user-b'};h.store.auth.currentUser=h.store.user;h.m.sync();},h=>{h.store.profile='profile-b';h.m.sync();},h=>{h.sandbox.location.hash='#metas';},h=>{h.elements.set('#pix-checkout',{querySelector:()=>null});}];
+ for(const change of changes){const h=pollingSetup(),before=h.elements.get('#pix-status').textContent;let reject;h.m.call=()=>new Promise((_,no)=>reject=no);const task=h.m.check(h.m.order,true);change(h);reject(Error('offline'));await task;assert.equal(h.clock.pending(),0);assert.equal(h.m.adFree,false);assert.equal(h.elements.get('#pix-status').textContent,before);}
+});
+
+test('returning to the app after the polling limit performs one read without renewing the expired watch window',async()=>{
+ const h=pollingSetup(),requests=[];h.m.refresh=async()=>{};h.m.call=async(name,data)=>{requests.push({name,data});return checkout({expiresAt:1792403600000});};
+ h.m.stop();h.clock.jump(30*60*1000);await h.m.resume();await new Promise(setImmediate);
+ assert.equal(requests.length,1);assert.equal(requests[0].name,'checkPixCheckout');assert.equal(requests[0].data.orderId,ORDER_ID);assert.equal(h.clock.pending(),0);assert.match(h.elements.get('#pix-status').textContent,/consulta automática foi pausada/);
+});
+
+test('a QR becoming ready preserves the original thirty-minute watch deadline',async()=>{
+ const h=pollingSetup({status:'in_process',qrCode:null,qrCodeBase64:null}),started=h.m.order.started;h.m.call=async()=>checkout({expiresAt:1792403600000});
+ h.clock.jump(29*60*1000);await h.m.check(h.m.order,true);assert.equal(h.m.order.started,started);assert.equal(h.elements.has('#pix-copy-code'),true);
+ await h.clock.advance(60*1000);assert.equal(h.clock.pending(),0);assert.match(h.elements.get('#pix-status').textContent,/consulta automática foi pausada/);
+});

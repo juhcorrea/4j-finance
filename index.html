@@ -3011,7 +3011,7 @@ const Monetization={
     this.watchOrder(order,false);
   },
   expiry(order){const value=typeof order.expiresAt==='number'?order.expiresAt:Date.parse(order.expiresAt);return Number.isFinite(value)?value:0;},
-  watchOrder(order,poll=true){this.order={...order,checking:false,marker:$('#pix-checkout'),watch:this.watch,started:Date.now(),profile:Store.profile,page:location.hash};if(poll)this.schedule(this.order);},
+  watchOrder(order,poll=true){this.order={...order,checking:false,failures:0,marker:$('#pix-checkout'),watch:this.watch,started:Number.isFinite(order.started)?order.started:Date.now(),profile:Store.profile,page:location.hash};if(poll)this.schedule(this.order);},
   qrReady(order){
     if(!order.qrCode&&!order.qrCodeBase64)return false;
     if(typeof order.qrCode!=='string'||!order.qrCode.trim()||typeof order.qrCodeBase64!=='string'||!/^[a-zA-Z0-9+/=\r\n]+$/.test(order.qrCodeBase64)||order.qrCodeBase64.length>500000)throw new Error('QR indisponível.');
@@ -3024,22 +3024,26 @@ const Monetization={
     this.watchOrder(order);
   },
   watching(order){return this.order===order&&this.current(order.uid)&&order.watch===this.watch&&order.marker===$('#pix-checkout')&&$('#modal').open&&order.profile===Store.profile&&order.page===location.hash;},
-  schedule(order){clearTimeout(this.timer);if(this.watching(order))this.timer=setTimeout(()=>this.check(order,true),15000);},
+  pollingRemaining(order){const expires=this.expiry(order),deadline=order.started+30*60*1000;return Math.min(deadline,expires||deadline)-Date.now();},
+  pausePolling(order){clearTimeout(this.timer);this.timer=null;if(this.watching(order))$('#pix-status').textContent='A consulta automática foi pausada. Use o botão de conferir para consultar novamente. Se já pagou, não pague outra vez.';},
+  schedule(order){clearTimeout(this.timer);this.timer=null;if(!this.watching(order))return;const remaining=this.pollingRemaining(order);if(remaining<=0){this.pausePolling(order);return;}const delay=Math.min(15000*2**Math.max(0,(order.failures||0)-1),60000,remaining);this.timer=setTimeout(()=>{this.timer=null;return this.check(order,true);},delay);},
   async check(order=this.order,automatic=false){
     if(!order||!this.current(order.uid)||order.checking)return;if(automatic&&!this.watching(order))return;
+    if(automatic&&this.pollingRemaining(order)<=0){this.pausePolling(order);return;}
+    if(this.watching(order)){clearTimeout(this.timer);this.timer=null;}
     const generation=this.generation,marker=$('#pix-checkout');order.checking=true;const button=marker?.querySelector('[data-action=monetization-check]');if(button)button.disabled=true;
     try{
       const status=await this.call('checkPixCheckout',{orderId:order.orderId});if(!this.current(order.uid)||generation!==this.generation)return;
       if(status.adFreeLifetime===true){await this.confirmPaid(order.uid,this.watching(order));return;}
       if(!this.watching(order))return;
       this.validateOrder(status,order.orderId);
+      order.failures=0;
       const area=$('#pix-status');
       if(this.terminal(status.status)){this.closedOrder({...order,status:status.status});return;}
-      const expired=this.expiry(order)&&Date.now()>this.expiry(order),longWait=Date.now()-order.started>30*60*1000;
-      if(expired||longWait){this.stop();area.textContent='A consulta automática foi pausada. Use o botão de conferir para consultar novamente. Se já pagou, não pague outra vez.';return;}
-      if(['pending','in_process'].includes(status.status)&&this.qrReady(status)&&!this.qrReady(order)){this.showOrder({...status,uid:order.uid});return;}
+      if(this.pollingRemaining(order)<=0){this.pausePolling(order);return;}
+      if(['pending','in_process'].includes(status.status)&&this.qrReady(status)&&!this.qrReady(order)){this.showOrder({...status,uid:order.uid,started:order.started});return;}
       area.textContent=status.status==='approved'?'Pagamento recebido. Finalizando a liberação...':!this.qrReady(order)?'Estamos gerando seu Pix. Aguarde; o código aparecerá automaticamente, sem criar outro pagamento.':'Ainda aguardando a confirmação do pagamento. Se já pagou, não pague novamente.';this.schedule(order);
-    }catch(err){if(this.watching(order)){$('#pix-status').textContent='Não foi possível conferir agora. Se já pagou, não pague novamente; tentaremos conferir outra vez.';this.schedule(order);}}
+    }catch(err){if(this.watching(order)){order.failures=Math.min((order.failures||0)+1,3);if(this.pollingRemaining(order)<=0)this.pausePolling(order);else{$('#pix-status').textContent='Não foi possível conferir agora. Se já pagou, não pague novamente; tentaremos conferir outra vez.';this.schedule(order);}}}
     finally{order.checking=false;if(button?.isConnected)button.disabled=false;}
   },
   async confirmPaid(uid,show=true){if(!this.current(uid))return;const generation=this.generation;this.adFree=true;this.phase='paid';this.pendingOrderId=null;this.order=null;this.lastRefresh=Date.now();this.stop();try{await Store.auth.currentUser.getIdToken(true);}catch(error){}if(!this.current(uid)||generation!==this.generation)return;try{this.channel?.postMessage({type:'refresh'});}catch(error){}try{window.localStorage?.setItem('4j-entitlement-refresh',String(Date.now()));}catch(error){}this.paintCard();if(show)this.paidScreen();},
@@ -3060,7 +3064,7 @@ const Monetization={
       const action=event.target.closest('[data-action]')?.dataset.action;if(!action?.startsWith('monetization-'))return;
       if(action==='monetization-open')return this.open();if(action==='monetization-copy')return this.copy();
       if(action==='monetization-new')return this.open(true);
-      if(action==='monetization-check'){if(this.order){this.order.watch=this.watch;this.order.marker=$('#pix-checkout');this.order.started=Date.now();}return this.check();}
+      if(action==='monetization-check'){if(this.order){this.order.watch=this.watch;this.order.marker=$('#pix-checkout');this.order.started=Date.now();this.order.failures=0;}return this.check();}
       if(action==='monetization-demo-confirm'&&Store.demo){this.demoPaid=true;this.phase='paid';return this.paidScreen(true);}
       const message=$('#pix-verify-message');
       if(action==='monetization-send-verification'&&!Store.demo&&this.current(this.uid)){
