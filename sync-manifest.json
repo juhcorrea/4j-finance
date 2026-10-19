@@ -59,8 +59,8 @@
     },
     {
       "path": "cloudflare/CONFIGURAR.md",
-      "bytes": 19102,
-      "sha256": "b5e89990a5ab00de587a515eeec5e503194792566b40a29f5c552d413e0fc000"
+      "bytes": 21226,
+      "sha256": "8337240f919a30820f34033d71a9b95a3db7086cc255db2ce7322ccfca710d5a"
     },
     {
       "path": "cloudflare/schema.sql",
@@ -99,13 +99,13 @@
     },
     {
       "path": "COMECE-AQUI.md",
-      "bytes": 21261,
-      "sha256": "b438beef9b21dc3088960cb03f4f3bb7085ef94eb686d48da4632fbb46ad3bf0"
+      "bytes": 21659,
+      "sha256": "39e53de26cfc82e2282f9f336d45c64260941c194fc7d5e1033bfbf86271a411"
     },
     {
       "path": "DECISOES.txt",
-      "bytes": 19600,
-      "sha256": "6cd7464aa1800ac14dc0d56536d553244bdb286eecbe819a74bf628698bc9e59"
+      "bytes": 21229,
+      "sha256": "3cabe0ce76a42d5ece2c73082c9fa3120d571592286746c4d980b4d45390c84f"
     },
     {
       "path": "docs/CATATAU-PLANEJAMENTO.md",
@@ -119,8 +119,8 @@
     },
     {
       "path": "docs/VALIDACAO-GITHUB.md",
-      "bytes": 12034,
-      "sha256": "96ae823a06f6bbac06e207265a318ded92d3c15c26df0649ff2c0a26abf0ff30"
+      "bytes": 12375,
+      "sha256": "b73fc5b7e91860f1bae6b6302536d3d6915c2cd6ba9c81f1585f9450c6bdf58f"
     },
     {
       "path": "DOMINIO-OFICIAL.txt",
@@ -909,13 +909,13 @@
     },
     {
       "path": "PUBLICACAO.json",
-      "bytes": 6056,
-      "sha256": "dd1af0e893a995ee725cfa053108a6a8b19a4d66587857a621a3fba5c95b0181"
+      "bytes": 6860,
+      "sha256": "566578af9082340231d2d43b4a445a90bd24da4b121762d8bd4b58377bc12ed9"
     },
     {
       "path": "PUBLICAR-NO-CLOUDFLARE.md",
-      "bytes": 15675,
-      "sha256": "ef03395b8ed15358e9e5401aa2451ce2b41caeec8de20819d17cd6f082bfcc78"
+      "bytes": 16016,
+      "sha256": "220dbe85044ee2bdbb505c13bd7a5de067474cdb04c1e7eab7e837f06797c8f6"
     },
     {
       "path": "qa-production-ui.cjs",
@@ -944,8 +944,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 11478,
-      "sha256": "03de127250d34b8f8e6e4fb2912a82525dd391f42e63cdaaf69dbd553aecf5f2"
+      "bytes": 11885,
+      "sha256": "f2da0e60e25146d249b87cedad2eea09961ffa5d8bd136b6cc40104cb5a7ad9e"
     },
     {
       "path": "scripts/build-cloudflare.cjs",
@@ -1064,8 +1064,8 @@
     },
     {
       "path": "TESTES.txt",
-      "bytes": 11683,
-      "sha256": "f6207933ff1766e17c712627c2205863e2c12735bdc21261a15fccb6577fe024"
+      "bytes": 13095,
+      "sha256": "4484be61fa506aef61da0e9e286e30461948b68a6eec00a4144217ff105a934d"
     },
     {
       "path": "ui-qa.cjs",

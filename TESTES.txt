@@ -1,5 +1,5 @@
 4J Finance — testes registrados e estado de publicação
-Atualização documental: 15/10/2026
+Atualização documental: 19/10/2026
 
 RESULTADOS HISTÓRICOS DA PREPARAÇÃO — 15/10/2026
 
@@ -108,3 +108,7 @@ Consolidação antes da pausa em 15/10/2026: 394 testes node:test e 16 verifica�
 
 
 Atualizacao de 19/10/2026: publicado https://ddcb1f1f.4jfinance.pages.dev com a correcao do bootstrap da CMP e controle para rever a escolha de anuncios. O componente so carrega pausado depois da escolha local e da verificacao da conta; a disponibilidade da API nao concede consentimento. Revisao independente e 409 testes + 16 verificacoes de privacidade passaram; QA visual de cookies teve 17 cenarios. Arquivos index/guia/consent/public-ads conferidos por hash no dominio oficial, health HTTP 200 e backendReady:true. Banco e segredos preservados; PAYMENTS_ENABLED=false e anuncios OFF. O dialogo real Google continua pendente de validacao; AdSense Preparando confirmado pela usuaria.
+
+WEBHOOK NATURAL DE TESTE E BENEFICIO AUTOMATICO — 19/10/2026
+
+19/10/2026, confirmacao final do sandbox: a assinatura anterior pertencia a outra aplicacao. A configuracao protegida passou a usar a assinatura da propria aplicacao da conta vendedora de teste, sem alterar o Access Token, o algoritmo de validacao ou a producao. Publicado o Worker limpo em 6543501e.4jfinance-pix-test.pages.dev; o pacote de teste inclui somente Worker e pagina de apoio, nao o frontend completo. Houve um unico create ficticio, inicialmente pending e adFreeLifetime:false. Um webhook natural correlacionado recebeu HTTP 200 as 15:00:05.552 UTC. Depois, SELECT do mesmo pedido confirmou approved, paid:true e adFreeLifetime:true, com checkedAt 15:00:09.924 UTC e updatedAt 15:00:09.964 UTC. Essa concessao automatica ocorreu sem getStatus, check, simulacao ou escrita direta no D1 durante a prova; nao foi atribuida isoladamente ao primeiro HTTP 200 capturado. A observacao final, iniciada as 15:03:42 UTC, foi somente leitura e nao criou contas ou pedidos. Firebase manteve billing:false antes e depois; captura removida, processo encerrado e relatorios privados preservados fora do Git. Produção ddcb1f1f inalterada, Pix e anuncios publicos OFF. O frontend corrigido de consultas permanece somente preparado localmente. O recebimento real em producao, as cotas de CPU e a validacao real da CMP continuam etapas separadas.
