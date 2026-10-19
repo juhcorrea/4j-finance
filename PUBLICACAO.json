@@ -42,7 +42,7 @@
   "paymentProductionBackendPublished": true,
   "pixCloudflareTestBackendPublished": true,
   "pixCloudflareTestUrl": "https://4jfinance-pix-test.pages.dev",
-  "pixCloudflareTestDeploymentUrl": "https://1ca101c3.4jfinance-pix-test.pages.dev",
+  "pixCloudflareTestDeploymentUrl": "https://bf47b7a7.4jfinance-pix-test.pages.dev",
   "pixCloudflareTestHealthVerified": true,
   "pixCloudflareTestBackendReady": true,
   "pixCloudflareTestEndToEndVerified": true,
@@ -58,7 +58,7 @@
   "customDomainExternalAccessConfirmedByUser": true,
   "customDomainLocalAccessIssue": "Resolvedor DNS da rede corporativa retorna servidor interno com certificado de outro dominio; acesso via rede movel confirmado pela responsavel. Nenhuma configuracao de rede alterada.",
   "pixCloudflareTestVerifiedAt": "2026-10-15T19:25:58.017Z",
-  "pixCloudflareTestDeploymentId": "1ca101c3-6f14-43e3-8bf2-36cc78380361",
+  "pixCloudflareTestDeploymentId": "bf47b7a7-76bd-4663-98fc-180b02535d56",
   "pixCloudflareTestEndToEndDeploymentUrl": "https://a1999d42.4jfinance-pix-test.pages.dev",
   "pixCloudflareTestPendingReconciliationPublished": true,
   "pixCloudflareTestPaidStatusSmokeVerified": true,
@@ -95,5 +95,6 @@
   "adsenseReviewLastConfirmedAt": "2026-10-19",
   "googleCmpBootstrapPrepared": true,
   "googleCmpBootstrapPublishedAt": "2026-10-19T11:22:49.152Z",
-  "googleCmpLocalQaVerified": true
+  "googleCmpLocalQaVerified": true,
+  "pixCloudflareTestCleanRestorationVerifiedAt": "2026-10-19T11:47:55.357Z"
 }

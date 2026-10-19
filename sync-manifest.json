@@ -59,8 +59,8 @@
     },
     {
       "path": "cloudflare/CONFIGURAR.md",
-      "bytes": 16590,
-      "sha256": "100f2efc54313475bc62ba63d3e6638447eaa9431c61c3d1ed7f196cde5a1a80"
+      "bytes": 19102,
+      "sha256": "b5e89990a5ab00de587a515eeec5e503194792566b40a29f5c552d413e0fc000"
     },
     {
       "path": "cloudflare/schema.sql",
@@ -104,8 +104,8 @@
     },
     {
       "path": "DECISOES.txt",
-      "bytes": 12670,
-      "sha256": "6e88cc0d75276c6a0ef3b2c150a72a29e47a23f82f17340e212fad4abdb0cf00"
+      "bytes": 14465,
+      "sha256": "561dcab736f0c08d677c0ecf149a3f23120812b347d32a844ef01297141e87b9"
     },
     {
       "path": "docs/CATATAU-PLANEJAMENTO.md",
@@ -909,8 +909,8 @@
     },
     {
       "path": "PUBLICACAO.json",
-      "bytes": 5047,
-      "sha256": "c8037fdb94361dfb8a2d7dabe57942198c91cddfae20c4487ce273a11fa963df"
+      "bytes": 5124,
+      "sha256": "7457fb91c21ec58bd59da2a76c3fc06e273a0c5cd813ad8ea206fe247d95a049"
     },
     {
       "path": "PUBLICAR-NO-CLOUDFLARE.md",
