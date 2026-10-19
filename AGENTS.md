@@ -9,5 +9,5 @@
 - Nao publicar credenciais, ambientes locais, auditorias privadas, dados reais, arquivos de conta de servico nem dependencias instaladas.
 - Antes do push: node scripts/check.cjs e node scripts/verify-build.cjs. Para mudancas de interface, executar testes visuais pertinentes. Nao repetir testes contra o banco real por rotina.
 - Preservar historico Git; nao usar force push. Se houver alteracoes remotas, reconciliar antes de enviar. Nao sobrescrever trabalho de outra pessoa.
-- Manter Netlify pausado; usar [skip netlify] na mensagem de commit. A hospedagem atual e Cloudflare Pages e somente public/ pode ser enviada.
+- Manter Netlify pausado; usar [skip netlify] na mensagem de commit. A hospedagem atual e Cloudflare Pages. O site estatico usa somente public/. O Pix gratuito usa exclusivamente o pacote validado por scripts/build-cloudflare.cjs: arquivos estaticos permitidos, _worker.js compilado e _routes.json. Nunca enviar o workspace, segredos, configuracoes locais nem fontes do servidor em bruto.
 - Publicacao Cloudflare e sincronizacao Git sao operacoes distintas; informar o resultado real de ambas sem alegar automatismo inexistente.

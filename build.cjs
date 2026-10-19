@@ -8,8 +8,10 @@ function replaceOnce(from,to){if(html.split(from).length!==2)throw new Error('Ex
 const publisher='ca-pub-9462093834252455';
 replaceOnce('<meta charset="utf-8">','<meta charset="utf-8">\n<meta name="google-adsense-account" content="'+publisher+'">');
 const firestoreSdk='<script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>';
-replaceOnce(firestoreSdk,firestoreSdk+'\n<script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-functions-compat.js"></script>\n<script>window.MONETIZATION_CONFIG={enabled:false,region:"southamerica-east1",adsEnabled:false,adPageAllowlist:[]};</script>');
+replaceOnce(firestoreSdk,firestoreSdk+'\n<script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-functions-compat.js"></script>\n<script>window.MONETIZATION_CONFIG={enabled:false,region:"southamerica-east1",adsEnabled:false,adPageAllowlist:[],provider:"cloudflare",apiBase:"/api/pix"};</script>');
 replaceOnce('</head>','<style>\n'+fs.readFileSync(path.join(base,'frontend/monetization.css'),'utf8')+'\n'+fs.readFileSync(path.join(base,'frontend/auth-responsive.css'),'utf8')+'\n</style>\n</head>');
+const plannerMarker='/* Catatau: consultas locais, sem serviços de IA ou envio de mensagens. */';
+replaceOnce(plannerMarker,fs.readFileSync(path.join(base,'frontend/catatau-planner.js'),'utf8')+'\n'+plannerMarker);
 const marker='if(document.modelContext?.registerTool)';
 replaceOnce(marker,fs.readFileSync(path.join(base,'frontend/monetization.js'),'utf8')+'\n'+marker);
 const note='<small class="muted">A demonstração usa apenas dados fictícios.</small>';

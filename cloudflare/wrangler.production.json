@@ -1,0 +1,26 @@
+{
+  "name": "4jfinance",
+  "pages_build_output_dir": "../work/cloudflare-production",
+  "compatibility_date": "2026-10-15",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "d1_databases": [
+    {
+      "binding": "BILLING_DB",
+      "database_name": "4jfinance-billing",
+      "database_id": "b3cf312a-950a-4998-897e-4d299e6ea2dc"
+    }
+  ],
+  "vars": {
+    "FIREBASE_PROJECT_ID": "financas-familia-9480b",
+    "FIREBASE_WEB_API_KEY": "AIzaSyA_FIN-_KEsblQ1QBu2S-RFLp0iwm3Y3I8",
+    "MP_COLLECTOR_ID": "672577400",
+    "MP_APPLICATION_ID": "6568194540882659",
+    "MP_LIVE_MODE": "true",
+    "MP_TEST_FIREBASE_PROJECT_ID": "fjfinance-pix-test",
+    "MP_PRODUCTION_FIREBASE_PROJECT_ID": "financas-familia-9480b",
+    "PAYMENTS_ENABLED": "false",
+    "ALLOWED_ORIGINS": "[\"https://4jfinance.com.br\",\"https://www.4jfinance.com.br\",\"https://4jfinance.pages.dev\"]"
+  }
+}

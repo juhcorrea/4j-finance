@@ -1,0 +1,26 @@
+{
+  "name": "4jfinance-pix-test",
+  "pages_build_output_dir": "../work/cloudflare-test",
+  "compatibility_date": "2026-10-15",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "d1_databases": [
+    {
+      "binding": "BILLING_DB",
+      "database_name": "4jfinance-pix-test",
+      "database_id": "c0c6d41a-6013-45c2-896f-ecb3746d8962"
+    }
+  ],
+  "vars": {
+    "FIREBASE_PROJECT_ID": "fjfinance-pix-test",
+    "FIREBASE_WEB_API_KEY": "AIzaSyCuj5Z5LSkgc73v8FwixsYx5qLEYn4fUp8",
+    "MP_COLLECTOR_ID": "3765216065",
+    "MP_APPLICATION_ID": "2201067926559576",
+    "MP_LIVE_MODE": "false",
+    "MP_TEST_FIREBASE_PROJECT_ID": "fjfinance-pix-test",
+    "MP_PRODUCTION_FIREBASE_PROJECT_ID": "financas-familia-9480b",
+    "PAYMENTS_ENABLED": "true",
+    "ALLOWED_ORIGINS": "[\"https://4jfinance-pix-test.pages.dev\"]"
+  }
+}

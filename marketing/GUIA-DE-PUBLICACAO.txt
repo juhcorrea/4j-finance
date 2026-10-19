@@ -165,7 +165,19 @@ O 4J Finance é uma ferramenta web de registros manuais. Não é banco, não mov
 
 A divisão 50% fixas / 20% reserva / 30% variáveis é uma configuração inicial ajustável. Compartilhamento em família depende das escolhas e permissões de cada grupo. Acertos familiares ajudam a registrar os repasses combinados; o dinheiro é transferido fora do site.
 
-Nesta campanha, Pix e AdSense não são anunciados como ativos. Não usar chamadas de “R$ 5 para retirar anúncios” até que a integração esteja efetivamente disponível e validada.
+USO GRATUITO E APOIO OPCIONAL — ATUALIZAÇÃO DE 15/10/2026
+
+O 4J Finance é gratuito para todos. A modalidade em preparação prevê anúncios para ajudar a manter o site e um pagamento opcional de R$ 5, uma única vez, para retirar todos os anúncios da conta permanentemente e apoiar o projeto. Não há mensalidade ou renovação; o benefício pertence à conta que fizer o pagamento.
+
+Anúncios e Pix ainda estão em configuração e não estão ativos no site. Apresente essa modalidade como prevista, sem convidar a pagar agora ou sugerir que a compra já está disponível. O uso gratuito não depende de contribuição.
 
 Nenhuma rede social foi acessada para publicar, criar perfil, enviar mensagens, agendar conteúdo ou contratar anúncios. Os arquivos ficam prontos para você revisar e utilizar.
 
+REGERAR O PORTFÓLIO COMPARTILHÁVEL
+
+A partir da raiz do workspace:
+1. node 4j-finance-marketing-2026-10/work/gallery.cjs
+2. node 4j-finance-marketing-2026-10/work/build-portable.cjs
+3. powershell -NoProfile -ExecutionPolicy Bypass -File 4j-finance-marketing-2026-10/work/package-portable.ps1
+
+Edite os textos em conteudo.json e a estrutura em work/gallery.cjs. O HTML compartilhável incorpora as imagens, os vídeos, as legendas e Montserrat; pode ser enviado sozinho. O ZIP correspondente contém somente esse HTML com o nome index.html. Nunca inclua work/, configurações ou credenciais no arquivo de compartilhamento.

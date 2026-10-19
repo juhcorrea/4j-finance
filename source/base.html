@@ -318,6 +318,7 @@ main:focus{outline:none}
 @media(max-width:360px){.frequency-options{grid-template-columns:1fr}.frequency-options label{align-items:center;padding:10px 12px}.frequency-options span{display:flex;gap:10px;align-items:center}.frequency-options small{margin:0;font-size:11px}.frequency-options b{min-width:60px}}
 </style>
 <style>
+.catatau-panel #chat-send{min-height:44px}.planner-settings{padding:7px 16px;border-bottom:1px solid var(--line)}.planner-settings label{display:flex;flex-direction:row;justify-content:flex-start;align-items:center;gap:8px;min-height:44px;margin:0;text-align:left;font-size:12px;font-weight:700}.planner-settings input[type=checkbox]{width:20px;height:20px;min-height:20px;margin:0;padding:0;flex:0 0 20px;accent-color:var(--blue)}.planner-settings small{display:block;font-size:10px;line-height:1.5;font-weight:400}.planner-actions{display:flex;gap:7px;padding:8px 16px;flex-wrap:wrap}.planner-actions button{min-height:44px;border:1px solid var(--line);background:var(--paper);color:var(--blue);border-radius:12px;padding:7px 10px;font:inherit;font-size:11px;cursor:pointer}.planner-actions button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}.planner-actions button:disabled{opacity:.55;cursor:default}.catatau-panel .chat-log{flex:1 1 140px;min-height:70px;overflow-anchor:none}.catatau-panel .chat-choices{max-height:85px}.catatau-panel .planner-settings,.catatau-panel .planner-actions,.catatau-panel .chat-form{flex-shrink:0}@media(max-height:660px){.catatau-panel .chat-intro{display:none}.planner-settings{padding-top:2px;padding-bottom:2px}.planner-settings>small{display:none}.planner-actions{padding-top:4px;padding-bottom:4px}}
 /* Monthly spending plan: readable cards, explicit status and comfortable touch controls. */
 .budget-section{margin-bottom:28px;overflow:hidden}
 .budget-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:14px}
@@ -586,10 +587,12 @@ main:focus{outline:none}
     <div class="chat-head"><div><b id="catatau-title">Catatau</b><small>Seu assistente local · sem limite de consultas</small></div><button class="icon-button" data-action="close-catatau" aria-label="Fechar Catatau">×</button></div>
     <div class="chat-intro"><span class="catatau-avatar"><img data-catatau src="" alt=""></span><div><b>Um olhar atento aos seus planos.</b><p id="chat-answer">Consultas locais com os registros deste perfil.</p></div></div>
     <div class="chat-context-row"><span id="chat-context"></span><button type="button" data-action="clear-catatau" aria-label="Limpar conversa deste perfil">Limpar</button></div>
+    <div class="planner-settings"><label><input id="catatau-firm" type="checkbox" aria-describedby="catatau-firm-note"> Modo firme <small>opcional</small></label><small id="catatau-firm-note">Só neste perfil. Não bloqueia banco, cartão ou registro de despesas.</small></div>
+    <div id="planner-actions" class="planner-actions" aria-label="Etapas do planejamento"></div>
     <div id="chat-log" class="chat-log" role="log" aria-label="Conversa com Catatau" aria-live="polite" aria-relevant="additions"></div>
     <details class="chat-topics" open><summary>Escolha um assunto</summary><div id="chat-choices" class="chat-choices"></div></details>
     <form id="catatau-form" class="chat-form"><label class="sr-only" for="chat-input">Sua pergunta ao Catatau</label><input id="chat-input" name="question" maxlength="400" required autocomplete="off" placeholder="Ex.: tenho contas atrasadas?" aria-describedby="chat-local-note"><button id="chat-send" class="button primary" type="submit" aria-label="Enviar pergunta">Enviar</button></form>
-    <small id="chat-local-note" class="chat-foot">Respostas programadas; sem IA conversacional. Histórico das últimas 20 consultas deste perfil, só nesta sessão. É apagado ao sair ou recarregar.</small>
+    <small id="chat-local-note" class="chat-foot">Consultas e planejamento guiado locais, sem IA externa. Últimas 20 consultas deste perfil, só nesta sessão. Simular não cria despesas.</small>
   </aside>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <noscript>Ative o JavaScript para usar o 4J Finance.</noscript>
@@ -638,7 +641,7 @@ const Store={
   get permission(){if(this.demo)return 'owner';if(!this.user||this.userDoc?.status!=='approved'||!this.profile||!this.meta.ownerUid)return 'view';if(this.userDoc?.role==='admin')return 'admin';if(this.meta.ownerUid===this.user.uid)return 'owner';if((this.meta.sharedEdit||[]).includes(this.user.email.toLowerCase()))return 'edit';return 'view';},
   get editable(){return ['owner','admin','edit'].includes(this.permission);},get manageable(){return ['owner','admin'].includes(this.permission);},
   emit(){window.dispatchEvent(new Event('finance-update'));},
-  cleanProfiles(){this.profileListeners.splice(0).forEach(fn=>fn());this.meta={};this.data={receitas:[],despesas:[]};},
+  cleanProfiles(){this.profileDataScope=null;this.profileListeners.splice(0).forEach(fn=>fn());this.meta={};this.data={receitas:[],despesas:[]};},
   clean(){this.cleanProfiles();this.listeners.splice(0).forEach(fn=>fn());this.profiles=[];this.profile='';},
   fail(e){console.error('4J:',e.code||e.message);this.error=e.code==='permission-denied'?'Seu acesso a este perfil não está disponível. Verifique as permissões com a administração.':'Não foi possível carregar os dados. Verifique a conexão e tente novamente.';this.loading=false;if(this.screen==='loading')this.screen='auth';this.emit();},
   async init(){
@@ -646,7 +649,15 @@ const Store={
     try{if(!window.firebase)throw new Error('Firebase unavailable');firebase.initializeApp(window.FINANCE_CONFIG);this.auth=firebase.auth();this.db=firebase.firestore();this.auth.onAuthStateChanged(user=>{this.clean();this.userListener?.();this.userListener=null;this.user=user;this.userDoc=null;this.loading=!!user;this.screen=user?'loading':'auth';this.emit();if(!user)return;this.userListener=this.db.collection('users').doc(user.uid).onSnapshot(doc=>{if(this.user?.uid!==user.uid)return;this.userDoc=doc.data();if(!this.userDoc||this.userDoc.status!=='approved'){this.clean();this.screen='pending';this.loading=false;this.emit();return;}this.screen='app';this.watchProfiles();},e=>this.fail(e));});}catch(e){this.loading=false;this.screen='auth';this.error='Não foi possível conectar. Confira sua internet e recarregue a página.';this.emit();}
   },
   watchProfiles(){this.listeners.splice(0).forEach(fn=>fn());const coll=this.db.collection('profiles');const queries=this.userDoc.role==='admin'?[coll]:[coll.where('ownerUid','==',this.user.uid),coll.where('sharedView','array-contains',this.user.email.toLowerCase()),coll.where('sharedEdit','array-contains',this.user.email.toLowerCase())];const snapshots=new Map();queries.forEach((q,i)=>this.listeners.push(q.onSnapshot(snap=>{snapshots.set(i,snap.docs.map(d=>({id:d.id,...d.data()})));if(snapshots.size!==queries.length)return;const merged=new Map();snapshots.forEach(rows=>rows.forEach(d=>merged.set(d.id,d)));this.profiles=[...merged.values()].sort((a,b)=>a.id.localeCompare(b.id));this.loading=false;if(!this.profiles.some(p=>p.id===this.profile)){this.cleanProfiles();this.profile='';if(this.profiles.length)this.selectProfile(ProfilePreference.pick(this));}this.emit();},e=>this.fail(e))));},
-  selectProfile(id){if(!this.profiles.some(p=>p.id===id))return;this.cleanProfiles();this.profile=id;this.error='';this.loading=true;ProfilePreference.remember(this,id);this.emit();if(this.demo){this.seed();this.emit();return;}let ready=0;const ref=this.db.collection('profiles').doc(id);this.profileListeners.push(ref.onSnapshot(doc=>{this.meta=doc.data()||{};this.emit();},e=>this.fail(e)));['receitas','despesas'].forEach(cat=>{let first=true;this.profileListeners.push(ref.collection(cat).onSnapshot(snap=>{this.data[cat]=snap.docs.map(d=>({...d.data(),id:d.id}));if(first){ready++;first=false;}if(ready===2)this.loading=false;this.emit();},e=>this.fail(e)));});},
+  selectProfile(id){
+    if(!this.profiles.some(p=>p.id===id))return;this.cleanProfiles();this.profile=id;this.error='';this.loading=true;ProfilePreference.remember(this,id);this.emit();
+    if(this.demo){this.seed();this.emit();return;}
+    const scope=this.profileDataScope={uid:this.user.uid,profile:id,ready:false},current=()=>this.profileDataScope===scope&&this.user?.uid===scope.uid&&this.profile===id;
+    let ready=0,metaReady=false;const ref=this.db.collection('profiles').doc(id);
+    const loaded=()=>{scope.ready=metaReady&&ready===2;this.loading=!scope.ready;this.emit();};
+    this.profileListeners.push(ref.onSnapshot(doc=>{if(!current())return;if(!doc.exists){this.fail({code:'permission-denied'});return;}this.meta=doc.data()||{};metaReady=true;loaded();},e=>{if(current())this.fail(e);}));
+    ['receitas','despesas'].forEach(cat=>{let first=true;this.profileListeners.push(ref.collection(cat).onSnapshot(snap=>{if(!current())return;this.data[cat]=snap.docs.map(d=>({...d.data(),id:d.id}));if(first){ready++;first=false;}loaded();},e=>{if(current())this.fail(e);}));});
+  },
   assertEdit(){if(!this.editable)throw new Error('Este perfil permite apenas visualização.');},
   assertManage(){if(!this.manageable)throw new Error('Apenas o proprietário ou a administração pode fazer isso.');},
   async touch(){if(this.demo)return;try{await this.db.collection('profiles').doc(this.profile).update({lastUpdatedAt:firebase.firestore.FieldValue.serverTimestamp(),lastUpdatedBy:this.userDoc.name||this.user.email});}catch(e){console.warn('Metadados não atualizados',e.code);}},
@@ -1600,9 +1611,9 @@ function catatauReply(question,context){
 }
 
 const catatauMemory={user:'',key:'',histories:new Map()};
-const catatauSuggestions=['Como estão meus acertos da família?','Como estou no meu orçamento?','Onde estou desviando?','Como está minha reserva do mês?','Como cadastrar uma despesa recorrente?','Como registrar uma compra antiga?','Como está meu saldo?','Contas atrasadas','O que preciso pagar?','Gastos por categoria','Meu maior gasto','Como estão minhas metas?','Comparar com o mês anterior','Próximas parcelas','Quanto entrou em receitas?','Reembolsos pendentes','Como transferir dados?','Como registrar um gasto?'];
+const catatauSuggestions=['Quero planejar uma compra','Como estão meus acertos da família?','Como estou no meu orçamento?','Onde estou desviando?','Como está minha reserva do mês?','Como cadastrar uma despesa recorrente?','Como registrar uma compra antiga?','Como está meu saldo?','Contas atrasadas','O que preciso pagar?','Gastos por categoria','Meu maior gasto','Como estão minhas metas?','Comparar com o mês anterior','Próximas parcelas','Quanto entrou em receitas?','Reembolsos pendentes','Como transferir dados?','Como registrar um gasto?'];
 function catatauReady(){return Store.screen==='app'&&!!Store.user&&!!Store.profile&&!Store.loading&&!Store.error;}
-function resetCatatau(){catatauMemory.histories.clear();catatauMemory.user='';catatauMemory.key='';$('#chat-log').replaceChildren();$('#chat-input').value='';closeCatatau(false);}
+function resetCatatau(){if(typeof CatatauPlanner!=='undefined')CatatauPlanner.clear();catatauMemory.histories.clear();catatauMemory.user='';catatauMemory.key='';$('#chat-log').replaceChildren();$('#chat-input').value='';closeCatatau(false);}
 function syncCatatauContext(){
   const user=Store.screen==='app'?Store.user?.uid||'':'';
   if(user!==catatauMemory.user){resetCatatau();catatauMemory.user=user;}
@@ -1614,6 +1625,7 @@ function syncCatatauContext(){
   $('#chat-input').disabled=!catatauReady();$('#chat-send').disabled=!catatauReady();
   $('#chat-context').textContent=Store.profile?`${profileName()} · ${monthName(state.month)}`:'Selecione um perfil';
   $('#chat-answer').textContent=catatauReady()?'Consultas locais com os registros deste perfil.':Store.loading?'Aguarde os dados do perfil carregarem.':'Selecione um perfil disponível para consultar os registros.';
+  if(typeof CatatauPlanner!=='undefined')CatatauPlanner.sync();
 }
 function renderCatatauHistory(){
   const log=$('#chat-log');log.replaceChildren();
@@ -1623,9 +1635,10 @@ function renderCatatauHistory(){
 function askCatatau(question){
   syncCatatauContext();if(!catatauReady())return;const text=String(question||'').trim().slice(0,400);if(!text)return;
   const history=catatauMemory.histories.get(catatauMemory.key)||[];
-  const response=catatauReply(text,{month:state.month,today:Money.today(),rows:allRows(),plans:goals(),budgetMeta:Store.meta});
+  const planned=CatatauPlanner.handle(text),response=planned||catatauReply(text,{month:state.month,today:Money.today(),rows:allRows(),plans:goals(),budgetMeta:Store.meta});
   history.push({role:'user',text},{role:'assistant',text:response.text,scope:response.scope});
   catatauMemory.histories.set(catatauMemory.key,history.slice(-40));$('#chat-input').value='';renderCatatauHistory();
+  if(planned){const log=$('#chat-log'),latest=log.lastElementChild;requestAnimationFrame(()=>{if(latest&&latest===log.lastElementChild)log.scrollTop+=latest.getBoundingClientRect().top-log.getBoundingClientRect().top;});}
 }
 function openCatatau(){
   $('#toast').classList.remove('visible');
@@ -1635,7 +1648,7 @@ function openCatatau(){
   renderCatatauHistory();$('#chat-input').focus({preventScroll:true});
 }
 document.addEventListener('submit',e=>{if(e.target.id==='catatau-form'){e.preventDefault();askCatatau($('#chat-input').value);}});
-document.addEventListener('click',e=>{const action=e.target.closest('[data-action]')?.dataset.action;if(action==='logout')resetCatatau();if(action==='clear-catatau'){catatauMemory.histories.delete(catatauMemory.key);renderCatatauHistory();$('#chat-input').focus({preventScroll:true});}},true);
+document.addEventListener('click',e=>{const action=e.target.closest('[data-action]')?.dataset.action;if(action==='logout')resetCatatau();if(action==='clear-catatau'){CatatauPlanner.clear();catatauMemory.histories.delete(catatauMemory.key);renderCatatauHistory();$('#chat-input').focus({preventScroll:true});}},true);
 window.addEventListener('pagehide',resetCatatau);
 
 function familyTargets(){return Store.profiles.filter(p=>p.id!==Store.profile&&(Store.demo||Store.userDoc?.role==='admin'||p.ownerUid===Store.user?.uid||(p.sharedEdit||[]).includes(String(Store.user?.email||'').toLowerCase())));}

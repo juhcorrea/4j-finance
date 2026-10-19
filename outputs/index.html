@@ -118,7 +118,7 @@ td{font-size:13px}td small{font-size:12px}th{font-size:12px}.report-toolbar inpu
   <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-functions-compat.js"></script>
-<script>window.MONETIZATION_CONFIG={enabled:false,region:"southamerica-east1",adsEnabled:false,adPageAllowlist:[]};</script>
+<script>window.MONETIZATION_CONFIG={enabled:false,region:"southamerica-east1",adsEnabled:false,adPageAllowlist:[],provider:"cloudflare",apiBase:"/api/pix"};</script>
 <style>
 /* 4J identity: the same mark on every screen and on the home screen. */
 .brand-symbol{display:block;object-fit:contain;flex-shrink:0;width:76px;height:45px;border-radius:8px}
@@ -321,6 +321,7 @@ main:focus{outline:none}
 @media(max-width:360px){.frequency-options{grid-template-columns:1fr}.frequency-options label{align-items:center;padding:10px 12px}.frequency-options span{display:flex;gap:10px;align-items:center}.frequency-options small{margin:0;font-size:11px}.frequency-options b{min-width:60px}}
 </style>
 <style>
+.catatau-panel #chat-send{min-height:44px}.planner-settings{padding:7px 16px;border-bottom:1px solid var(--line)}.planner-settings label{display:flex;flex-direction:row;justify-content:flex-start;align-items:center;gap:8px;min-height:44px;margin:0;text-align:left;font-size:12px;font-weight:700}.planner-settings input[type=checkbox]{width:20px;height:20px;min-height:20px;margin:0;padding:0;flex:0 0 20px;accent-color:var(--blue)}.planner-settings small{display:block;font-size:10px;line-height:1.5;font-weight:400}.planner-actions{display:flex;gap:7px;padding:8px 16px;flex-wrap:wrap}.planner-actions button{min-height:44px;border:1px solid var(--line);background:var(--paper);color:var(--blue);border-radius:12px;padding:7px 10px;font:inherit;font-size:11px;cursor:pointer}.planner-actions button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}.planner-actions button:disabled{opacity:.55;cursor:default}.catatau-panel .chat-log{flex:1 1 140px;min-height:70px;overflow-anchor:none}.catatau-panel .chat-choices{max-height:85px}.catatau-panel .planner-settings,.catatau-panel .planner-actions,.catatau-panel .chat-form{flex-shrink:0}@media(max-height:660px){.catatau-panel .chat-intro{display:none}.planner-settings{padding-top:2px;padding-bottom:2px}.planner-settings>small{display:none}.planner-actions{padding-top:4px;padding-bottom:4px}}
 /* Monthly spending plan: readable cards, explicit status and comfortable touch controls. */
 .budget-section{margin-bottom:28px;overflow:hidden}
 .budget-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:14px}
@@ -607,10 +608,12 @@ body.dark .monetization-mark,body.dark .monetization-badge,body.dark .pix-price 
     <div class="chat-head"><div><b id="catatau-title">Catatau</b><small>Seu assistente local · sem limite de consultas</small></div><button class="icon-button" data-action="close-catatau" aria-label="Fechar Catatau">×</button></div>
     <div class="chat-intro"><span class="catatau-avatar"><img data-catatau src="" alt=""></span><div><b>Um olhar atento aos seus planos.</b><p id="chat-answer">Consultas locais com os registros deste perfil.</p></div></div>
     <div class="chat-context-row"><span id="chat-context"></span><button type="button" data-action="clear-catatau" aria-label="Limpar conversa deste perfil">Limpar</button></div>
+    <div class="planner-settings"><label><input id="catatau-firm" type="checkbox" aria-describedby="catatau-firm-note"> Modo firme <small>opcional</small></label><small id="catatau-firm-note">Só neste perfil. Não bloqueia banco, cartão ou registro de despesas.</small></div>
+    <div id="planner-actions" class="planner-actions" aria-label="Etapas do planejamento"></div>
     <div id="chat-log" class="chat-log" role="log" aria-label="Conversa com Catatau" aria-live="polite" aria-relevant="additions"></div>
     <details class="chat-topics" open><summary>Escolha um assunto</summary><div id="chat-choices" class="chat-choices"></div></details>
     <form id="catatau-form" class="chat-form"><label class="sr-only" for="chat-input">Sua pergunta ao Catatau</label><input id="chat-input" name="question" maxlength="400" required autocomplete="off" placeholder="Ex.: tenho contas atrasadas?" aria-describedby="chat-local-note"><button id="chat-send" class="button primary" type="submit" aria-label="Enviar pergunta">Enviar</button></form>
-    <small id="chat-local-note" class="chat-foot">Respostas programadas; sem IA conversacional. Histórico das últimas 20 consultas deste perfil, só nesta sessão. É apagado ao sair ou recarregar.</small>
+    <small id="chat-local-note" class="chat-foot">Consultas e planejamento guiado locais, sem IA externa. Últimas 20 consultas deste perfil, só nesta sessão. Simular não cria despesas.</small>
   </aside>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <noscript>Ative o JavaScript para usar o 4J Finance.</noscript>
@@ -659,7 +662,7 @@ const Store={
   get permission(){if(this.demo)return 'owner';if(!this.user||this.userDoc?.status!=='approved'||!this.profile||!this.meta.ownerUid)return 'view';if(this.meta.ownerUid===this.user.uid)return 'owner';if(this.user.emailVerified===true&&(this.meta.sharedEdit||[]).includes(this.user.email.toLowerCase()))return 'edit';return 'view';},
   get editable(){return ['owner','edit'].includes(this.permission);},get manageable(){return this.permission==='owner';},
   emit(){window.dispatchEvent(new Event('finance-update'));},
-  cleanProfiles(){this.profileListeners.splice(0).forEach(fn=>fn());this.meta={};this.data={receitas:[],despesas:[]};},
+  cleanProfiles(){this.profileDataScope=null;this.profileListeners.splice(0).forEach(fn=>fn());this.meta={};this.data={receitas:[],despesas:[]};},
   clean(){this.cleanProfiles();this.listeners.splice(0).forEach(fn=>fn());this.profiles=[];this.profile='';},
   fail(e){console.error('4J:',e.code||e.message);this.error=e.code==='permission-denied'?'Seu acesso a este perfil não está disponível. Verifique as permissões com a administração.':'Não foi possível carregar os dados. Verifique a conexão e tente novamente.';this.loading=false;if(this.screen==='loading')this.screen='auth';this.emit();},
   async init(){
@@ -667,7 +670,15 @@ const Store={
     try{if(!window.firebase)throw new Error('Firebase unavailable');firebase.initializeApp(window.FINANCE_CONFIG);this.auth=firebase.auth();this.db=firebase.firestore();this.auth.onAuthStateChanged(user=>{this.clean();this.userListener?.();this.userListener=null;this.user=user;this.userDoc=null;this.loading=!!user;this.screen=user?'loading':'auth';this.emit();if(!user)return;this.userListener=this.db.collection('users').doc(user.uid).onSnapshot(doc=>{if(this.user?.uid!==user.uid)return;this.userDoc=doc.data();if(!this.userDoc||this.userDoc.status!=='approved'){this.clean();this.screen='pending';this.loading=false;this.emit();return;}this.screen='app';this.watchProfiles();},e=>this.fail(e));});}catch(e){this.loading=false;this.screen='auth';this.error='Não foi possível conectar. Confira sua internet e recarregue a página.';this.emit();}
   },
   watchProfiles(){this.listeners.splice(0).forEach(fn=>fn());const coll=this.db.collection('profiles');const queries=[coll.where('ownerUid','==',this.user.uid),...(this.user.emailVerified===true?[coll.where('sharedView','array-contains',this.user.email.toLowerCase()),coll.where('sharedEdit','array-contains',this.user.email.toLowerCase())]:[])];const snapshots=new Map();queries.forEach((q,i)=>this.listeners.push(q.onSnapshot(snap=>{snapshots.set(i,snap.docs.map(d=>({id:d.id,...d.data()})));if(snapshots.size!==queries.length)return;const merged=new Map();snapshots.forEach(rows=>rows.forEach(d=>merged.set(d.id,d)));this.profiles=[...merged.values()].sort((a,b)=>a.id.localeCompare(b.id));this.loading=false;if(!this.profiles.some(p=>p.id===this.profile)){this.cleanProfiles();this.profile='';if(this.profiles.length)this.selectProfile(ProfilePreference.pick(this));}this.emit();},e=>this.fail(e))));},
-  selectProfile(id){if(!this.profiles.some(p=>p.id===id))return;this.cleanProfiles();this.profile=id;this.error='';this.loading=true;ProfilePreference.remember(this,id);this.emit();if(this.demo){this.seed();this.emit();return;}let ready=0;const ref=this.db.collection('profiles').doc(id);this.profileListeners.push(ref.onSnapshot(doc=>{this.meta=doc.data()||{};this.emit();},e=>this.fail(e)));['receitas','despesas'].forEach(cat=>{let first=true;this.profileListeners.push(ref.collection(cat).onSnapshot(snap=>{this.data[cat]=snap.docs.map(d=>({...d.data(),id:d.id}));if(first){ready++;first=false;}if(ready===2)this.loading=false;this.emit();},e=>this.fail(e)));});},
+  selectProfile(id){
+    if(!this.profiles.some(p=>p.id===id))return;this.cleanProfiles();this.profile=id;this.error='';this.loading=true;ProfilePreference.remember(this,id);this.emit();
+    if(this.demo){this.seed();this.emit();return;}
+    const scope=this.profileDataScope={uid:this.user.uid,profile:id,ready:false},current=()=>this.profileDataScope===scope&&this.user?.uid===scope.uid&&this.profile===id;
+    let ready=0,metaReady=false;const ref=this.db.collection('profiles').doc(id);
+    const loaded=()=>{scope.ready=metaReady&&ready===2;this.loading=!scope.ready;this.emit();};
+    this.profileListeners.push(ref.onSnapshot(doc=>{if(!current())return;if(!doc.exists){this.fail({code:'permission-denied'});return;}this.meta=doc.data()||{};metaReady=true;loaded();},e=>{if(current())this.fail(e);}));
+    ['receitas','despesas'].forEach(cat=>{let first=true;this.profileListeners.push(ref.collection(cat).onSnapshot(snap=>{if(!current())return;this.data[cat]=snap.docs.map(d=>({...d.data(),id:d.id}));if(first){ready++;first=false;}loaded();},e=>{if(current())this.fail(e);}));});
+  },
   assertEdit(){if(!this.editable)throw new Error('Este perfil permite apenas visualização.');},
   assertManage(){if(!this.manageable)throw new Error('Apenas o proprietário pode fazer isso.');},
   async touch(){if(this.demo)return;try{await this.db.collection('profiles').doc(this.profile).update({lastUpdatedAt:firebase.firestore.FieldValue.serverTimestamp(),lastUpdatedBy:this.userDoc.name||this.user.email});}catch(e){console.warn('Metadados não atualizados',e.code);}},
@@ -1587,6 +1598,325 @@ const MobileShell={
 
 function closeCatatau(restoreFocus=true){const wasOpen=!$('#catatau-panel').hidden;$('#catatau-panel').hidden=true;$('#catatau-launcher').setAttribute('aria-expanded','false');$('#catatau-launcher').setAttribute('aria-label','Abrir Catatau, seu assistente');$('#catatau-launcher').title='Abrir Catatau';MobileShell.chatState(false);if(restoreFocus&&wasOpen)MobileShell.restoreChatFocus();}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#catatau-panel').hidden){e.preventDefault();closeCatatau();}});
+/* Catatau purchase planning: local calculations and voluntary guidance only. */
+var CatatauPlanner = (() => {
+  'use strict';
+  const MAX_CENTS = 99999999900;
+  const monthIndex = value => /^\d{4}-(0[1-9]|1[0-2])$/.test(value || '') ? Number(value.slice(0, 4)) * 12 + Number(value.slice(5)) - 1 : null;
+  const monthKey = index => String(Math.floor(index / 12)).padStart(4, '0') + '-' + String(index % 12 + 1).padStart(2, '0');
+  const validCents = value => Number.isSafeInteger(value) && value >= 0 && value <= MAX_CENTS;
+  const normalize = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+  function moneyInput(value) {
+    let text = String(value ?? '').trim().replace(/^R\$\s*/i, '').replace(/\s/g, '');
+    if (text.includes(',')) {
+      if (!/^(?:\d+|\d{1,3}(?:\.\d{3})+)(?:,\d{1,2})?$/.test(text)) return null;
+      text = text.replace(/\./g, '').replace(',', '.');
+    }
+    if (!/^\d+(?:\.\d{1,2})?$/.test(text)) return null;
+    const [whole, fraction = ''] = text.split('.');
+    const cents = Number(whole) * 100 + Number(fraction.padEnd(2, '0'));
+    return validCents(cents) ? cents : null;
+  }
+  function dateInput(value, today) {
+    let text = String(value || '').trim();
+    if (normalize(text) === 'hoje') text = today;
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(text)) text = text.split('/').reverse().join('-');
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(text) || Number(text.slice(0, 4)) < 1900 || Number(text.slice(0, 4)) > 2200) return null;
+    const date = new Date(text + 'T12:00:00Z');
+    return Number.isFinite(date.getTime()) && date.toISOString().slice(0, 10) === text ? text : null;
+  }
+  function addMonths(date, offset) {
+    if (!dateInput(date) || !Number.isInteger(offset) || offset < 0 || offset > 24) throw Error('invalid-date');
+    const [year, month, day] = date.split('-').map(Number);
+    const shifted = new Date(Date.UTC(year, month - 1 + offset, 1));
+    shifted.setUTCDate(Math.min(day, new Date(Date.UTC(shifted.getUTCFullYear(), shifted.getUTCMonth() + 1, 0)).getUTCDate()));
+    return shifted.toISOString().slice(0, 10);
+  }
+  function splitCents(total, count) {
+    if (!validCents(total) || !Number.isInteger(count) || count < 1 || count > 24 || total < count) throw Error('invalid-installments');
+    const base = Math.floor(total / count), remainder = total % count;
+    return Array.from({ length: count }, (_, index) => base + (index < remainder ? 1 : 0));
+  }
+  function schedules(terms) {
+    if (!validCents(terms.cashCents) || terms.cashCents === 0 || !dateInput(terms.purchaseDate)) throw Error('invalid-price');
+    const result = [{ key: 'cash', totalCents: terms.cashCents, upfrontCents: terms.cashCents, events: [{ date: terms.purchaseDate, cents: terms.cashCents }] }];
+    if (terms.count === undefined || terms.count === 0) return result;
+    if (!Number.isInteger(terms.count) || terms.count < 2 || terms.count > 24) throw Error('invalid-installments');
+    if (!validCents(terms.totalCents) || !validCents(terms.downCents) || terms.downCents >= terms.totalCents || !dateInput(terms.firstDue) || terms.firstDue < terms.purchaseDate) throw Error('invalid-installments');
+    const financed = terms.totalCents - terms.downCents;
+    result.push({ key: 'card', totalCents: terms.totalCents, financedCents: financed, upfrontCents: terms.downCents,
+      events: [...(terms.downCents ? [{ date: terms.purchaseDate, cents: terms.downCents }] : []), ...splitCents(financed, terms.count).map((cents, index) => ({ date: addMonths(terms.firstDue, index), cents }))] });
+    return result;
+  }
+  function reserveTarget(income, plan) {
+    const keys = ['fixed', 'reserve', 'variable'];
+    const amounts = Object.fromEntries(keys.map(key => [key, Math.floor(income * plan[key] / 100)]));
+    const order = [...keys].sort((a, b) => income * plan[b] % 100 - income * plan[a] % 100);
+    for (let rest = income - keys.reduce((sum, key) => sum + amounts[key], 0), index = 0; rest > 0; rest--, index++) amounts[order[index % 3]]++;
+    return amounts.reserve;
+  }
+  function snapshot({ store, fromMonth, months = 12, today, rowsForWindow }) {
+    const fail = () => { throw Error('profile-unavailable'); };
+    if (!store || store.screen !== 'app' || store.loading || store.error || !store.user?.uid || !store.profile || !store.profiles?.some(profile => profile.id === store.profile)) fail();
+    if (!store.demo) {
+      const meta = store.meta, email = String(store.user.email || '').toLowerCase();
+      const invited = store.user.emailVerified === true && [meta?.sharedView, meta?.sharedEdit].some(list => Array.isArray(list) && list.includes(email));
+      if (store.userDoc?.status !== 'approved' || !meta?.ownerUid || !(meta.ownerUid === store.user.uid || invited)) fail();
+      if (!store.profileDataScope || store.profileDataScope.uid !== store.user.uid || store.profileDataScope.profile !== store.profile || !store.profileDataScope.ready) fail();
+    }
+    const from = monthIndex(fromMonth);
+    if (from === null || !Number.isInteger(months) || months < 1 || months > 24 || !dateInput(today)) throw Error('invalid-window');
+    const planInput = store.meta?.budgetPlan;
+    const planKnown = !!planInput && ['fixed', 'reserve', 'variable'].every(key => Number.isInteger(planInput[key]) && planInput[key] >= 0 && planInput[key] <= 100) && planInput.fixed + planInput.reserve + planInput.variable === 100;
+    const plan = planKnown ? { fixed: planInput.fixed, reserve: planInput.reserve, variable: planInput.variable } : { fixed: 50, reserve: 20, variable: 30 };
+    const toMonth = monthKey(from + months - 1), rows = rowsForWindow(fromMonth, toMonth);
+    if (!Array.isArray(rows)) throw Error('invalid-records');
+    const output = Array.from({ length: months }, (_, index) => ({ month: monthKey(from + index), incomeCents: 0, incomeKnown: false, expenseCents: 0, unpaidCents: 0, recordedReserveCents: null }));
+    for (const row of rows) {
+      if (!dateInput(row.date) || !['receita', 'despesa'].includes(row.type) || typeof row.value !== 'number' || !Number.isFinite(row.value) || row.value < 0 || !validCents(Math.round(row.value * 100))) throw Error('invalid-records');
+      const position = monthIndex(row.date.slice(0, 7)) - from;
+      if (position < 0 || position >= months) continue;
+      const entry = output[position], cents = Math.round(row.value * 100);
+      if (row.type === 'receita') { entry.incomeCents += cents; entry.incomeKnown = true; }
+      else { entry.expenseCents += cents; if (!row.paid) entry.unpaidCents += cents; }
+      if (!validCents(entry.incomeCents) || !validCents(entry.expenseCents)) throw Error('invalid-records');
+    }
+    for (const entry of output) if (Object.hasOwn(store.meta?.budgetMonths || {}, entry.month)) {
+      const value = store.meta.budgetMonths[entry.month];
+      if (typeof value !== 'number' || !Number.isFinite(value) || value < 0 || !validCents(Math.round(value * 100))) throw Error('invalid-records');
+      entry.recordedReserveCents = Math.round(value * 100);
+    }
+    return { version: 1, currency: 'BRL', scope: JSON.stringify([store.user.uid, store.profile]), today, fromMonth, toMonth, plan, planKnown, months: output };
+  }
+  function evaluate(finance, terms, assumptions = {}) {
+    const variants = schedules(terms);
+    if (!finance || !Array.isArray(finance.months) || finance.months.length < 1 || finance.months.length > 24) throw Error('invalid-snapshot');
+    const knownMonths = new Set(finance.months.map(month => month.month));
+    for (const option of variants) if (option.events.some(event => !knownMonths.has(event.date.slice(0, 7)))) throw Error('outside-window');
+    const extraKnown = validCents(assumptions.extraMonthlyCents);
+    const reserveKnown = assumptions.reserveMode === 'plan' || (assumptions.reserveMode === 'fixed' && validCents(assumptions.reserveMonthlyCents));
+    return variants.map(option => {
+      const missing = [], rows = finance.months.map(entry => {
+        const supplied = assumptions.incomes?.[entry.month];
+        const known = entry.incomeKnown || validCents(supplied);
+        const income = entry.incomeKnown ? entry.incomeCents : validCents(supplied) ? supplied : null;
+        if (!known) missing.push('Renda de ' + entry.month);
+        const reserve = known && reserveKnown ? Math.max(entry.recordedReserveCents ?? 0, assumptions.reserveMode === 'fixed' ? assumptions.reserveMonthlyCents : reserveTarget(income, finance.plan)) : null;
+        const purchase = option.events.filter(event => event.date.startsWith(entry.month)).reduce((sum, event) => sum + event.cents, 0);
+        const before = known && extraKnown && reserve !== null ? income - entry.expenseCents - assumptions.extraMonthlyCents - reserve : null;
+        return { month: entry.month, incomeCents: income, existingCents: entry.expenseCents, extraCents: extraKnown ? assumptions.extraMonthlyCents : null, reserveCents: reserve, purchaseCents: purchase, beforeCents: before, afterCents: before === null ? null : before - purchase };
+      });
+      if (!extraKnown) missing.push('Gastos mensais ainda não registrados');
+      if (!reserveKnown) missing.push('Valor a preservar para reserva');
+      const deficits = rows.filter(row => row.afterCents !== null && row.afterCents < 0);
+      let cashShortfallCents = 0, limitShortfallCents = 0;
+      if (option.upfrontCents > 0) {
+        if (!validCents(assumptions.spendableCashCents)) missing.push('Dinheiro livre na data da compra');
+        else cashShortfallCents = Math.max(0, option.upfrontCents - assumptions.spendableCashCents);
+      }
+      if (option.key === 'card') {
+        if (!validCents(assumptions.cardLimitCents)) missing.push('Limite disponível do cartão');
+        else limitShortfallCents = Math.max(0, option.financedCents - assumptions.cardLimitCents);
+      }
+      return { ...option, rows, missing, deficits, cashShortfallCents, limitShortfallCents,
+        status: deficits.length || cashShortfallCents || limitShortfallCents ? 'over' : missing.length ? 'insufficient' : 'within',
+        extraCostCents: option.totalCents - terms.cashCents };
+    });
+  }
+  const core = { moneyInput, dateInput, addMonths, splitCents, schedules, snapshot, evaluate, reserveTarget };
+  if (typeof module === 'object' && module.exports) module.exports = core;
+  if (typeof document === 'undefined' || typeof Store === 'undefined') return core;
+
+  const currency = cents => Money.format(cents / 100);
+  const dateLabel = date => date.split('-').reverse().join('/');
+  const monthLabel = value => monthName(value);
+  let scope = '', draft = null, notice = '', signature = '', firm = false, revision = 0;
+  const preferenceKey = key => '4j-catatau-firm-v1:' + key;
+  const answer = text => ({ text, scope: 'Planejamento local · ' + profileName() });
+  function currentScope() { return Store.screen === 'app' && Store.user?.uid && Store.profile ? JSON.stringify([Store.user.uid, Store.profile]) : ''; }
+  function fingerprint() { return JSON.stringify([revision, Store.loading, Store.error, Store.userDoc?.status, Store.user?.emailVerified, Store.meta.ownerUid]); }
+  function preferences() {
+    try { firm = !!scope && localStorage.getItem(preferenceKey(scope)) === 'true'; } catch { firm = false; }
+  }
+  function sync() {
+    const next = currentScope();
+    if (next !== scope) { scope = next; draft = null; notice = ''; signature = ''; preferences(); }
+    const nextSignature = fingerprint();
+    if (signature && signature !== nextSignature && draft) { draft = null; notice = 'Os registros ou o acesso deste perfil mudaram. A simulação foi encerrada para não usar dados antigos. Comece novamente em “Planejar uma compra”.'; }
+    signature = nextSignature;
+    if (!catatauReady()) draft = null;
+    const checkbox = document.querySelector('#catatau-firm');
+    if (checkbox) { checkbox.checked = firm; checkbox.disabled = !catatauReady(); }
+    const note = document.querySelector('#catatau-firm-note');
+    if (note) note.textContent = firm ? 'Ativo: vou dizer “Não compre agora” se a compra comprometer o plano informado. Registrar despesas continua liberado.' : 'Opcional e só neste perfil. Não bloqueia banco, cartão ou registro de despesas.';
+    controls();
+  }
+  function clear() { draft = null; notice = ''; controls(); }
+  function controls() {
+    const root = document.querySelector('#planner-actions');
+    if (!root) return;
+    root.replaceChildren();
+    const choices = !draft ? [['Planejar uma compra', 'Quero planejar uma compra']]
+      : draft.step === 'date' ? [['Hoje', 'hoje'], ['Cancelar', 'cancelar']]
+      : draft.step === 'count' ? [['Só à vista', 'não'], ['Cancelar', 'cancelar']]
+      : ['terms', 'confirm'].includes(draft.step) ? [['Confirmar', 'confirmar'], ['Recomeçar', 'recomeçar'], ['Cancelar', 'cancelar']]
+      : draft.step === 'reserve' ? [['Preservar o plano', 'confirmar'], ['Não sei', 'não sei'], ['Cancelar', 'cancelar']]
+      : ['income', 'extra', 'cash', 'limit'].includes(draft.step) ? [['Não sei', 'não sei'], ['Cancelar', 'cancelar']]
+      : [['Cancelar', 'cancelar']];
+    for (const [label, value] of choices) { const button = document.createElement('button'); button.type = 'button'; button.textContent = label; button.disabled = !catatauReady(); button.addEventListener('click', () => askCatatau(value)); root.append(button); }
+    const input = document.querySelector('#chat-input');
+    if (input) { input.placeholder = draft ? 'Responda à etapa acima ou digite cancelar' : 'Ex.: posso planejar uma compra?'; input.setAttribute('inputmode', draft && ['price', 'count', 'total', 'down', 'income', 'extra', 'cash', 'limit'].includes(draft.step) ? 'decimal' : 'text'); }
+  }
+  function prompt() {
+    const prompts = {
+      name: 'O que você quer comprar ou qual despesa está planejando? Dê um nome curto. Esta conversa só simula; não cria um lançamento. Para sair, digite cancelar.',
+      price: 'Qual é o preço total à vista, já com frete e taxas? Ex.: 1.200,00.',
+      date: 'Em que data pretende comprar? Use DD/MM/AAAA ou hoje. Vou olhar pelo menos 12 meses, até o limite de 24.',
+      count: 'Há uma opção parcelada no cartão para comparar? Informe o número de parcelas (2 a 24) ou responda não para avaliar só à vista.',
+      total: 'Qual é o total final parcelado, somando entrada, parcelas, juros, frete e taxas? Informe o total, não o valor de uma parcela. Se não souber, confirme com a loja antes de continuar.',
+      down: 'Qual é o valor da entrada? Digite 0 se não houver. Ela será considerada na data da compra.',
+      due: 'Qual é o vencimento da primeira parcela? Use DD/MM/AAAA. Não deduzo fechamento ou vencimento pelo nome do cartão.',
+      extra: 'Quanto reservar por mês para gastos que ainda não estão nos registros, como mercado e transporte? Informe um valor extra mensal; 0 significa que você conferiu e já incluiu tudo. Também pode responder não sei.',
+      cash: 'Quanto estará livre para usar na data da compra, depois de separar contas, reserva e metas? Informe o valor ou não sei. O saldo mensal do app não é o saldo da sua conta bancária.',
+      limit: 'Qual é o limite disponível do cartão para esta compra? Informe o valor ou não sei. Vou comparar com o total financiado, e não apenas com uma parcela; confirme a regra do seu cartão.',
+    };
+    if (draft.step === 'income') return 'Não há renda registrada em ' + draft.missingIncome.map(monthLabel).join(', ') + '. Qual renda líquida mensal você espera nesses meses? O mesmo valor será usado apenas nesta simulação. Digite 0 se não haverá renda, ou não sei. Não vou repetir o salário automaticamente.';
+    if (draft.step === 'reserve') return 'Vou preservar a maior entre a reserva já registrada no mês e a meta de ' + draft.finance.plan.reserve + '% da renda (' + (draft.finance.planKnown ? 'plano deste perfil' : 'plano padrão, que você pode ajustar') + '). Responda confirmar, informe um valor mensal fixo para preservar ou não sei. O acumulado das metas não será somado nem descontado novamente.';
+    return prompts[draft.step] || '';
+  }
+  function advance(step) { draft.step = step; controls(); return answer(prompt()); }
+  function termsSummary() {
+    const options = schedules(draft.terms), installment = options[1];
+    return 'Confira: ' + draft.name + '.\nCompra: ' + dateLabel(draft.terms.purchaseDate) + '.\nÀ vista: ' + currency(draft.terms.cashCents) + '.' + (installment ? '\nCartão: total ' + currency(installment.totalCents) + ', entrada ' + currency(installment.upfrontCents) + ' e ' + draft.terms.count + ' parcelas, primeira em ' + dateLabel(draft.terms.firstDue) + '.\nParcelas: ' + splitCents(installment.financedCents, draft.terms.count).map(currency).join(' + ') + '.' : '') + '\n\nResponda confirmar se os valores e datas estão corretos, ou recomeçar.';
+  }
+  function prepareFinance() {
+    const options = schedules(draft.terms), fromMonth = Money.today().slice(0, 7), last = options.flatMap(option => option.events).map(event => event.date.slice(0, 7)).sort().at(-1);
+    const months = Math.max(12, monthIndex(last) - monthIndex(fromMonth) + 1);
+    if (months > 24) return false;
+    draft.finance = snapshot({ store: Store, fromMonth, months, today: Money.today(), rowsForWindow: allRows });
+    draft.missingIncome = draft.finance.months.filter(month => !month.incomeKnown).map(month => month.month);
+    draft.assumptions = { incomes: {} };
+    return true;
+  }
+  function assumptionsSummary() {
+    const a = draft.assumptions, absent = value => validCents(value) ? currency(value) : 'não informado';
+    return 'Antes de calcular, confira as hipóteses de ' + monthLabel(draft.finance.fromMonth) + ' a ' + monthLabel(draft.finance.toMonth) + ':\n' +
+      (draft.missingIncome.length ? '• Renda mensal nos meses sem registro: ' + absent(a.incomes[draft.missingIncome[0]]) + '.\n' : '• Renda: somente os valores registrados em cada mês.\n') +
+      '• Gastos extras mensais: ' + absent(a.extraMonthlyCents) + '.\n• Reserva: ' + (a.reserveMode === 'plan' ? 'preservar a meta de ' + draft.finance.plan.reserve + '% e a reserva já registrada' : a.reserveMode === 'fixed' ? 'preservar pelo menos ' + currency(a.reserveMonthlyCents) + ' por mês e a reserva já registrada' : 'não informada') +
+      '.\n• Dinheiro livre na compra: ' + absent(a.spendableCashCents) + '.' + (draft.terms.count ? '\n• Limite disponível do cartão: ' + absent(a.cardLimitCents) + '.' : '') +
+      '\n\nOs registros podem estar incompletos. Confirme também os gastos e as rendas já cadastrados. Digite confirmar para calcular, ou recomeçar. Nada será salvo nas suas finanças.';
+  }
+  function resultText() {
+    const results = evaluate(draft.finance, draft.terms, draft.assumptions), lines = [draft.name + ' · projeção de ' + draft.finance.months.length + ' meses, somente deste perfil.'];
+    for (const option of results) {
+      const title = option.key === 'cash' ? 'À vista' : 'Parcelado no cartão';
+      lines.push('\n' + title + ' — ' + currency(option.totalCents));
+      if (option.status === 'over') {
+        lines.push(firm ? 'Não compre agora nesta condição. Ela compromete o cenário informado.' : 'Esta condição não cabe no cenário informado. Vale adiar ou ajustar a compra.');
+        for (const row of option.deficits.slice(0, 4)) lines.push('• ' + monthLabel(row.month) + ': faltariam ' + currency(-row.afterCents) + ' após despesas, reserva e compra' + (row.beforeCents < 0 ? '; o mês já estava negativo antes dela' : '') + '.');
+        if (option.deficits.length > 4) lines.push('• Outros ' + (option.deficits.length - 4) + ' meses também ficariam negativos.');
+        if (option.cashShortfallCents) lines.push('• Faltam ' + currency(option.cashShortfallCents) + ' no dinheiro livre informado para a compra/entrada.');
+        if (option.limitShortfallCents) lines.push('• O total financiado supera o limite disponível em ' + currency(option.limitShortfallCents) + '.');
+        lines.push('Para caber, reduza o custo ou ajuste as despesas/renda nos meses apontados. Adiar só ajuda se o cenário do novo mês permitir. Refaça a simulação depois de conferir.');
+      } else if (option.status === 'insufficient') lines.push(firm ? 'Não decida esta compra ainda. O Modo firme aguarda os dados que faltam.' : 'Ainda não dá para dizer se cabe: faltam dados.');
+      else {
+        const lowest = option.rows.reduce((best, row) => row.afterCents < best.afterCents ? row : best);
+        lines.push('Cabe no orçamento informado, preservando a reserva escolhida. A menor sobra mensal projetada é ' + currency(lowest.afterCents) + ' em ' + monthLabel(lowest.month) + '.');
+        lines.push('Isso não garante saldo no dia do vencimento nem aprovação do cartão. Confira se seus registros estão completos.');
+      }
+      if (option.missing.length) lines.push('A confirmar: ' + option.missing.slice(0, 4).join('; ') + (option.missing.length > 4 ? '; e outros ' + (option.missing.length - 4) + ' meses/dados' : '') + '.');
+      if (option.key === 'card') lines.push(option.extraCostCents > 0 ? 'O parcelamento custa ' + currency(option.extraCostCents) + ' a mais que à vista.' : option.extraCostCents < 0 ? 'Pelos preços informados, parcelar custa ' + currency(-option.extraCostCents) + ' a menos; confira a oferta.' : 'O total parcelado é igual ao preço à vista informado.');
+    }
+    lines.push('\nEste é um planejamento local, sem IA externa. O Modo firme é opcional: não bloqueia banco, cartão ou o registro de uma despesa que já aconteceu. Para mudar condições, escolha Planejar uma compra.');
+    return lines.join('\n');
+  }
+  function handle(text) {
+    sync();
+    const command = normalize(text);
+    if (['cancelar', 'sair do planejamento'].includes(command) && draft) { clear(); return answer('Planejamento encerrado. Nenhum lançamento foi criado.'); }
+    if (/^(quero planejar uma compra|planejar uma compra|planejar compra|simular compra|recomecar)$/.test(command) || (!draft && /\b(posso comprar|quero comprar|compra cabe)\b/.test(command))) {
+      notice = '';
+      try { snapshot({ store: Store, fromMonth: Money.today().slice(0, 7), today: Money.today(), months: 1, rowsForWindow: allRows }); }
+      catch { return answer('Aguarde os dados deste perfil e confira seu acesso antes de planejar.'); }
+      draft = { name: '', terms: {}, step: 'name', assumptions: {} };
+      const topics = document.querySelector('.chat-topics'); if (topics) topics.open = false;
+      return advance('name');
+    }
+    if (notice) { const message = notice; notice = ''; return answer(message); }
+    if (!draft) return null;
+    if (command === 'ajuda') return answer(prompt());
+    const unknown = /^(nao sei|nao informado)$/.test(command), cents = moneyInput(text);
+    const invalid = message => answer(message + '\n\n' + prompt());
+    try {
+      switch (draft.step) {
+        case 'name':
+          if (!text.trim() || text.trim().length > 80) return invalid('Use um nome entre 1 e 80 caracteres.');
+          draft.name = text.trim(); return advance('price');
+        case 'price':
+          if (cents === null || cents <= 0) return invalid('Informe um valor positivo em reais, como 1.200,00.');
+          draft.terms.cashCents = cents; return advance('date');
+        case 'date': {
+          const date = dateInput(text, Money.today());
+          if (!date || date < Money.today() || monthIndex(date.slice(0, 7)) - monthIndex(Money.today().slice(0, 7)) > 23) return invalid('Escolha hoje ou uma data nos próximos 24 meses.');
+          draft.terms.purchaseDate = date; return advance('count');
+        }
+        case 'count':
+          if (/^(nao|a vista|so a vista)$/.test(command)) { draft.terms.count = 0; draft.step = 'terms'; controls(); return answer(termsSummary()); }
+          if (!/^\d{1,2}$/.test(command) || Number(command) < 2 || Number(command) > 24) return invalid('Use um número de 2 a 24, ou não.');
+          draft.terms.count = Number(command); return advance('total');
+        case 'total':
+          if (cents === null || cents < draft.terms.count) return invalid('Informe o custo total final, em reais.');
+          draft.terms.totalCents = cents; return advance('down');
+        case 'down':
+          if (cents === null || draft.terms.totalCents - cents < draft.terms.count) return invalid('A entrada precisa deixar pelo menos um centavo por parcela.');
+          draft.terms.downCents = cents; return advance('due');
+        case 'due': {
+          const date = dateInput(text, Money.today());
+          if (!date || date < draft.terms.purchaseDate || monthIndex(addMonths(date, draft.terms.count - 1).slice(0, 7)) - monthIndex(Money.today().slice(0, 7)) > 23) return invalid('O primeiro vencimento deve ser na compra ou depois, e a última parcela deve ficar dentro dos próximos 24 meses.');
+          draft.terms.firstDue = date; draft.step = 'terms'; controls(); return answer(termsSummary());
+        }
+        case 'terms':
+          if (command !== 'confirmar') return answer(termsSummary());
+          if (!prepareFinance()) { clear(); return answer('A compra ultrapassa o limite de 24 meses. Recomece com um prazo menor.'); }
+          return advance(draft.missingIncome.length ? 'income' : 'extra');
+        case 'income':
+          if (!unknown && cents === null) return invalid('Informe a renda mensal prevista, 0 ou não sei.');
+          for (const month of draft.missingIncome) draft.assumptions.incomes[month] = unknown ? null : cents;
+          return advance('extra');
+        case 'extra':
+          if (!unknown && cents === null) return invalid('Informe um valor mensal, 0 ou não sei.');
+          draft.assumptions.extraMonthlyCents = unknown ? null : cents; return advance('reserve');
+        case 'reserve':
+          if (command === 'confirmar') draft.assumptions.reserveMode = 'plan';
+          else if (unknown) draft.assumptions.reserveMode = 'unknown';
+          else if (cents !== null) { draft.assumptions.reserveMode = 'fixed'; draft.assumptions.reserveMonthlyCents = cents; }
+          else return invalid('Responda confirmar, um valor mensal ou não sei.');
+          return advance('cash');
+        case 'cash':
+          if (!unknown && cents === null) return invalid('Informe um valor livre, 0 ou não sei.');
+          draft.assumptions.spendableCashCents = unknown ? null : cents;
+          if (draft.terms.count) return advance('limit');
+          draft.step = 'confirm'; controls(); return answer(assumptionsSummary());
+        case 'limit':
+          if (!unknown && cents === null) return invalid('Informe o limite disponível, 0 ou não sei.');
+          draft.assumptions.cardLimitCents = unknown ? null : cents; draft.step = 'confirm'; controls(); return answer(assumptionsSummary());
+        case 'confirm': {
+          if (command !== 'confirmar') return answer(assumptionsSummary());
+          const text = resultText(); clear(); return answer(text);
+        }
+      }
+    } catch { clear(); return answer('Não foi possível calcular com segurança. Confira os dados e comece novamente. Nenhum lançamento foi criado.'); }
+    return null;
+  }
+  document.querySelector('#catatau-firm')?.addEventListener('change', event => {
+    const selected = event.target.checked; sync(); firm = selected; event.target.checked = selected;
+    try { if (scope) localStorage.setItem(preferenceKey(scope), String(firm)); } catch { /* preference remains in this session */ }
+    const note = document.querySelector('#catatau-firm-note'); if (note) note.textContent = firm ? 'Ativo: vou dizer “Não compre agora” se a compra comprometer o plano informado. Registrar despesas continua liberado.' : 'Opcional e só neste perfil. Não bloqueia banco, cartão ou registro de despesas.';
+  });
+  window.addEventListener('finance-update', () => { revision++; sync(); });
+  window.addEventListener('pagehide', clear);
+  return { ...core, sync, clear, handle };
+})();
 /* Catatau: consultas locais, sem serviços de IA ou envio de mensagens. */
 const catatauNormalize=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9\s-]/g,' ').replace(/\s+/g,' ').trim();
 function catatauReply(question,context){
@@ -1651,9 +1981,9 @@ function catatauReply(question,context){
 }
 
 const catatauMemory={user:'',key:'',histories:new Map()};
-const catatauSuggestions=['Como estão meus acertos da família?','Como estou no meu orçamento?','Onde estou desviando?','Como está minha reserva do mês?','Como cadastrar uma despesa recorrente?','Como registrar uma compra antiga?','Como está meu saldo?','Contas atrasadas','O que preciso pagar?','Gastos por categoria','Meu maior gasto','Como estão minhas metas?','Comparar com o mês anterior','Próximas parcelas','Quanto entrou em receitas?','Reembolsos pendentes','Como transferir dados?','Como registrar um gasto?'];
+const catatauSuggestions=['Quero planejar uma compra','Como estão meus acertos da família?','Como estou no meu orçamento?','Onde estou desviando?','Como está minha reserva do mês?','Como cadastrar uma despesa recorrente?','Como registrar uma compra antiga?','Como está meu saldo?','Contas atrasadas','O que preciso pagar?','Gastos por categoria','Meu maior gasto','Como estão minhas metas?','Comparar com o mês anterior','Próximas parcelas','Quanto entrou em receitas?','Reembolsos pendentes','Como transferir dados?','Como registrar um gasto?'];
 function catatauReady(){return Store.screen==='app'&&!!Store.user&&!!Store.profile&&!Store.loading&&!Store.error;}
-function resetCatatau(){catatauMemory.histories.clear();catatauMemory.user='';catatauMemory.key='';$('#chat-log').replaceChildren();$('#chat-input').value='';closeCatatau(false);}
+function resetCatatau(){if(typeof CatatauPlanner!=='undefined')CatatauPlanner.clear();catatauMemory.histories.clear();catatauMemory.user='';catatauMemory.key='';$('#chat-log').replaceChildren();$('#chat-input').value='';closeCatatau(false);}
 function syncCatatauContext(){
   const user=Store.screen==='app'?Store.user?.uid||'':'';
   if(user!==catatauMemory.user){resetCatatau();catatauMemory.user=user;}
@@ -1665,6 +1995,7 @@ function syncCatatauContext(){
   $('#chat-input').disabled=!catatauReady();$('#chat-send').disabled=!catatauReady();
   $('#chat-context').textContent=Store.profile?`${profileName()} · ${monthName(state.month)}`:'Selecione um perfil';
   $('#chat-answer').textContent=catatauReady()?'Consultas locais com os registros deste perfil.':Store.loading?'Aguarde os dados do perfil carregarem.':'Selecione um perfil disponível para consultar os registros.';
+  if(typeof CatatauPlanner!=='undefined')CatatauPlanner.sync();
 }
 function renderCatatauHistory(){
   const log=$('#chat-log');log.replaceChildren();
@@ -1674,9 +2005,10 @@ function renderCatatauHistory(){
 function askCatatau(question){
   syncCatatauContext();if(!catatauReady())return;const text=String(question||'').trim().slice(0,400);if(!text)return;
   const history=catatauMemory.histories.get(catatauMemory.key)||[];
-  const response=catatauReply(text,{month:state.month,today:Money.today(),rows:allRows(),plans:goals(),budgetMeta:Store.meta});
+  const planned=CatatauPlanner.handle(text),response=planned||catatauReply(text,{month:state.month,today:Money.today(),rows:allRows(),plans:goals(),budgetMeta:Store.meta});
   history.push({role:'user',text},{role:'assistant',text:response.text,scope:response.scope});
   catatauMemory.histories.set(catatauMemory.key,history.slice(-40));$('#chat-input').value='';renderCatatauHistory();
+  if(planned){const log=$('#chat-log'),latest=log.lastElementChild;requestAnimationFrame(()=>{if(latest&&latest===log.lastElementChild)log.scrollTop+=latest.getBoundingClientRect().top-log.getBoundingClientRect().top;});}
 }
 function openCatatau(){
   $('#toast').classList.remove('visible');
@@ -1686,7 +2018,7 @@ function openCatatau(){
   renderCatatauHistory();$('#chat-input').focus({preventScroll:true});
 }
 document.addEventListener('submit',e=>{if(e.target.id==='catatau-form'){e.preventDefault();askCatatau($('#chat-input').value);}});
-document.addEventListener('click',e=>{const action=e.target.closest('[data-action]')?.dataset.action;if(action==='logout')resetCatatau();if(action==='clear-catatau'){catatauMemory.histories.delete(catatauMemory.key);renderCatatauHistory();$('#chat-input').focus({preventScroll:true});}},true);
+document.addEventListener('click',e=>{const action=e.target.closest('[data-action]')?.dataset.action;if(action==='logout')resetCatatau();if(action==='clear-catatau'){CatatauPlanner.clear();catatauMemory.histories.delete(catatauMemory.key);renderCatatauHistory();$('#chat-input').focus({preventScroll:true});}},true);
 window.addEventListener('pagehide',resetCatatau);
 
 function familyTargets(){return Store.profiles.filter(p=>p.id!==Store.profile&&(Store.demo||p.ownerUid===Store.user?.uid||(Store.user?.emailVerified===true&&(p.sharedEdit||[]).includes(String(Store.user?.email||'').toLowerCase()))));}
@@ -2551,23 +2883,46 @@ async function openProfileOperation(kind){
 
 function renameProfile(){Store.assertManage();modal('Renomear o perfil',`<form id="rename-form"><label>Novo nome<input name="name" required maxlength="60" value="${esc(profileName())}"></label><p class="form-tip">O nome de exibição muda. Os registros e compartilhamentos são mantidos.</p><p id="rename-error" class="form-error" role="alert" hidden></p><div class="modal-actions"><button class="button primary" type="submit">Salvar nome</button></div></form>`);$('#rename-form').onsubmit=e=>{e.preventDefault();const form=e.target,name=new FormData(form).get('name').trim();runForm(form,'#rename-error',async()=>{if(!name||name.length>60)throw new Error('Use um nome de até 60 caracteres.');Store.assertManage();if(Store.demo){Store.meta.displayName=name;Store.emit();return;}await Store.db.collection('profiles').doc(Store.profile).update({displayName:name});},()=>{$('#modal').close();toast('Nome atualizado.');});};}
 /* Integrate inside DOMContentLoaded, after familyAccessSettings is declared.
-   Payment entitlements are read from trusted backend responses or signed Auth claims only. */
+   Cloudflare entitlements come from the backend; signed Auth claim fallback is legacy Firebase only. */
 const Monetization={
-  config:Object.freeze({enabled:false,region:'southamerica-east1',adsEnabled:false,adPageAllowlist:[],...(window.MONETIZATION_CONFIG||{})}),
-  uid:'',profile:'',generation:0,phase:'disabled',adFree:false,demoPaid:false,order:null,timer:null,watch:0,refreshing:null,lastRefresh:0,auth:null,channel:null,
+  config:Object.freeze({enabled:false,provider:'firebase',apiBase:'/api/pix',region:'southamerica-east1',adsEnabled:false,adPageAllowlist:[],...(window.MONETIZATION_CONFIG||{})}),
+  uid:'',profile:'',generation:0,phase:'disabled',adFree:false,demoPaid:false,paymentsEnabled:false,pendingOrderId:null,order:null,timer:null,watch:0,refreshing:null,lastRefresh:0,auth:null,channel:null,
   enabled(){return this.config.enabled===true;},
+  validOrderId(value){return typeof value==='string'&&/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);},
+  terminal(status){return ['rejected','cancelled','refunded','charged_back','expired'].includes(status);},
+  canCreate(){return this.enabled()&&this.phase==='free'&&this.paymentsEnabled===true&&!this.adFree;},
   active(){return Store.screen==='app'&&!!Store.user?.uid&&Store.userDoc?.status==='approved';},
   current(uid){return this.active()&&Store.user.uid===uid&&(Store.demo||Store.auth?.currentUser?.uid===uid);},
   sync(){
     const uid=this.active()?Store.user.uid:'';
-    if(uid!==this.uid){this.stop();this.uid=uid;this.generation++;this.phase=this.enabled()?'loading':'disabled';this.adFree=false;this.demoPaid=false;this.order=null;this.refreshing=null;this.lastRefresh=0;}
+    if(uid!==this.uid){this.stop();this.uid=uid;this.generation++;this.phase=this.enabled()?'loading':'disabled';this.adFree=false;this.demoPaid=false;this.paymentsEnabled=false;this.pendingOrderId=null;this.order=null;this.refreshing=null;this.lastRefresh=0;}
     if(this.profile!==Store.profile){this.stop();this.profile=Store.profile;}
     if(Store.auth&&Store.auth!==this.auth){this.unsubscribe?.();this.auth=Store.auth;this.unsubscribe=this.auth.onIdTokenChanged(()=>{this.sync();if(this.uid)this.refresh(false);});}
     if(Store.demo&&uid)this.phase=this.demoPaid?'paid':'free';
   },
+  apiUrl(name){
+    if(!['getMonetizationStatus','createPixCheckout','checkPixCheckout'].includes(name))throw new Error('Operação indisponível.');
+    const page=new URL(location.href),base=new URL(this.config.apiBase,page);
+    const secure=page.protocol==='https:'||(page.protocol==='http:'&&['localhost','127.0.0.1','[::1]'].includes(page.hostname));
+    if(!secure||base.origin!==page.origin||base.username||base.password||base.search||base.hash)throw new Error('Conexão indisponível.');
+    return base.origin+base.pathname.replace(/\/$/,'')+'/'+name;
+  },
   async call(name,data={}){
     if(!this.enabled()||Store.demo||!this.current(this.uid))throw new Error('Pagamentos indisponíveis.');
-    if(!window.firebase?.functions)throw new Error('Conexão indisponível.');
+    if(this.config.provider==='cloudflare'){
+      const url=this.apiUrl(name),uid=this.uid,generation=this.generation,user=Store.auth.currentUser;
+      const current=()=>this.current(uid)&&generation===this.generation&&Store.auth.currentUser===user;
+      const token=await user.getIdToken();if(!current())throw new Error('A sessão mudou.');
+      if(typeof token!=='string'||!token.trim()||typeof window.fetch!=='function')throw new Error('Conexão indisponível.');
+      if(name==='checkPixCheckout'&&!this.validOrderId(data?.orderId))throw new Error('Pedido inválido.');
+      const payload=name==='checkPixCheckout'?{orderId:data.orderId}:{};
+      const response=await window.fetch(url,{method:'POST',headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'},credentials:'same-origin',redirect:'error',body:JSON.stringify({data:payload})});
+      const result=await response.json();if(!current())throw new Error('A sessão mudou.');
+      if(!response.ok||result?.error){const error=new Error('Não foi possível concluir a solicitação.');error.code='functions/'+String(result?.error?.status||'unavailable').toLowerCase().replace(/_/g,'-');throw error;}
+      if(!result?.data||typeof result.data!=='object'||Array.isArray(result.data))throw new Error('Resposta inválida.');
+      return result.data;
+    }
+    if(this.config.provider!=='firebase'||!window.firebase?.functions)throw new Error('Conexão indisponível.');
     return(await firebase.app().functions(this.config.region).httpsCallable(name)(data)).data;
   },
   async refresh(force=false){
@@ -2577,21 +2932,23 @@ const Monetization={
     const uid=this.uid,generation=this.generation;
     const task=(async()=>{
       try{
-        const token=await Store.auth.currentUser.getIdTokenResult(force);
-        if(!this.current(uid)||generation!==this.generation)return;
-        if(token.claims.adFreeLifetime===true){this.adFree=true;this.phase='paid';this.paintCard();}
+        if(this.config.provider==='firebase'){
+          const token=await Store.auth.currentUser.getIdTokenResult(force);
+          if(!this.current(uid)||generation!==this.generation)return;
+          if(token.claims.adFreeLifetime===true){this.adFree=true;this.phase='paid';this.paintCard();}
+        }
         const status=await this.call('getMonetizationStatus');
         if(!this.current(uid)||generation!==this.generation)return;
-        if(typeof status?.adFreeLifetime!=='boolean'||Number(status.price)!==5||status.currency!=='BRL')throw new Error('Resposta inválida.');
-        this.adFree=status.adFreeLifetime;this.phase=this.adFree?'paid':'free';this.lastRefresh=Date.now();
-      }catch(error){if(this.current(uid)&&generation===this.generation&&!this.adFree)this.phase='unavailable';}
+        if(typeof status?.adFreeLifetime!=='boolean'||Number(status.price)!==5||status.currency!=='BRL'||typeof status.paymentsEnabled!=='boolean'||(status.pendingOrderId!==null&&!this.validOrderId(status.pendingOrderId)))throw new Error('Resposta inválida.');
+        this.adFree=status.adFreeLifetime;this.paymentsEnabled=status.paymentsEnabled;this.pendingOrderId=this.adFree?null:status.pendingOrderId;this.phase=this.adFree?'paid':'free';this.lastRefresh=Date.now();
+      }catch(error){if(this.current(uid)&&generation===this.generation){this.paymentsEnabled=false;if(this.config.provider==='cloudflare')this.adFree=false;if(!this.adFree)this.phase='unavailable';}}
       finally{if(generation===this.generation){this.paintCard();this.refreshing=null;}}
     })();this.refreshing=task;return task;
   },
   shouldLoadAds(page=location.pathname){return !Store.demo&&this.enabled()&&this.config.adsEnabled===true&&this.current(this.uid)&&this.phase==='free'&&!this.adFree&&Array.isArray(this.config.adPageAllowlist)&&this.config.adPageAllowlist.includes(page);},
   card(){
-    const demo=Store.demo,paid=demo?this.demoPaid:this.adFree,preparing=!demo&&!this.enabled(),checking=this.phase==='loading',failed=this.phase==='unavailable';
-    return `<div class="monetization-top"><span class="monetization-mark" aria-hidden="true">${paid?'✓':'✦'}</span><div><p class="monetization-eyebrow">SEU 4J FINANCE</p><h3>${paid?'Sem anúncios · ativo':'Mais tranquilidade para seus planos'}</h3></div><span class="monetization-badge">${demo?'Demonstração':paid?'Pagamento único':preparing?'Em preparação':checking?'Conferindo':failed?'Indisponível':'Gratuito'}</span></div><p class="modal-copy">${paid?'Todos os anúncios do Google AdSense no 4J Finance estão removidos para este login, em qualquer dispositivo enquanto você estiver conectado. Sem mensalidade e sem renovação.':preparing?'Estamos preparando o pagamento único de R$ 5,00 para retirar todos os anúncios do Google AdSense no 4J Finance para esta conta. Nenhuma cobrança está disponível agora.':'Use a versão gratuita ou retire todos os anúncios do Google AdSense no 4J Finance para esta conta por R$ 5,00, uma única vez.'}</p>${!paid?'<p class="form-tip">O benefício é permanente para seu login. Não é uma assinatura e não é repassado aos outros membros da família.</p>':''}${demo?'<p class="form-tip">Prévia com pagamento fictício. Nenhum dinheiro é enviado.</p>':''}<div class="settings-buttons"><button type="button" class="button ${paid?'secondary':'primary'}" data-action="monetization-open" ${preparing?'disabled':''}>${paid?'Ver meu benefício':preparing?'Pagamento em preparação':checking?'Ver opção sem anúncios':failed?'Tentar novamente':'Remover anúncios · R$ 5,00'}</button></div>${!paid&&!preparing?'<p class="form-tip">O pagamento é via Pix. A liberação acontece após a confirmação do pagamento.</p>':''}`;
+    const demo=Store.demo,paid=demo?this.demoPaid:this.adFree,pending=!demo&&!paid&&!!this.pendingOrderId,preparing=!demo&&(!this.enabled()||(this.phase==='free'&&!this.paymentsEnabled&&!pending)),checking=this.phase==='loading',failed=this.phase==='unavailable';
+    return `<div class="monetization-top"><span class="monetization-mark" aria-hidden="true">${paid?'✓':'✦'}</span><div><p class="monetization-eyebrow">SEU 4J FINANCE</p><h3>${paid?'Sem anúncios · ativo':'Mais tranquilidade para seus planos'}</h3></div><span class="monetization-badge">${demo?'Demonstração':paid?'Pagamento único':preparing?'Em preparação':checking?'Conferindo':failed?'Indisponível':pending?'Pix para conferir':'Gratuito'}</span></div><p class="modal-copy">${paid?'Todos os anúncios do Google AdSense no 4J Finance estão removidos para este login, em qualquer dispositivo enquanto você estiver conectado. Sem mensalidade e sem renovação.':pending?'Há um pedido de Pix para esta conta. Confira a situação ou retome o código antes de tentar outro pagamento.':preparing?'Estamos preparando o pagamento único de R$ 5,00 para retirar todos os anúncios do Google AdSense no 4J Finance para esta conta. Nenhuma nova cobrança está disponível agora.':'Use a versão gratuita ou retire todos os anúncios do Google AdSense no 4J Finance para esta conta por R$ 5,00, uma única vez.'}</p>${!paid?'<p class="form-tip">O benefício é permanente para seu login. Não é uma assinatura e não é repassado aos outros membros da família.</p>':''}${demo?'<p class="form-tip">Prévia com pagamento fictício. Nenhum dinheiro é enviado.</p>':''}<div class="settings-buttons"><button type="button" class="button ${paid?'secondary':'primary'}" data-action="monetization-open" ${preparing?'disabled':''}>${paid?'Ver meu benefício':preparing?'Pagamento em preparação':checking?'Ver opção sem anúncios':failed?'Tentar novamente':pending?'Conferir meu Pix':'Remover anúncios · R$ 5,00'}</button></div>${!paid&&!preparing?'<p class="form-tip">O pagamento é via Pix. A liberação acontece após a confirmação do pagamento.</p>':''}`;
   },
   appendCard(){
     this.sync();const container=$('#modal-content');if(!container)return;let card=$('#monetization-card');
@@ -2600,40 +2957,68 @@ const Monetization={
   },
   paintCard(){const card=$('#monetization-card');if(card)card.innerHTML=this.card();},
   stop(){clearTimeout(this.timer);this.timer=null;this.watch++;},
-  errorText(error){const code=String(error?.code||'').split('/').pop();return({'unauthenticated':'Entre novamente na sua conta para continuar.','permission-denied':'Confirme seu e-mail e confira se sua conta está ativa antes de pagar.','invalid-argument':'Confira o CPF informado. Ele deve ser válido e pertencer ao pagador.','resource-exhausted':'Aguarde um pouco antes de tentar novamente.','failed-precondition':'O pagamento não está disponível para esta conta agora. Confirme seu e-mail ou tente mais tarde.'})[code]||'Não conseguimos conferir o pagamento agora. Nenhum benefício foi liberado sem confirmação. Tente novamente.';},
+  errorText(error){const code=String(error?.code||'').split('/').pop();return({'unauthenticated':'Entre novamente na sua conta para continuar.','permission-denied':'Confirme seu e-mail e confira se sua conta está ativa antes de pagar.','invalid-argument':'Não foi possível preparar o Pix. Confira sua conta e tente novamente.','resource-exhausted':'Aguarde um pouco antes de tentar novamente.','failed-precondition':'O pagamento não está disponível para esta conta agora. Confirme seu e-mail ou tente mais tarde.'})[code]||'Não conseguimos conferir o pagamento agora. Nenhum benefício foi liberado sem confirmação. Tente novamente.';},
   frame(title,content){this.stop();modal(title,`<div id="pix-checkout">${content}</div>`);},
   paidScreen(demo=false){this.frame(demo?'Demonstração concluída':'Seu 4J, sem anúncios',`<div class="pix-result"><span class="pix-success" aria-hidden="true">✓</span><h3>${demo?'Assim será a confirmação':'Pagamento confirmado'}</h3><p>${demo?'Esta é apenas uma simulação. Sua conta real não foi alterada.':'Seu benefício permanente está ativo para este login. Ele acompanha você nos outros dispositivos, sem pagar novamente.'}</p></div><div class="pix-summary"><span>Plano</span><b>Sem anúncios</b><span>Cobrança</span><b>Única · R$ 5,00</b><span>Renovação</span><b>Não existe</b></div><p class="form-tip">${demo?'Nenhuma cobrança foi criada.':'Guarde o comprovante do Pix no seu banco. O benefício vale para esta conta, não para toda a família.'}</p><div class="modal-actions"><button type="button" class="button primary" data-action="settings">Voltar aos ajustes</button></div>`);},
-  async open(){
+  async open(newCheckout=false){
     this.sync();if(!this.active())return;
     if(Store.demo){if(this.demoPaid)this.paidScreen(true);else this.demoCheckout();return;}
     if(!this.enabled()){this.frame('Pagamento em preparação','<p class="modal-copy">O pagamento ainda não foi ativado. Nenhuma cobrança pode ser feita agora.</p>');return;}
-    const uid=this.uid;this.frame('Remover anúncios','<p class="modal-copy" role="status" id="pix-loading">Conferindo o benefício da sua conta...</p>');
+    const uid=this.uid,generation=this.generation;this.frame('Remover anúncios','<p class="modal-copy" role="status" id="pix-loading">Conferindo o benefício da sua conta...</p>');
     const marker=$('#pix-loading');await this.refresh(true);
-    if(!this.current(uid)||$('#pix-loading')!==marker||!$('#modal').open)return;
+    const current=()=>this.current(uid)&&generation===this.generation&&$('#pix-loading')===marker&&$('#modal').open;
+    if(!current())return;
     if(this.adFree){this.paidScreen();return;}
     if(this.phase!=='free'){this.frame('Conexão indisponível','<p class="form-error" role="alert">Não conseguimos conferir sua conta. Tente novamente antes de gerar um Pix.</p><div class="modal-actions"><button class="button primary" data-action="monetization-open">Tentar novamente</button></div>');return;}
+    const orderId=this.pendingOrderId||(this.order?.uid===uid?this.order.orderId:null);
+    if(orderId){
+      try{
+        const order=await this.call('checkPixCheckout',{orderId});if(!current())return;
+        this.validateOrder(order,orderId);
+        if(order.adFreeLifetime===true||!newCheckout||!this.terminal(order.status)){await this.presentOrder(order,uid);return;}
+        this.order={...order,uid};
+      }catch(error){if(current())this.frame('Confira seu Pix anterior','<p class="form-error" role="alert">Não conseguimos recuperar seu Pix agora. Se já pagou, não pague novamente. Tente conferir a confirmação outra vez.</p><div class="modal-actions"><button type="button" class="button secondary" data-action="settings">Voltar aos ajustes</button><button type="button" class="button primary" data-action="monetization-open">Conferir novamente</button></div>');return;}
+    }
+    if(!this.canCreate()){this.frame('Novos pagamentos em preparação','<p class="modal-copy">Nenhuma nova cobrança está disponível agora. Um benefício já confirmado continua ativo, e você pode conferir um Pix anterior pelos ajustes.</p><div class="modal-actions"><button type="button" class="button primary" data-action="settings">Voltar aos ajustes</button></div>');return;}
     if(!Store.auth.currentUser.emailVerified){this.frame('Primeiro, confirme seu e-mail','<p class="modal-copy">Para vincular o pagamento à conta certa, confirme seu e-mail antes de gerar o Pix.</p><p id="pix-verify-message" class="form-tip" role="status"></p><div class="modal-actions"><button class="button secondary" data-action="monetization-send-verification">Enviar confirmação</button><button class="button primary" data-action="monetization-reload-user">Já confirmei</button></div>');return;}
-    this.frame('Sem anúncios, de uma vez',`<div class="pix-price"><span>Pagamento único</span><strong>R$ 5<span>,00</span></strong><p>Sem assinatura. Sem renovação.</p></div><p class="modal-copy">Você continua com todos os recursos do 4J Finance e retira todos os anúncios do Google AdSense no site para esta conta, de forma permanente enquanto estiver conectado.</p><form id="pix-payer-form"><label for="pix-cpf">CPF do pagador<input id="pix-cpf" name="cpf" inputmode="numeric" autocomplete="off" maxlength="14" required pattern="[0-9.\\- ]{11,14}" placeholder="000.000.000-00" aria-describedby="pix-cpf-help"></label><p id="pix-cpf-help" class="form-tip">Usado pelo Mercado Pago para processar o Pix; não é salvo no 4J Finance.</p><p id="pix-create-error" class="form-error" role="alert" hidden></p><div class="modal-actions"><button type="button" class="button secondary" data-action="settings">Voltar</button><button type="submit" class="button primary">Gerar Pix de R$ 5,00</button></div></form>`);
-    $('#pix-payer-form').onsubmit=event=>{event.preventDefault();this.create(event.currentTarget);};
+    this.frame('Sem anúncios, de uma vez',`<div class="pix-price"><span>Pagamento único</span><strong>R$ 5<span>,00</span></strong><p>Sem assinatura. Sem renovação.</p></div><p class="modal-copy">Você continua com todos os recursos do 4J Finance e retira todos os anúncios do Google AdSense no site para esta conta, de forma permanente enquanto estiver conectado.</p><form id="pix-confirm-form"><p class="form-tip">Ao continuar, será gerado um Pix de R$ 5,00 para esta conta. O benefício será liberado após a confirmação do pagamento.</p><p id="pix-create-error" class="form-error" role="alert" hidden></p><div class="modal-actions"><button type="button" class="button secondary" data-action="settings">Voltar</button><button type="submit" class="button primary">Gerar Pix de R$ 5,00</button></div></form>`);
+    $('#pix-confirm-form').onsubmit=event=>{event.preventDefault();this.create(event.currentTarget);};
   },
   async create(form){
-    if(!this.current(this.uid))return;const uid=this.uid,watch=this.watch,button=form.querySelector('[type=submit]'),input=form.querySelector('[name=cpf]'),error=form.querySelector('[role=alert]');
-    let cpf=input.value.replace(/\D/g,'');if(cpf.length!==11){error.hidden=false;error.textContent='Informe os 11 números do CPF.';return;}
+    if(!this.current(this.uid))return;const uid=this.uid,watch=this.watch,button=form.querySelector('[type=submit]'),error=form.querySelector('[role=alert]');
+    if(!this.canCreate()){error.hidden=false;error.textContent='Nenhuma nova cobrança está disponível agora. Volte aos ajustes para conferir sua conta ou um Pix anterior.';button.disabled=true;return;}
     button.disabled=true;button.textContent='Preparando seu Pix...';error.hidden=true;
     try{
-      const request=this.call('createPixCheckout',{cpf});cpf='';input.value='';const order=await request;
+      const order=await this.call('createPixCheckout',{});
       if(!this.current(uid)||watch!==this.watch||!form.isConnected)return;
-      if(order.adFreeLifetime===true){await this.confirmPaid(uid);return;}
-      if(!order.orderId||Number(order.amount)!==5||order.currency!=='BRL')throw new Error('Resposta inválida.');
-      this.order={...order,uid};
-      if(order.status==='approved'){this.frame('Conferindo a liberação','<p id="pix-status" class="pix-status" role="status">Pagamento recebido. Aguardando a confirmação do benefício...</p><div class="modal-actions"><button class="button primary" data-action="monetization-check">Conferir confirmação</button></div>');this.watchOrder(this.order);await this.check();return;}
-      if(typeof order.qrCode!=='string'||!order.qrCode.trim()||typeof order.qrCodeBase64!=='string'||!/^[a-zA-Z0-9+/=\r\n]+$/.test(order.qrCodeBase64)||order.qrCodeBase64.length>500000)throw new Error('QR indisponível.');
-      this.showOrder(this.order);
+      await this.presentOrder(order,uid);
     }catch(err){if(this.current(uid)&&form.isConnected&&watch===this.watch){error.hidden=false;error.textContent=this.errorText(err);button.disabled=false;button.textContent='Gerar Pix de R$ 5,00';}}
   },
+  validateOrder(order,orderId){
+    if(typeof order?.adFreeLifetime!=='boolean'||!this.validOrderId(order.orderId)||(orderId&&order.orderId!==orderId)||Number(order.amount)!==5||order.currency!=='BRL'||(!['pending','in_process','approved'].includes(order.status)&&!this.terminal(order.status)))throw new Error('Resposta inválida.');
+  },
+  async presentOrder(order,uid){
+    if(order?.adFreeLifetime===true){await this.confirmPaid(uid);return;}
+    this.validateOrder(order);
+    this.order={...order,uid};this.pendingOrderId=order.orderId;
+    if(this.terminal(order.status)){this.closedOrder(this.order);return;}
+    if(order.status==='approved'){this.frame('Conferindo a liberação','<p id="pix-status" class="pix-status" role="status">Pagamento recebido. Aguardando a confirmação do benefício...</p><div class="modal-actions"><button class="button primary" data-action="monetization-check">Conferir confirmação</button></div>');this.watchOrder(this.order);return;}
+    this.showOrder(this.order);
+  },
+  closedOrder(order){
+    const message=order.status==='expired'?'Este Pix expirou.':order.status==='cancelled'?'Este Pix foi cancelado.':order.status==='rejected'?'Este pagamento foi recusado.':'Este pagamento foi devolvido ou estornado.';
+    this.frame('Confira seu pagamento',`<p id="pix-status" class="pix-status" role="status">${message} O benefício não está ativo. Se já pagou, confira a situação no seu banco e consulte a confirmação antes de preparar outro Pix.</p><div class="modal-actions"><button type="button" class="button secondary" data-action="monetization-check">Conferir confirmação</button>${this.paymentsEnabled?'<button type="button" class="button primary" data-action="monetization-new">Preparar outro Pix</button>':'<button type="button" class="button primary" data-action="settings">Voltar aos ajustes</button>'}</div>`);
+    this.watchOrder(order,false);
+  },
   expiry(order){const value=typeof order.expiresAt==='number'?order.expiresAt:Date.parse(order.expiresAt);return Number.isFinite(value)?value:0;},
-  watchOrder(order){this.order={...order,marker:$('#pix-checkout'),watch:this.watch,started:Date.now(),profile:Store.profile,page:location.hash};this.schedule(this.order);},
+  watchOrder(order,poll=true){this.order={...order,checking:false,marker:$('#pix-checkout'),watch:this.watch,started:Date.now(),profile:Store.profile,page:location.hash};if(poll)this.schedule(this.order);},
+  qrReady(order){
+    if(!order.qrCode&&!order.qrCodeBase64)return false;
+    if(typeof order.qrCode!=='string'||!order.qrCode.trim()||typeof order.qrCodeBase64!=='string'||!/^[a-zA-Z0-9+/=\r\n]+$/.test(order.qrCodeBase64)||order.qrCodeBase64.length>500000)throw new Error('QR indisponível.');
+    return true;
+  },
   showOrder(order){
+    if(!this.qrReady(order)){this.frame('Preparando seu Pix','<p id="pix-status" class="pix-status" role="status" aria-live="polite">Estamos gerando seu Pix. Aguarde um instante; o código aparecerá aqui automaticamente. Não é necessário gerar outro pagamento.</p><div class="modal-actions"><button type="button" class="button secondary" data-action="close-modal">Conferir depois</button><button type="button" class="button primary" data-action="monetization-check">Conferir código</button></div>');this.watchOrder(order);return;}
     const expires=this.expiry(order),label=expires?new Date(expires).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'}):'Veja a validade no aplicativo do banco';
     this.frame('Pague com Pix',`<div class="pix-price pix-price-small"><span>Uma vez, para esta conta</span><strong>R$ 5<span>,00</span></strong></div><p class="modal-copy">No celular, copie o código e escolha <b>Pix Copia e Cola</b> no aplicativo do seu banco. Confira o recebedor e o valor antes de pagar.</p><div class="pix-qr"><img src="data:image/png;base64,${order.qrCodeBase64}" width="224" height="224" alt="QR Code do Pix de cinco reais"></div><label for="pix-copy-code">Código Pix<textarea id="pix-copy-code" readonly rows="3" spellcheck="false">${esc(order.qrCode)}</textarea></label><button type="button" class="button secondary full" data-action="monetization-copy">Copiar código Pix</button><p id="pix-copy-result" class="form-tip" role="status"></p><p class="form-tip">Válido até: ${esc(label)}. Pague apenas uma vez.</p><p id="pix-status" class="pix-status" role="status" aria-live="polite">Aguardando o pagamento. A confirmação é automática.</p><div class="modal-actions"><button type="button" class="button secondary" data-action="close-modal">Conferir depois</button><button type="button" class="button primary" data-action="monetization-check">Já paguei · conferir</button></div>`);
     this.watchOrder(order);
@@ -2642,20 +3027,22 @@ const Monetization={
   schedule(order){clearTimeout(this.timer);if(this.watching(order))this.timer=setTimeout(()=>this.check(order,true),15000);},
   async check(order=this.order,automatic=false){
     if(!order||!this.current(order.uid)||order.checking)return;if(automatic&&!this.watching(order))return;
-    const marker=$('#pix-checkout');order.checking=true;const button=marker?.querySelector('[data-action=monetization-check]');if(button)button.disabled=true;
+    const generation=this.generation,marker=$('#pix-checkout');order.checking=true;const button=marker?.querySelector('[data-action=monetization-check]');if(button)button.disabled=true;
     try{
-      const status=await this.call('checkPixCheckout',{orderId:order.orderId});if(!this.current(order.uid))return;
+      const status=await this.call('checkPixCheckout',{orderId:order.orderId});if(!this.current(order.uid)||generation!==this.generation)return;
       if(status.adFreeLifetime===true){await this.confirmPaid(order.uid,this.watching(order));return;}
       if(!this.watching(order))return;
-      const area=$('#pix-status'),terminal=['rejected','cancelled','refunded','charged_back','expired'].includes(status.status);
-      if(terminal){this.stop();area.textContent=status.status==='expired'?'Este Pix expirou. Se você já pagou, confira a confirmação antes de gerar outro.':'Este pagamento não liberou o benefício. Confira a situação no seu banco.';return;}
+      this.validateOrder(status,order.orderId);
+      const area=$('#pix-status');
+      if(this.terminal(status.status)){this.closedOrder({...order,status:status.status});return;}
       const expired=this.expiry(order)&&Date.now()>this.expiry(order),longWait=Date.now()-order.started>30*60*1000;
-      if(expired||longWait){this.stop();area.textContent='A consulta automática foi pausada. Se já pagou, toque em “Já paguei · conferir” para consultar novamente.';return;}
-      area.textContent=status.status==='approved'?'Pagamento recebido. Finalizando a liberação...':'Ainda aguardando a confirmação do pagamento. Se já pagou, não pague novamente.';this.schedule(order);
+      if(expired||longWait){this.stop();area.textContent='A consulta automática foi pausada. Use o botão de conferir para consultar novamente. Se já pagou, não pague outra vez.';return;}
+      if(['pending','in_process'].includes(status.status)&&this.qrReady(status)&&!this.qrReady(order)){this.showOrder({...status,uid:order.uid});return;}
+      area.textContent=status.status==='approved'?'Pagamento recebido. Finalizando a liberação...':!this.qrReady(order)?'Estamos gerando seu Pix. Aguarde; o código aparecerá automaticamente, sem criar outro pagamento.':'Ainda aguardando a confirmação do pagamento. Se já pagou, não pague novamente.';this.schedule(order);
     }catch(err){if(this.watching(order)){$('#pix-status').textContent='Não foi possível conferir agora. Se já pagou, não pague novamente; tentaremos conferir outra vez.';this.schedule(order);}}
     finally{order.checking=false;if(button?.isConnected)button.disabled=false;}
   },
-  async confirmPaid(uid,show=true){if(!this.current(uid))return;this.adFree=true;this.phase='paid';this.lastRefresh=Date.now();this.stop();try{await Store.auth.currentUser.getIdToken(true);}catch(error){}if(!this.current(uid))return;try{this.channel?.postMessage({type:'refresh'});}catch(error){}try{window.localStorage?.setItem('4j-entitlement-refresh',String(Date.now()));}catch(error){}this.paintCard();if(show)this.paidScreen();},
+  async confirmPaid(uid,show=true){if(!this.current(uid))return;const generation=this.generation;this.adFree=true;this.phase='paid';this.pendingOrderId=null;this.order=null;this.lastRefresh=Date.now();this.stop();try{await Store.auth.currentUser.getIdToken(true);}catch(error){}if(!this.current(uid)||generation!==this.generation)return;try{this.channel?.postMessage({type:'refresh'});}catch(error){}try{window.localStorage?.setItem('4j-entitlement-refresh',String(Date.now()));}catch(error){}this.paintCard();if(show)this.paidScreen();},
   async resume(){
     const order=this.order,marker=$('#pix-checkout');await this.refresh(false);
     if(order&&order.marker===marker&&marker===$('#pix-checkout')&&$('#modal').open&&this.current(order.uid)&&order.profile===Store.profile&&order.page===location.hash){
@@ -2667,11 +3054,12 @@ const Monetization={
   install(){
     const originalSettings=familyAccessSettings;familyAccessSettings=function(...args){const value=originalSettings.apply(this,args);Monetization.appendCard();return value;};
     const originalEmit=Store.emit;Store.emit=function(...args){Monetization.sync();return originalEmit.apply(this,args);};
-    $('#modal')?.addEventListener('close',()=>this.stop());window.addEventListener('hashchange',()=>this.stop());window.addEventListener('pagehide',()=>this.stop());window.addEventListener('focus',()=>this.resume());document.addEventListener('visibilitychange',()=>{if(document.hidden)this.stop();else this.resume();});
+    $('#modal')?.addEventListener('close',()=>this.stop());window.addEventListener('hashchange',()=>this.stop());window.addEventListener('pagehide',()=>this.stop());window.addEventListener('pageshow',event=>{if(event.persisted)this.resume();});window.addEventListener('focus',()=>this.resume());document.addEventListener('visibilitychange',()=>{if(document.hidden)this.stop();else this.resume();});
     try{if(window.BroadcastChannel){this.channel=new BroadcastChannel('4j-entitlement-refresh');this.channel.onmessage=()=>this.refresh(true);}}catch(error){}
     document.addEventListener('click',async event=>{
       const action=event.target.closest('[data-action]')?.dataset.action;if(!action?.startsWith('monetization-'))return;
       if(action==='monetization-open')return this.open();if(action==='monetization-copy')return this.copy();
+      if(action==='monetization-new')return this.open(true);
       if(action==='monetization-check'){if(this.order){this.order.watch=this.watch;this.order.marker=$('#pix-checkout');this.order.started=Date.now();}return this.check();}
       if(action==='monetization-demo-confirm'&&Store.demo){this.demoPaid=true;this.phase='paid';return this.paidScreen(true);}
       const message=$('#pix-verify-message');

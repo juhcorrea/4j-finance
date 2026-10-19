@@ -11,10 +11,11 @@
     "build": "node build.cjs",
     "test": "node scripts/check.cjs",
     "verify:build": "node scripts/verify-build.cjs",
-    "test:ui": "node qa/public-pages.test.cjs && node qa/auth-responsive.test.cjs",
+    "test:ui": "node qa/public-pages.test.cjs && node qa/auth-responsive.test.cjs && node qa/pix-checkout.test.cjs && node qa/catatau-planner.test.cjs",
     "test:rules": "pnpm --dir privacy run test:rules"
   },
   "devDependencies": {
+    "esbuild": "0.28.2",
     "playwright": "1.62.1"
   }
 }

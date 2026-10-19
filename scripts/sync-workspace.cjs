@@ -14,18 +14,21 @@ function collect(from,to){
  if(info.isDirectory()){for(const name of fs.readdirSync(from).sort()){if(['node_modules','.wrangler','.firebase','.git'].includes(name))continue;collect(path.join(from,name),path.posix.join(to,name));}return;}
  if(!info.isFile())throw Error('Tipo de arquivo inesperado: '+to);
  if(to.split('/').some(p=>['node_modules','.wrangler','.firebase','.git'].includes(p))||/\.(?:pem|key|log|zip)$/i.test(to)||/(^|\/)\.env(?:\.|$)/.test(to)&&!to.endsWith('.env.example'))throw Error('Arquivo local ou secreto recusado: '+to);
+ if(/(^|\/)\.dev\.vars(?:\.|$)/.test(to))throw Error('Cloudflare secrets file refused: '+to);
  if(info.size>45*1024*1024)throw Error('Arquivo grande demais para sincronizacao: '+to);
  files.set(to,from);
 }
-for(const dir of ['public','frontend','source','scripts','docs','.github'])collect(path.join(source,dir),dir);
+for(const dir of ['public','frontend','source','scripts','docs','cloudflare','.github'])collect(path.join(source,dir),dir);
 for(const file of ['README.md','AGENTS.md','.gitignore','.gitattributes','.nvmrc','netlify.toml','package.json','pnpm-lock.yaml','build.cjs','finalize.cjs','firebase.json','firebase-rules-deploy.json','PUBLICACAO.json','COMECE-AQUI.md','PUBLICAR-NO-CLOUDFLARE.md','ADSENSE-PREPARACAO.txt','DOMINIO-OFICIAL.txt','DECISOES.txt','TESTES.txt','ui-qa.cjs','qa-production-ui.cjs'])collect(path.join(source,file),file);
 for(const file of ['index.js','payment-core.js','package.json','package-lock.json','.env.example','.gitignore','CONFIGURAR.md','firestore-billing.rules.fragment'])collect(path.join(source,'functions',file),'functions/'+file);
 collect(path.join(source,'functions/test'),'functions/test');
 for(const file of ['apply-privacy.cjs','email-privacy.js','firestore.rules','privacy.test.cjs','firestore-emulator.test.cjs','firebase-emulator.json','package.json','VERIFICACAO.txt'])collect(path.join(source,'privacy',file),'privacy/'+file);
-for(const file of ['public-pages.test.cjs','auth-responsive.test.cjs'])collect(path.join(source,'qa',file),'qa/'+file);
+for(const file of ['public-pages.test.cjs','auth-responsive.test.cjs','pix-checkout.test.cjs','catatau-planner.test.cjs'])collect(path.join(source,'qa',file),'qa/'+file);
 const marketing=path.join(workspace,'4j-finance-marketing-2026-10');
 for(const dir of ['assets','capas','capturas','carrossel','legendas','posts','stories','videos'])collect(path.join(marketing,dir),'marketing/'+dir);
 for(const file of ['ABRA-O-PORTFOLIO.html','conteudo.json','GUIA-DE-PUBLICACAO.txt','LEIA-ME.txt'])collect(path.join(marketing,file),'marketing/'+file);
+// Reproducible portfolio sources only; never collect marketing/work recursively.
+for(const file of ['gallery.cjs','build-portable.cjs','package-portable.ps1','qa-portable.cjs','portfolio-video-data.json'])collect(path.join(marketing,'work',file),'marketing/work/'+file);
 collect(path.join(workspace,'4j-finance-logotipo-adsense.png'),'branding/4j-finance-logotipo-adsense.png');
 collect(path.join(workspace,'4j-finance-portfolio-compartilhar.html'),'4j-finance-portfolio-compartilhar.html');
 collect(path.join(source,'public/index.html'),'index.html');

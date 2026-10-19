@@ -42,6 +42,66 @@ A propriedade de 4jfinance.com.br foi verificada no AdSense e a revisão foi sol
 
 A mensagem de regulamentações europeias aparece como publicada no painel do AdSense. A integração da CMP no site ainda não está concluída nem testada de ponta a ponta. A dependência circular do carregador entre aguardar consentimento e disponibilizar os componentes que o produzem precisa ser resolvida e validada. Publicar a mensagem no painel não comprova que ela esteja funcionando no site.
 
-Pix e anúncios permanecem desativados. Não houve cobrança real. O Pix foi adiado. A integração Mercado Pago de ponta a ponta e o funcionamento no Safari de um iPhone físico ainda precisam ser validados. Os testes simulados acima não comprovam essas etapas.
+Naquele registro, Pix e anúncios permaneceram desativados e o Pix estava adiado. Essa decisão foi posteriormente substituída pela retomada descrita abaixo. Não houve cobrança real. O fluxo de ponta a ponta e o Safari de um iPhone físico ainda precisam ser validados; os testes simulados não comprovam essas etapas.
 
 A publicação antiga do Netlify não foi alterada ou reativada. A atualização documental não executou novos testes, não publicou código e não comprova um push no GitHub.
+
+RETOMADA ORDERS E MIGRAÇÃO CLOUDFLARE FREE — 15/10/2026
+
+A responsável recusou Blaze e pediu alternativa gratuita. O backend atual foi preparado em cloudflare/ para Pages Functions/Workers Free + D1. Firebase Auth e Firestore continuam no Spark. O backend Firebase Functions foi preservado como legado, não ativo.
+
+Recortes executados e aprovados durante esta migração, sem totalizar com os históricos anteriores:
+
+- 99 testes combinados da monetização e do carregador público de anúncios. Verificaram transporte Cloudflare na mesma origem, token da sessão, descarte em troca de conta, ausência de fallback inseguro, retomada, estado e respostas tardias.
+- 25 testes HTTP do Worker. Verificaram envelopes da API, autenticação, CORS, métodos, corpo limitado e erros sem exposição de dados.
+- 13 cenários visuais sintéticos do checkout. Verificaram iPhone em larguras 320/390/430 e desktop, criação, processamento sem QR, chegada do QR, fechar/reabrir, aprovação, remoção do benefício, erros e pagamentos desligados. Não houve Firebase ou Mercado Pago real nesses cenários. Emulação em Chromium/Edge não equivale a Safari em iPhone físico.
+
+Esses recortes são evidências das execuções correspondentes, não um total consolidado da versão final. As suites completas e a reprodução do build devem ser registradas na revisão final; esta atualização documental não as executou.
+
+O teste direto da API Orders no sandbox Mercado Pago passou: R$ 5,00 aprovado, status processed/accredited. Não movimentou dinheiro real, não tocou Firebase e não validou webhook. O checkout continua sem CPF; o servidor reserva e reutiliza o pedido, e o benefício permanente pertence ao UID comprador.
+
+HISTÓRICO — VERIFICAÇÃO INICIAL DO AMBIENTE CLOUDFLARE DE TESTE
+
+URL: https://4jfinance-pix-test.pages.dev
+Deployment: 7ac93e50.
+GET /api/pix/health: HTTP 200, backendReady:false.
+GET /api/pix/mercadoPagoWebhook: HTTP 405, comportamento esperado para uma rota POST; não comprova recebimento de webhook.
+Firebase de teste: fjfinance-pix-test.
+D1 de teste: criado, schema aplicado em nove comandos.
+Dados financeiros de produção: não acessados nesta migração.
+
+EVOLUÇÃO POSTERIOR — CONFIGURAÇÃO PROTEGIDA E NOVO DEPLOYMENT
+
+A configuração protegida do ambiente de teste foi concluída em 2026-10-15T19:13:32.529Z, após corrigir o wrapper para Windows PowerShell 5.1. O helper enviou os valores por memória, sem gravar credenciais em arquivos locais; o relatório contém somente o resultado seguro. A correção passou em três testes, cobrindo sete execuções sintéticas, sem acesso ao helper real nesses testes.
+
+Deployment anterior de teste, verificado antes da conclusão do fluxo remoto: https://429f9a18.4jfinance-pix-test.pages.dev, com alias https://4jfinance-pix-test.pages.dev. GET /api/pix/health retornou HTTP 200 com backendReady:true. Uma chamada à API sem autenticação retornou HTTP 401 com erro seguro. PAYMENTS_ENABLED está true exclusivamente no sandbox; Pix de produção e anúncios continuam desligados. O servidor Pix de produção ainda não foi publicado.
+
+Naquela etapa, o provedor de autenticação de teste estava ativo (GET HTTP 200), mas a conta sintética ainda estava em correção e o teste completo não havia sido executado. Esse estado foi superado pelo teste remoto aprovado registrado a seguir.
+
+VERIFICAÇÃO DO DOMÍNIO
+
+O domínio oficial consta ativo na Cloudflare, com certificado Google válido. A usuária confirmou que o site abre pela rede 4G. A falha de acesso observada ficou restrita à rede corporativa: nela, a resolução DNS apontou para um servidor da empresa, que apresentou certificado de outro domínio.
+
+PENDÊNCIAS REAIS
+
+- A preparação da conta sintética foi concluída e o teste remoto da API passou conforme o resultado final abaixo.
+- Configurar e validar webhook Order (Mercado Pago), consulta da order e benefício no D1.
+- Concluir a suíte consolidada e os cenários adicionais de concorrência, retomada, outra conta, falhas, reembolso e esgotamento de cota. O fluxo remoto básico da API já passou.
+- Medir CPU no runtime remoto; testes Node não comprovam o limite de 10 ms do Workers Free.
+- Validar Safari em iPhone físico e, separadamente, a futura configuração de produção.
+- Concluir AdSense/CMP antes de ativar anúncios.
+
+O servidor Pix de produção ainda não foi publicado. Pix real, anúncios e planos pagos continuam desligados. A publicação de teste não autoriza cobrança real, upgrade nem deploy de produção. Netlify permanece pausado.
+
+TESTE REMOTO DA API APROVADO — RESULTADO POSTERIOR EM 15/10/2026
+
+O teste remoto da API Cloudflare passou em 2026-10-15T19:25:58.017Z (remote-qa ok:true), no deployment https://a1999d42.4jfinance-pix-test.pages.dev, com alias https://4jfinance-pix-test.pages.dev. O fluxo validou autenticação, consulta de status, criação de Pix simulado de R$ 5, duas consultas do mesmo UUID de pedido e resultado final adFreeLifetime:true. Não houve cobrança financeira real.
+
+A conta sintética do Firebase de teste está pronta, com Auth e Firestore no Spark; billingEnabled:false foi confirmado. PAYMENTS_ENABLED=true permanece exclusivo do sandbox. Pix de produção e anúncios continuam desligados; o servidor Pix de produção não foi publicado.
+
+A entrega real do webhook ainda não está comprovada: realWebhookDeliveryVerified:false. O histórico de notificações do Mercado Pago está sendo consultado. O resultado aprovado acima veio do fluxo autenticado da API e das consultas do pedido; não deve ser apresentado como prova de entrega do webhook.
+
+A compatibilidade de redirecionamentos Google/Mercado Pago foi corrigida com tratamento manual e reproduzida no runtime Workerd. Os recortes de 42 testes de autenticação e 25 de cobrança foram aprovados; a suíte consolidada final ainda será executada e não recebe total neste registro.
+
+
+Consolidação antes da pausa em 15/10/2026: 394 testes node:test e 16 verificações de privacidade passaram; build reproduzível com SHA-256 4d97c1d17ccc61dbefb69f47c95004a1a954885fb14be9c66ec34ca1c63427f1. Sem diagnóstico temporário no Worker. Produção publicada em https://97912b74.4jfinance.pages.dev com PAYMENTS_ENABLED=false, health200/backendReadytrue, D1/segredos presentes, checkout sem autenticação401, webhook sem assinatura401 e GET405. Readback em 19/10 confirmou o mesmo deployment e flags OFF. Git ainda sem commit/push no momento deste registro; a sincronização será concluída separadamente.

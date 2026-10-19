@@ -25,6 +25,17 @@
     "centralMessage": "Você registra. O 4J Finance organiza a visão. O Catatau ajuda a acompanhar.",
     "demoLabel": "Demonstração • dados fictícios"
   },
+  "support": {
+    "eyebrow": "USO GRATUITO · APOIO OPCIONAL",
+    "title": "Gratuito para todos.",
+    "intro": "O 4J Finance é gratuito. Estamos preparando os anúncios que vão ajudar a manter o site.",
+    "freeTitle": "Use sem pagar",
+    "freeText": "O acesso ao site continua gratuito para todo mundo. Apoiar o projeto é uma escolha sua.",
+    "supportTitle": "R$ 5, uma única vez",
+    "supportText": "Quando a opção estiver disponível, o pagamento opcional de R$ 5 retirará todos os anúncios da sua conta permanentemente e também apoiará o projeto.",
+    "supportDetail": "Sem mensalidade ou renovação. O benefício vale para a conta que fizer o pagamento.",
+    "status": "Anúncios e Pix estão em configuração e ainda não estão ativos no site."
+  },
   "truthChecks": [
     "O 4J Finance é uma ferramenta web de registros manuais; não é banco nem faz movimentações de dinheiro.",
     "Não apresentar conexão automática com bancos, leitura de extratos ou pagamento automático de contas.",

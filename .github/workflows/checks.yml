@@ -15,6 +15,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - uses: pnpm/action-setup@v6
+        with:
+          run_install: false
+      - name: Instalar dependencias travadas
+        run: pnpm install --frozen-lockfile --ignore-scripts
       - name: Testes de logica e validacao publica
         run: node scripts/check.cjs
       - name: Reproducao do HTML publicado

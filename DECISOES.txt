@@ -2,7 +2,7 @@
 
 HOSPEDAGEM E DOMÍNIO
 
-A alternativa escolhida ao Netlify foi Cloudflare Pages para os arquivos públicos, mantendo Firebase para login, dados e a futura integração de pagamentos.
+A alternativa escolhida ao Netlify foi Cloudflare Pages para os arquivos públicos, mantendo Firebase para login e dados. Para o Pix, a escolha atual é Pages Functions/Workers Free + D1, conforme a decisão de plano gratuito abaixo.
 
 Publicação autorizada e concluída no Cloudflare Pages, projeto 4jfinance. O domínio 4jfinance.com.br foi registrado e configurado. Os servidores jacqueline.ns.cloudflare.com e john.ns.cloudflare.com foram salvos no Registro.br; a transição DNS foi concluída. Os endereços https://4jfinance.com.br e https://www.4jfinance.com.br estão ativos com HTTPS verificado. https://4jfinance.pages.dev continua disponível.
 
@@ -22,19 +22,27 @@ Manter a publicação do Netlify bloqueada. A sincronização do GitHub não sig
 
 ANÚNCIOS E CONSENTIMENTO
 
-O site terá opção de monetização com Google AdSense. Pix e anúncios continuam desativados até concluir suas configurações e validações.
+O site terá opção de monetização com Google AdSense. Pix de produção e anúncios continuam desativados até concluir suas configurações e validações. O sandbox exclusivo de teste tem ativação separada, conforme a evolução abaixo.
 
 A propriedade de 4jfinance.com.br foi verificada no AdSense, e a revisão foi solicitada em 15/10/2026 às 14h05, horário de Brasília. A aprovação continua pendente de confirmação.
 
 A mensagem de regulamentações europeias foi publicada no painel do AdSense. A integração real da CMP no site ainda não foi concluída nem testada de ponta a ponta. A dependência circular do carregador precisa ser resolvida antes da ativação. A interface local de preferências de cookies não equivale a uma CMP certificada.
 
-PIX — ETAPA ADIADA
+PIX — PREPARAÇÃO RETOMADA EM 15/10/2026
 
-Preço escolhido para retirar todos os anúncios AdSense do 4J Finance: R$5,00, em pagamento único, sem renovação mensal.
+Preço confirmado para retirar todos os anúncios AdSense do 4J Finance: R$ 5,00, em pagamento único, sem mensalidade ou renovação. O benefício permanente pertence ao UID do Firebase que comprou; outras contas da família não recebem a liberação automaticamente.
 
-O Pix deve ser gerado no próprio site e confirmado automaticamente pelo provedor. Mercado Pago é o provedor de recebimento escolhido. A chave Pix fornecida não foi copiada para o projeto: cobrança automática usa a API oficial e credenciais protegidas no servidor.
+A preparação foi retomada com a API Orders do Mercado Pago. O checkout não pede CPF e utiliza no servidor o e-mail da conta autenticada. A chave Pix de recebimento não foi copiada para o projeto; credenciais e assinatura de webhook devem permanecer protegidas no servidor.
 
-O benefício será permanente na conta que comprou, identificada pelo UID do Firebase; não é uma liberação automática de outras contas da família. Nenhuma cobrança real foi realizada. A etapa de Pix foi adiada para depois da preparação do AdSense; permanece desligada e não autoriza, por si só, uma mudança de plano de infraestrutura.
+A interface e o código de integração estão preparados para reservar e reutilizar o pedido, manter a idempotência da tentativa, retomar o Pix e aguardar a geração assíncrona do QR sem criar outra cobrança. A confirmação automática depende da consulta válida ao provedor e do webhook de Order. A mensagem de pagamento aprovado, sozinha, não concede o benefício sem a confirmação do servidor.
+
+Passaram testes sintéticos de lógica e interface. Também passou um teste direto da API Orders no sandbox do Mercado Pago: pedido de R$ 5,00 aprovado, com status processed/accredited. Esse teste não movimentou dinheiro real, não acessou o Firebase e não verificou o webhook. Naquela etapa inicial, o fluxo pela Cloudflare ainda estava pendente; o teste remoto da API passou posteriormente conforme o resultado final abaixo. O teste financeiro em produção continua pendente. Nenhuma cobrança financeira real foi criada. A publicação inicial ocorreu somente no ambiente de teste descrito abaixo.
+
+A consulta anterior de faturamento do Firebase retornou billingEnabled:false. A responsável recusou a adesão ao Blaze e pediu uma alternativa gratuita; a arquitetura atual preserva Firebase Spark. Pagamentos de produção permanecem desativados até concluir configuração, validação e autorização de ativação. As pendências de AdSense e CMP continuam independentes da preparação do Pix.
+
+HISTÓRICO — ADIAMENTO ANTERIOR DO PIX
+
+A etapa de Pix havia sido adiada para depois da preparação do AdSense. Esse registro descreve a decisão anterior; não representa o estado atual da preparação, retomada conforme o registro acima. Nenhuma mudança de plano foi autorizada pelo adiamento ou pela retomada do código.
 
 ACESSO E IDENTIDADE VISUAL
 
@@ -45,3 +53,43 @@ Compartilhamento financeiro é opcional; o papel ADMIN não concede acesso finan
 O contato público de atendimento foi autorizado em 15/10/2026 e incluído nas páginas públicas apropriadas. Dados privados dos usuários não pertencem à documentação pública.
 
 Preservar Montserrat, os pesos e tamanhos de títulos, as cores e o Catatau do site original. As prévias devem carregar a fonte real, sem fonte substituta de teste.
+
+PLANO GRATUITO MANTIDO — 15/10/2026
+
+Após o teste da API Orders em sandbox ser aprovado, a responsável recusou Blaze e pediu alternativa gratuita. A implementação escolhida usa Cloudflare Pages Functions/Workers Free + D1, mantendo Firebase Auth e Firestore no Spark. Não ativar Blaze, Workers Paid ou qualquer upgrade. functions/ mantém o backend Firebase legado, não ativo; cloudflare/ contém o backend atual preparado. A interface tem transporte Cloudflare configurável na mesma origem, com token da sessão; o benefício vem do servidor/D1, sem gravação de custom claims.
+
+Na publicação inicial, o ambiente https://4jfinance-pix-test.pages.dev recebeu o deployment 7ac93e50. A verificação inicial retornou health HTTP 200 com backendReady:false e webhook GET HTTP 405. Firebase de teste: fjfinance-pix-test. D1 de teste criado e schema aplicado em nove comandos. Não foram acessados dados financeiros de produção. Naquela verificação inicial, a validação completa Cloudflare aguardava Auth, segredos e webhook; o estado posterior está registrado abaixo. O teste direto do Mercado Pago não valida esse caminho. O servidor Pix de produção ainda não foi publicado; Pix real e anúncios seguem desativados.
+
+O empacotador scripts/build-cloudflare.cjs --test gera somente a saída permitida em work/cloudflare-test/ e a configuração em work/cloudflare-test-deploy/wrangler.json. O Wrangler usa --cwd work/cloudflare-test-deploy, sem --config personalizado. Manter nodejs_compat. Nunca enviar work/ inteiro ou arquivos privados; publicar apenas a lista permitida e _worker.js/_routes.json compilados. CLOUDFLARE_ACCOUNT_ID pode ser necessário no ambiente local para selecionar a conta, sem copiar valores para documentos.
+
+Cotas documentadas: Workers Free 100 mil requisições/dia e 10 ms de CPU por invocação; D1 Free 5 milhões de linhas lidas/dia, 100 mil escritas/dia e 5 GB totais. Esgotar a cota deve falhar, sem upgrade automático. A API deve permanecer fechada em falhas; o consumo de CPU remoto precisa ser medido antes da ativação. Fontes: https://developers.cloudflare.com/workers/platform/pricing/ e https://developers.cloudflare.com/d1/platform/pricing/.
+
+O código e a documentação devem ser preservados e sincronizados com o GitHub. Publicação, upgrade e ativação de pagamentos são decisões distintas; este registro não executa nenhuma delas.
+
+HISTÓRICO DO SANDBOX — ESTADO APÓS A CONFIGURAÇÃO EM 15/10/2026, ÀS 19:13 UTC
+
+A configuração protegida do ambiente de teste foi concluída em 2026-10-15T19:13:32.529Z, após corrigir o wrapper para Windows PowerShell 5.1. O helper enviou os valores por memória, sem gravar credenciais em arquivos locais; o relatório contém somente o resultado seguro. A correção passou em três testes, cobrindo sete execuções sintéticas, sem acesso ao helper real nesses testes.
+
+Deployment anterior de teste, verificado antes da conclusão do fluxo remoto: https://429f9a18.4jfinance-pix-test.pages.dev, com alias https://4jfinance-pix-test.pages.dev. GET /api/pix/health retornou HTTP 200 com backendReady:true. Uma chamada à API sem autenticação retornou HTTP 401 com erro seguro. PAYMENTS_ENABLED está true exclusivamente no sandbox; Pix de produção e anúncios continuam desligados. O servidor Pix de produção ainda não foi publicado.
+
+Naquela etapa, o provedor de autenticação de teste estava ativo (GET HTTP 200), mas a conta sintética ainda estava em correção e o teste completo não havia sido executado. Esse estado foi superado pelo teste remoto aprovado registrado a seguir.
+
+ACESSO AO DOMÍNIO NA REDE CORPORATIVA
+
+O domínio oficial consta ativo na Cloudflare, com certificado Google válido. A usuária confirmou que o site abre pela rede 4G. A falha de acesso observada ficou restrita à rede corporativa: nela, a resolução DNS apontou para um servidor da empresa, que apresentou certificado de outro domínio.
+
+TESTE REMOTO DA API APROVADO — 15/10/2026
+
+O teste remoto da API Cloudflare passou em 2026-10-15T19:25:58.017Z (remote-qa ok:true), no deployment https://a1999d42.4jfinance-pix-test.pages.dev, com alias https://4jfinance-pix-test.pages.dev. O fluxo validou autenticação, consulta de status, criação de Pix simulado de R$ 5, duas consultas do mesmo UUID de pedido e resultado final adFreeLifetime:true. Não houve cobrança financeira real.
+
+A conta sintética do Firebase de teste está pronta, com Auth e Firestore no Spark; billingEnabled:false foi confirmado. PAYMENTS_ENABLED=true permanece exclusivo do sandbox. Pix de produção e anúncios continuam desligados; o servidor Pix de produção não foi publicado.
+
+A entrega real do webhook ainda não está comprovada: realWebhookDeliveryVerified:false. O histórico de notificações do Mercado Pago está sendo consultado. O resultado aprovado acima veio do fluxo autenticado da API e das consultas do pedido; não deve ser apresentado como prova de entrega do webhook.
+
+A compatibilidade de redirecionamentos Google/Mercado Pago foi corrigida com tratamento manual e reproduzida no runtime Workerd. Os recortes de 42 testes de autenticação e 25 de cobrança foram aprovados; a suíte consolidada final ainda será executada e não recebe total neste registro.
+
+CATATAU E PORTFOLIO — 15/10/2026
+
+Escolha de implementacao para manter baixo custo: conversa guiada e calculos locais, sem IA externa. Modo firme voluntario orienta adiar compras que comprometam contas/reserva, sem bloquear banco ou registro de despesas. Analise somente do perfil autorizado atual, com dados desconhecidos explicitados e confirmacao das hipoteses. Portfolio: uso gratuito para todos, anuncios como sustento e apoio opcional por retirada permanente de anuncios; pagamento real ainda em configuracao.
+
+19/10/2026 — Usuária pediu continuar de onde parou. Prioridade: finalizar backup GitHub pendente e validar Pix mantendo Cloudflare Free/Firebase Spark, sem upgrades. A pausa de 15/10 foi por limite de uso; nenhuma cobrança real foi ativada.

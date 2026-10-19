@@ -23,6 +23,15 @@ qa/**
 !qa/*.test.cjs
 privacy/privacy-candidate.html
 privacy/emulator-test-result.txt
-marketing/work/
+!marketing/work/
+/marketing/work/*
+!marketing/work/gallery.cjs
+!marketing/work/build-portable.cjs
+!marketing/work/package-portable.ps1
+!marketing/work/qa-portable.cjs
+!marketing/work/portfolio-video-data.json
 playwright-report/
 test-results/
+
+.dev.vars
+.dev.vars.*

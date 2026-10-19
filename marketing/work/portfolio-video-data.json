@@ -1,0 +1,28 @@
+{
+  "videos": [
+    {
+      "id": "video-01",
+      "duration": 27.133333333333333
+    },
+    {
+      "id": "video-02",
+      "duration": 32.733333333333334
+    },
+    {
+      "id": "video-03",
+      "duration": 31.1
+    },
+    {
+      "id": "video-04",
+      "duration": 30.333333333333332
+    },
+    {
+      "id": "video-05",
+      "duration": 32.2
+    },
+    {
+      "id": "video-06",
+      "duration": 29.333333333333336
+    }
+  ]
+}

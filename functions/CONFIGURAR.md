@@ -1,120 +1,101 @@
 # Configuração técnica do Pix automático
 
-Este módulo está preparado localmente e **desativado por padrão**. Não foi publicado nem testado com a conta real do Mercado Pago. O HTML sozinho não consegue confirmar Pix: estas funções devem rodar no servidor Firebase.
+## Estado atual — 15/10/2026
 
-## O que foi implementado
+A aplicação do Mercado Pago foi criada para **Checkout Transparente via Orders API**. O código local usa `/v1/orders`; o backend Firebase ainda não foi publicado. A usuária decidiu manter o Firebase no plano gratuito, sem ativar cobrança ou Blaze por enquanto. Não há segredos de produção configurados neste trabalho. Pix real e anúncios permanecem desativados.
 
-- R$ 5,00, uma única vez, para remover anúncios **da conta autenticada**. O benefício não depende do perfil financeiro/família selecionado.
-- Cobrança Pix dinâmica vinculada ao UID Firebase, produto e pedido; CPF enviado somente ao Mercado Pago, sem gravação no Firestore ou logs deste código.
-- Reutilização de Pix pendente e chave de idempotência. Em resposta perdida, busca autenticada pela referência do pedido antes de criar outra cobrança.
-- Webhook com HMAC; conferência posterior do pagamento na API do Mercado Pago. O corpo enviado pelo navegador/webhook nunca comprova pagamento.
-- Conferência de R$ 5,00, BRL, Pix, conta recebedora, ambiente, UID, SKU e pedido.
-- Benefício em custom claims Firebase Auth (`adFreeLifetime` e IDs de pagamentos), não em campo de perfil editável. Flags e recibos Firestore sozinhos não concedem benefício.
-- Reembolso parcial/integral ou chargeback retira o benefício daquele pagamento; outro pagamento aprovado da mesma pessoa o preserva.
-- Conta ativa e e-mail confirmado para criar pagamento. Não há aprovação manual de cada compra.
+O HTML sozinho não confirma pagamentos. A integração completa depende das Functions, das regras privadas do Firestore e do webhook. O teste direto da API descrito abaixo não comprova essas etapas.
 
-## Preparação da conta
+## Comportamento e proteção de dados
 
-1. Crie uma aplicação em **Mercado Pago Developers > Suas integrações**, para Checkout Transparente via API Payments. Habilite Pix na conta recebedora.
-2. Configure as credenciais **diretamente no seu computador/painel**. Nunca cole Access Token ou segredo do webhook no chat, HTML, Git ou armazenamento do navegador.
-3. Obtenha o ID numérico da conta recebedora. `MP_COLLECTOR_ID` deve corresponder ao `collector_id` da conta ligada ao token.
-4. Use outro projeto Firebase para testes. Nenhum pagamento de teste deve conceder benefício em contas reais.
-5. As Functions exigem um projeto com cobrança habilitada para publicação; confira o plano Blaze, custos e alertas antes de ativar.
+- R$ 5,00, uma única vez, remove anúncios da **conta autenticada**, independentemente da família ou do perfil financeiro selecionado.
+- O servidor reserva um pedido privado com UID, SKU, valor, moeda, projeto, recebedor, aplicação e ambiente. O navegador não escolhe esses dados.
+- CPF foi removido. O e-mail confirmado do Firebase Auth é enviado como `payer.email` e mantido no `requestPayload` privado para repetir exatamente o mesmo corpo em tentativas com a mesma chave de idempotência. Não registrar esse corpo em logs nem expô-lo ao cliente.
+- A criação usa `POST /v1/orders`, valores em strings (`"5.00"`), `type: online`, `processing_mode: automatic`, meio `pix/bank_transfer` e expiração de 24 horas. A referência externa identifica o pedido local; não há `metadata` de usuário no payload.
+- Antes de confirmar, o servidor consulta a order autenticadamente e valida seu vínculo com o pedido local, recebedor, país, Pix, valores e projeto. Confere a aplicação quando a API a retorna. `currency`/`currency_id`, quando presentes, precisam ser BRL. Orders não garante `live_mode` nem moeda no GET; o ambiente é conferido também pela identidade do token em `/users/me`, incluindo país/site e a tag `test_user`.
+- Só `processed/accredited` na order **e** na transação, com R$ 5 efetivamente pagos e sem reembolso, concede o benefício. As claims usadas são `adFreeLifetime` e `adFreeOrderIds`; campos editáveis de perfil ou recibos não concedem acesso.
+- Reembolso parcial/integral ou chargeback remove o benefício daquele pagamento após validar o mesmo vínculo completo. Outro pagamento válido da mesma pessoa preserva o benefício. Falha de consulta ou vínculo divergente não autoriza alterar a conta de outra pessoa.
+- Uma order `processing` pode não ter pagamento ou QR ainda. O frontend recebe `in_process` e aguarda. **Vencimento local, resposta perdida ou estado incerto não autorizam uma segunda cobrança.** Repete-se a criação reservada com o mesmo corpo/chave, ou consulta-se o ID já conhecido. Só um estado terminal confirmado da order permite substituí-la.
+- `pendingOrderId` permite retomar o pedido ao voltar ou abrir outra sessão. A assinatura do webhook autentica o ID do recurso; status, usuário e valor do corpo não comprovam pagamento.
 
-A chave Pix aleatória recebida na conversa **não foi copiada para os arquivos**. A API usa as credenciais da conta Mercado Pago para criar cada cobrança.
+## Configuração dos ambientes
 
-## Configuração local e servidor
+Requisitos locais: Node.js 22 e Firebase CLI; `firebase.json` aponta `functions.source` para `functions`. Na pasta `functions`, use `npm ci --ignore-scripts`, `npm test` e `npm run check`.
 
-Requisitos: Node.js 22 e Firebase CLI. No projeto de publicação, o `firebase.json` deve apontar `functions.source` para esta pasta.
-
-Dentro da pasta `functions`:
-
-```powershell
-npm install
-npm test
-npm run check
-```
-
-As versões diretas foram consultadas no registro npm e fixadas: firebase-admin 14.5.0 e firebase-functions 7.4.0. As dependências foram instaladas localmente sem executar scripts de instalação. O package-lock.json foi gerado; use npm ci --ignore-scripts para reproduzir a instalação. A validação local usou Node 24; o runtime configurado de publicação continua Node 22.
-
-No diretório que contém o `firebase.json`, selecione explicitamente o projeto correto:
-
-```powershell
-firebase use SEU_PROJETO
-firebase functions:secrets:set MP_ACCESS_TOKEN --project SEU_PROJETO
-firebase functions:secrets:set MP_WEBHOOK_SECRET --project SEU_PROJETO
-```
-
-Digite os valores nas solicitações da CLI. O segredo do webhook vem de **Suas integrações > Webhooks**, e não é o Access Token.
-
-Copie `.env.example` para `.env.SEU_PROJETO` dentro de `functions`, ajustando:
+Copie `.env.example` para um arquivo local de ambiente em `functions`. Use IDs da conta e da aplicação correspondentes às credenciais escolhidas, sem copiá-los de outro ambiente:
 
 ```dotenv
-MP_COLLECTOR_ID=ID_NUMERICO_DA_CONTA
+MP_COLLECTOR_ID=ID_NUMERICO_DO_RECEBEDOR_DESTE_AMBIENTE
+MP_APPLICATION_ID=ID_NUMERICO_DA_APLICACAO_DESTE_AMBIENTE
 MP_LIVE_MODE=false
-MP_WEBHOOK_URL=https://southamerica-east1-SEU_PROJETO.cloudfunctions.net/mercadoPagoWebhook
+MP_TEST_FIREBASE_PROJECT_ID=demo-4j-pix
+MP_PRODUCTION_FIREBASE_PROJECT_ID=financas-familia-9480b
 PAYMENTS_ENABLED=false
 ```
 
-- **Teste:** projeto Firebase separado + credenciais de teste + `MP_LIVE_MODE=false`.
-- **Produção:** credenciais reais + `MP_LIVE_MODE=true`, depois de validar a integração.
-- Mantenha `PAYMENTS_ENABLED=false` até configurar regras e webhook. A opção controla novas cobranças; consultas/estornos de pagamentos existentes continuam funcionando.
-- Nunca hospede esta pasta, arquivos `.env`, código do servidor ou backups junto ao `index.html` público.
+- `demo-4j-pix` é o identificador reservado ao emulador. Use Auth e Firestore emulados com dados sintéticos; não a conta Firebase real. O backend exige que o projeto em execução corresponda ao ambiente configurado. Para testes publicados, use outro projeto real exclusivo e ajuste explicitamente o identificador de teste.
+- Teste e produção têm **aplicações, contas recebedoras e credenciais correspondentes distintas**. `MP_APPLICATION_ID` e `MP_COLLECTOR_ID` são obrigatórios. O prefixo `APP_USR` também ocorre em credenciais de teste e não identifica produção.
+- Em teste, o backend envia `payer.first_name: APRO`. O usuário sintético do Auth deve ter e-mail confirmado no domínio `@testuser.com` e conta ativa no Firestore emulado.
+- `MP_ACCESS_TOKEN` e `MP_WEBHOOK_SECRET` são segredos separados. Em ambiente publicado, configure-os pelo Firebase Secret Manager usando a solicitação interativa da CLI e `--project` explícito. Emuladores podem usar `.secret.local`, excluído do Git. Nunca colocar valores no chat, argumentos de terminal, HTML ou navegador.
+- `MP_WEBHOOK_URL` não é parâmetro do backend nem vai no POST Orders. Configure a URL diretamente no painel Mercado Pago.
+- `PAYMENTS_ENABLED=false` impede novas compras; consultas de pedidos existentes e tratamento de reembolsos continuam disponíveis. Não habilitar pagamentos no HTML antes de concluir a integração.
 
-## Firestore e privacidade
+## Teste isolado do Mercado Pago, sem Firebase
 
-O arquivo `firestore-billing.rules.fragment` contém os três bloqueios necessários para `billingOrders`, `billingAccounts` e `billingLocks`. Insira-os nas regras completas da aplicação e teste as regras antes de publicar.
-
-**Um bloqueio não sobrepõe uma permissão mais ampla.** Remova qualquer regra genérica que permita ao cliente ler ou escrever estas coleções. A aplicação também precisa de regras próprias de isolamento entre pessoas e famílias: este módulo de pagamento não corrige automaticamente o acesso global de ADMIN do site antigo.
-
-O servidor usa Admin SDK. Não é necessário liberar leitura das coleções de cobrança ao navegador; ele usa funções autenticadas.
-
-## Webhook e publicação
-
-Depois de preparar e revisar a configuração:
+Na raiz do pacote, execute:
 
 ```powershell
-firebase deploy --only functions --project SEU_PROJETO
+.\scripts\testar-pix.ps1
 ```
 
-No painel Mercado Pago, configure o evento **Pagamentos (payment)** para a URL HTTPS `mercadoPagoWebhook` publicada. Registre o segredo correto no Secret Manager. Se alterar um segredo, publique novamente as funções consumidoras.
+O helper pede o Access Token **de teste** em entrada oculta, envia-o ao processo Node por stdin e não grava a credencial. Confere se a conta é brasileira e contém a tag `test_user` antes de criar uma order sintética de R$ 5 com `APRO`. Consulta a confirmação automática e salva um relatório sem token em `work/pix-sandbox/resultado.json`.
 
-Para ativar de verdade: finalize testes em projeto separado, publique as regras completas, configure `MP_LIVE_MODE=true` e `PAYMENTS_ENABLED=true` em produção, republique as Functions e só então habilite a opção de pagamentos na configuração do HTML. Não exponha um botão de compra antes disso.
+Em 15/10/2026, o teste direto no sandbox do Mercado Pago foi aprovado: order e pagamento de R$ 5 retornaram `processed/accredited`, com país `BRA`. O relatório local sanitizado confirmou o resultado, sem armazenar o token informado em entrada privada. Esse teste não movimentou dinheiro real, não acessou o Firebase, não concedeu benefício e não verificou webhook. Mantenha o relatório fora do Git. A aprovação automática usa `APRO`, sem pagamento bancário do QR de teste.
 
-Teste pelo painel e com o fluxo suportado pela sua conta: um simulador que não forneça um ID de pagamento consultável na API pode não completar este webhook. Nunca simule produção alterando manualmente claims ou registros de cobrança.
+## Firestore, webhook e futura publicação
+
+As coleções `billingOrders`, `billingAccounts` e `billingLocks` devem ser inacessíveis ao cliente. Incorpore `firestore-billing.rules.fragment` às regras completas e teste-as. Um bloqueio não sobrepõe uma permissão ampla: remova liberações genéricas que atinjam essas coleções. Este módulo não substitui as regras de isolamento entre pessoas e famílias.
+
+A publicação das Functions e a ativação do Pix real ficam suspensas enquanto for mantida a decisão de não ativar cobrança. Não executar deploy nem ativar Blaze com base apenas neste documento. Se a usuária autorizar essa mudança no futuro, concluir os testes necessários, publicar no projeto explícito e configurar em **Mercado Pago Developers > Suas integrações > Webhooks**:
+
+- Evento **Order (Mercado Pago)**, com tópico `order`.
+- URL HTTPS da função: `https://southamerica-east1-SEU_PROJETO.cloudfunctions.net/mercadoPagoWebhook`.
+- Segredo de assinatura da aplicação correspondente em `MP_WEBHOOK_SECRET`; não é o Access Token.
+
+O handler usa `x-signature`, `x-request-id` e `data.id` da query, normalizado em minúsculas no manifesto HMAC-SHA256. Reconsulta a order antes de processar. Uma notificação simulada sem uma order válida e vinculada não valida o fluxo completo. Nunca simular produção escrevendo claims ou registros manualmente.
+
+A ativação produtiva exige validar testes, publicar as regras completas, configurar os segredos reais e os IDs de produção, alterar `MP_LIVE_MODE=true`, publicar as Functions e configurar/verificar o webhook. Só depois habilitar `PAYMENTS_ENABLED` e a opção de pagamentos do HTML. GitHub e publicação do site na Cloudflare são operações separadas; Netlify continua pausado.
 
 ## Contrato com o HTML
 
-Região: `southamerica-east1`.
+Região: `southamerica-east1`. `orderId` é o UUID interno; o `ORD...` do Mercado Pago permanece no vínculo privado. `paymentId` é o `PAY...` e pode estar vazio enquanto a order é processada.
 
-| Função callable | Entrada | Resposta principal |
+| Função | Entrada | Resposta principal |
 |---|---|---|
-| `getMonetizationStatus` | `{}` | `adFreeLifetime`, `price:5`, `currency:'BRL'`, `paymentsEnabled` |
-| `createPixCheckout` | `{cpf}` | `orderId`, `paymentId`, `status`, `amount:5`, `currency:'BRL'`, `qrCode`, `qrCodeBase64`, `ticketUrl`, `expiresAt`, `adFreeLifetime` |
+| `getMonetizationStatus` | `{}` | `adFreeLifetime`, `pendingOrderId`, `price:5`, `currency:'BRL'`, `paymentsEnabled` |
+| `createPixCheckout` | `{}` | `orderId`, `paymentId`, `status`, `amount:5`, `currency:'BRL'`, `qrCode`, `qrCodeBase64`, `ticketUrl`, `expiresAt`, `adFreeLifetime` |
 | `checkPixCheckout` | `{orderId}` | os mesmos campos do checkout |
-| `mercadoPagoWebhook` | HTTP POST assinado | `200` somente após processar; `503` para nova tentativa em falhas |
+| `mercadoPagoWebhook` | POST assinado, tópico `order` | `200` ao processar/ignorar recurso fora do produto; falhas transitórias recebem `503` |
 
-Se já houver benefício ativo, `createPixCheckout` responde `{status:'approved',adFreeLifetime:true}` e não cria cobrança. O HTML deve tratar esta resposta antes de exigir dados do QR.
+Se o benefício já estiver ativo, a criação responde `{status:'approved',adFreeLifetime:true}` sem cobrar. O HTML deve tratar essa resposta antes de exigir QR. Os estados públicos incluem `pending`, `in_process`, `approved`, `cancelled`, `rejected`, `refunded` e `charged_back`. QR vazio em `in_process` não é erro nem aprovação.
 
-Só `adFreeLifetime === true`, retornado pelo servidor, confirma o benefício. Após aprovação, o cliente deve renovar seu token com `getIdToken(true)` e garantir que o script de anúncios não seja carregado novamente. Falha de consulta não pode ser interpretada como sucesso.
+Só `adFreeLifetime === true` retornado pelo servidor confirma o benefício. Após a confirmação, renovar o token com `getIdToken(true)` e impedir novo carregamento de anúncios. Falhas de consulta não significam sucesso.
 
-## Testes feitos e limites
+## Validação e consumo
 
-A suíte usa dados sintéticos e simulações de Auth, Firestore e API Mercado Pago. Valida assinatura, adulteração, valor fixo, vínculo de conta, reutilização, recuperação, aprovação, estorno e repetição de webhook. Não são testes do ambiente real, da aceitação comercial do Mercado Pago ou das regras atualmente publicadas no Firebase.
+A suíte local usa dados sintéticos e simulações de Auth, Firestore e Mercado Pago. As verificações cobrem os vínculos e estados do contrato, mas não comprovam o ambiente publicado, as regras reais ou a integração completa com o provedor. Consulte o resultado atual dos comandos, sem inferir sucesso pela documentação.
 
-Antes de vender, teste no ambiente configurado: confirmação automática com a página fechada, atualização ao voltar, segunda sessão/celular, tentativa de usar pedido de outra conta, notificações repetidas, falha transitória, estorno e chamadas sem login. Configure monitoramento e alertas de cobrança. O limite local é 5 pedidos por usuário/dia; App Check e proteção adicional de abuso podem ser ativados após preparar o cliente.
+Antes da ativação, validar retomada em outra sessão, aprovação com a página fechada, pedido de outra conta, notificações repetidas, falha transitória, criação com resposta perdida, order sem QR, vencimento sem segunda cobrança, estorno e acesso sem login. Preparar monitoramento, alertas e proteção contra abuso.
+
+Cada função usa `minInstances=0`, `maxInstances=5`, memória de 256 MiB e timeout de 120 segundos. Esses limites não são teto de gastos. Custos dependem do uso e precisam ser conferidos antes de autorizar a cobrança.
 
 ## Referências oficiais
 
-- [Pix via API Payments](https://www.mercadopago.com.br/developers/pt/docs/checkout-api-payments/integration-configuration/integrate-pix)
-- [Assinatura dos webhooks](https://www.mercadopago.com.br/developers/en/docs/links-and-debts/additional-content/your-integrations/notifications/webhooks)
-- [Consulta de pagamentos por referência](https://www.mercadopago.com.br/developers/pt/docs/subscriptions/additional-content/payment-management)
-- [Funções callable](https://firebase.google.com/docs/functions/callable)
-- [Secrets e parâmetros](https://firebase.google.com/docs/functions/config-env)
-- [Custom claims](https://firebase.google.com/docs/auth/admin/custom-claims)
-- [Plano e preparação das Functions](https://firebase.google.com/docs/functions/get-started)
-
-
-## Consumo preparado
-
-Cada função mantém minInstances=0 (nenhuma instância reservada), maxInstances=5, memória de 256 MiB e timeout de 120 segundos. O limite é por função e não representa um teto de gastos. Mantivemos a capacidade do webhook para não atrasar confirmações e estornos. Com pagamentos desativados no HTML, o frontend não chama getMonetizationStatus. Quando ativado, o status atual ainda revalida pagamentos anteriores no Mercado Pago; não retiramos essa verificação de estornos nesta etapa.
+- [Pix via Orders](https://www.mercadopago.com.br/developers/pt/docs/checkout-api-orders/payment-integration/websites/pix)
+- [Consulta da order e campos do recebedor](https://www.mercadopago.com.br/developers/en/reference/online-payments/checkout-api/get-order/get.md)
+- [Teste automático Pix com APRO](https://www.mercadopago.com.br/developers/pt/docs/checkout-api-orders/integration-test/pix)
+- [Notificações e assinatura de Orders](https://www.mercadopago.com.br/developers/pt/docs/checkout-api-orders/notifications)
+- [Reembolsos e cancelamentos](https://www.mercadopago.com.br/developers/pt/docs/checkout-api-orders/payment-management/refunds-cancellations)
+- [Secrets e parâmetros Firebase](https://firebase.google.com/docs/functions/config-env)
+- [Emuladores Firebase](https://firebase.google.com/docs/emulator-suite)
+- [Preparação das Functions](https://firebase.google.com/docs/functions/get-started)
