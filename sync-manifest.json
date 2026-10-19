@@ -104,8 +104,8 @@
     },
     {
       "path": "DECISOES.txt",
-      "bytes": 18345,
-      "sha256": "e14ed592ebdc9fa192a3a97fc927b71af4755dd4ea1fa144ab7a1e52d0b21874"
+      "bytes": 19507,
+      "sha256": "cb2cd1c29de8b6b5a03397e554d98a0fb6b65f90b6cfeccd840e8e9d32af5040"
     },
     {
       "path": "docs/CATATAU-PLANEJAMENTO.md",
@@ -909,8 +909,8 @@
     },
     {
       "path": "PUBLICACAO.json",
-      "bytes": 5747,
-      "sha256": "768bd7ef7dea035f17f65f3fb93cf3397054e46df6bbf00f4b532b0aa8d8405f"
+      "bytes": 6056,
+      "sha256": "dd1af0e893a995ee725cfa053108a6a8b19a4d66587857a621a3fba5c95b0181"
     },
     {
       "path": "PUBLICAR-NO-CLOUDFLARE.md",

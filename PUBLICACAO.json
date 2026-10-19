@@ -102,9 +102,20 @@
   "pixCloudflareTestAuthenticatedQueryConfirmationVerified": true,
   "pixCloudflareTestAuthenticatedQueryConfirmationVerifiedAt": "2026-10-19T13:58:17.181Z",
   "pixCloudflareTestMcpHistoryRequiresOAuth": true,
-  "pixCloudflareTestMcpHistoryOAuthConnected": false,
   "pixPollingFailureBackoffPrepared": true,
   "pixPollingFailureBackoffTestsPassed": 62,
   "pixPollingFailureBackoffPublished": false,
-  "preparedIndexSha256": "a71e930d73b157343b95613a6a1260f0665613d33683445fe45fbfc34c27b226"
+  "preparedIndexSha256": "a71e930d73b157343b95613a6a1260f0665613d33683445fe45fbfc34c27b226",
+  "pixCloudflareTestMcpTemporaryOAuthRead": {
+    "date": "2026-10-19",
+    "scope": "read",
+    "completed": true,
+    "sessionClosed": true,
+    "tokenPersisted": false,
+    "mainApplicationListed": true,
+    "sandboxApplicationListed": false,
+    "sandboxHistoryOwnerMismatch": true,
+    "mainHistoryToolError": false,
+    "webhookCauseDetermined": false
+  }
 }
