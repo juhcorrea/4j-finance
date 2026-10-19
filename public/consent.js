@@ -6,7 +6,7 @@
   'use strict';
   const win=env.window,doc=env.document,now=env.now||Date.now;
   const KEY='4j.cookie-consent.v1',CHANNEL='4j-cookie-preferences',LIFETIME=180*86400000,MAX_TIMER=2147483647;
-  let record=null,storage=null,started=false,destroyed=false,memoryOnly=false,channel=null,timer=null,ui=null,returnFocus=null;
+  let record=null,storage=null,started=false,destroyed=false,memoryOnly=false,channel=null,timer=null,ui=null,returnFocus=null,googleAvailable=false;
   function parse(raw){
     try{
       const v=typeof raw==='string'?JSON.parse(raw):raw;
@@ -82,6 +82,7 @@
   function onChannel(e){if(e.data&&e.data.type==='4j-consent-update')reconcile(e.data.record,true);}
   function onRestore(){reconcile();}
   function onVisibility(){if(!doc||!doc.hidden)onRestore();}
+  function onGoogleReady(e){googleAvailable=e?.detail?.ready===true;if(ui)ui.googleSettings.hidden=!googleAvailable;}
   function onSettingsClick(e){const trigger=e.target&&e.target.closest&&e.target.closest('[data-cookie-settings]');if(trigger){e.preventDefault();openSettings(trigger);}}
   function focusBack(){
     const target=returnFocus&&returnFocus.isConnected&&!returnFocus.closest('[hidden]')?returnFocus:doc.querySelector('[data-cookie-settings]');returnFocus=null;
@@ -98,10 +99,19 @@
     if(typeof ui.dialog.showModal==='function')ui.dialog.showModal();else{ui.dialog.setAttribute('open','');ui.dialog.classList.add('fourj-consent-dialog--fallback');}
     ui.heading.focus({preventScroll:true});
   }
+  function requestGoogleSettings(){
+    if(!googleAvailable||!ui)return;
+    const notify=()=>win.dispatchEvent(new win.CustomEvent('4j:google-consent-settings'));
+    // Native dialog close restores focus asynchronously. Hand over to Google's
+    // dialog only after that event, so local focus restoration cannot steal it.
+    if(typeof ui.dialog.close==='function'&&ui.dialog.hasAttribute('open')){ui.dialog.addEventListener('close',notify,{once:true});closeSettings();}
+    else{closeSettings();notify();}
+  }
   function memoryMessage(){return'Seu navegador não permitiu guardar a escolha. Ela vale nesta página; em uma próxima visita, podemos perguntar novamente.';}
   function render(){
     if(!ui)return;ui.banner.hidden=Boolean(record);
     if(!ui.dialog.hasAttribute('open'))ui.checkbox.checked=Boolean(record&&record.advertising);
+    ui.googleSettings.hidden=!googleAvailable;
     ui.statusText.textContent=memoryOnly&&record?memoryMessage():'';ui.status.hidden=!(memoryOnly&&record);ui.dialogStatus.textContent=memoryOnly?memoryMessage():'';
   }
   function chooseAndClose(value){saveChoice(value);if(ui&&ui.dialog.hasAttribute('open'))closeSettings();else if(ui&&ui.banner.contains(doc.activeElement))focusBack();}
@@ -141,27 +151,28 @@
         <p class="fourj-consent-note">Esta preferência vale por até 180 dias neste navegador. A recusa mantém as funções do site disponíveis.</p>
         <p class="fourj-consent-dialog-status" role="status" aria-live="polite"></p>
         <div class="fourj-consent-dialog-actions"><button type="button" data-consent-action="reject">Recusar opcionais</button><button type="button" data-consent-action="save">Salvar escolhas</button></div>
+        <button type="button" data-consent-action="google-settings" hidden>Rever escolha de anúncios</button>
         <a class="fourj-consent-link" href="./privacidade.html#cookies">Ler a Política de Privacidade</a>
       </dialog>`;
     doc.body.appendChild(host);
-    ui={host,banner:host.querySelector('.fourj-consent-banner'),dialog:host.querySelector('dialog'),heading:host.querySelector('#fourj-cookie-title'),checkbox:host.querySelector('#fourj-cookie-advertising'),status:host.querySelector('.fourj-consent-status'),statusText:host.querySelector('.fourj-consent-status p'),dialogStatus:host.querySelector('.fourj-consent-dialog-status')};
+    ui={host,banner:host.querySelector('.fourj-consent-banner'),dialog:host.querySelector('dialog'),heading:host.querySelector('#fourj-cookie-title'),checkbox:host.querySelector('#fourj-cookie-advertising'),status:host.querySelector('.fourj-consent-status'),statusText:host.querySelector('.fourj-consent-status p'),dialogStatus:host.querySelector('.fourj-consent-dialog-status'),googleSettings:host.querySelector('[data-consent-action=google-settings]')};
     host.addEventListener('click',e=>{
       const b=e.target.closest('[data-consent-action]');if(!b)return;
-      switch(b.dataset.consentAction){case'accept':chooseAndClose(true);break;case'reject':chooseAndClose(false);break;case'save':chooseAndClose(ui.checkbox.checked);break;case'customize':openSettings(b);break;case'close':closeSettings();break;case'dismiss':ui.status.hidden=true;focusBack();break;}
+      switch(b.dataset.consentAction){case'google-settings':requestGoogleSettings();break;case'accept':chooseAndClose(true);break;case'reject':chooseAndClose(false);break;case'save':chooseAndClose(ui.checkbox.checked);break;case'customize':openSettings(b);break;case'close':closeSettings();break;case'dismiss':ui.status.hidden=true;focusBack();break;}
     });
     ui.dialog.addEventListener('close',focusBack);ui.dialog.addEventListener('cancel',e=>{e.preventDefault();closeSettings();});ui.dialog.addEventListener('keydown',onDialogKey);render();
   }
   function start(){
     if(started||destroyed)return;started=true;
     try{storage=Object.prototype.hasOwnProperty.call(env,'storage')?env.storage:win.localStorage;if(!storage)throw new Error('Storage unavailable');record=parse(storage.getItem(KEY));}catch(_){storage=null;record=null;memoryOnly=true;}
-    if(win.addEventListener){win.addEventListener('storage',onStorage);win.addEventListener('focus',onRestore);win.addEventListener('pageshow',onRestore);}
+    if(win.addEventListener){win.addEventListener('storage',onStorage);win.addEventListener('focus',onRestore);win.addEventListener('pageshow',onRestore);win.addEventListener('4j:google-consent-ready',onGoogleReady);}
     if(doc&&doc.addEventListener){doc.addEventListener('click',onSettingsClick);doc.addEventListener('visibilitychange',onVisibility);if(!doc.body)doc.addEventListener('DOMContentLoaded',mount,{once:true});}
     if(typeof win.BroadcastChannel==='function')try{channel=new win.BroadcastChannel(CHANNEL);channel.onmessage=onChannel;}catch(_){channel=null;}
     mount();scheduleExpiry();emit();
   }
   function destroy(){
     destroyed=true;if(timer!==null&&win.clearTimeout)win.clearTimeout(timer);if(channel)channel.close();
-    if(win.removeEventListener){win.removeEventListener('storage',onStorage);win.removeEventListener('focus',onRestore);win.removeEventListener('pageshow',onRestore);}
+    if(win.removeEventListener){win.removeEventListener('storage',onStorage);win.removeEventListener('focus',onRestore);win.removeEventListener('pageshow',onRestore);win.removeEventListener('4j:google-consent-ready',onGoogleReady);}
     if(doc&&doc.removeEventListener){doc.removeEventListener('click',onSettingsClick);doc.removeEventListener('visibilitychange',onVisibility);doc.removeEventListener('DOMContentLoaded',mount);}
     if(ui)ui.host.remove();ui=null;
   }

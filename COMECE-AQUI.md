@@ -1,6 +1,8 @@
 # 4J Finance: publicação, anúncios e Pix automático
 
-Estado consolidado em 19/10/2026: backend de produção publicado em https://97912b74.4jfinance.pages.dev e revalidado em 19/10, com Pix e anúncios desativados. O teste 1ca101c3 aceitou a simulação do webhook com HTTP 200; assinatura verificada, notificação espontânea e pagamento real ainda pendentes. Os registros históricos abaixo descrevem etapas anteriores.
+Estado consolidado em 19/10/2026: backend de producao e preparacao do consentimento publicados em https://ddcb1f1f.4jfinance.pages.dev e verificados no dominio oficial. Pix e anuncios continuam desativados; AdSense permanece Preparando. O simulador do webhook passou com HTTP 200, mas a notificacao espontanea do novo teste retornou 401 e segue em investigacao. Registros abaixo de datas/horarios anteriores sao historicos.
+
+AdSense em 19/10/2026: a captura enviada pela responsável ainda mostra Preparando, com propriedade verificada e revisão solicitada em 15/10 às 14h10. O prazo exibido de 2 a 4 semanas é estimado. A correção local da inicialização e revisão de consentimento não equivale a aprovação do Google; todas as flags de anúncios continuam desligadas.
 
 ## Estado confirmado em 15/10/2026
 
@@ -10,7 +12,7 @@ O domínio já foi registrado e configurado. Os servidores DNS são `jacqueline.
 
 A propriedade de **4jfinance.com.br** foi verificada no AdSense e a revisão foi solicitada em **15/10/2026, às 14h05, horário de Brasília**. A mensagem de consentimento de regulamentações europeias aparece como publicada no painel do AdSense. Isso confirma a configuração no painel, mas não comprova que a mensagem esteja integrada e funcionando no site.
 
-**Anúncios e Pix de produção permanecem desativados.** A aprovação do AdSense ainda não foi confirmada. A integração real da CMP precisa ser validada; o carregador tem uma dependência circular entre aguardar o consentimento e carregar os componentes que o disponibilizam. Essa dependência deve ser resolvida e testada antes de ativar publicidade. A preparação do Pix foi retomada com API Orders do Mercado Pago e alternativa gratuita Cloudflare Pages Functions/Workers Free + D1. A responsável recusou o Blaze; Firebase Auth e Firestore permanecem no Spark. O sandbox direto Orders aprovou o pedido de R$ 5,00 sem dinheiro real nem Firebase. O ambiente Cloudflare de teste foi publicado e recebeu a configuração protegida. A conta sintética está pronta, e o teste remoto completo da API foi aprovado: Auth, status, Pix simulado, consultas e benefício. A entrega real do webhook continua sem comprovação. O servidor de pagamento de produção não foi publicado e não houve cobrança real.
+**Anúncios e Pix de produção permanecem desativados.** A aprovação do AdSense ainda não foi confirmada. A integração real da CMP precisa ser validada; a dependência circular entre a tag e o consentimento foi corrigida e testada localmente em 19/10. O carregador confere a conta, inicia a tag pausada e aguarda a decisão real; a veiculação da mensagem Google ainda precisa ser validada antes de ativar publicidade. A preparação do Pix foi retomada com API Orders do Mercado Pago e alternativa gratuita Cloudflare Pages Functions/Workers Free + D1. A responsável recusou o Blaze; Firebase Auth e Firestore permanecem no Spark. O sandbox direto Orders aprovou o pedido de R$ 5,00 sem dinheiro real nem Firebase. O ambiente Cloudflare de teste foi publicado e recebeu a configuração protegida. A conta sintética está pronta, e o teste remoto completo da API foi aprovado: Auth, status, Pix simulado, consultas e benefício. A entrega real do webhook continua sem comprovação. O servidor de pagamento de produção não foi publicado e não houve cobrança real.
 
 O Firebase continua responsável pelo login e pelo banco. As regras de privacidade do Firestore foram publicadas e conferidas. Passaram 38 verificações de acesso no projeto real, usando somente contas e documentos sintéticos, removidos ao terminar. A publicação estática não substitui essas regras.
 
@@ -41,7 +43,7 @@ A metatag de verificação e o arquivo `public/ads.txt` estão publicados no dom
 A mensagem de regulamentações europeias já foi publicada no painel do AdSense. Antes da ativação, falta:
 
 1. Confirmar a aprovação do site no AdSense.
-2. Resolver a dependência circular do carregador e integrar a CMP real sem exigir previamente um sinal que só pode existir depois que a própria CMP carregar.
+2. A correção do carregador está preparada e testada com fixtures locais. Validar agora a mensagem Google real, mantendo solicitações pausadas durante o carregamento e até existir consentimento e conta elegível.
 3. Verificar a mensagem e os sinais de consentimento no site, incluindo consentir, recusar, gerenciar opções, revogar e o comportamento em diferentes regiões.
 4. Confirmar que a sessão e o benefício da conta são consultados antes de qualquer publicidade; em caso de falha, a exibição deve permanecer bloqueada.
 5. Somente após as verificações, habilitar as configurações necessárias, publicar e testar no computador e no celular.

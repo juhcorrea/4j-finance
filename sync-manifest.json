@@ -29,8 +29,8 @@
     },
     {
       "path": "ADSENSE-PREPARACAO.txt",
-      "bytes": 5219,
-      "sha256": "b195a26b672bb1f7c94136a65afdc452094eb5d69f1f2378f59f84ddc1095070"
+      "bytes": 7403,
+      "sha256": "f7d75e0df85d49889e8c2268a76680725e294b606e6ba90d43897a576a0b4568"
     },
     {
       "path": "AGENTS.md",
@@ -59,8 +59,8 @@
     },
     {
       "path": "cloudflare/CONFIGURAR.md",
-      "bytes": 15648,
-      "sha256": "0ebbaa5a07c122338bfa3ebad168a5d780c988151daaaadfadae09f32357a52c"
+      "bytes": 16590,
+      "sha256": "100f2efc54313475bc62ba63d3e6638447eaa9431c61c3d1ed7f196cde5a1a80"
     },
     {
       "path": "cloudflare/schema.sql",
@@ -99,13 +99,13 @@
     },
     {
       "path": "COMECE-AQUI.md",
-      "bytes": 20725,
-      "sha256": "3f1e1fdc12461d31691b25f69626df06d104e96a661fcd4f288b6aa7cc753c33"
+      "bytes": 21261,
+      "sha256": "b438beef9b21dc3088960cb03f4f3bb7085ef94eb686d48da4632fbb46ad3bf0"
     },
     {
       "path": "DECISOES.txt",
-      "bytes": 12231,
-      "sha256": "8417e86b1491c675baca638e04fac7511b99bad3e24013aac525692930bed40e"
+      "bytes": 12670,
+      "sha256": "6e88cc0d75276c6a0ef3b2c150a72a29e47a23f82f17340e212fad4abdb0cf00"
     },
     {
       "path": "docs/CATATAU-PLANEJAMENTO.md",
@@ -119,8 +119,8 @@
     },
     {
       "path": "docs/VALIDACAO-GITHUB.md",
-      "bytes": 11290,
-      "sha256": "4a5031d377786adee13d1635dacd99f6e1c917126fad8be09a16af8bea27560b"
+      "bytes": 12034,
+      "sha256": "96ae823a06f6bbac06e207265a318ded92d3c15c26df0649ff2c0a26abf0ff30"
     },
     {
       "path": "DOMINIO-OFICIAL.txt",
@@ -179,8 +179,8 @@
     },
     {
       "path": "frontend/public-ads.test.cjs",
-      "bytes": 15288,
-      "sha256": "e1335a9f567515d5456c8cc1d605fa184c6ee2afaf56c2f1dc2c13535d480cfa"
+      "bytes": 23682,
+      "sha256": "04ac5b0482edbab0d614f84c6f224ca529e292521615e1958dc643004da17996"
     },
     {
       "path": "functions/.env.example",
@@ -869,8 +869,8 @@
     },
     {
       "path": "public/consent.js",
-      "bytes": 13359,
-      "sha256": "cf90ce25a72890442c224a0ab637dbf8b1fda476d1068d946aaca3450c56df74"
+      "bytes": 14425,
+      "sha256": "63196641c318054461bcd336bc89b38a374fa96d07795d0063157f280df0a80f"
     },
     {
       "path": "public/contato.html",
@@ -894,8 +894,8 @@
     },
     {
       "path": "public/public-ads.js",
-      "bytes": 8252,
-      "sha256": "3c02050218c2dc480ebba9a93810ff131071969f822eefd05bd270dc6fb16e94"
+      "bytes": 12464,
+      "sha256": "9487ba109928bb359e4731ff5e1fd823cb5eb50ee2530d708ba6f1dfdc139742"
     },
     {
       "path": "public/public-site.css",
@@ -909,13 +909,13 @@
     },
     {
       "path": "PUBLICACAO.json",
-      "bytes": 4816,
-      "sha256": "66bc0721464acb60edb3e2ea2d51fcfa30a7f5edc74aad2a7cf7ede71b7b19dc"
+      "bytes": 5047,
+      "sha256": "c8037fdb94361dfb8a2d7dabe57942198c91cddfae20c4487ce273a11fa963df"
     },
     {
       "path": "PUBLICAR-NO-CLOUDFLARE.md",
-      "bytes": 15621,
-      "sha256": "a0fb02a4db3a7639cebd3a0a27e25996b0a866bab1f54c6fc91926393f0f8bc8"
+      "bytes": 15675,
+      "sha256": "ef03395b8ed15358e9e5401aa2451ce2b41caeec8de20819d17cd6f082bfcc78"
     },
     {
       "path": "qa-production-ui.cjs",
@@ -939,13 +939,13 @@
     },
     {
       "path": "qa/public-pages.test.cjs",
-      "bytes": 8767,
-      "sha256": "d93f96197b17bf556cbd515b02d7d7236951c5dd756898bf6599b19e57c98f34"
+      "bytes": 10584,
+      "sha256": "96393f4ecb226fbc695351c8c275fc8d16ba6cedba6cb1ce8ac77f07a55d44f6"
     },
     {
       "path": "README.md",
-      "bytes": 11424,
-      "sha256": "b3adfa1450596bb68d5ee2c1c72c3e6238886984bfe89d8121b92059f48b1611"
+      "bytes": 11478,
+      "sha256": "03de127250d34b8f8e6e4fb2912a82525dd391f42e63cdaaf69dbd553aecf5f2"
     },
     {
       "path": "scripts/build-cloudflare.cjs",
@@ -1064,8 +1064,8 @@
     },
     {
       "path": "TESTES.txt",
-      "bytes": 10993,
-      "sha256": "bc2194aab1a4e4abe088fbc99c4f0cf6d51e74290d0401f6668da3abb6b44aa6"
+      "bytes": 11683,
+      "sha256": "f6207933ff1766e17c712627c2205863e2c12735bdc21261a15fccb6577fe024"
     },
     {
       "path": "ui-qa.cjs",

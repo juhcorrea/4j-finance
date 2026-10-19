@@ -99,6 +99,27 @@ const server=http.createServer((req,res)=>{
     assert.equal(await page.evaluate(()=>typeof window.FourJPublicAds),'undefined');
     results.push({case:'private app login links and no ad loader',passed:true});await ctx.close();
   }
+  for(const width of [390,1440]){
+    const ctx=await context(width),page=await ctx.newPage();await open(page,'guia');
+    await page.locator('.fourj-consent-banner [data-consent-action=accept]').click();
+    await page.locator('[data-cookie-settings]').first().click();
+    const review=page.locator('[data-consent-action=google-settings]');assert.equal(await review.isVisible(),false);
+    await page.evaluate(()=>{
+      window.syntheticGoogleReview={count:0,localDialogClosed:false};
+      window.addEventListener('4j:google-consent-settings',()=>{syntheticGoogleReview.count++;syntheticGoogleReview.localDialogClosed=!document.querySelector('dialog[open]');});
+      window.dispatchEvent(new CustomEvent('4j:google-consent-ready',{detail:{ready:true}}));
+    });
+    assert.equal(await review.isVisible(),true);assert.equal(await review.textContent(),'Rever escolha de anúncios');await fit(page,width,'review ads settings');
+    const box=await review.boundingBox();assert.ok(box.height>=44);await review.focus();await page.keyboard.press('Enter');
+    await page.waitForFunction(()=>syntheticGoogleReview.count===1);
+    assert.deepEqual(await page.evaluate(()=>syntheticGoogleReview),{count:1,localDialogClosed:true});
+    assert.equal(await page.evaluate(()=>FourJConsent.getState().adsAllowed),true);
+    await page.locator('[data-cookie-settings]').first().click();await fit(page,width,'reopened review settings');
+    await page.screenshot({path:path.join(out,'review-ads-'+width+'.png')});
+    await page.evaluate(()=>window.dispatchEvent(new CustomEvent('4j:google-consent-ready',{detail:{ready:false}})));
+    assert.equal(await review.isVisible(),false);
+    results.push({case:'Google choice control: synthetic readiness, keyboard and local dialog handoff',width,passed:true});await ctx.close();
+  }
   assert.deepEqual(errors,[],'JavaScript errors');assert.deepEqual(missing,[],'Missing public assets');assert.deepEqual(requests,[],'No advertising, analytics or Firebase writes');
   const report={checkedAt:new Date().toISOString(),results,requests,errors,missing,scope:'Headless Chromium-compatible browser, local site and synthetic cookies; no real login, payment, ad or CMP activated.'};
   fs.writeFileSync(path.join(out,'public-pages-result.json'),JSON.stringify(report,null,2));

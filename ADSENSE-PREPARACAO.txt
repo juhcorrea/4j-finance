@@ -1,4 +1,4 @@
-4J Finance — preparação do AdSense (15/10/2026)
+4J Finance — preparação do AdSense (atualizada em 19/10/2026)
 
 ENTREGA DESTA ETAPA
 Páginas públicas: sobre.html, guia.html, privacidade.html, contato.html.
@@ -15,7 +15,7 @@ Não é benefício da família inteira. Não remove anúncios de outros sites ou
 Pix fica para uma etapa posterior: nenhuma cobrança ou mudança de plano foi ativada.
 
 CONTROLES PREPARADOS
-public-ads.js exige simultaneamente enabled=true, approvalConfirmed=true e certifiedCmpConfigured=true, além da preferência local, sinal da CMP e estado da conta verificado. Todas as flags permanecem false.
+public-ads.js exige simultaneamente enabled=true, approvalConfirmed=true e certifiedCmpConfigured=true. O bootstrap pausado da mensagem Google requer escolha local aceita e Auth/benefício resolvidos; liberar solicitações de anúncios também exige consentimento válido da CMP. Todas as flags permanecem false.
 Atualmente somente /guia e /guia.html são rotas candidatas a anúncios. Sobre, contato, privacidade e painel privado não carregam o AdSense.
 Falhas de autenticação ou consulta do benefício bloqueiam anúncios. Pagamento, troca de conta e revogação retiram os anúncios já carregados por recarregamento da página.
 A comunicação entre abas usa BroadcastChannel e, para o pagamento, um sinal de horário no armazenamento. Esse sinal não concede benefício; a conta continua sendo conferida no servidor.
@@ -25,9 +25,9 @@ PENDÊNCIAS ANTES DE MOSTRAR ANÚNCIOS REAIS
 1. CONCLUÍDO em 15/10/2026 às 14h00: DNS e HTTPS de 4jfinance.com.br e www.4jfinance.com.br confirmados; páginas públicas, metatag e ads.txt acessíveis.
 2. SOLICITADO em 15/10/2026 às 14h05: propriedade verificada e revisão de 4jfinance.com.br solicitada, conforme captura enviada pela usuária. Aguardar resultado do Google; aprovação ainda não confirmada.
 3. Mensagem da CMP Google PUBLICADA no painel em 15/10/2026, conforme captura da usuária, para 4jfinance.com.br. Idioma visível: português (pt-PT) e mais 1. Publicação no painel confirmada; integração/veiculação no site ainda NÃO verificadas. O painel de preferências próprio NÃO substitui a CMP.
-4. Integrar o carregamento oficial da CMP Google antes de ativar anúncios. O controlador atual aguarda __tcfapi antes de carregar adsbygoogle, mas a CMP Google é carregada pela própria tag: corrigir essa dependência circular. Avaliar bootstrap documentado com pauseAdRequests=1 e callback CONSENT_API_READY; somente liberar solicitações após aprovação, consentimento válido e elegibilidade da conta. A pausa ainda permite carregar scripts e ler cookies Google existentes; respeitar a preferência local antes desse carregamento. Não inventar snippet Funding Choices. Referências: https://support.google.com/adsense/answer/7670312?hl=pt-BR e https://developers.google.com/funding-choices/fc-api-docs.
+4. Correção preparada e testada localmente em 19/10: o carregador resolve a conta antes de qualquer tag Google, inicia adsbygoogle com pauseAdRequests=1 e registra CONSENT_API_READY. Esse callback apenas conecta o listener TCF; não representa consentimento. A mensagem publicada ainda precisa ser verificada no site real, inclusive no Brasil e no EEE. API ausente, geografia desconhecida, erro ou timeout mantêm a publicidade bloqueada, sem recarga automática em ciclo. A pausa ainda carrega scripts e lê cookies Google existentes, por isso a preferência local precisa estar aceita antes do bootstrap. Referências: https://support.google.com/adsense/answer/7670312?hl=pt-BR e https://developers.google.com/funding-choices/fc-api-docs.
 5. Validar consentimento/revogação de ponta a ponta, inclusive armazenamento bloqueado e múltiplas abas, com a CMP real. A preferência própria não substitui obrigações regionais nem revoga sozinha registros do provedor.
-6. Quando Pix for ativado, validar benefício pago no servidor antes de qualquer anúncio. As funções de pagamento/status ainda estão desativadas.
+6. Quando Pix for ativado, validar benefício pago no servidor antes de qualquer anúncio. O backend de produção está publicado com criação de pagamentos desativada; a checagem do benefício é independente da ativação do checkout.
 7. Só então habilitar explicitamente a publicidade nas páginas selecionadas.
 
 ADBLOCK
@@ -46,3 +46,13 @@ CMP: https://support.google.com/adsense/answer/13554116
 TCF: https://support.google.com/adsense/answer/9804260
 Cookies: https://www.gov.br/anpd/pt-br/centrais-de-conteudo/materiais-educativos-e-publicacoes/guia-orientativo-cookies-e-protecao-de-dados-pessoais.pdf
 
+
+ESTADO CONFERIDO EM 19/10/2026
+- Captura enviada pela responsável: AdSense em Preparando, propriedade verificada e revisão solicitada em 15/10/2026 às 14h10 (America/Sao_Paulo). A interface informa prazo estimado de 2 a 4 semanas; isso não é aprovação nem data garantida. Não reenviar a revisão.
+- Correção do ciclo de inicialização validada com 92 testes de consentimento/anúncios, usando respostas sintéticas. O teste não ativa Google, Firebase, pagamentos nem anúncios reais.
+- Conta paga, consulta de benefício indisponível, Auth incerto, recusa local e modo demo impedem carregar a tag Google. Consentimento recusado mantém solicitações pausadas; consentimento retirado depois de anúncios remove a página publicitária por uma recarga segura.
+- Rever escolha de anúncios aparece nas preferências somente quando a API Google está pronta e o consentimento europeu é aplicável. O diálogo local fecha antes de abrir a revisão do Google. A revisão pausa solicitações e ignora tcloaded intermediário até useractioncomplete, evitando fechar o diálogo ou reutilizar consentimento antigo.
+- A preferência local continua distinta da decisão registrada no Google. Não há fallback para anúncios limitados/não personalizados após recusa.
+- Ativação e validação da mensagem Google real, incluindo disponibilidade de __tcfapi fora do EEE e comportamento em iPhone físico, continuam pendentes. Flags permanecem OFF.
+- QA local de paginas publicas em 19/10: 17 cenarios aprovados; controle novo conferido por teclado e visualmente em 390 e 1440 px, sem overflow, erros JavaScript ou requisicoes publicitarias. Readiness Google foi simulada; nenhuma CMP real foi ativada.
+- Validacao consolidada posterior na copia Git: 409 testes node:test e 16 verificacoes de privacidade aprovados. Build reproduzivel; o HTML do aplicativo privado permanece identico. Envio Git e publicacao sao confirmados separadamente.

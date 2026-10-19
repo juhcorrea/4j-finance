@@ -1,6 +1,6 @@
 # Validacao da sincronizacao GitHub — 15/10/2026
 
-Estado consolidado em 19/10/2026: backend de produção publicado em https://97912b74.4jfinance.pages.dev e revalidado em 19/10, com Pix e anúncios desativados. O teste 1ca101c3 aceitou a simulação do webhook com HTTP 200; assinatura verificada, notificação espontânea e pagamento real ainda pendentes. Os registros históricos abaixo descrevem etapas anteriores.
+Estado consolidado em 19/10/2026: backend de producao e preparacao do consentimento publicados em https://ddcb1f1f.4jfinance.pages.dev e verificados no dominio oficial. Pix e anuncios continuam desativados; AdSense permanece Preparando. O simulador do webhook passou com HTTP 200, mas a notificacao espontanea do novo teste retornou 401 e segue em investigacao. Registros abaixo de datas/horarios anteriores sao historicos.
 
 ## Registro historico da sincronizacao anterior
 
@@ -84,3 +84,6 @@ Consolidação antes da pausa em 15/10/2026: 394 testes node:test e 16 verifica�
 - Pacote Cloudflare de teste recompilado pelo check, com servidor empacotado e sem segredos incorporados.
 - A verificacao local nao equivale a aprovacao do AdSense nem a um pagamento real. Anuncios e cobrancas publicas permanecem desativados.
 - Commit, push e resultado do CI devem ser confirmados no GitHub depois dessas verificacoes.
+
+
+Atualizacao de 19/10/2026: publicado https://ddcb1f1f.4jfinance.pages.dev com a correcao do bootstrap da CMP e controle para rever a escolha de anuncios. O componente so carrega pausado depois da escolha local e da verificacao da conta; a disponibilidade da API nao concede consentimento. Revisao independente e 409 testes + 16 verificacoes de privacidade passaram; QA visual de cookies teve 17 cenarios. Arquivos index/guia/consent/public-ads conferidos por hash no dominio oficial, health HTTP 200 e backendReady:true. Banco e segredos preservados; PAYMENTS_ENABLED=false e anuncios OFF. O dialogo real Google continua pendente de validacao; AdSense Preparando confirmado pela usuaria.

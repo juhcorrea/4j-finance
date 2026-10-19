@@ -1,6 +1,6 @@
 # Pix no plano gratuito da Cloudflare
 
-Estado consolidado em 19/10/2026: backend de produção publicado em https://97912b74.4jfinance.pages.dev e revalidado em 19/10, com Pix e anúncios desativados. O teste 1ca101c3 aceitou a simulação do webhook com HTTP 200; assinatura verificada, notificação espontânea e pagamento real ainda pendentes. Os registros históricos abaixo descrevem etapas anteriores.
+Estado consolidado em 19/10/2026: backend de producao e preparacao do consentimento publicados em https://ddcb1f1f.4jfinance.pages.dev e verificados no dominio oficial. Pix e anuncios continuam desativados; AdSense permanece Preparando. O simulador do webhook passou com HTTP 200, mas a notificacao espontanea do novo teste retornou 401 e segue em investigacao. Registros abaixo de datas/horarios anteriores sao historicos.
 
 ## Estado em 15/10/2026
 
@@ -107,3 +107,6 @@ A validação de Firebase no fluxo Cloudflare de teste está concluída (Auth e 
 Em 2026-10-15T20:21:17.850Z, a simulação enviada pelo painel Mercado Pago foi aceita com HTTP 200 no teste corrigido https://1ca101c3.4jfinance-pix-test.pages.dev. A captura confirmou que o simulador assina o ID com as letras originais; o SDK oficial preserva esse formato, enquanto a documentação Orders também descreve minúsculas. O backend agora exige HMAC válido em uma dessas duas formas, sempre incluindo ID, request-id e timestamp, e reconsulta o pedido no provedor. Os diagnósticos temporários foram removidos. A aceitação desta simulação não comprova uma notificação espontânea após pagamento; essa etapa permanece pendente.
 
 Referências da compatibilidade de assinatura: [SDK oficial](https://github.com/mercadopago/sdk-nodejs/blob/master/src/utils/webhook/index.ts) e [documentação Orders](https://www.mercadopago.com.br/developers/pt/docs/checkout-api-orders/notifications). Para atualizar somente a assinatura secreta do teste, execute interativamente scripts/configurar-webhook-pix-teste.ps1. O helper não recebe Access Token, não publica e preserva D1, demais segredos e ambiente de produção.
+
+
+Medicao remota em 19/10/2026: uma nova conta sintetica isolada criou somente um Pix ficticio de R$ 5. Status, criacao, duas consultas do mesmo pedido e beneficio passaram com HTTP 200; Firebase manteve billing:false. CPU observada: status inicial 11 ms, criacao 16 ms, consultas 9/7 ms e status final 6 ms, todas outcome:ok. Ha picos acima dos 10 ms nominais do Free; a Cloudflare tolera excessos ocasionais, mas estes resultados nao garantem disponibilidade sob carga. Nao foi autorizado nem ativado upgrade. Quatro chamadas espontaneas ao webhook retornaram 401 durante o teste; o painel Mercado Pago mostrou order.processed de 19/10 11:14:56 UTC. A entrega autenticada espontanea continua pendente; nao trocar chaves ou relaxar verificacao sem diagnostico. Relatorios privados sanitizados em work/pix-cloudflare/cpu-checkout-smoke-2026-10-19.json e cpu-status-smoke-2026-10-19.json.

@@ -1,6 +1,6 @@
 # Publicar o 4J Finance no Cloudflare Pages
 
-Estado consolidado em 19/10/2026: backend de produção publicado em https://97912b74.4jfinance.pages.dev e revalidado em 19/10, com Pix e anúncios desativados. O teste 1ca101c3 aceitou a simulação do webhook com HTTP 200; assinatura verificada, notificação espontânea e pagamento real ainda pendentes. Os registros históricos abaixo descrevem etapas anteriores.
+Estado consolidado em 19/10/2026: backend de producao e preparacao do consentimento publicados em https://ddcb1f1f.4jfinance.pages.dev e verificados no dominio oficial. Pix e anuncios continuam desativados; AdSense permanece Preparando. O simulador do webhook passou com HTTP 200, mas a notificacao espontanea do novo teste retornou 401 e segue em investigacao. Registros abaixo de datas/horarios anteriores sao historicos.
 
 O site usa Cloudflare Pages para os arquivos públicos e Firebase Spark para autenticação e dados financeiros. Após recusar Blaze e pedir uma alternativa gratuita, a responsável escolheu **Pages Functions/Workers Free + D1** para o Pix com API Orders do Mercado Pago. O backend Firebase Functions anterior está preservado em `functions/`, sem ativação. Montserrat, cores, Catatau e uso no iPhone devem ser preservados.
 
