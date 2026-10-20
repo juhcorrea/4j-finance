@@ -119,8 +119,8 @@
     },
     {
       "path": "DECISOES.txt",
-      "bytes": 26688,
-      "sha256": "125f2778e78f22afa28bb9a9971993533232d8396fd4f643fa9f375124b2b295"
+      "bytes": 27161,
+      "sha256": "bc89ebd074844e30d9738e7cf5e383883348ddb66b67768f5b2f180fb4242fe4"
     },
     {
       "path": "docs/CATATAU-PLANEJAMENTO.md",
@@ -129,8 +129,8 @@
     },
     {
       "path": "docs/PIX-PILOTO.md",
-      "bytes": 16988,
-      "sha256": "0d3deb5c63c11b6af7a0f8dc0a78c89996de23a3e1db1906d65ce5615b659376"
+      "bytes": 17565,
+      "sha256": "71784393d7b796cbffb3017aea2942a1ac220d6a1152dc77db84c58cfe344772"
     },
     {
       "path": "docs/SINCRONIZACAO.md",
@@ -944,13 +944,13 @@
     },
     {
       "path": "PUBLICACAO.json",
-      "bytes": 16966,
-      "sha256": "8c8e87aeceb4d843e7ff25706c0cbf9ea047e00d2b52b38145ed335021b600e6"
+      "bytes": 17565,
+      "sha256": "af2cf7306df8470d7174b14b4822c9dc0114009d26fa07dbc09240644fe85f45"
     },
     {
       "path": "PUBLICAR-NO-CLOUDFLARE.md",
-      "bytes": 23796,
-      "sha256": "536c48a7f554a67f8d3b0603fa6cdf4890d1bfdef831c936a528862b2c261508"
+      "bytes": 24303,
+      "sha256": "f08600bd82b27616d0a5afa3b290ee9cb2e1e146b48fbf4bb902d47372889aec"
     },
     {
       "path": "qa-production-ui.cjs",
@@ -979,8 +979,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 15214,
-      "sha256": "38a522a16237dc0a22ae7de096a03e51132ce854934d9c7879acddee3783338b"
+      "bytes": 15747,
+      "sha256": "bdc6c2756a55b8832c9246a8e8ca537bd805b4fb7800544f09032a4ecda6b212"
     },
     {
       "path": "scripts/build-cloudflare.cjs",
@@ -1109,8 +1109,8 @@
     },
     {
       "path": "TESTES.txt",
-      "bytes": 19749,
-      "sha256": "f498b1e38b6eac86521daf6adf2e951a779ac0ea5073471c5219fe64c2d73b9a"
+      "bytes": 20395,
+      "sha256": "ecab052848e3c25c3910a0073fc34d7d0479b10a635ee93fc4f5962f84e6cb9d"
     },
     {
       "path": "ui-qa.cjs",

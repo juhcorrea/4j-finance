@@ -1,5 +1,9 @@
 4J Finance — testes registrados e estado de publicação
-Atualização documental: 20/10/2026 — TESTE e suíte final aprovados; piloto restrito publicado e readback final confirmado
+Atualização documental: 20/10/2026 — pagamento real e benefício permanente do piloto confirmados
+
+Pagamento real do piloto confirmado em 20/10/2026: a verificação somente leitura às 17:12 UTC confirmou no D1 de produção um único pedido de R$ 5 aprovado e o benefício permanente ativo. A usuária também confirmou a tela no iPhone, no domínio oficial. Essas evidências não identificam o webhook como canal exclusivo da confirmação. O piloto segue restrito a uma conta e uma reserva, até 21/10 às 12:16 de Brasília; Pix público e anúncios continuam OFF.
+
+A conferência usou somente SELECT restrito à conta previamente selecionada, sem API de status/check, escrita ou nova cobrança. O histórico abaixo descreve a publicação anterior ao pagamento.
 
 PUBLICAÇÃO DO PILOTO RESTRITO E VALIDAÇÃO DA CÓPIA GIT — 20/10/2026
 
