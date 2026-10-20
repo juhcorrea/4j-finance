@@ -1,3 +1,4 @@
 {
-  "pilotEnabled": true
+  "pilotEnabled": false,
+  "publicPayments": true
 }

@@ -1,5 +1,19 @@
 4J Finance — testes registrados e estado de publicação
-Atualização documental: 20/10/2026 — pagamento real e benefício permanente do piloto confirmados
+Atualização documental: 20/10/2026 — Pix público publicado e readback aprovado
+
+LIBERAÇÃO PÚBLICA — PUBLICAÇÃO E VALIDAÇÃO APROVADAS EM 20/10/2026
+
+A cópia Git passou com 496/496 testes Node e 16/16 verificações de privacidade. verify-build confirmou o HTML SHA-256 f8dbc483f10c83810539bf25a7904950643f694ba738d4a142c6c7ba6a13c821. A validação cobre o teto de autorização entre Pages e executor e as regressões de compra única e isolamento.
+
+QA local do Pix público: 26 cenários em Chrome headless, larguras 320, 375, 390, 430 e 1440 px, sem erros ou rede externa inesperada. As capturas de confirmação e benefício aprovado em 390 px foram inspecionadas; isso não representa nova prova em Safari/iPhone físico. Helper: 12 self-tests e preflight por leitura aprovados.
+
+Executor publicado SHA-256 398fe97d166a10fb973edcb1169715471c58c5bf15a872914c91658ba40740a9; roteador preservado em 96d9ab376436234aaffa09ee466fe90153e4400b4748937242e53e2c48f2b692. Cobrança, autenticação e roteador inalterados: a medição de CPU citada permanece a rodada anterior de TESTE, sem alegar nova medição remota desta liberação.
+
+Publicação em 2026-10-20T17:35:03.726306Z: Pages 906fac2d-3f35-4f0e-9bdf-49a3a834b42e, executor 75976ab1-bb58-47ee-a67e-a416e24979e3. Readback final ok:true às 17:36:08.770 UTC. Canonical, alias e domínio oficial com HTML esperado; health HTTP 200/backendReady:true, status sem autenticação HTTP 401. Provas adicionais: create sem autenticação HTTP 401, webhook sem assinatura HTTP 401 e health de www HTTP 200/backendReady:true. PAYMENTS_ENABLED=true, piloto removido, anúncios OFF, D1/namespace/segredos preservados e TESTE inalterado.
+
+A primeira leitura do alias não correspondeu ao HTML novo; uma repetição somente leitura aprovou todas as verificações, sem redeploy. A causa não foi determinada. SELECT restrito após publicação confirmou exatamente um pedido real anterior aprovado, vínculo correto e benefício permanente ativo, sem escrita ou nova cobrança. Firebase billing desativado confirmado às 17:36:02.039 UTC; nenhum plano alterado. Os registros seguintes preservam as provas anteriores do piloto.
+
+HISTÓRICO DO PILOTO E PAGAMENTO CONFIRMADO
 
 Pagamento real do piloto confirmado em 20/10/2026: a verificação somente leitura às 17:12 UTC confirmou no D1 de produção um único pedido de R$ 5 aprovado e o benefício permanente ativo. A usuária também confirmou a tela no iPhone, no domínio oficial. Essas evidências não identificam o webhook como canal exclusivo da confirmação. O piloto segue restrito a uma conta e uma reserva, até 21/10 às 12:16 de Brasília; Pix público e anúncios continuam OFF.
 

@@ -27,7 +27,7 @@ function deploymentConfigs(pages, test) {
     || vars.FIREBASE_PROJECT_ID !== expected.firebase || !/^AIza[A-Za-z0-9_-]{20,100}$/.test(vars.FIREBASE_WEB_API_KEY)
     || vars.MP_TEST_FIREBASE_PROJECT_ID !== MODES.test.firebase || vars.MP_PRODUCTION_FIREBASE_PROJECT_ID !== MODES.production.firebase
     || vars.MP_COLLECTOR_ID !== expected.collector || vars.MP_APPLICATION_ID !== expected.application
-    || vars.MP_LIVE_MODE !== String(!test) || vars.PAYMENTS_ENABLED !== String(test)
+    || vars.MP_LIVE_MODE !== String(!test) || !['true', 'false'].includes(vars.PAYMENTS_ENABLED)
     || vars.ALLOWED_ORIGINS !== JSON.stringify(expected.origins)) refused();
   const executor = {
     name: expected.executor,

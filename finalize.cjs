@@ -21,8 +21,8 @@ assert.doesNotMatch(app,/adsbygoogle\.js/);
 const {readPublicConfig,embeddedConfig}=require('./frontend/monetization-build-config.cjs');
 const expectedMonetization=readPublicConfig(__dirname);
 assert.deepEqual(embeddedConfig(app),expectedMonetization);
-assert.equal(expectedMonetization.publicPayments,false);
+assert.equal(expectedMonetization.publicPayments&&expectedMonetization.pilotEnabled,false);
 assert.equal(expectedMonetization.adsEnabled,false);
 for(const name of ['public-ads.js','consent.js'])new vm.Script(fs.readFileSync(path.join(pub,name),'utf8'));
-console.log(JSON.stringify({publicPages:names.length,scriptsValid:true,adsEnabled:false,paymentsEnabled:false,pixPilotEnabled:expectedMonetization.pilotEnabled}));
+console.log(JSON.stringify({publicPages:names.length,scriptsValid:true,adsEnabled:false,paymentsEnabled:expectedMonetization.publicPayments,pixPilotEnabled:expectedMonetization.pilotEnabled}));
 

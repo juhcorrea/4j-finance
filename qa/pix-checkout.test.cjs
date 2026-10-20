@@ -11,7 +11,8 @@ const $=selector=>document.querySelector(selector);
 const esc=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const scenario=new URLSearchParams(location.search).get('scenario')||'ready';
 const provider=new URLSearchParams(location.search).get('provider')==='cloudflare'?'cloudflare':'firebase';
-const fixture={calls:[],transportRequests:0,created:false,paid:false,status:'pending',ready:true,paymentsEnabled:true,pilotMode:true,failStatus:false,failCreate:false,failCheck:false};
+const pilot=provider==='cloudflare'&&scenario.startsWith('pilot-');
+const fixture={calls:[],transportRequests:0,created:false,paid:false,status:'pending',ready:true,paymentsEnabled:true,pilotMode:pilot,failStatus:false,failCreate:false,failCheck:false};
 if(scenario==='disabled')fixture.paymentsEnabled=false;
 if(scenario==='pilot-incomplete')fixture.pilotMode=undefined;
 if(scenario==='pilot-mismatch')fixture.pilotMode=false;
@@ -23,7 +24,7 @@ const user={uid:'synthetic-qa-user',emailVerified:true,getIdTokenResult:async()=
 const Store={screen:'app',profile:'synthetic-profile',demo:false,user,userDoc:{status:'approved'},auth:{currentUser:user,onIdTokenChanged:()=>()=>{}},emit(){}};
 function modal(title,html){const dialog=$('#modal');$('#modal-content').innerHTML='<div class="modal-heading"><h2 id="modal-title">'+esc(title)+'</h2><button type="button" class="icon-button" data-action="close-modal" aria-label="Fechar">×</button></div>'+html;if(!dialog.open)dialog.showModal();}
 function familyAccessSettings(){modal('Ajustes','<section class="account-summary"><h3>Conta de demonstração técnica</h3></section>');}
-window.MONETIZATION_CONFIG={enabled:true,pilotEnabled:provider==='cloudflare',publicPayments:false,provider,apiBase:'/api/pix',adsEnabled:true,adPageAllowlist:['/guia/']};
+window.MONETIZATION_CONFIG={enabled:true,pilotEnabled:pilot,publicPayments:provider==='cloudflare'&&!pilot,provider,apiBase:'/api/pix',adsEnabled:false,adPageAllowlist:[]};
 document.addEventListener('click',event=>{const action=event.target.closest('[data-action]')?.dataset.action;if(action==='close-modal')$('#modal').close();if(action==='settings')familyAccessSettings();});
 `+source+String.raw`
 const orderId='12345678-1234-4123-8123-123456789abc';
@@ -57,7 +58,7 @@ const server=http.createServer((req,res)=>{const script=new URL(req.url,'http://
    await context.route('**/*',route=>{const request=route.request(),url=new URL(request.url());if(url.origin===origin||['fonts.googleapis.com','fonts.gstatic.com'].includes(url.hostname))return route.continue();unexpectedNetwork.push({host:url.hostname,method:request.method()});return route.abort();});
    const page=await context.newPage();page.on('pageerror',error=>errors.push(error.message));
    async function open(scenario='ready',provider='cloudflare'){await page.goto(origin+'/?scenario='+scenario+'&provider='+provider,{waitUntil:'networkidle'});await page.evaluate(()=>document.fonts.ready);await page.locator('[data-action=monetization-open]').click();await page.locator('dialog[open]').waitFor();}
-   await open();assert.ok(await page.evaluate(()=>PixFixture.state.transportRequests)>0,'Cloudflare transport exercised');await shot(page,width,'confirm');assert.equal(await page.locator('#pix-confirm-form input').count(),0);assert.equal(await page.locator('#pix-confirm-form').textContent().then(t=>/R\$ 5,00/.test(t)),true);
+   await open();assert.equal(await page.evaluate(()=>PixFixture.state.pilotMode),false);assert.equal(await page.evaluate(()=>window.MONETIZATION_CONFIG.publicPayments),true);assert.equal(await page.evaluate(()=>PixFixture.adsAllowed()),false);assert.ok(await page.evaluate(()=>PixFixture.state.transportRequests)>0,'Cloudflare transport exercised');await shot(page,width,'confirm');assert.equal(await page.locator('#pix-confirm-form input').count(),0);assert.equal(await page.locator('#pix-confirm-form').textContent().then(t=>/R\$ 5,00/.test(t)),true);
    await page.locator('#pix-confirm-form [type=submit]').click();await page.locator('#pix-copy-code').waitFor();await shot(page,width,'pending');await page.locator('[data-action=monetization-check]').scrollIntoViewIfNeeded();await shot(page,width,'pending-controls');assert.equal(await page.evaluate(()=>PixFixture.state.calls.filter(c=>c.name==='createPixCheckout').length),1);
    await page.locator('[data-action=monetization-copy]').click();await page.locator('#pix-copy-result').filter({hasText:/copiado|Copiar/}).waitFor();
    await page.locator('#pix-checkout [data-action=close-modal]').click();await page.locator('main [data-action=monetization-open]').click();await page.locator('#pix-copy-code').waitFor();assert.equal(await page.evaluate(()=>PixFixture.state.calls.filter(c=>c.name==='createPixCheckout').length),1);
@@ -68,12 +69,12 @@ const server=http.createServer((req,res)=>{const script=new URL(req.url,'http://
    await open('error');await page.locator('#pix-confirm-form [type=submit]').click();await page.locator('#pix-create-error:not([hidden])').waitFor();await shot(page,width,'error');assert.equal(await page.locator('#pix-confirm-form [type=submit]').isEnabled(),true);
    await open('disabled');await page.getByRole('heading',{name:'Novos pagamentos em preparação'}).waitFor();assert.equal(await page.locator('#pix-confirm-form').count(),0);await shot(page,width,'disabled');
    for(const scenario of ['pilot-incomplete','pilot-mismatch']){await open(scenario);await page.getByRole('heading',{name:'Conexão indisponível'}).waitFor();assert.equal(await page.locator('#pix-confirm-form').count(),0);assert.equal(await page.evaluate(()=>PixFixture.state.calls.filter(c=>c.name==='createPixCheckout').length),0);await shot(page,width,scenario);results.push({width,case:scenario+' fails closed without a checkout',passed:true});}
-   await open('unavailable');await page.getByRole('heading',{name:'Conexão indisponível'}).waitFor();assert.equal(await page.locator('#pix-confirm-form').count(),0);await fit(page,width,'unavailable');results.push({width,case:'pilot allowed checkout, creation error, other account disabled and unavailable status',passed:true});
+   await open('unavailable');await page.getByRole('heading',{name:'Conexão indisponível'}).waitFor();assert.equal(await page.locator('#pix-confirm-form').count(),0);await fit(page,width,'unavailable');results.push({width,case:'public checkout, creation error, disabled new payments and unavailable status',passed:true});
    if(width===390){await open('terminal');await page.evaluate(()=>document.body.classList.add('dark','large-text'));await shot(page,width,'terminal-dark-large');await page.locator('[data-action=monetization-new]').click();await page.locator('#pix-confirm-form').waitFor();await fit(page,width,'terminal explicit retry');}
    if(width===390){await open('ready','firebase');await page.locator('#pix-confirm-form').waitFor();assert.equal(await page.evaluate(()=>PixFixture.state.transportRequests),0);await fit(page,width,'legacy Firebase fixture');results.push({width,case:'legacy Firebase fixture preserved',passed:true});}
    await context.close();
   }
   assert.deepEqual(errors,[],'Browser errors');assert.deepEqual(unexpectedNetwork,[],'No provider Firebase advertising or other external request');
-  const report={checkedAt:new Date().toISOString(),results,errors,unexpectedNetwork,scope:'Local synthetic pilot component (allowed/disabled/incomplete contract) with authenticated Cloudflare fetch mocked and legacy Firebase fixture, Chromium mobile viewports and desktop; no real Safari device, Firebase, payment, provider, advertising or public activation.'};fs.writeFileSync(path.join(out,'result.json'),JSON.stringify(report,null,2));console.log(JSON.stringify({passed:results.length,results,errors,unexpectedNetwork},null,2));
+  const report={checkedAt:new Date().toISOString(),results,errors,unexpectedNetwork,scope:'Local synthetic public component (ads disabled) and negative pilot contracts with authenticated Cloudflare fetch mocked and legacy Firebase fixture, Chromium mobile viewports and desktop; no real Safari device, Firebase, payment, provider, advertising or public activation.'};fs.writeFileSync(path.join(out,'result.json'),JSON.stringify(report,null,2));console.log(JSON.stringify({passed:results.length,results,errors,unexpectedNetwork},null,2));
  }finally{await browser.close();server.close();}
 })().catch(error=>{console.error(error.stack);server.close();process.exitCode=1;});

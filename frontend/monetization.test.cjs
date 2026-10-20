@@ -196,3 +196,15 @@ test('pilot rollback preserves existing benefit and order controls without expos
 test('pilot mode preserves a local demo with no backend calls',async()=>{
  const h=setup({enabled:true,pilotEnabled:true,provider:'cloudflare',adsEnabled:false});h.store.demo=true;await h.m.open();assert.equal(h.calls.length,0);assert.match(h.frames.at(-1).html,/demonstração|simulação|fictício/i);assert.equal(h.m.shouldLoadAds('/guia/'),false);
 });
+
+
+test('public mode offers the fixed purchase to eligible sessions and preserves a paid account without another checkout', async () => {
+ const config=require('./monetization-build-config.cjs').publicConfig({pilotEnabled:false,publicPayments:true});
+ const h=setup(config);
+ h.m.call=async(name,data)=>{h.calls.push({name,data});return account({pilotMode:false,adFreeLifetime:h.store.user.uid==='user-a'});};
+ await h.m.open();assert.equal(h.m.adFree,true);assert.equal(h.m.canCreate(),false);assert.equal(h.elements.has('#pix-confirm-form'),false);assert.match(h.frames.at(-1).html,/Pagamento confirmado/);
+ assert.equal(h.calls.some(c=>c.name==='createPixCheckout'),false);assert.equal(h.m.shouldLoadAds('/guia/'),false);
+ h.store.user={...h.store.user,uid:'other-eligible-user'};h.store.auth.currentUser=h.store.user;
+ await h.m.open();assert.equal(h.m.adFree,false);assert.equal(h.m.canCreate(),true);assert.equal(h.elements.has('#pix-confirm-form'),true);assert.match(h.frames.at(-1).html,/R\$ 5,00/);assert.equal(h.m.shouldLoadAds('/guia/'),false);
+ assert.equal(h.calls.some(c=>c.name==='createPixCheckout'),false, 'opening a public checkout still requires explicit confirmation');
+});

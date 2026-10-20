@@ -918,3 +918,38 @@ test('final batches reject absent success flags, null entries and sparse results
     assert.equal(h.db.sql.prepare('SELECT COUNT(*) AS count FROM billingLocks').get().count, 0);
   }
 });
+
+
+test('public production preserves paid benefit and allows only a separate eligible account purchase', async () => {
+  const h = setup({ liveMode: true, projectId: 'production-4j-pix', paymentsEnabled: true, pilotMode: false });
+  h.merchant.tags = [];
+  const first = await h.service.create(h.actor);
+  fixture.approve(h.remote(first.orderId)); await h.webhook(h.remote(first.orderId).id);
+  assert.equal((await h.service.getStatus(h.actor)).adFreeLifetime, true);
+  assert.equal((await h.service.create(h.actor)).adFreeLifetime, true);
+  assert.equal(h.calls.posts.length, 1, 'a paid user is never charged again');
+  const otherStatus = await h.service.getStatus(h.bob);
+  assert.equal(otherStatus.adFreeLifetime, false); assert.equal(otherStatus.paymentsEnabled, true); assert.equal(otherStatus.pilotMode, false);
+  const other = await h.service.create(h.bob);
+  assert.notEqual(other.orderId, first.orderId); assert.equal(h.calls.posts.length, 2);
+  assert.equal(h.stored(other.orderId).uid, h.bob.uid); assert.equal(h.stored(other.orderId).liveMode, 1);
+  assert.equal(h.stored(other.orderId).amountCents, 500); assert.equal(h.stored(other.orderId).currency, 'BRL');
+  for (const post of h.calls.posts) assert.equal(JSON.parse(post.body).payer.first_name, undefined);
+  const before = h.calls.gets;
+  await assert.rejects(h.service.check(h.bob, { orderId: first.orderId }), e => e.code === 'permission-denied');
+  await assert.rejects(h.service.check(h.actor, { orderId: other.orderId }), e => e.code === 'permission-denied');
+  assert.equal(h.calls.gets, before, 'cross-account attempts never consult another provider order');
+  assert.equal(h.account(h.bob.uid).adFreeLifetime, 0); assert.equal(h.account(h.actor.uid).adFreeLifetime, 1);
+});
+
+test('public production rejects anonymous unverified suspended and cross-project purchases before any charge', async () => {
+  const h = setup({ liveMode: true, projectId: 'production-4j-pix', paymentsEnabled: true, pilotMode: false });
+  h.merchant.tags = [];
+  for (const [actor, code] of [[null, 'unauthenticated'], [{ ...h.actor, emailVerified: false }, 'failed-precondition'], [{ ...h.actor, active: false }, 'permission-denied']]) {
+    await assert.rejects(h.service.create(actor), e => e.code === code);
+  }
+  assert.equal(h.calls.merchant, 0); assert.equal(h.calls.posts.length, 0);
+  h.config.projectId = h.config.testProjectId;
+  await assert.rejects(h.service.create(h.actor), e => e.code === 'failed-precondition');
+  assert.equal(h.calls.posts.length, 0); assert.equal(h.account(), undefined);
+});

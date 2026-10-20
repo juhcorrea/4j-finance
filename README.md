@@ -1,5 +1,11 @@
 # 4J Finance
 
+Pix público de R$ 5 publicado e conferido em 20/10/2026. A compra é única por login habilitado, com e-mail verificado e cadastro aprovado; quem já pagou conserva o benefício permanente e não precisa pagar novamente. O piloto privado foi encerrado, sem prazo de expiração aplicado às compras públicas. Anúncios continuam OFF, Firebase Spark e Cloudflare Free preservados, sem upgrade. Tarifas de recebimento do Mercado Pago são separadas da hospedagem.
+
+Produção: [906fac2d](https://906fac2d.4jfinance.pages.dev), publicada às 17:35:03 UTC e conferida às 17:36:08 UTC no domínio oficial, alias e versão canônica. O pedido real anterior e seu benefício permanecem ativos. Validação: 496 testes, 16 verificações de privacidade e 26 cenários locais de interface aprovados. Detalhes em [operação do Pix](docs/PIX-PILOTO.md).
+
+## Histórico do piloto validado — 20/10/2026
+
 Pagamento real do piloto confirmado em 20/10/2026: a verificação somente leitura às 17:12 UTC confirmou no D1 de produção um único pedido de R$ 5 aprovado e o benefício permanente ativo. A usuária também confirmou a tela no iPhone, no domínio oficial. Essas evidências não identificam o webhook como canal exclusivo da confirmação. O piloto segue restrito a uma conta e uma reserva, até 21/10 às 12:16 de Brasília; Pix público e anúncios continuam OFF.
 
 Estado em 20/10/2026 após a validação final de TESTE: OAuth da Cloudflare concluído. A tela Workers & Pages enviada pela usuária mostra cota de 100 mil requisições/dia e botão Upgrade, evidência visual compatível com Workers Free; a API de assinaturas retornou HTTP 403 e não confirmou o plano. Nenhum upgrade ou cadastro de cartão foi feito. O teste aprovado usa Pages em https://8a4c3ca2.4jfinance-pix-test.pages.dev e executor privado 4jfinance-pix-executor-test, versão eb819c59-e3d1-403c-933a-23e3c55a0535. Hash remoto, namespace SQLite preservado, binding e ausência de rotas públicas do executor foram conferidos.
@@ -52,7 +58,7 @@ A compatibilidade de redirecionamentos Google/Mercado Pago foi corrigida com tra
 | source/base.html | Fonte de entrada anterior as transformacoes; nunca hospedar diretamente |
 | frontend/ | Modulos de interface e testes de consentimento/monetizacao |
 | privacy/ | Transformacoes, regras Firestore e testes de isolamento |
-| cloudflare/ | Pix Orders: roteador Pages, executor privado Durable Object SQLite, D1, autenticacao e testes; piloto privado publicado; pagamento real e benefício confirmados |
+| cloudflare/ | Pix Orders: roteador Pages, executor privado Durable Object SQLite, D1, autenticacao e testes; Pix público de R$ 5 publicado; benefício por login e pagamento anterior preservados |
 | functions/ | Implementacao Firebase Functions legada, preservada e nao ativa |
 | qa/ | Testes de navegador com dados sinteticos |
 | scripts/ | Validacao, reproducao do build e sincronizacao do workspace |

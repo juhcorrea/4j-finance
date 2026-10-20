@@ -1,4 +1,20 @@
-# Operação do piloto privado de Pix — R$ 5
+# Operação do Pix de R$ 5 e histórico do piloto
+
+## Operação pública publicada e conferida — 20/10/2026
+
+O Pix de R$ 5 foi liberado ao público elegível no deployment 906fac2d-3f35-4f0e-9bdf-49a3a834b42e, publicado em 20/10/2026 às 17:35:03.726306 UTC, com readback aprovado às 17:36:08.770 UTC. A validação local passou com 496 testes, 16 verificações de privacidade e 26 cenários de interface. O piloto encerrado e seu pagamento real confirmado permanecem no histórico abaixo.
+
+- Compra única para login habilitado, com e-mail verificado e cadastro aprovado. O benefício permanente pertence ao comprador; não se estende automaticamente aos outros logins da família.
+- Quem já pagou conserva o benefício. Antes de gerar cobrança, servidor e interface conferem o benefício e recuperam o pedido existente; uma falha ou resposta incerta não autoriza criar outro Pix.
+- PAYMENTS_ENABLED=true está publicado e PIX_PILOT_CONFIG foi removido da configuração incorporada ao Pages. No frontend, pilotEnabled=false e publicPayments=true. O piloto privado está encerrado; a restrição de uma conta e sua expiração não se aplicam às compras públicas. Pedidos e benefícios permanecem no mesmo D1.
+- O executor privado mantém o teto explícito de autorização: se estiver desativado, Pages não pode habilitar compras; quando estiver habilitado, Pages ainda pode mantê-las desligadas. Identidades, ambiente e banco continuam fixos. Nenhuma credencial ou identidade de usuário entra no pacote público.
+- Anúncios continuam OFF. Esta autorização não libera AdSense/CMP, outro preço, assinatura, compartilhamento do benefício ou upgrade de plano.
+
+A implantação ativa foi conferida: HTML esperado no domínio oficial, alias e canonical; health HTTP 200/backendReady:true, status e criação sem autenticação HTTP 401 e webhook sem assinatura HTTP 401. A leitura restrita do D1 após a publicação confirmou o único pedido real anterior aprovado, com vínculo e benefício permanente preservados, sem nova cobrança. Os dados de CPU provêm da medição anterior, com cobrança, autenticação e roteador inalterados; não houve nova medição remota de CPU desta liberação.
+
+A hospedagem deve permanecer no Firebase Spark e Cloudflare Free, dentro das cotas detalhadas neste guia e em PUBLICAR-NO-CLOUDFLARE.md. O Mercado Pago publica tarifa de 0,99% para Pix no checkout com recebimento imediato; a tarifa efetiva desta conta não foi verificada. Não apresentar hospedagem gratuita como isenção de tarifa de processamento. [Tabela oficial de Checkout](https://www.mercadopago.com.br/ferramentas-para-vender/check-out), consultada em 20/10/2026.
+
+## Histórico do piloto privado e suas regras
 
 Pagamento real do piloto confirmado em 20/10/2026: a verificação somente leitura às 17:12 UTC confirmou no D1 de produção um único pedido de R$ 5 aprovado e o benefício permanente ativo. A usuária também confirmou a tela no iPhone, no domínio oficial. Essas evidências não identificam o webhook como canal exclusivo da confirmação. O piloto segue restrito a uma conta e uma reserva, até 21/10 às 12:16 de Brasília; Pix público e anúncios continuam OFF.
 
@@ -10,7 +26,7 @@ Produção publicada em 20/10/2026 no deployment canônico 9d41bbad-1426-4603-88
 
 A nova conferência somente leitura de produção às 15:21:41.993 UTC, após a publicação, confirmou billing do Firebase desativado e conta selecionada habilitada, com e-mail verificado e cadastro aprovado. Firebase permanece no Spark, sem upgrade ou cadastro de cartão; Cloudflare Free tem a evidência visual descrita acima, sem confirmação pela API de assinaturas. A leitura pública do script AdSense retornou HTTP 200 e confirmou a estrutura presente, com flags OFF; a tela Receber código não comprova aprovação do AdSense. A validação final da cópia Git passou com 491 testes e 16 verificações de privacidade, instalação frozen aprovada e HTML reproduzível com SHA-256 3e7b43dd93d7e54e4d2253d0a7707dfdc5f17aa30b47497467250dbf086b8883. Os 26 cenários de interface anteriores continuam registrados no escopo em que foram executados.
 
-## Limites da autorização
+## Limites da autorização — piloto privado
 
 - Um único login selecionado de forma privada, com e-mail verificado e cadastro aprovado. A seleção é pelo UID autenticado no servidor; o navegador não escolhe a conta autorizada.
 - No máximo uma reserva de pedido de R$ 5 para essa conta no banco do ambiente. Retomar o mesmo pedido não cria outra reserva. Uma reserva anterior, mesmo sem pagamento concluído, impede reservar outro pedido durante o piloto.
@@ -20,7 +36,7 @@ A nova conferência somente leitura de produção às 15:21:41.993 UTC, após a 
 
 Manter Firebase Spark e Cloudflare Workers Free, sem Blaze, Workers Paid, outro upgrade ou cadastro de cartão para viabilizar esta arquitetura. Conferir por leitura o plano Workers da conta e o billing do Firebase antes e depois de qualquer operação remota autorizada; registrar data e resultado, sem credenciais. O plano Free do domínio não comprova o plano Workers. Se a leitura não estiver disponível, registrar a verificação como pendente, sem presumir gratuidade ou alterar a assinatura. Manter Netlify pausado. A publicação na Cloudflare é uma operação distinta do backup Git. O apoio de R$ 5 está sujeito às tarifas de recebimento do Mercado Pago aplicáveis à conta; os planos gratuitos de infraestrutura não eliminam essa tarifa do provedor.
 
-## Configuração privada
+## Configuração privada — piloto privado
 
 Usar o segredo `PIX_PILOT_CONFIG` no projeto Cloudflare de produção. Seu objeto JSON contém somente `uids`, uma lista com exatamente um UID, e `expiresAt`, um instante UTC no formato `AAAA-MM-DDTHH:mm:ss.sssZ`. O horário deve ser calculado no momento da configuração, com validade de 24 horas.
 
@@ -55,7 +71,7 @@ A validação precisa medir as duas camadas separadamente: **10 ms de CPU por ch
 
 No Workers Free, Durable Objects SQLite têm cotas de 100 mil requisições e 13 mil GB-s de duração por dia. A duração considera tempo ativo, inclusive espera de I/O, e não equivale à CPU. As cotas de Pages/Workers, D1 e Firebase também continuam aplicáveis. Se uma cota Free esgotar, a operação correspondente falha; não contratar nem automatizar upgrade. Preservar confirmação e recuperação seguras após indisponibilidade. [Cotas e duração de Durable Objects](https://developers.cloudflare.com/durable-objects/platform/pricing/).
 
-## Comportamento esperado no site
+## Comportamento esperado no site — piloto privado
 
 `frontend/monetization-build.json` prepara a integração com `pilotEnabled=true`, enquanto o build mantém `publicPayments=false` e `adsEnabled=false`. Essas flags públicas não concedem autorização de compra.
 
@@ -77,7 +93,7 @@ Se a confirmação demorar ou o site for fechado:
 
 O limite de uma reserva não é liberado por expiração do piloto, recarga da página ou nova configuração do segredo. Qualquer repetição com outro pedido exige uma decisão operacional separada; não faz parte deste piloto.
 
-## Desligamento
+## Desligamento — piloto privado
 
 A expiração já incluída na implantação é verificada pelo código: ao chegar o prazo, novas criações são bloqueadas automaticamente, sem nova publicação. Manter `PAYMENTS_ENABLED=false`.
 
@@ -87,7 +103,7 @@ Não desligar a integração do frontend, remover credenciais de confirmação, 
 
 Após o desligamento, conferir com o mesmo login que a criação está indisponível e que a consulta do pedido ou benefício continua funcionando. Confirmar também que outra conta continua sem permissão de criar. Registrar apenas o resultado, horário, versão publicada e verificações realizadas, sem identificadores privados.
 
-## Evidências antes de ampliar o acesso
+## Evidências antes de ampliar o acesso — piloto privado
 
 Antes de ampliar o acesso, ainda precisam de registros próprios o isolamento remoto entre a conta permitida e outra conta e o desligamento com recuperação preservada. O pagamento real e o benefício já foram confirmados por leitura restrita do D1 e pela tela enviada pela usuária. O readback de produção foi concluído; a API de assinaturas permanece sem permissão de leitura, e a evidência visual de Free está descrita neste guia. O deploy de teste, a correção RPC, a medição dual aprovada, a prova natural do benefício, a suíte final e o build reproduzível da cópia Git estão confirmados. A configuração do piloto foi publicada em produção; isso não comprova pagamento real ou encerramento do piloto. Não tratar este guia, um build local ou a aprovação do sandbox anterior como prova dessas etapas em produção.
 

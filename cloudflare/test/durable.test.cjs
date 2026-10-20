@@ -157,15 +157,29 @@ test('executor keeps credentials per invocation and never exposes a public fetch
   assert.deepEqual(await httpResponse(await executor.handle(request(), missing)).json(), { backendReady: false });
 });
 
-test('executor production cannot enable global purchases and rejects cross-environment identity', async () => {
+test('executor enforces a strict purchase ceiling while all environment identities remain fixed', async () => {
   const { PixExecutor } = await nodeExecutor;
-  const production = configuration({ FIREBASE_PROJECT_ID: 'synthetic-production', MP_LIVE_MODE: 'true', PAYMENTS_ENABLED: 'false' });
-  const executor = new PixExecutor({}, { ...production, BILLING_DB: { prepare() {} } });
-  assert.deepEqual(await httpResponse(await executor.handle(request(), production)).json(), { backendReady: true });
-  await genericFailure(await executor.handle(request(), configuration()));
-  const unsafe = { ...production, PAYMENTS_ENABLED: 'true' };
-  const unsafeExecutor = new PixExecutor({}, { ...unsafe, BILLING_DB: { prepare() {} } });
-  await genericFailure(await unsafeExecutor.handle(request(), unsafe));
+  for (const liveMode of ['false', 'true']) {
+    const base = configuration({ FIREBASE_PROJECT_ID: liveMode === 'true' ? 'synthetic-production' : 'synthetic-test', MP_LIVE_MODE: liveMode });
+    for (const ceiling of ['false', 'true']) {
+      const executor = new PixExecutor({}, { ...base, PAYMENTS_ENABLED: ceiling, BILLING_DB: { prepare() { throw Error('No SQL expected'); } } });
+      for (const requested of ['false', 'true']) {
+        const response = await executor.handle(request(), { ...base, PAYMENTS_ENABLED: requested });
+        if (ceiling === 'false' && requested === 'true') await genericFailure(response);
+        else assert.deepEqual(await httpResponse(response).json(), { backendReady: true });
+      }
+      for (const invalid of [undefined, null, true, false, '', 'TRUE', '1', ' false ']) {
+        await genericFailure(await executor.handle(request(), { ...base, PAYMENTS_ENABLED: invalid }));
+        const malformed = new PixExecutor({}, { ...base, PAYMENTS_ENABLED: invalid, BILLING_DB: { prepare() {} } });
+        await genericFailure(await malformed.handle(request(), { ...base, PAYMENTS_ENABLED: 'false' }));
+      }
+      const opposite = configuration({ FIREBASE_PROJECT_ID: liveMode === 'true' ? 'synthetic-test' : 'synthetic-production', MP_LIVE_MODE: liveMode === 'true' ? 'false' : 'true', PAYMENTS_ENABLED: 'false' });
+      await genericFailure(await executor.handle(request(), opposite));
+      for (const changes of [{ MP_APPLICATION_ID: '9999' }, { MP_COLLECTOR_ID: '9999' }, { ALLOWED_ORIGINS: '[]' }, { MP_PRODUCTION_FIREBASE_PROJECT_ID: 'other-production' }]) {
+        await genericFailure(await executor.handle(request(), { ...base, PAYMENTS_ENABLED: 'false', ...changes }));
+      }
+    }
+  }
 });
 
 test('Miniflare: actual cross-worker RPC preserves core HTTP, HMAC and environment isolation', { timeout: 90000 }, async () => {
@@ -185,8 +199,20 @@ test('Miniflare: actual cross-worker RPC preserves core HTTP, HMAC and environme
   };
   const runtime = { modules: true, compatibilityDate: '2026-10-15', compatibilityFlags: ['nodejs_compat'], outboundService: outbound };
   const binding = { PIX_EXECUTOR: { className: 'PixExecutor', scriptName: 'executor', useSQLite: true } };
+  const productionConfig = configuration({ FIREBASE_PROJECT_ID: 'synthetic-production', MP_LIVE_MODE: 'true' });
+  const productionWorkers = ['false', 'true'].flatMap(ceiling => {
+    const name = 'executor-production-' + ceiling;
+    return [
+      { ...runtime, name, script: executor, bindings: { ...productionConfig, PAYMENTS_ENABLED: ceiling },
+        d1Databases: { BILLING_DB: 'synthetic-production-database' }, durableObjects: { SELF: { className: 'PixExecutor', useSQLite: true } } },
+      ...['false', 'true'].map(requested => ({ ...runtime, name: 'pages-production-' + ceiling + '-' + requested, script: router,
+        bindings: { ...productionConfig, PAYMENTS_ENABLED: requested },
+        durableObjects: { PIX_EXECUTOR: { className: 'PixExecutor', scriptName: name, useSQLite: true } } })),
+    ];
+  });
   const mf = new Miniflare(convertV4MiniflareOptions({ cf: false, log: new Log(LogLevel.ERROR), workers: [
     { ...runtime, name: 'pages', script: router, bindings: config, durableObjects: binding },
+    ...productionWorkers,
     { ...runtime, name: 'pages-wrong-identity', script: router, bindings: { ...config, MP_APPLICATION_ID: '9999' }, durableObjects: binding },
     { ...runtime, name: 'executor', script: executor, bindings: fixed, d1Databases: { BILLING_DB: 'synthetic-database' },
       durableObjects: { SELF: { className: 'PixExecutor', useSQLite: true } } },
@@ -227,6 +253,17 @@ test('Miniflare: actual cross-worker RPC preserves core HTTP, HMAC and environme
     assert.equal(await response.text(), 'ignored'); assert.equal(upstream, 2);
     const wrong = await mf.getWorker('pages-wrong-identity');
     await genericFailure(await wrong.fetch(ORIGIN + '/api/pix/health')); assert.equal(upstream, 2);
+    for (const ceiling of ['false', 'true']) for (const requested of ['false', 'true']) {
+      const pages = await mf.getWorker('pages-production-' + ceiling + '-' + requested);
+      const ready = await pages.fetch(ORIGIN + '/api/pix/health');
+      if (ceiling === 'false' && requested === 'true') await genericFailure(ready);
+      else {
+        assert.equal(ready.status, 200); assert.deepEqual(await ready.json(), { backendReady: true });
+        const anonymous = await pages.fetch(ORIGIN + '/api/pix/createPixCheckout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{"data":{}}' });
+        assert.equal(anonymous.status, 401);
+      }
+    }
+    assert.equal(upstream, 2, 'public configuration does not bypass authentication or create a payment');
     const publicExecutor = await mf.getWorker('executor');
     assert.equal((await publicExecutor.fetch(ORIGIN + '/api/pix/health')).status, 404);
     const namespace = await mf.getDurableObjectNamespace('SELF', 'executor');

@@ -44,8 +44,8 @@
     },
     {
       "path": "build.cjs",
-      "bytes": 4461,
-      "sha256": "ce21a1bc5d888ce9cf2e9c200874535e1d53aa44a4ca19e70ad6304d7e29ef0f"
+      "bytes": 4496,
+      "sha256": "6154e312d889169c8d372a30bb443bf23c895c3f870f6af75b8d19fe735d4b63"
     },
     {
       "path": "cloudflare/auth.cjs",
@@ -64,8 +64,8 @@
     },
     {
       "path": "cloudflare/durable.mjs",
-      "bytes": 4509,
-      "sha256": "d3df92e420428a3bed895619b52f91c1fd8be7c7eef55499ac3d3e015d98e06a"
+      "bytes": 4848,
+      "sha256": "23f43aa5e9b11d98234b9fba78a3985cf41524069f5852b95b4133bbb0d4f2fb"
     },
     {
       "path": "cloudflare/router.mjs",
@@ -84,13 +84,13 @@
     },
     {
       "path": "cloudflare/test/billing.test.cjs",
-      "bytes": 57105,
-      "sha256": "560202a14019b73c3af7c0d8eed26d74f9fddc6b916705cdbb4349afc187b141"
+      "bytes": 59668,
+      "sha256": "5b49e588bfe0543281c0e89796ce0e6c5f5b70b512e20a44669f120068bc4e7b"
     },
     {
       "path": "cloudflare/test/durable.test.cjs",
-      "bytes": 18813,
-      "sha256": "d758409ec27f9d15735b0c0949248d26ffa9d704193c3e41e1bbc02de94d78b4"
+      "bytes": 21549,
+      "sha256": "ade1846464c707dd42544eb71f33ebe1f9e31fce19072090605438f419c27753"
     },
     {
       "path": "cloudflare/test/http.test.cjs",
@@ -104,8 +104,8 @@
     },
     {
       "path": "cloudflare/wrangler.production.json",
-      "bytes": 1032,
-      "sha256": "83155fdc75d98bcc82670bb06a546a3c78b53f12af16ee13cb5089f8a3058a06"
+      "bytes": 1061,
+      "sha256": "9d62040e8cd68306f0ca287576b690a99bd31cfa25ea92a72e4c1d27fb0b2da0"
     },
     {
       "path": "cloudflare/wrangler.test.json",
@@ -119,8 +119,8 @@
     },
     {
       "path": "DECISOES.txt",
-      "bytes": 27161,
-      "sha256": "bc89ebd074844e30d9738e7cf5e383883348ddb66b67768f5b2f180fb4242fe4"
+      "bytes": 29443,
+      "sha256": "eb32766d0d5e421134ef20509438cd2c2d0ddbe037f66a4b98fc71165e3791db"
     },
     {
       "path": "docs/CATATAU-PLANEJAMENTO.md",
@@ -129,8 +129,8 @@
     },
     {
       "path": "docs/PIX-PILOTO.md",
-      "bytes": 17565,
-      "sha256": "71784393d7b796cbffb3017aea2942a1ac220d6a1152dc77db84c58cfe344772"
+      "bytes": 20349,
+      "sha256": "584f3fbcedb3022b1302c2b8746142780dff1604c95fd6d0c9065cf76347e21c"
     },
     {
       "path": "docs/SINCRONIZACAO.md",
@@ -149,8 +149,8 @@
     },
     {
       "path": "finalize.cjs",
-      "bytes": 1944,
-      "sha256": "03e4672c0d75f19f6d3408651eb3bdfbbf9e5c62826f2b83dad6404e969e4806"
+      "bytes": 2009,
+      "sha256": "454e656d2dccb55227338e5728a29e0cb73aced4e212e28f34cc368e06b4864d"
     },
     {
       "path": "firebase-rules-deploy.json",
@@ -184,13 +184,13 @@
     },
     {
       "path": "frontend/monetization-build-config.cjs",
-      "bytes": 932,
-      "sha256": "da08f37debf25638983efde4cadb18fe2866fd829ca411946722c50f8b75bf6a"
+      "bytes": 1110,
+      "sha256": "000dc3dc087ddf4d389ca148a646631883fe70dd64e42c33c5740309cefa1edb"
     },
     {
       "path": "frontend/monetization-build.json",
-      "bytes": 27,
-      "sha256": "a814336b858facacec326f2314d819c9e60f1684633eab979cb2c1fad48b6722"
+      "bytes": 54,
+      "sha256": "2c3bf41f056634012c5eeb1d3f4fed4ab9ba0d4b9eb82b11b8ffdbb2e75b9d4c"
     },
     {
       "path": "frontend/monetization.css",
@@ -204,8 +204,8 @@
     },
     {
       "path": "frontend/monetization.test.cjs",
-      "bytes": 35206,
-      "sha256": "1e92ded1ee8e7148d25b91fea973b3ef4f108662fd8eeebd4bade7a0eb611b07"
+      "bytes": 36399,
+      "sha256": "e749a03a611ab48bcf0912b621f299bf67017241699ac022a7ec5a1460831b4d"
     },
     {
       "path": "frontend/public-ads.test.cjs",
@@ -270,7 +270,7 @@
     {
       "path": "index.html",
       "bytes": 2812205,
-      "sha256": "3e7b43dd93d7e54e4d2253d0a7707dfdc5f17aa30b47497467250dbf086b8883"
+      "sha256": "f8dbc483f10c83810539bf25a7904950643f694ba738d4a142c6c7ba6a13c821"
     },
     {
       "path": "marketing/ABRA-O-PORTFOLIO.html",
@@ -820,7 +820,7 @@
     {
       "path": "outputs/index.html",
       "bytes": 2812205,
-      "sha256": "3e7b43dd93d7e54e4d2253d0a7707dfdc5f17aa30b47497467250dbf086b8883"
+      "sha256": "f8dbc483f10c83810539bf25a7904950643f694ba738d4a142c6c7ba6a13c821"
     },
     {
       "path": "package.json",
@@ -920,7 +920,7 @@
     {
       "path": "public/index.html",
       "bytes": 2812205,
-      "sha256": "3e7b43dd93d7e54e4d2253d0a7707dfdc5f17aa30b47497467250dbf086b8883"
+      "sha256": "f8dbc483f10c83810539bf25a7904950643f694ba738d4a142c6c7ba6a13c821"
     },
     {
       "path": "public/privacidade.html",
@@ -944,13 +944,13 @@
     },
     {
       "path": "PUBLICACAO.json",
-      "bytes": 17565,
-      "sha256": "af2cf7306df8470d7174b14b4822c9dc0114009d26fa07dbc09240644fe85f45"
+      "bytes": 23032,
+      "sha256": "9f2132ca5729a2d5ef75433aa0ac2b20b4224aa49c26fedda5bb705e890175cf"
     },
     {
       "path": "PUBLICAR-NO-CLOUDFLARE.md",
-      "bytes": 24303,
-      "sha256": "f08600bd82b27616d0a5afa3b290ee9cb2e1e146b48fbf4bb902d47372889aec"
+      "bytes": 26146,
+      "sha256": "326d62cf6949f7733a84869cca9b2438107d08a6185cb0a2e902691fc4a250cd"
     },
     {
       "path": "qa-production-ui.cjs",
@@ -969,8 +969,8 @@
     },
     {
       "path": "qa/pix-checkout.test.cjs",
-      "bytes": 14436,
-      "sha256": "eb4eff095f7f886a2a24c1133c55fed922ccfabb9bf4d99316f146649acfb6a9"
+      "bytes": 14730,
+      "sha256": "24eda92eb75aa1db46bdaa872bdcaf2f77c20c8a3e6affda13ec36efdae27d72"
     },
     {
       "path": "qa/public-pages.test.cjs",
@@ -979,13 +979,13 @@
     },
     {
       "path": "README.md",
-      "bytes": 15747,
-      "sha256": "bdc6c2756a55b8832c9246a8e8ca537bd805b4fb7800544f09032a4ecda6b212"
+      "bytes": 16664,
+      "sha256": "70c96d9046727e96b07c4c4fb21881205c35c4fc20865be6a04c1b906cb21d48"
     },
     {
       "path": "scripts/build-cloudflare.cjs",
-      "bytes": 9011,
-      "sha256": "8295b4565034bdb4693d866ee80d065eff3331117e77113a3c57a7788560ca95"
+      "bytes": 9023,
+      "sha256": "6ff4fcd8144205038d8b28bcf50bafd11f0c4f5ab29cb1e5efe99b6d6f4d9ca8"
     },
     {
       "path": "scripts/build-static.cjs",
@@ -999,8 +999,8 @@
     },
     {
       "path": "scripts/cloudflare-build.test.cjs",
-      "bytes": 9289,
-      "sha256": "bf83902dd41e4d001dcc6c140dc1fc62fe3f86b63b504427ea97503443629fcc"
+      "bytes": 9834,
+      "sha256": "4fe58a2b2cf7543e33cc31fc86d8c84961343f6f45981ba669e0e5702957ee0b"
     },
     {
       "path": "scripts/cloudflare-production-secrets.test.cjs",
@@ -1059,8 +1059,8 @@
     },
     {
       "path": "scripts/monetization-build.test.cjs",
-      "bytes": 3077,
-      "sha256": "df3c98358c8fa8eac77358f3a477339684cef627be26a504487faa5cb1d99b85"
+      "bytes": 3426,
+      "sha256": "f3c25e41758a65458dd278bde72553d025079658ec9c2715b628ec1b606ab52c"
     },
     {
       "path": "scripts/pix-sandbox.cjs",
@@ -1094,8 +1094,8 @@
     },
     {
       "path": "scripts/verify-build.cjs",
-      "bytes": 1977,
-      "sha256": "8992135a946927fa77c615a163578e757a315c80a08f9fb04112c7a997b1e046"
+      "bytes": 1947,
+      "sha256": "4fcc4b80dacbf7c7e70c5e754f26bb0e1b4e2f7e2120bc3cca09bdd2425971a4"
     },
     {
       "path": "source/base.html",
@@ -1109,8 +1109,8 @@
     },
     {
       "path": "TESTES.txt",
-      "bytes": 20395,
-      "sha256": "ecab052848e3c25c3910a0073fc34d7d0479b10a635ee93fc4f5962f84e6cb9d"
+      "bytes": 22521,
+      "sha256": "3fa2d533f560217c7c752b7b834b73055c48b3c1ed62efc89a3b89f271c61b20"
     },
     {
       "path": "ui-qa.cjs",

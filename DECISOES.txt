@@ -145,3 +145,19 @@ Dependência Miniflare fixada em desenvolvimento; instalação frozen, 491 teste
 20/10/2026, fechamento documental: publicação real às 15:18:13.30968 UTC e readback final aprovado às 15:27:31.471 UTC. Canonical, configurações protegidas, executor e HTML conferidos. No alias e domínio oficial, status sem autenticação retorna 401 com e sem Origin; webhook sem assinatura retorna 401 e GET retorna 405. Nenhum pagamento real foi criado. O piloto permanece restrito até a expiração registrada, com Pix público e anúncios OFF.
 
 Pagamento real do piloto confirmado em 20/10/2026: a verificação somente leitura às 17:12 UTC confirmou no D1 de produção um único pedido de R$ 5 aprovado e o benefício permanente ativo. A usuária também confirmou a tela no iPhone, no domínio oficial. Essas evidências não identificam o webhook como canal exclusivo da confirmação. O piloto segue restrito a uma conta e uma reserva, até 21/10 às 12:16 de Brasília; Pix público e anúncios continuam OFF.
+
+20/10/2026 — LIBERAÇÃO PÚBLICA DO PIX AUTORIZADA; PUBLICAÇÃO PENDENTE
+
+Após o pagamento real confirmado, a responsável autorizou o Pix público de R$ 5 em compra única para login habilitado, com e-mail verificado e cadastro aprovado. Preservar o benefício permanente de quem já pagou e o isolamento entre logins. Na publicação validada, remover a configuração privada do piloto e habilitar compras públicas, mantendo pedidos e benefícios no mesmo D1. A autorização está registrada; a nova versão ainda exige testes, publicação e leitura de confirmação.
+
+Manter Firebase Spark e Cloudflare Free, sem upgrade ou cartão, e anúncios OFF. As cotas gratuitas de hospedagem não eliminam a tarifa de recebimento do Mercado Pago; a taxa pública de Checkout é 0,99% para Pix, sem verificação da condição comercial específica desta conta. Detalhes e fonte oficial em docs/PIX-PILOTO.md.
+
+20/10/2026 — VALIDAÇÃO LOCAL DA LIBERAÇÃO PÚBLICA APROVADA
+
+Passaram 496 testes, 16 verificações de privacidade e a reprodução do HTML f8dbc483f10c83810539bf25a7904950643f694ba738d4a142c6c7ba6a13c821 na cópia Git; 26 cenários de interface local, 12 self-tests do helper e preflight por leitura também aprovados. Publicação em andamento, ainda sem resultado remoto final. A evidência de CPU é da rodada anterior, não uma nova medição desta liberação.
+
+20/10/2026 — PIX PÚBLICO PUBLICADO E CONFERIDO
+
+Liberação concluída no Pages 906fac2d-3f35-4f0e-9bdf-49a3a834b42e, publicado às 17:35:03.726306 UTC e conferido às 17:36:08.770 UTC; executor privado versão 75976ab1-bb58-47ee-a67e-a416e24979e3. PAYMENTS_ENABLED=true, piloto privado removido, anúncios OFF. Compra única de R$ 5 por login elegível; leitura restrita após publicação confirmou o pedido anterior aprovado e o benefício permanente preservado. Nenhuma nova cobrança foi criada pela publicação ou verificação.
+
+D1, namespace e segredos preservados; TESTE inalterado, Firebase billing desativado confirmado e nenhum plano alterado. A primeira leitura do alias ainda não correspondeu ao HTML novo; repetição somente leitura aprovou todas as verificações, sem redeploy e sem causa atribuída. Os registros anteriores de espera pela publicação são históricos.

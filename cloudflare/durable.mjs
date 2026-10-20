@@ -5,7 +5,7 @@ import { PIX_CONFIG_KEYS, isPixResponse } from './router.mjs';
 const FIXED_KEYS = Object.freeze([
   'FIREBASE_PROJECT_ID', 'FIREBASE_WEB_API_KEY', 'MP_COLLECTOR_ID', 'MP_APPLICATION_ID',
   'MP_LIVE_MODE', 'MP_TEST_FIREBASE_PROJECT_ID', 'MP_PRODUCTION_FIREBASE_PROJECT_ID',
-  'PAYMENTS_ENABLED', 'ALLOWED_ORIGINS',
+  'ALLOWED_ORIGINS',
 ]);
 const PRIVATE_KEYS = new Set(PIX_CONFIG_KEYS);
 function unavailable() {
@@ -24,8 +24,13 @@ export class PixExecutor extends DurableObject {
     for (const key of FIXED_KEYS) {
       if (typeof this.env[key] !== 'string' || this.env[key] !== config[key]) throw Error('configuration');
     }
+    // The executor caps public purchases. Pages may restrict that flag during
+    // deployment or rollback. A private pilot still requires public=false;
+    // status and existing-order reconciliation remain available in either mode.
     if (!['true', 'false'].includes(this.env.MP_LIVE_MODE) ||
-        this.env.PAYMENTS_ENABLED !== (this.env.MP_LIVE_MODE === 'true' ? 'false' : 'true')) throw Error('configuration');
+        !['true', 'false'].includes(this.env.PAYMENTS_ENABLED) ||
+        !['true', 'false'].includes(config.PAYMENTS_ENABLED) ||
+        (config.PAYMENTS_ENABLED === 'true' && this.env.PAYMENTS_ENABLED !== 'true')) throw Error('configuration');
     return { ...config, BILLING_DB: this.env.BILLING_DB };
   }
   async #diagnostic(request, response) {

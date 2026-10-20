@@ -40,12 +40,22 @@ for (const mode of ['test', 'production']) test('executor configuration keeps ' 
   assert.equal(configs.executor.workers_dev, false);
   assert.equal(configs.executor.preview_urls, false);
   assert.deepEqual(configs.executor.routes, []);
-  assert.equal(configs.executor.vars.PAYMENTS_ENABLED, String(mode === 'test'));
+  assert.equal(configs.executor.vars.PAYMENTS_ENABLED, 'true');
   assert.equal(configs.executor.vars.MP_LIVE_MODE, String(mode !== 'test'));
   assert.equal(configs.pages.durable_objects.bindings[0].script_name, configs.executor.name);
   assert.equal(configs.executor.main, '../cloudflare-' + mode + '-executor/index.mjs');
   for (const key of ['PIX_PILOT_CONFIG', 'MP_ACCESS_TOKEN', 'MP_WEBHOOK_SECRET']) assert.equal(Object.hasOwn(configs.executor.vars, key), false);
   for (const key of ['usage_model', 'limits', 'services', 'queues', 'triggers', 'build', 'assets', 'exports']) assert.equal(Object.hasOwn(configs.executor, key), false);
+});
+
+test('rollback configurations retain strict boolean purchase flags and separate identities', () => {
+  for (const mode of ['test', 'production']) {
+    const original = readConfig(mode); original.vars.PAYMENTS_ENABLED = 'false';
+    const result = deploymentConfigs(original, mode === 'test');
+    assert.equal(result.pages.vars.PAYMENTS_ENABLED, 'false');
+    assert.equal(result.executor.vars.PAYMENTS_ENABLED, 'false');
+    assert.equal(result.executor.vars.MP_LIVE_MODE, String(mode === 'production'));
+  }
 });
 
 test('configuration guard refuses secrets, identifiers from another environment and expanded capabilities', () => {
@@ -56,7 +66,8 @@ test('configuration guard refuses secrets, identifiers from another environment 
     x => { x.vars.EXTRA = 'unexpected'; },
     x => { x.vars.PIX_CPU_DIAGNOSTICS = 'true'; },
     x => { delete x.vars.FIREBASE_PROJECT_ID; },
-    x => { x.vars.PAYMENTS_ENABLED = 'true'; },
+    x => { x.vars.PAYMENTS_ENABLED = 'TRUE'; },
+    x => { x.vars.PAYMENTS_ENABLED = true; },
     x => { x.vars.MP_LIVE_MODE = 'false'; },
     x => { x.vars.MP_APPLICATION_ID = '0'; },
     x => { x.vars.MP_COLLECTOR_ID = '0'; },

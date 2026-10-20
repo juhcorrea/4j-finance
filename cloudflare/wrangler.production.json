@@ -14,7 +14,11 @@
   ],
   "durable_objects": {
     "bindings": [
-      { "name": "PIX_EXECUTOR", "class_name": "PixExecutor", "script_name": "4jfinance-pix-executor" }
+      {
+        "name": "PIX_EXECUTOR",
+        "class_name": "PixExecutor",
+        "script_name": "4jfinance-pix-executor"
+      }
     ]
   },
   "vars": {
@@ -25,7 +29,7 @@
     "MP_LIVE_MODE": "true",
     "MP_TEST_FIREBASE_PROJECT_ID": "fjfinance-pix-test",
     "MP_PRODUCTION_FIREBASE_PROJECT_ID": "financas-familia-9480b",
-    "PAYMENTS_ENABLED": "false",
+    "PAYMENTS_ENABLED": "true",
     "ALLOWED_ORIGINS": "[\"https://4jfinance.com.br\",\"https://www.4jfinance.com.br\",\"https://4jfinance.pages.dev\"]"
   }
 }
