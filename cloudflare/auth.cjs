@@ -7,6 +7,8 @@ const MAX_TOKEN_LENGTH = 16384;
 const MAX_RESPONSE_LENGTH = 131072;
 const KEY_REFRESH_COOLDOWN_MS = 60000;
 const MAX_KEY_TTL_MS = 3600000;
+const UTF8_DECODER = new TextDecoder('utf-8', { fatal: true });
+const UTF8_ENCODER = new TextEncoder();
 
 class AuthError extends Error {
   constructor(code) {
@@ -23,12 +25,15 @@ function bytes(segment) {
   if (!segment || !/^[A-Za-z0-9_-]+$/.test(segment)) fail('unauthenticated');
   try {
     const binary = atob(segment.replace(/-/g, '+').replace(/_/g, '/'));
-    return Uint8Array.from(binary, char => char.charCodeAt(0));
+    // Avoid iterator/callback allocation for every byte of each JWT segment.
+    const result = new Uint8Array(binary.length);
+    for (let index = 0; index < binary.length; index++) result[index] = binary.charCodeAt(index);
+    return result;
   } catch { fail('unauthenticated'); }
 }
 function jsonSegment(segment) {
   try {
-    const result = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(bytes(segment)));
+    const result = JSON.parse(UTF8_DECODER.decode(bytes(segment)));
     if (!object(result)) fail('unauthenticated');
     return result;
   } catch { fail('unauthenticated'); }
@@ -77,10 +82,15 @@ function createAuthenticator({ projectId, apiKey, fetchImpl = globalThis.fetch, 
           || (jwk.alg !== undefined && jwk.alg !== 'RS256') || (jwk.use !== undefined && jwk.use !== 'sig')
           || typeof jwk.n !== 'string' || typeof jwk.e !== 'string' || replacement.has(jwk.kid)) fail('unavailable');
         try {
+          // Reuse only a previously imported, identical public JWK after a fresh
+          // Google response. Removed/changed keys never survive replacement.
+          const serialized = JSON.stringify(jwk);
+          const cached = keys.get(jwk.kid);
+          if (cached?.serialized === serialized) { replacement.set(jwk.kid, cached); continue; }
           const modulus = bytes(jwk.n);
           if (modulus.length < 256 || modulus.length > 512) fail('unavailable');
           const key = await subtle.importKey('jwk', jwk, { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' }, false, ['verify']);
-          replacement.set(jwk.kid, key);
+          replacement.set(jwk.kid, { key, serialized });
         } catch { fail('unavailable'); }
       }
       const cacheControl = response.headers.get('cache-control') || '';
@@ -111,11 +121,11 @@ function createAuthenticator({ projectId, apiKey, fetchImpl = globalThis.fetch, 
       || claims.exp <= claims.iat) fail('unauthenticated');
     if (now() >= keysExpireAt || !keys.has(header.kid)) await refreshKeys();
     if (now() >= keysExpireAt) fail('unavailable');
-    const key = keys.get(header.kid);
+    const key = keys.get(header.kid)?.key;
     if (!key) fail('unauthenticated');
     let verified = false;
     try {
-      verified = await subtle.verify('RSASSA-PKCS1-v1_5', key, bytes(parts[2]), new TextEncoder().encode(`${parts[0]}.${parts[1]}`));
+      verified = await subtle.verify('RSASSA-PKCS1-v1_5', key, bytes(parts[2]), UTF8_ENCODER.encode(`${parts[0]}.${parts[1]}`));
     } catch { fail('unauthenticated'); }
     if (!verified) fail('unauthenticated');
     return claims;

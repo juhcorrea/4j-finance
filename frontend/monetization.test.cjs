@@ -170,3 +170,29 @@ test('a QR becoming ready preserves the original thirty-minute watch deadline',a
  h.clock.jump(29*60*1000);await h.m.check(h.m.order,true);assert.equal(h.m.order.started,started);assert.equal(h.elements.has('#pix-copy-code'),true);
  await h.clock.advance(60*1000);assert.equal(h.clock.pending(),0);assert.match(h.elements.get('#pix-status').textContent,/consulta automática foi pausada/);
 });
+
+
+test('pilot purchase action stays unavailable until the backend explicitly permits this session',async()=>{
+ const h=setup({enabled:true,pilotEnabled:true,publicPayments:false,adsEnabled:false});
+ assert.doesNotMatch(h.m.card(),/data-action="monetization-open"/);assert.match(h.m.card(),/disabled/);
+ h.m.call=async()=>account({paymentsEnabled:false,pilotMode:false});await h.m.refresh(true);assert.equal(h.m.canCreate(),false);assert.doesNotMatch(h.m.card(),/data-action="monetization-open"/);
+ h.m.call=async()=>account({paymentsEnabled:true,pilotMode:true});await h.m.refresh(true);assert.equal(h.m.canCreate(),true);assert.match(h.m.card(),/data-action="monetization-open"/);assert.equal(h.m.shouldLoadAds('/guia/'),false);
+ h.store.user={...h.store.user,uid:'another-user'};h.store.auth.currentUser=h.store.user;h.m.sync();assert.equal(h.m.canCreate(),false);assert.doesNotMatch(h.m.card(),/data-action="monetization-open"/);
+});
+
+test('pilot malformed permission or failed status never exposes a purchase action',async()=>{
+ for(const status of [account(),account({pilotMode:'true'}),account({pilotMode:false})]){
+  const h=setup({enabled:true,pilotEnabled:true,adsEnabled:false});h.m.call=async()=>status;await h.m.refresh(true);assert.equal(h.m.phase,'unavailable');assert.equal(h.m.canCreate(),false);assert.doesNotMatch(h.m.card(),/data-action="monetization-open"/);
+ }
+ const h=setup({enabled:true,pilotEnabled:true,adsEnabled:false});h.m.call=async()=>{throw Error('offline');};await h.m.refresh(true);assert.doesNotMatch(h.m.card(),/data-action="monetization-open"/);assert.equal(h.m.canCreate(),false);
+});
+
+test('pilot rollback preserves existing benefit and order controls without exposing new purchase',async()=>{
+ for(const state of [account({adFreeLifetime:true,paymentsEnabled:false,pilotMode:false}),account({pendingOrderId:ORDER_ID,paymentsEnabled:false,pilotMode:false})]){
+  const h=setup({enabled:true,pilotEnabled:true,adsEnabled:false});h.m.call=async()=>state;await h.m.refresh(true);assert.equal(h.m.canCreate(),false);assert.match(h.m.card(),/data-action="monetization-open"/);assert.doesNotMatch(h.m.card(),/Remover anúncios · R\$ 5,00/);
+ }
+});
+
+test('pilot mode preserves a local demo with no backend calls',async()=>{
+ const h=setup({enabled:true,pilotEnabled:true,provider:'cloudflare',adsEnabled:false});h.store.demo=true;await h.m.open();assert.equal(h.calls.length,0);assert.match(h.frames.at(-1).html,/demonstração|simulação|fictício/i);assert.equal(h.m.shouldLoadAds('/guia/'),false);
+});

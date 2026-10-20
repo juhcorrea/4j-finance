@@ -10,6 +10,9 @@ try{
  cp.execFileSync(process.execPath,['build.cjs'],{cwd:temporary,stdio:'pipe',windowsHide:true});
  const before=hash(path.join(root,'public/index.html')),after=hash(path.join(temporary,'public/index.html'));
  if(before!==after)throw Error('O build difere do public/index.html versionado. Reconciliar fonte e entrega antes do envio.');
+ const {readPublicConfig,embeddedConfig}=require('../frontend/monetization-build-config.cjs');
+ const expected=readPublicConfig(root),built=embeddedConfig(fs.readFileSync(path.join(temporary,'public/index.html'),'utf8'));
+ if(JSON.stringify(built)!==JSON.stringify(expected)||built.publicPayments!==false||built.adsEnabled!==false)throw Error('O modo Pix reproduzido difere da configuracao revisada.');
  console.log('Build reproduzivel: public/index.html identico. SHA-256 '+after);
 }finally{
  const resolved=fs.realpathSync(temporary);

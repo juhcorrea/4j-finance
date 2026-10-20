@@ -12,6 +12,11 @@
       "database_id": "b3cf312a-950a-4998-897e-4d299e6ea2dc"
     }
   ],
+  "durable_objects": {
+    "bindings": [
+      { "name": "PIX_EXECUTOR", "class_name": "PixExecutor", "script_name": "4jfinance-pix-executor" }
+    ]
+  },
   "vars": {
     "FIREBASE_PROJECT_ID": "financas-familia-9480b",
     "FIREBASE_WEB_API_KEY": "AIzaSyA_FIN-_KEsblQ1QBu2S-RFLp0iwm3Y3I8",

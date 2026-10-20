@@ -162,3 +162,93 @@ for (const [stage, overrides, count] of [
 test('invalid configuration fails closed', () => {
   assert.throws(() => createAuthenticator({ projectId: '../escape', apiKey: 'x' }), errorCode('unavailable'));
 });
+
+test('unchanged freshly fetched public keys reuse imports but still verify every token and current account', async t => {
+  const subtle = globalThis.crypto.subtle;
+  const importKey = subtle.importKey;
+  const verify = subtle.verify;
+  const imports = t.mock.method(subtle, 'importKey', function (...args) { return importKey.apply(this, args); });
+  const verifications = t.mock.method(subtle, 'verify', function (...args) { return verify.apply(this, args); });
+  const h = harness({ keys: [jwk, rotatedJwk], maxAge: 60 });
+  await h.auth(request(), { purchase: true });
+  assert.equal(imports.mock.callCount(), 2);
+  h.advance(60001);
+  await h.auth(request(), { purchase: true });
+  assert.equal(h.calls.filter(call => call.url.includes('/jwk/')).length, 2, 'fresh Google response is required after TTL');
+  assert.equal(imports.mock.callCount(), 2, 'identical public keys need no second import');
+  assert.equal(verifications.mock.callCount(), 2, 'signed tokens are never cached');
+  assert.equal(h.calls.filter(call => call.url.includes('accounts:lookup')).length, 2);
+  assert.equal(h.calls.filter(call => call.url.includes('firestore.googleapis.com')).length, 2);
+});
+
+test('changed key material under the same kid invalidates the previously imported key', async t => {
+  const subtle = globalThis.crypto.subtle;
+  const original = subtle.importKey;
+  const imports = t.mock.method(subtle, 'importKey', function (...args) { return original.apply(this, args); });
+  const h = harness({ maxAge: 60 });
+  await h.auth(request());
+  h.advance(60001);
+  h.state.keys = [{ ...rotatedJwk, kid: jwk.kid }];
+  await assert.rejects(h.auth(request()), errorCode('unauthenticated'));
+  assert.equal(imports.mock.callCount(), 2);
+  assert.equal(h.calls.filter(call => call.url.includes('accounts:lookup')).length, 1);
+  assert.equal((await h.auth(request(jwt({}, {}, rotated.privateKey)))).uid, 'synthetic-alice');
+});
+
+test('a key absent from the refreshed JWKS is removed even when it was already imported', async () => {
+  const h = harness({ maxAge: 60 });
+  await h.auth(request());
+  h.advance(60001);
+  h.state.keys = [rotatedJwk];
+  await assert.rejects(h.auth(request()), errorCode('unauthenticated'));
+  assert.equal(h.calls.filter(call => call.url.includes('accounts:lookup')).length, 1);
+  assert.equal((await h.auth(request(jwt({}, { kid: rotatedJwk.kid }, rotated.privateKey)))).uid, 'synthetic-alice');
+});
+
+test('changed JWK usage metadata cannot reuse a previously imported verify key', async () => {
+  const h = harness({ maxAge: 60 });
+  await h.auth(request());
+  h.advance(60001);
+  h.state.keys = [{ ...jwk, key_ops: ['sign'] }];
+  await assert.rejects(h.auth(request()), errorCode('unavailable'));
+  assert.equal(h.calls.filter(call => call.url.includes('accounts:lookup')).length, 1);
+});
+
+test('failed or duplicate refreshed key sets cannot extend an expired public-key cache', async () => {
+  for (const patch of [{ keys: [jwk, jwk] }, { keysStatus: 503 }]) {
+    const h = harness({ maxAge: 60 });
+    await h.auth(request());
+    h.advance(60001);
+    Object.assign(h.state, patch);
+    await assert.rejects(h.auth(request()), errorCode('unavailable'));
+    await assert.rejects(h.auth(request()), errorCode('unavailable'));
+    assert.equal(h.calls.filter(call => call.url.includes('accounts:lookup')).length, 1);
+  }
+});
+
+test('public-key reuse never caches account revocation or profile approval', async () => {
+  const revoked = harness();
+  await revoked.auth(request(), { purchase: true });
+  revoked.state.account.validSince = String(initialSeconds - 15);
+  await assert.rejects(revoked.auth(request(), { purchase: true }), errorCode('unauthenticated'));
+  const inactive = harness();
+  await inactive.auth(request(), { purchase: true });
+  inactive.state.status = 'pending';
+  await assert.rejects(inactive.auth(request(), { purchase: true }), errorCode('permission-denied'));
+});
+
+test('shared UTF-8 codecs preserve Unicode and recover safely after a malformed segment', async () => {
+  const h = harness();
+  const invalidUtf8 = Buffer.from([0xff]).toString('base64url');
+  await assert.rejects(h.auth(request(invalidUtf8 + '.e30.AAAA')), errorCode('unauthenticated'));
+  assert.equal(h.calls.length, 0);
+  assert.equal((await h.auth(request(jwt({ note: 'ação segura 🔒' })))).uid, 'synthetic-alice');
+});
+
+test('base64 conversion keeps malformed segments and oversized tokens rejected before network access', async () => {
+  for (const token of ['A.e30.AAAA', 'e30.A.AAAA', 'e30.e30.A', 'a'.repeat(16385)]) {
+    const h = harness();
+    await assert.rejects(h.auth(request(token)), errorCode('unauthenticated'));
+    assert.equal(h.calls.length, 0);
+  }
+});

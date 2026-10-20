@@ -18,7 +18,11 @@ const guide=fs.readFileSync(path.join(pub,'guia.html'),'utf8');
 for(const flag of ['enabled','approvalConfirmed','certifiedCmpConfigured'])assert.match(guide,new RegExp(flag+':false'));
 const app=fs.readFileSync(path.join(pub,'index.html'),'utf8');
 assert.doesNotMatch(app,/adsbygoogle\.js/);
-assert.match(app,/enabled:false,region:"southamerica-east1",adsEnabled:false/);
+const {readPublicConfig,embeddedConfig}=require('./frontend/monetization-build-config.cjs');
+const expectedMonetization=readPublicConfig(__dirname);
+assert.deepEqual(embeddedConfig(app),expectedMonetization);
+assert.equal(expectedMonetization.publicPayments,false);
+assert.equal(expectedMonetization.adsEnabled,false);
 for(const name of ['public-ads.js','consent.js'])new vm.Script(fs.readFileSync(path.join(pub,name),'utf8'));
-console.log(JSON.stringify({publicPages:names.length,scriptsValid:true,adsEnabled:false,paymentsEnabled:false}));
+console.log(JSON.stringify({publicPages:names.length,scriptsValid:true,adsEnabled:false,paymentsEnabled:false,pixPilotEnabled:expectedMonetization.pilotEnabled}));
 

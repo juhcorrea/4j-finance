@@ -19,7 +19,7 @@ function collect(from,to){
  files.set(to,from);
 }
 for(const dir of ['public','frontend','source','scripts','docs','cloudflare','.github'])collect(path.join(source,dir),dir);
-for(const file of ['README.md','AGENTS.md','.gitignore','.gitattributes','.nvmrc','netlify.toml','package.json','pnpm-lock.yaml','build.cjs','finalize.cjs','firebase.json','firebase-rules-deploy.json','PUBLICACAO.json','COMECE-AQUI.md','PUBLICAR-NO-CLOUDFLARE.md','ADSENSE-PREPARACAO.txt','DOMINIO-OFICIAL.txt','DECISOES.txt','TESTES.txt','ui-qa.cjs','qa-production-ui.cjs'])collect(path.join(source,file),file);
+for(const file of ['README.md','AGENTS.md','.gitignore','.gitattributes','.nvmrc','netlify.toml','package.json','pnpm-lock.yaml','pnpm-workspace.yaml','build.cjs','finalize.cjs','firebase.json','firebase-rules-deploy.json','PUBLICACAO.json','COMECE-AQUI.md','PUBLICAR-NO-CLOUDFLARE.md','ADSENSE-PREPARACAO.txt','DOMINIO-OFICIAL.txt','DECISOES.txt','TESTES.txt','ui-qa.cjs','qa-production-ui.cjs'])collect(path.join(source,file),file);
 for(const file of ['index.js','payment-core.js','package.json','package-lock.json','.env.example','.gitignore','CONFIGURAR.md','firestore-billing.rules.fragment'])collect(path.join(source,'functions',file),'functions/'+file);
 collect(path.join(source,'functions/test'),'functions/test');
 for(const file of ['apply-privacy.cjs','email-privacy.js','firestore.rules','privacy.test.cjs','firestore-emulator.test.cjs','firebase-emulator.json','package.json','VERIFICACAO.txt'])collect(path.join(source,'privacy',file),'privacy/'+file);

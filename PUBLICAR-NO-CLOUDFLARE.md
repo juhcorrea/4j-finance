@@ -1,8 +1,16 @@
 # Publicar o 4J Finance no Cloudflare Pages
 
-Estado consolidado em 19/10/2026, apos a prova final do sandbox: webhook natural autenticado e concessao automatica sem fallback, posteriormente confirmada por SELECT. A assinatura usada antes pertencia a outra aplicacao; configurar o segredo da propria aplicacao da conta vendedora de teste resolveu a autenticacao sem alterar o Worker. Ambiente de teste: https://6543501e.4jfinance-pix-test.pages.dev. A producao permanece em https://ddcb1f1f.4jfinance.pages.dev, com Pix e anuncios OFF; AdSense Preparando. O pacote de teste contem Worker e pagina de apoio, nao o frontend completo; a correcao local de consultas ainda nao foi publicada. Registros abaixo de datas/horarios anteriores sao historicos; a prova do sandbox nao equivale a pagamento real em producao.
+Estado em 20/10/2026 após a validação final de TESTE: OAuth da Cloudflare concluído. A tela Workers & Pages enviada pela usuária mostra cota de 100 mil requisições/dia e botão Upgrade, evidência visual compatível com Workers Free; a API de assinaturas retornou HTTP 403 e não confirmou o plano. Nenhum upgrade ou cadastro de cartão foi feito. O teste aprovado usa Pages em https://8a4c3ca2.4jfinance-pix-test.pages.dev e executor privado 4jfinance-pix-executor-test, versão eb819c59-e3d1-403c-933a-23e3c55a0535. Hash remoto, namespace SQLite preservado, binding e ausência de rotas públicas do executor foram conferidos.
 
-O site usa Cloudflare Pages para os arquivos públicos e Firebase Spark para autenticação e dados financeiros. Após recusar Blaze e pedir uma alternativa gratuita, a responsável escolheu **Pages Functions/Workers Free + D1** para o Pix com API Orders do Mercado Pago. O backend Firebase Functions anterior está preservado em `functions/`, sem ativação. Montserrat, cores, Catatau e uso no iPhone devem ser preservados.
+Na medição final de TESTE iniciada em 20/10 às 15:13:50.753 UTC, o webhook natural autenticado concedeu o benefício automaticamente, sem consulta de fallback. As seis chamadas de aplicação e dois webhooks naturais tiveram pares correlacionados com HTTP 200 e outcome:ok. A consulta inicial entrou na cobertura: roteador 0–4 ms de CPU para orçamento de 10 ms; Durable Object 5–14 ms para o padrão de 30.000 ms. O resultado geral de TESTE foi aprovado. O executor agora devolve um descritor finito da resposta e o Pages reconstrói a Response local; isso eliminou os outcome:canceled observados na rodada anterior. Firebase permaneceu com billing desativado antes e depois; as capturas foram encerradas e removidas. A amostra não garante cold start do deployment nem substitui o piloto real.
+
+Produção publicada em 20/10/2026 no deployment canônico 9d41bbad-1426-4603-8801-34542dedb10a, com executor privado 4jfinance-pix-executor versão 158f7f69-5185-451d-b086-db0a48b28bfa. O piloto tem configuração publicada para um único UID administrativo escolhido em segredo, no máximo uma reserva de R$ 5 e expiração em 21/10/2026 às 15:16:08.594 UTC (12:16:08.594 de Brasília). PAYMENTS_ENABLED=false e anúncios OFF permanecem; não houve checkout nem pagamento real. O HTML 3e7b43dd… foi conferido no domínio oficial e no alias, com health HTTP 200/backendReady:true e status sem autenticação HTTP 401 quando enviado Origin permitido. O readback final concluiu com sucesso às 15:27:31.471 UTC: domínio oficial e alias com HTML conferido, health HTTP 200/backendReady:true, status sem autenticação HTTP 401 com e sem Origin, webhook sem assinatura HTTP 401 e GET do webhook HTTP 405. O deployment canônico, as configurações protegidas e o executor foram conferidos, sem redeploy. Nenhum UID, e-mail, credencial ou dado de conta é registrado aqui. Netlify continua pausado, sem upgrade de plano. Os registros datados anteriores são históricos.
+
+A nova conferência somente leitura de produção às 15:21:41.993 UTC, após a publicação, confirmou billing do Firebase desativado e conta selecionada habilitada, com e-mail verificado e cadastro aprovado. Firebase permanece no Spark, sem upgrade ou cadastro de cartão; Cloudflare Free tem a evidência visual descrita acima, sem confirmação pela API de assinaturas. A leitura pública do script AdSense retornou HTTP 200 e confirmou a estrutura presente, com flags OFF; a tela Receber código não comprova aprovação do AdSense. A validação final da cópia Git passou com 491 testes e 16 verificações de privacidade, instalação frozen aprovada e HTML reproduzível com SHA-256 3e7b43dd93d7e54e4d2253d0a7707dfdc5f17aa30b47497467250dbf086b8883. Os 26 cenários de interface anteriores continuam registrados no escopo em que foram executados.
+
+Marco histórico do sandbox em 19/10: webhook natural autenticado e concessão automática sem fallback, posteriormente confirmada por SELECT. Configurar o segredo da própria aplicação vendedora de teste resolveu a assinatura antes associada a outra aplicação. Essa prova não equivale a pagamento real nem valida o orçamento de CPU da nova arquitetura. Os registros datados abaixo preservam o histórico e não substituem a nova validação.
+
+O site usa Cloudflare Pages para os arquivos públicos e Firebase Spark para autenticação e dados financeiros. O Pix preparado usa **Pages/Workers Free + Durable Object SQLite + D1**, mantendo a API Orders do Mercado Pago. O executor privado recebe as chamadas do roteador pelo binding `PIX_EXECUTOR`; o D1 continua guardando pedidos e benefícios, sem migração dos dados. O backend Firebase Functions anterior está preservado em `functions/`, sem ativação. Manter Netlify pausado, Montserrat, cores, Catatau e uso no iPhone.
 
 ## Estado confirmado em 15/10/2026
 
@@ -14,7 +22,7 @@ A propriedade foi verificada no AdSense e a revisão solicitada em 15/10/2026 à
 
 **Pix real e anúncios continuam desativados. O servidor Pix de produção já está publicado e preparado, com PAYMENTS_ENABLED=false.** O preço preparado é R$ 5 uma única vez por UID comprador, com benefício permanente após confirmação do servidor, sem CPF no checkout e sem transferência automática para outros logins da família.
 
-## Ambiente de teste já publicado — estado atual
+## Histórico do teste da API em 15/10/2026
 
 O teste remoto da API Cloudflare passou em 2026-10-15T19:25:58.017Z (remote-qa ok:true), no deployment https://a1999d42.4jfinance-pix-test.pages.dev, com alias https://4jfinance-pix-test.pages.dev. O fluxo validou autenticação, consulta de status, criação de Pix simulado de R$ 5, duas consultas do mesmo UUID de pedido e resultado final adFreeLifetime:true. Não houve cobrança financeira real.
 
@@ -56,38 +64,47 @@ O repositório [juhcorrea/4j-finance](https://github.com/juhcorrea/4j-finance) r
 - `cloudflare/`: backend Orders, autenticação, schema D1 e configurações sem segredos.
 - `functions/`: backend Firebase legado, não ativo; não é uma pasta Pages Functions publicável.
 - `privacy/`: regras e testes de isolamento, com publicação separada.
-- `scripts/build-cloudflare.cjs`: pacote Cloudflare com lista explícita de arquivos permitidos, Worker compilado e rotas.
+- `scripts/build-cloudflare.cjs`: pacotes separados do Pages e do executor privado, ambos compilados e com listas explícitas de arquivos permitidos.
 
 Nunca versionar credenciais, tokens, arquivos de autenticação, logs privados, dados reais, dependências instaladas ou `work/` inteiro. Nunca enviar a raiz do workspace, `source/`, `marketing/`, `functions/`, `privacy/`, `audit/` ou um ZIP completo do código para hospedagem estática. Os valores secretos pertencem somente à configuração protegida do servidor.
 
 ## Preparar o pacote de teste
 
-Execute na raiz do pacote, com Node.js e as dependências do projeto instaladas:
+Execute na fonte atual `4j-finance-monetizacao/`, com Node.js e as dependências do projeto instaladas:
 
 ~~~sh
 node scripts/build-cloudflare.cjs --test
 ~~~
 
-O script gera dois diretórios com funções distintas:
+O script gera dois pacotes e dois diretórios de controle:
 
 | Caminho | Conteúdo |
 | --- | --- |
-| `work/cloudflare-test/` | Página de teste, `_worker.js` compilado e `_routes.json`, somente os arquivos permitidos |
+| `work/cloudflare-test/` | Página de teste, `_worker.js` do roteador compilado e `_routes.json` |
 | `work/cloudflare-test-deploy/wrangler.json` | Configuração do Wrangler, com `pages_build_output_dir` apontando para `../cloudflare-test` |
+| `work/cloudflare-test-executor/index.mjs` | Único arquivo do pacote compilado do executor privado |
+| `work/cloudflare-test-executor-deploy/wrangler.json` | Configuração do Worker externo, D1 existente e namespace SQLite |
 
-O diretório de configuração não é o conteúdo público. Nunca publicar `work/` inteiro. O empacotador recusa arquivos extras na saída; não contorne essa verificação. A configuração usa `nodejs_compat`, necessária ao bundle atual. `_routes.json` executa o Worker somente em `/api/pix/*`, preservando o serviço estático fora da API.
+Os diretórios de controle não são conteúdo público. Nunca publicar `work/` inteiro. O empacotador recusa arquivos extras, fontes brutas, mapas de código e links simbólicos nas saídas. A configuração usa `nodejs_compat`. `_routes.json` executa o roteador somente em `/api/pix/*`, preservando o serviço estático fora da API.
 
-Preparar o pacote não faz deploy. Quando a publicação de teste estiver dentro do escopo autorizado, use o Wrangler a partir da configuração gerada:
+O Worker externo de teste chama-se `4jfinance-pix-executor-test`; a classe é `PixExecutor`. Ele usa `workers_dev=false`, `preview_urls=false`, `routes=[]` e responde 404 no acesso direto ao `fetch`. A migração `v1` declara `new_sqlite_classes: ["PixExecutor"]`; não executar migrações nem copiar dados D1 para essa mudança. Pages e executor continuam ligados aos mesmos D1 e Firebase do respectivo ambiente. O binding Pages `PIX_EXECUTOR` aponta para a classe nesse Worker externo e só pode ser resolvido depois da criação do executor e do namespace SQLite. [Durable Objects com Pages](https://developers.cloudflare.com/pages/functions/bindings/#durable-objects).
+
+Segredos continuam configurados remotamente no Pages: `MP_ACCESS_TOKEN`, `MP_WEBHOOK_SECRET` e, quando configurado, `PIX_PILOT_CONFIG` seguem somente na lista permitida de valores escalares por RPC, na memória de cada chamada, junto com a requisição. A volta usa um descritor finito de resposta, validado antes de reconstruir uma Response local no Pages. Não exportar segredos para `.env`, `.dev.vars`, arquivos de controle, headers de transporte, URLs ou vars públicas do executor; a configuração privada não é persistida no objeto. As vars públicas fixas do executor precisam corresponder ao ambiente recebido; seu D1 não pode ser escolhido pela requisição. `PIX_CPU_DIAGNOSTICS=true` é fixo e exclusivo do executor TESTE; produção não inclui a flag. Autenticação, assinatura, lease, idempotência e concessão do benefício mantêm suas verificações. [Transporte RPC](https://developers.cloudflare.com/workers/runtime-apis/rpc/#readablestream-writablestream-request-and-response).
+
+Preparar o pacote não faz deploy. A permissão de Pages/D1 não substitui a permissão de publicação de Workers. A autorização OAuth foi concluída; isso não confirma o plano nem substitui o deploy e sua validação. Antes de executar os comandos, conferir por leitura o plano Workers da conta e o billing do Firebase, registrando data e resultado seguro. Exigir Workers Free e Firebase Spark, sem upgrade ou cadastro de cartão para esta arquitetura. O plano Free do domínio não comprova Workers Free. Se a leitura estiver indisponível, registrar a pendência; não deduzir o plano a partir do sucesso de um build ou de uma chamada.
+
+Depois de autorizar o acesso necessário, revisar os dois hashes e concluir os testes, a publicação de teste deve criar primeiro o executor e conferir sua configuração remota; somente depois publicar o roteador Pages. Usar `--no-bundle` no executor conserva o arquivo já compilado e revisado:
 
 ~~~sh
+npx wrangler deploy --no-bundle --config work/cloudflare-test-executor-deploy/wrangler.json
 npx wrangler --cwd work/cloudflare-test-deploy pages deploy
 ~~~
 
-Use `--cwd`: este fluxo de Pages não aceita `--config` com caminho personalizado. Se a conta não for selecionada automaticamente, configure `CLOUDFLARE_ACCOUNT_ID` no ambiente local antes do comando. Não copie o valor da conta, tokens ou segredos para este guia. Confira que o destino é **4jfinance-pix-test**, sem alterar o projeto de produção.
+Use `--cwd` no comando Pages: esse fluxo não aceita `--config` com caminho personalizado. Fixar `CLOUDFLARE_ACCOUNT_ID` na conta revisada em ambos os comandos, sem depender da seleção automática do Wrangler. Não copiar conta, tokens ou segredos para este guia. Conferir destinos, versão e hash do executor, namespace SQLite, binding `PIX_EXECUTOR`, vars e ausência de rotas públicas antes de enviar Pages; depois conferir o deployment Pages e o funcionamento do binding. Repetir a leitura dos planos após a operação e registrar somente resultados seguros. Os comandos acima são referência operacional, não comprovam deploy.
 
 ## Concluir a validação do Pix
 
-O provedor Firebase Auth, o binding D1, a conta sintética e os parâmetros protegidos do ambiente de teste estão configurados; o fluxo remoto da API passou. Conclua a verificação da entrega real do webhook e os cenários restantes conforme `cloudflare/CONFIGURAR.md`. Os ambientes precisam de projetos, D1 e credenciais próprios. Nunca usar dados financeiros de produção para esse teste. Não repetir a configuração de segredos apenas porque a entrega real do webhook ainda está pendente.
+O transporte pelo executor foi aprovado no TESTE em 20/10 às 15:13 UTC: webhook natural autenticado, benefício sem fallback e medição dual com status inicial, CPU dentro dos limites e outcome:ok. O retorno finito do RPC resolveu os canceled da rodada anterior. Preservar esse conjunto de evidências ao conferir a versão autorizada para produção; ele não comprova pagamento real nem publicação de produção. Os ambientes mantêm projetos, D1 e credenciais próprios. Nunca usar dados financeiros de produção para esse teste nem repetir a configuração de segredos sem evidência de divergência.
 
 O navegador usa transporte configurável `provider: 'cloudflare'` e API da mesma origem `/api/pix`, com token Firebase da sessão. UID, preço e e-mail não são definidos pelo navegador. O servidor determina R$ 5/BRL e o comprador, reserva e reutiliza o pedido, confirma a order e mantém o benefício no D1. Esta alternativa não escreve custom claims no Firebase.
 
@@ -103,7 +120,7 @@ Para conteúdo estático, reconstrua com `node build.cjs`, execute as verificaç
 
 Prepare o pacote com `node scripts/build-static.cjs` e publique pelo controle isolado: `npx wrangler pages deploy --cwd work/cloudflare-static-deploy --project-name 4jfinance --branch main`. O empacotador seleciona somente 13 arquivos públicos, excluindo caches. Não execute a publicação estática a partir da raiz que contém `functions/`: o Wrangler tentaria compilar as funções Firebase legadas como rotas Pages. O controle isolado evita essa interpretação.
 
-Para a futura versão com API, `node scripts/build-cloudflare.cjs` prepara `work/cloudflare-production/` a partir da lista permitida de `public/`, acrescenta `_worker.js` e `_routes.json` e gera `work/cloudflare-production-deploy/wrangler.json`. Revise bindings, origem e modo antes de qualquer deploy. Este guia não autoriza publicar esse servidor ou ligar pagamentos; isso ainda não foi feito.
+`node scripts/build-cloudflare.cjs` prepara `work/cloudflare-production/` a partir da lista permitida de `public/`, acrescenta o roteador `_worker.js` e `_routes.json` e gera `work/cloudflare-production-deploy/wrangler.json`. Também prepara `work/cloudflare-production-executor/index.mjs` e `work/cloudflare-production-executor-deploy/wrangler.json`. O executor chama-se `4jfinance-pix-executor`, separado do teste e sem diagnóstico. Exigir a mesma revisão de hash, `--no-bundle`, namespace SQLite, bindings, rotas privadas e flags antes de publicar qualquer parte. A implantação do executor privado não ativa o Pages nem o Pix por si só. A operação do piloto restrito está em `docs/PIX-PILOTO.md`; o pagamento público continua desligado.
 
 Após uma publicação autorizada, confira o domínio por HTTPS, as rotas públicas, login, cadastro e as rotas de API aplicáveis, usando dados de teste. Compare a versão publicada com a versão enviada ao GitHub. Não presumir que um ZIP anterior acompanhe os arquivos reconstruídos. Não alterar DNS apenas para trocar o conteúdo.
 
@@ -112,12 +129,17 @@ Após uma publicação autorizada, confira o domínio por HTTPS, as rotas públi
 | Recurso | Cota documentada Free |
 | --- | --- |
 | Workers/Pages Functions | 100 mil requisições por dia |
-| CPU do Worker | 10 ms por invocação |
+| CPU do roteador Pages/Worker | 10 ms por invocação |
+| Durable Object SQLite: requisições | 100 mil por dia |
+| Durable Object SQLite: duração | 13 mil GB-s por dia |
+| CPU do Durable Object | 30.000 ms (30 segundos) por invocação, limite padrão |
 | D1: linhas lidas | 5 milhões por dia |
 | D1: linhas escritas | 100 mil por dia |
 | D1: armazenamento total | 5 GB |
 
-Ao atingir as cotas gratuitas, as operações falham; isso não ativa um upgrade automático. Manter a API fechada em falhas e não aderir a Blaze ou Workers Paid. A gratuidade dentro dessas cotas é separada de tarifas de recebimento do Mercado Pago. Fontes: [Workers Free](https://developers.cloudflare.com/workers/platform/pricing/), [D1 Free e comportamento ao esgotar cotas](https://developers.cloudflare.com/d1/platform/pricing/).
+Limites oficiais conferidos em 20/10/2026. Medir ambas as camadas no runtime remoto: roteador até 10 ms e executor até 30.000 ms de CPU, incluindo a consulta inicial de status antes do checkout. São orçamentos separados; não aumentar `limits.cpu_ms`. Duração em GB-s considera tempo ativo, inclusive espera de I/O; não é a mesma métrica que CPU. Não desconsiderar a primeira chamada nem inferir CPU a partir do tempo dos testes Node. As medições anteriores do Worker único não aprovam este design.
+
+Ao atingir as cotas Free, as operações correspondentes falham; não há upgrade automático. Confirmar os planos por leitura, manter a API fechada em falhas e não aderir a Blaze ou Workers Paid nem cadastrar cartão. A gratuidade dentro dessas cotas é separada de tarifas de recebimento do Mercado Pago. Fontes: [limites Workers Free](https://developers.cloudflare.com/workers/platform/limits/), [limites Durable Objects](https://developers.cloudflare.com/durable-objects/platform/limits/), [cotas e duração de Durable Objects](https://developers.cloudflare.com/durable-objects/platform/pricing/), [D1 Free](https://developers.cloudflare.com/d1/platform/pricing/).
 
 ## AdSense e limites da publicação
 

@@ -12,6 +12,11 @@
       "database_id": "c0c6d41a-6013-45c2-896f-ecb3746d8962"
     }
   ],
+  "durable_objects": {
+    "bindings": [
+      { "name": "PIX_EXECUTOR", "class_name": "PixExecutor", "script_name": "4jfinance-pix-executor-test" }
+    ]
+  },
   "vars": {
     "FIREBASE_PROJECT_ID": "fjfinance-pix-test",
     "FIREBASE_WEB_API_KEY": "AIzaSyCuj5Z5LSkgc73v8FwixsYx5qLEYn4fUp8",

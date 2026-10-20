@@ -1,5 +1,37 @@
 4J Finance — testes registrados e estado de publicação
-Atualização documental: 19/10/2026
+Atualização documental: 20/10/2026 — TESTE e suíte final aprovados; piloto restrito publicado e readback final confirmado
+
+PUBLICAÇÃO DO PILOTO RESTRITO E VALIDAÇÃO DA CÓPIA GIT — 20/10/2026
+
+A dependência Miniflare foi declarada e fixada em desenvolvimento, com instalação frozen aprovada. Na cópia Git, scripts/check.cjs passou com 491 testes e 16 verificações de privacidade; scripts/verify-build.cjs confirmou o HTML SHA-256 3e7b43dd93d7e54e4d2253d0a7707dfdc5f17aa30b47497467250dbf086b8883. Os 26 cenários de interface anteriores são preservados, sem declarar nova execução em iPhone físico.
+
+Executor de produção publicado e conferido às 15:15:08.649 UTC, versão 158f7f69-5185-451d-b086-db0a48b28bfa, namespace SQLite e hash remoto verificados, sem rota pública e sem diagnóstico de teste. Em seguida, patch protegido do piloto e publicação Pages confirmados em 9d41bbad-1426-4603-8801-34542dedb10a, canônico ativo e demais configurações protegidas preservadas. Piloto: um UID selecionado em segredo, no máximo uma reserva de R$ 5, expiração 2026-10-21T15:16:08.594Z. PAYMENTS_ENABLED=false, anúncios OFF, nenhum checkout real ou requisição de usuário autenticado criada nesta publicação.
+
+O helper inicial chegou à etapa public-probes e marcou PUBLIC_READBACK_FAILED, com causa indeterminada; a hipótese inicial de ausência de Origin foi descartada. O código permite Origin ausente e exige autenticação (HTTP 401); origens não permitidas são bloqueadas com HTTP 403. Leituras independentes do domínio oficial e do alias confirmaram HTML esperado, health HTTP 200/backendReady:true e status HTTP 401 com Origin permitido. O readback corrigido foi concluído com ok:true e nenhuma verificação reprovada em 2026-10-20T15:27:31.471Z, sem redeploy. Não atribuir a falha inicial a rede transitória sem evidência nem alterar as proteções para acomodar o checker. A leitura final confirmou canonical, configurações protegidas e executor; no alias e domínio oficial, HTML/health HTTP 200, status sem autenticação HTTP 401 com e sem Origin, webhook sem assinatura HTTP 401 e GET HTTP 405. O HTML canônico também corresponde ao hash esperado. Horário real da publicação informado pela Cloudflare: 2026-10-20T15:18:13.30968Z.
+
+VALIDAÇÃO FINAL REMOTA DO TESTE — 20/10/2026, 15:13 UTC
+
+Publicado e conferido às 15:12:20.273 UTC: Pages 8a4c3ca2-ac5d-439b-bfba-e47cbab4d834 e executor 4jfinance-pix-executor-test versão eb819c59-e3d1-403c-933a-23e3c55a0535, com namespace SQLite preservado e hashes remotos verificados. O RPC passou a retornar somente um descritor finito, validado, com status, headers e corpo; Pages reconstrói a Response local sem stream remoto.
+
+A medição iniciada às 15:13:50.753 UTC retornou ok:true: seis chamadas da aplicação e dois webhooks naturais correlacionados nas duas camadas, HTTP 200 e outcome:ok. Status inicial incluído. CPU Pages: status 2–4 ms, criação 1 ms, consulta 1 ms, webhook 0–1 ms, orçamento 10 ms. CPU Durable Object: status 5–7 ms, criação 14 ms, consulta 6 ms, webhook 5–8 ms, orçamento padrão 30.000 ms. Cobertura completa, sem excedentes; a rodada não garante cold start do deployment.
+
+O benefício foi concedido pelo webhook natural autenticado sem fallback. Firebase billing desativado antes e depois; as duas capturas foram encerradas e removidas. Nenhum pagamento real ou alteração do site de produção nessa prova. O resultado remoto de TESTE está aprovado, preservando a separação da publicação e do piloto de produção.
+
+A primeira suíte na cópia Git encontrou a dependência de desenvolvimento Miniflare ausente. A declaração da dependência e a reprodução no ambiente de CI estão em correção; não há total final de 491 testes aprovado neste registro. Os 489 testes locais, 16 verificações de privacidade e 26 cenários de interface abaixo são resultados anteriores à correção RPC, preservados sem extrapolar a validação atual.
+
+HISTÓRICO INTERMEDIÁRIO DO EXECUTOR PRIVADO — 20/10/2026, 15:03 UTC
+
+Antes da correção do ciclo RPC, passaram 489 testes locais de lógica e 16 verificações de privacidade; o QA de interface registrou 26 cenários aprovados. Esses resultados não substituem a repetição pertinente após a correção. O HTML preparado tem SHA-256 3e7b43dd93d7e54e4d2253d0a7707dfdc5f17aa30b47497467250dbf086b8883; ele não é o HTML atualmente publicado em produção.
+
+O deploy TESTE foi confirmado em 2026-10-20T14:58:15.801Z: Pages 44c4e28a-be19-47db-8671-baa8a7e2a1c7 e executor 4jfinance-pix-executor-test versão 622057bc-5ff5-4bb4-a299-dca021036915. Hash remoto, namespace SQLite, binding PIX_EXECUTOR e ausência de rotas públicas conferidos. O ambiente de teste contém API e página de apoio; não publica o frontend completo. Produção ddcb1f1f inalterada.
+
+Medição remota de 2026-10-20T15:03:00.266Z: webhook natural autenticado e benefício automático sem fallback confirmados. A consulta inicial de status entrou na cobertura. CPU Pages: status 0–2 ms, criação 1 ms, consulta 0 ms e webhook 0–1 ms, orçamento 10 ms. CPU Durable Object: status 6–8 ms, criação 15 ms, consulta 7 ms e webhook 5–9 ms, orçamento padrão 30.000 ms. Cobertura e correlação completas; não houve amostra acima dos limites. A execução não garante cold start do deployment.
+
+As seis traces RPC do Durable Object registraram outcome:canceled; as seis traces correspondentes do roteador registraram outcome:ok. Naquela rodada, o resultado geral foi ok:false e o fluxo NÃO foi aprovado. Esse bloqueio foi resolvido pela resposta RPC finita e pela medição final aprovada às 15:13 UTC, registrada acima; os números desta rodada intermediária foram preservados como histórico.
+
+Firebase billing desativado antes e depois da prova. OAuth Cloudflare concluído; tela Workers & Pages com cota de 100 mil requisições/dia e Upgrade é compatível com Free, mas a API de assinaturas retornou 403 e não confirmou o plano. Nenhum upgrade, cadastro de cartão ou pagamento real. Piloto de produção, validação em iPhone físico e CMP/AdSense continuam etapas distintas. Auditorias privadas, identificadores de usuários e dados de contas não entram neste registro público.
+
+A conferência somente leitura de produção em 20/10/2026 às 15:08:13.500 UTC passou: billing do Firebase desativado e conta selecionada habilitada, com e-mail verificado e cadastro aprovado. Isso não ativou nem publicou o piloto. A leitura pública do script AdSense retornou HTTP 200 e confirmou a estrutura presente, com flags de anúncios OFF; a tela Receber código não comprova aprovação do AdSense.
 
 RESULTADOS HISTÓRICOS DA PREPARAÇÃO — 15/10/2026
 

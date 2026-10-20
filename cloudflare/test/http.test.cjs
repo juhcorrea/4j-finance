@@ -9,7 +9,7 @@ async function setup(options={}){
  const actor={uid:'synthetic-uid',email:'test@example.invalid',emailVerified:true,active:true};
  const authFactory=options.authFactory||((config)=>{authConfigs.push(config);return async(req,settings)=>{authCalls.push({authorization:req.headers.get('authorization'),settings});if(!req.headers.get('authorization'))throw Object.assign(Error('private auth reason'),{code:'unauthenticated'});return actor;};});
  const billingFactory=options.billingFactory||((config)=>{serviceConfigs.push(config);return {getStatus:async user=>{calls.push({method:'getStatus',user});return {adFreeLifetime:false,price:5,currency:'BRL',paymentsEnabled:config.config.paymentsEnabled,pendingOrderId:null};},create:async user=>{calls.push({method:'create',user});return {orderId:UUID,amount:5,currency:'BRL',status:'pending',adFreeLifetime:false};},check:async(user,data)=>{calls.push({method:'check',user,data});return {orderId:data.orderId,status:'pending',amount:5,currency:'BRL',adFreeLifetime:false};},webhook:async input=>{calls.push({method:'webhook',input});return {status:200,body:'ok'};}};});
- return {worker:createWorker({authFactory,billingFactory}),authConfigs,authCalls,serviceConfigs,calls,actor};
+ return {worker:createWorker({authFactory,billingFactory,...(options.now?{now:options.now}:{})}),authConfigs,authCalls,serviceConfigs,calls,actor};
 }
 function secureHeaders(response){assert.equal(response.headers.get('cache-control'),'no-store');assert.equal(response.headers.get('x-content-type-options'),'nosniff');assert.equal(response.headers.get('x-frame-options'),'DENY');assert.equal(response.headers.get('access-control-allow-credentials'),null);}
 
@@ -63,3 +63,47 @@ test('HTTP entry never logs tokens requests or config',()=>{const source=fs.read
 test('unknown API is JSON 404 even with no environment and a browser Origin',async()=>{const h=await setup(),response=await h.worker.fetch(request('/api/pix/no-such-route'),{});assert.equal(response.status,404);assert.equal((await response.json()).error.status,'NOT_FOUND');assert.equal(h.authConfigs.length,0);assert.equal(h.serviceConfigs.length,0);});
 
 test('an asynchronous static asset error cannot disclose its original error',async()=>{const h=await setup(),response=await h.worker.fetch(new Request(ORIGIN+'/index.html'),{ASSETS:{fetch:async()=>{throw Error('synthetic-private-access');}}});assert.equal(response.status,500);assert.doesNotMatch(await response.text(),/synthetic-private/);});
+
+const PILOT_NOW=Date.parse('2026-10-19T12:00:00.000Z');
+const pilotValue=(overrides={})=>JSON.stringify({uids:['synthetic-uid'],expiresAt:'2026-10-20T12:00:00.000Z',...overrides});
+test('private pilot enables purchases only for its verified approved actor while public payments stay off',async()=>{
+ const h=await setup({now:()=>PILOT_NOW}),env=environment({PIX_PILOT_CONFIG:pilotValue()});
+ let response=await h.worker.fetch(request(),env),body=await response.json();
+ assert.equal(response.status,200);assert.equal(body.data.paymentsEnabled,true);
+ assert.equal(env.PAYMENTS_ENABLED,'false');assert.doesNotMatch(JSON.stringify(body),/synthetic-uid|expiresAt|uids|pilot/);
+ response=await h.worker.fetch(request('/api/pix/createPixCheckout'),env);assert.equal(response.status,200);
+ assert.equal(h.serviceConfigs.at(-1).config.pilotMode,true);assert.equal(h.serviceConfigs.at(-1).config.pilot,undefined);
+ h.actor.uid='other-user';response=await h.worker.fetch(request(),env);assert.equal((await response.json()).data.paymentsEnabled,false);
+ const before=h.calls.length;response=await h.worker.fetch(request('/api/pix/createPixCheckout'),env);assert.equal(response.status,412);assert.equal(h.calls.length,before);
+});
+test('pilot expiry is checked per request and still permits existing-order status and webhook handling',async()=>{
+ let current=PILOT_NOW;const h=await setup({now:()=>current}),env=environment({PIX_PILOT_CONFIG:pilotValue()});
+ assert.equal((await (await h.worker.fetch(request(),env)).json()).data.paymentsEnabled,true);
+ current=Date.parse('2026-10-20T12:00:00.000Z');
+ assert.equal((await (await h.worker.fetch(request(),env)).json()).data.paymentsEnabled,false);
+ assert.equal((await h.worker.fetch(request('/api/pix/createPixCheckout'),env)).status,412);
+ assert.equal((await h.worker.fetch(request('/api/pix/checkPixCheckout',{data:{orderId:UUID}}),env)).status,200);
+ assert.equal((await h.worker.fetch(request('/api/pix/mercadoPagoWebhook',{type:'order'}),env)).status,200);
+});
+test('pilot never substitutes for approval or email verification and cannot be enabled by a client body',async()=>{
+ for(const change of [{active:false},{emailVerified:false}]){const h=await setup({now:()=>PILOT_NOW});Object.assign(h.actor,change);
+  const env=environment({PIX_PILOT_CONFIG:pilotValue()});assert.equal((await (await h.worker.fetch(request(),env)).json()).data.paymentsEnabled,false);
+  assert.equal((await h.worker.fetch(request('/api/pix/createPixCheckout'),env)).status,412);
+ }
+ const h=await setup({now:()=>PILOT_NOW});
+ assert.equal((await h.worker.fetch(request('/api/pix/createPixCheckout',{data:{pilotMode:true,uid:'synthetic-uid'}}),environment())).status,400);
+ assert.equal((await h.worker.fetch(request('/api/pix/createPixCheckout'),environment())).status,412);
+ assert.equal(h.calls.length,0);
+});
+test('malformed or publicly enabled pilot configuration fails closed without exposing its contents',async()=>{
+ const values=['','null','{}','bad',JSON.stringify({uids:['a'],expiresAt:'tomorrow'}),pilotValue({uids:[]}),pilotValue({uids:['a','b']}),pilotValue({uids:[' bad']}),pilotValue({uids:['../other']}),pilotValue({uids:['..']}),pilotValue({expiresAt:'2026-02-30T12:00:00.000Z'}),pilotValue({extra:true})];
+ for(const value of values){const h=await setup({now:()=>PILOT_NOW}),response=await h.worker.fetch(request(),environment({PIX_PILOT_CONFIG:value}));assert.equal(response.status,412);assert.equal(h.authCalls.length,0);assert.equal(h.calls.length,0);assert.doesNotMatch(await response.text(),/synthetic-uid|expiresAt|uids/);}
+ const h=await setup({now:()=>PILOT_NOW});assert.equal((await h.worker.fetch(request(),environment({PIX_PILOT_CONFIG:pilotValue(),PAYMENTS_ENABLED:'true'}))).status,412);
+});
+test('removing or rotating pilot immediately removes the previous account purchase permission',async()=>{
+ const h=await setup({now:()=>PILOT_NOW});
+ for(const [value,enabled]of [[pilotValue(),true],[undefined,false],[pilotValue({uids:['replacement']}),false]]){
+  const response=await h.worker.fetch(request(),environment({PIX_PILOT_CONFIG:value}));assert.equal((await response.json()).data.paymentsEnabled,enabled);
+ }
+ assert.equal(h.authCalls.length,3);
+});

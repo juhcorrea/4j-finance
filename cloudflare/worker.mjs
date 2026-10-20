@@ -30,6 +30,19 @@ function strictBoolean(value) {
   if (value !== 'true' && value !== 'false') fail('failed-precondition');
   return value === 'true';
 }
+function pilotConfiguration(value) {
+  if (value === undefined) return null;
+  if (typeof value !== 'string' || value.length > 2048) fail('failed-precondition');
+  let pilot;
+  try { pilot = JSON.parse(value); } catch { fail('failed-precondition'); }
+  if (!exactKeys(pilot, ['uids', 'expiresAt']) || !Array.isArray(pilot.uids) || pilot.uids.length !== 1
+    || !boundedString(pilot.uids[0], 128) || /[\x00-\x20/]/.test(pilot.uids[0]) || ['.', '..'].includes(pilot.uids[0])
+    || typeof pilot.expiresAt !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(pilot.expiresAt)
+    || !Number.isFinite(Date.parse(pilot.expiresAt))) fail('failed-precondition');
+  const expiresAt = Date.parse(pilot.expiresAt);
+  if (new Date(expiresAt).toISOString() !== pilot.expiresAt) fail('failed-precondition');
+  return { uid: pilot.uids[0], expiresAt };
+}
 function allowedOrigins(env) {
   let values;
   try { values = JSON.parse(env.ALLOWED_ORIGINS); } catch { fail('failed-precondition'); }
@@ -46,6 +59,9 @@ function allowedOrigins(env) {
 }
 function configuration(env) {
   const liveMode = strictBoolean(env.MP_LIVE_MODE), paymentsEnabled = strictBoolean(env.PAYMENTS_ENABLED);
+  const pilot = pilotConfiguration(env.PIX_PILOT_CONFIG);
+  // A pilot can never accidentally coexist with public purchase activation.
+  if (pilot && paymentsEnabled) fail('failed-precondition');
   if (!env.BILLING_DB || typeof env.BILLING_DB.prepare !== 'function' || !PROJECT_ID.test(env.FIREBASE_PROJECT_ID || '')
     || !PROJECT_ID.test(env.MP_TEST_FIREBASE_PROJECT_ID || '') || !PROJECT_ID.test(env.MP_PRODUCTION_FIREBASE_PROJECT_ID || '')
     || env.MP_TEST_FIREBASE_PROJECT_ID === env.MP_PRODUCTION_FIREBASE_PROJECT_ID
@@ -56,7 +72,7 @@ function configuration(env) {
   allowedOrigins(env);
   return { projectId: env.FIREBASE_PROJECT_ID, testProjectId: env.MP_TEST_FIREBASE_PROJECT_ID, productionProjectId: env.MP_PRODUCTION_FIREBASE_PROJECT_ID,
     collectorId: env.MP_COLLECTOR_ID, applicationId: env.MP_APPLICATION_ID, liveMode, paymentsEnabled,
-    accessToken: env.MP_ACCESS_TOKEN, webhookSecret: env.MP_WEBHOOK_SECRET };
+    accessToken: env.MP_ACCESS_TOKEN, webhookSecret: env.MP_WEBHOOK_SECRET, pilot };
 }
 function responseHeaders(origin, contentType = 'application/json; charset=utf-8') {
   const headers = new Headers({ 'Content-Type': contentType, 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'DENY', Vary: 'Origin' });
@@ -128,7 +144,7 @@ function preflight(request, origin) {
   return new Response(null, { status: 204, headers });
 }
 
-export function createWorker({ authFactory = createAuthenticator, billingFactory = createBillingService } = {}) {
+export function createWorker({ authFactory = createAuthenticator, billingFactory = createBillingService, now = Date.now } = {}) {
   // Keep only public signing-key caches, never actors or request tokens.
   const authenticators = new Map();
   function authenticator(env) {
@@ -171,7 +187,12 @@ export function createWorker({ authFactory = createAuthenticator, billingFactory
           return new Response(result.body, { status: result.status, headers: responseHeaders(origin, 'text/plain; charset=utf-8') });
         }
         const actor = await authenticator(env)(request, { purchase: name === 'createPixCheckout' });
-        const service = billingFactory({ db: env.BILLING_DB, config });
+        const { pilot, ...billingConfig } = config;
+        billingConfig.pilotMode = pilot !== null;
+        billingConfig.paymentsEnabled = config.paymentsEnabled || !!(pilot && now() < pilot.expiresAt
+          && actor.uid === pilot.uid && actor.active === true && actor.emailVerified === true);
+        if (name === 'createPixCheckout' && !billingConfig.paymentsEnabled) fail('failed-precondition');
+        const service = billingFactory({ db: env.BILLING_DB, config: billingConfig });
         const result = name === 'getMonetizationStatus' ? await service.getStatus(actor)
           : name === 'createPixCheckout' ? await service.create(actor) : await service.check(actor, data);
         return json({ data: result }, 200, origin);

@@ -11,8 +11,10 @@ const $=selector=>document.querySelector(selector);
 const esc=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const scenario=new URLSearchParams(location.search).get('scenario')||'ready';
 const provider=new URLSearchParams(location.search).get('provider')==='cloudflare'?'cloudflare':'firebase';
-const fixture={calls:[],transportRequests:0,created:false,paid:false,status:'pending',ready:true,paymentsEnabled:true,failStatus:false,failCreate:false,failCheck:false};
+const fixture={calls:[],transportRequests:0,created:false,paid:false,status:'pending',ready:true,paymentsEnabled:true,pilotMode:true,failStatus:false,failCreate:false,failCheck:false};
 if(scenario==='disabled')fixture.paymentsEnabled=false;
+if(scenario==='pilot-incomplete')fixture.pilotMode=undefined;
+if(scenario==='pilot-mismatch')fixture.pilotMode=false;
 if(scenario==='processing'){fixture.status='in_process';fixture.ready=false;}
 if(scenario==='error')fixture.failCreate=true;
 if(scenario==='unavailable')fixture.failStatus=true;
@@ -21,14 +23,14 @@ const user={uid:'synthetic-qa-user',emailVerified:true,getIdTokenResult:async()=
 const Store={screen:'app',profile:'synthetic-profile',demo:false,user,userDoc:{status:'approved'},auth:{currentUser:user,onIdTokenChanged:()=>()=>{}},emit(){}};
 function modal(title,html){const dialog=$('#modal');$('#modal-content').innerHTML='<div class="modal-heading"><h2 id="modal-title">'+esc(title)+'</h2><button type="button" class="icon-button" data-action="close-modal" aria-label="Fechar">×</button></div>'+html;if(!dialog.open)dialog.showModal();}
 function familyAccessSettings(){modal('Ajustes','<section class="account-summary"><h3>Conta de demonstração técnica</h3></section>');}
-window.MONETIZATION_CONFIG={enabled:true,provider,apiBase:'/api/pix',adsEnabled:true,adPageAllowlist:['/guia/']};
+window.MONETIZATION_CONFIG={enabled:true,pilotEnabled:provider==='cloudflare',publicPayments:false,provider,apiBase:'/api/pix',adsEnabled:true,adPageAllowlist:['/guia/']};
 document.addEventListener('click',event=>{const action=event.target.closest('[data-action]')?.dataset.action;if(action==='close-modal')$('#modal').close();if(action==='settings')familyAccessSettings();});
 `+source+String.raw`
 const orderId='12345678-1234-4123-8123-123456789abc';
 const order=()=>({orderId,amount:5,currency:'BRL',status:fixture.status,adFreeLifetime:fixture.paid,expiresAt:Date.now()+3600000,qrCode:fixture.ready?'00020101021226890014BR.GOV.BCB.PIX.TESTE-SINTETICO-SEM-VALOR-NAO-PAGAR52040000530398654045.005802BR':'',qrCodeBase64:fixture.ready?'iVBORw0KGgoAAAANSUhEUgAAACUAAAAlCAYAAADFniADAAACJ0lEQVR4Ac3BQY7cMBDAQNLw/7/MbB8EGIJmk7kErrIfvMzFC1280MUL3WxUflPxpLJUPKn8i4qnm4OKnUrFruKTikWlYqeyu/lAZalYVJaKJ5Wl4kRlqTi5+YJKxVBZVEbFUFlUvnXxhQqVkwqVk4pv3HxQsVOpUKkYKhUqFSoVQ6VCZan4m5sDlZMKlZMKlZMKFZV/cXNQ8aQyVCp2KqNipzIqnlQ+sR+8zM2BylLxpLJUPKksFU8qS8VvbjYqFUNlURkVQ2VRGRVDZVEZFUNlURkVTxebCpWTCpWTCpWTCpWTit3FRqVCpWKoVKhUqFQMlQqVCpWKoVKhUqFSMVQqVHYXmwqVkwqVkwqVkwqVk4rdzUalYqcyKnYqo2KnMip2KqPiyX7wMjcHKkvFk8pS8aSyVDypLBW/udmoVAyVRWVUDJVFZVQMlUVlVAyVRWVUPF1sKlROKlROKlROKlROKnYXG5UKlYqhUqFSoVIxVCpUKlQqhkqFSoVKxVCpUNldbCpUTipUTipUTipUTip2NxuVip3KqNipjIqdyqjYqYyKJ/vBg8onFf/DzUHFTmWoLBVPKkvFk8pS8ZubD1SWiqFSMVQWlVExVBaVUTFUFpVR8XTxhQqVkwqVkwqVk4rdxRdUKlQqhkqFSoVKxVCpUKlQqRgqFSq7mw8qdhUqJxUqJxUqJxW7mwOVE5WKncqo2KmMip3KqHiyH7zMxQtdvNDFC/0BBMmsgVDif8IAAAAASUVORK5CYII=':''});
 const fixtureCall=async(name,data={})=>{
  fixture.calls.push({name,data});
- if(name==='getMonetizationStatus'){if(fixture.failStatus)throw Error('synthetic offline');return {adFreeLifetime:fixture.paid,price:5,currency:'BRL',paymentsEnabled:fixture.paymentsEnabled,pendingOrderId:fixture.created?orderId:null};}
+ if(name==='getMonetizationStatus'){if(fixture.failStatus)throw Error('synthetic offline');return {adFreeLifetime:fixture.paid,price:5,currency:'BRL',paymentsEnabled:fixture.paymentsEnabled,pilotMode:fixture.pilotMode,pendingOrderId:fixture.created?orderId:null};}
  if(name==='createPixCheckout'){assertEmptyPayload(data);if(fixture.failCreate)throw Error('synthetic create failure');fixture.created=true;return order();}
  if(name==='checkPixCheckout'){if(fixture.failCheck)throw Error('synthetic check failure');if(data.orderId!==orderId)throw Error('unexpected order');return order();}
  throw Error('unexpected method');
@@ -50,7 +52,7 @@ const server=http.createServer((req,res)=>{const script=new URL(req.url,'http://
  }
  async function shot(page,width,label){await fit(page,width,label);await page.screenshot({path:path.join(out,label+'-'+width+'.png'),fullPage:true});}
  try{
-  for(const width of [320,390,430,1440]){
+  for(const width of [320,375,390,430,1440]){
    const context=await browser.newContext({viewport:{width,height:width<768?844:1000},deviceScaleFactor:1,isMobile:width<768,hasTouch:width<768});
    await context.route('**/*',route=>{const request=route.request(),url=new URL(request.url());if(url.origin===origin||['fonts.googleapis.com','fonts.gstatic.com'].includes(url.hostname))return route.continue();unexpectedNetwork.push({host:url.hostname,method:request.method()});return route.abort();});
    const page=await context.newPage();page.on('pageerror',error=>errors.push(error.message));
@@ -65,12 +67,13 @@ const server=http.createServer((req,res)=>{const script=new URL(req.url,'http://
    await open('processing');await page.locator('#pix-confirm-form [type=submit]').click();await page.getByText(/Estamos gerando seu Pix/).waitFor();assert.equal(await page.locator('#pix-checkout img').count(),0);await shot(page,width,'processing');await page.evaluate(async()=>{PixFixture.state.ready=true;await PixFixture.poll();});await page.locator('#pix-copy-code').waitFor();assert.equal(await page.evaluate(()=>PixFixture.state.calls.filter(c=>c.name==='createPixCheckout').length),1);results.push({width,case:'processing to QR without another attempt',passed:true});
    await open('error');await page.locator('#pix-confirm-form [type=submit]').click();await page.locator('#pix-create-error:not([hidden])').waitFor();await shot(page,width,'error');assert.equal(await page.locator('#pix-confirm-form [type=submit]').isEnabled(),true);
    await open('disabled');await page.getByRole('heading',{name:'Novos pagamentos em preparação'}).waitFor();assert.equal(await page.locator('#pix-confirm-form').count(),0);await shot(page,width,'disabled');
-   await open('unavailable');await page.getByRole('heading',{name:'Conexão indisponível'}).waitFor();assert.equal(await page.locator('#pix-confirm-form').count(),0);await fit(page,width,'unavailable');results.push({width,case:'creation error payments disabled and unavailable status',passed:true});
+   for(const scenario of ['pilot-incomplete','pilot-mismatch']){await open(scenario);await page.getByRole('heading',{name:'Conexão indisponível'}).waitFor();assert.equal(await page.locator('#pix-confirm-form').count(),0);assert.equal(await page.evaluate(()=>PixFixture.state.calls.filter(c=>c.name==='createPixCheckout').length),0);await shot(page,width,scenario);results.push({width,case:scenario+' fails closed without a checkout',passed:true});}
+   await open('unavailable');await page.getByRole('heading',{name:'Conexão indisponível'}).waitFor();assert.equal(await page.locator('#pix-confirm-form').count(),0);await fit(page,width,'unavailable');results.push({width,case:'pilot allowed checkout, creation error, other account disabled and unavailable status',passed:true});
    if(width===390){await open('terminal');await page.evaluate(()=>document.body.classList.add('dark','large-text'));await shot(page,width,'terminal-dark-large');await page.locator('[data-action=monetization-new]').click();await page.locator('#pix-confirm-form').waitFor();await fit(page,width,'terminal explicit retry');}
    if(width===390){await open('ready','firebase');await page.locator('#pix-confirm-form').waitFor();assert.equal(await page.evaluate(()=>PixFixture.state.transportRequests),0);await fit(page,width,'legacy Firebase fixture');results.push({width,case:'legacy Firebase fixture preserved',passed:true});}
    await context.close();
   }
   assert.deepEqual(errors,[],'Browser errors');assert.deepEqual(unexpectedNetwork,[],'No provider Firebase advertising or other external request');
-  const report={checkedAt:new Date().toISOString(),results,errors,unexpectedNetwork,scope:'Local synthetic component with authenticated Cloudflare fetch mocked and legacy Firebase fixture, Chromium mobile viewports and desktop; no real Safari device, Firebase, payment, provider, advertising or public activation.'};fs.writeFileSync(path.join(out,'result.json'),JSON.stringify(report,null,2));console.log(JSON.stringify({passed:results.length,results,errors,unexpectedNetwork},null,2));
+  const report={checkedAt:new Date().toISOString(),results,errors,unexpectedNetwork,scope:'Local synthetic pilot component (allowed/disabled/incomplete contract) with authenticated Cloudflare fetch mocked and legacy Firebase fixture, Chromium mobile viewports and desktop; no real Safari device, Firebase, payment, provider, advertising or public activation.'};fs.writeFileSync(path.join(out,'result.json'),JSON.stringify(report,null,2));console.log(JSON.stringify({passed:results.length,results,errors,unexpectedNetwork},null,2));
  }finally{await browser.close();server.close();}
 })().catch(error=>{console.error(error.stack);server.close();process.exitCode=1;});
