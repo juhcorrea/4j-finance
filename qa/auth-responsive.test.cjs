@@ -66,7 +66,7 @@ const server=http.createServer((req,res)=>{
      const visible=[...f.querySelectorAll('input,button'),document.querySelector('#auth .auth-theme-toggle')].filter(e=>e.getClientRects().length&&getComputedStyle(e).visibility!=='hidden');
      const mobile=document.querySelector('.auth-mobile-welcome'),desktop=document.querySelector('.auth-desktop-pair');
      const pair=innerWidth<=960?mobile.querySelector('.auth-mascot-pair'):desktop;
-     const mascots=[...pair.querySelectorAll('img')].map(image=>({normal:image.classList.contains('auth-catatau-normal'),sheriff:image.classList.contains('auth-catatau-sheriff'),loaded:image.complete&&image.naturalWidth>0,fixed:!image.hasAttribute('data-catatau'),src:image.getAttribute('src'),visible:!!image.getClientRects().length,bounds:image.getBoundingClientRect().toJSON()}));
+     const mascots=[...pair.querySelectorAll('img')].map(image=>({normal:image.classList.contains('auth-catatau-normal'),sheriff:image.classList.contains('auth-catatau-sheriff'),duo:image.classList.contains('auth-catatau-duo'),alt:image.alt,loaded:image.complete&&image.naturalWidth>0,fixed:!image.hasAttribute('data-catatau'),src:image.getAttribute('src'),visible:!!image.getClientRects().length,bounds:image.getBoundingClientRect().toJSON()}));
      const headline=document.querySelector('.auth-story-copy').getBoundingClientRect();
      return {viewport:innerWidth,body:document.body.scrollWidth,root:document.documentElement.scrollWidth,form:f.getBoundingClientRect().toJSON(),submitTop:document.querySelector('#auth-submit').getBoundingClientRect().top+scrollY,mobileWelcomeVisible:!!mobile.getClientRects().length,desktopMascotVisible:!!desktop.getClientRects().length,mascots,pairBounds:pair.getBoundingClientRect().toJSON(),headlineBounds:headline.toJSON(),controls:visible.map(e=>({id:e.id||e.dataset.auth||e.textContent.trim().slice(0,30),tag:e.tagName,type:e.type,left:e.getBoundingClientRect().left,right:e.getBoundingClientRect().right,width:e.getBoundingClientRect().width,height:e.getBoundingClientRect().height,fontSize:parseFloat(getComputedStyle(e).fontSize),scroll:e.scrollWidth,client:e.clientWidth})),montserrat:[...document.fonts].some(f=>f.family==='Montserrat'&&f.status==='loaded')};
     });
@@ -81,9 +81,16 @@ const server=http.createServer((req,res)=>{
     }
     assert.equal(geometry.mobileWelcomeVisible,width<=960,'Mobile welcome matches layout');
     assert.equal(geometry.desktopMascotVisible,width>960,'Desktop mascot pair matches its layout');
-    assert.equal(geometry.mascots.length,2,'Welcome shows both versions of Catatau');
-    assert.ok(geometry.mascots.some(image=>image.normal&&image.src==='assets/catatau.webp'),'Normal Catatau is included in the welcome');
-    assert.ok(geometry.mascots.some(image=>image.sheriff&&image.src==='assets/catatau-sheriff.webp'),'Sheriff Catatau is included in the welcome');
+    if(width<=960){
+     assert.equal(geometry.mascots.length,1,'Mobile welcome uses one illustration containing both Catatau versions');
+     assert.ok(geometry.mascots[0].duo&&geometry.mascots[0].src==='assets/catatau-duo-welcome.webp','Mobile welcome uses the side-by-side waving duo');
+     assert.match(geometry.mascots[0].alt,/abra[cç]|abra[sç]ad/i,'Duo alternative text describes their embrace');
+     assert.match(geometry.mascots[0].alt,/acen|dando tchau/i,'Duo alternative text describes their greeting');
+    }else{
+     assert.equal(geometry.mascots.length,2,'Desktop welcome preserves both individual versions of Catatau');
+     assert.ok(geometry.mascots.some(image=>image.normal&&image.src==='assets/catatau.webp'),'Normal Catatau is included in the desktop welcome');
+     assert.ok(geometry.mascots.some(image=>image.sheriff&&image.src==='assets/catatau-sheriff.webp'),'Sheriff Catatau is included in the desktop welcome');
+    }
     assert.ok(geometry.mascots.every(image=>image.loaded&&image.fixed&&image.visible),'Both welcome mascots load without choosing firm mode');
     for(const image of geometry.mascots)assert.ok(image.bounds.left>=-1&&image.bounds.right<=width+1&&image.bounds.width>40&&image.bounds.height>40,'Both Catatau versions remain visible inside the viewport');
     if(width>960)assert.ok(geometry.pairBounds.top>=geometry.headlineBounds.bottom,'Desktop Catatau pair must not overlap its welcome copy');

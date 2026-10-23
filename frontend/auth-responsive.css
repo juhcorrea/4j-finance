@@ -34,8 +34,7 @@ body.dark .auth-theme-toggle .auth-theme-sun{display:block}
   .auth-mobile-welcome h1{font-size:18px;line-height:1.3;letter-spacing:-.4px;color:#2e5372;overflow-wrap:anywhere}
   .auth-mobile-welcome .auth-greeting p{display:block;font-size:12px;line-height:1.6;color:#6e644c;margin:5px 0 0;max-width:none}
   .auth-mobile-welcome .auth-mascot-pair{display:flex;align-items:flex-end;justify-content:center;min-width:0}
-  .auth-mobile-welcome img{display:block;position:static;width:88px;height:136px;max-width:56%;object-fit:contain;filter:drop-shadow(0 5px 3px #503e1e15)}
-  .auth-mobile-welcome .auth-catatau-sheriff{margin-left:-16px}
+  .auth-mobile-welcome .auth-catatau-duo{display:block;position:static;width:100%;height:136px;max-width:100%;object-fit:contain;filter:drop-shadow(0 5px 3px #503e1e15)}
   .auth-form-wrap{position:relative;min-height:0;align-items:flex-start;padding:0 max(16px,env(safe-area-inset-right)) 20px max(16px,env(safe-area-inset-left));margin-top:-20px;background:transparent}
   .auth-form{width:min(430px,100%);max-width:100%;padding:23px 20px 16px;border:1px solid var(--line);border-radius:22px;background:var(--paper);box-shadow:0 8px 28px #223e580a}
   .auth-form>.auth-brand,.auth-form>.eyebrow{display:none}
@@ -67,7 +66,7 @@ body.dark .auth-theme-toggle .auth-theme-sun{display:block}
 @media screen and (max-width:359px){
   .auth-story{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
   .auth-story>.auth-mobile-welcome{grid-template-columns:minmax(0,1fr) 134px;min-height:120px}
-  .auth-mobile-welcome img{height:126px}
+  .auth-mobile-welcome .auth-catatau-duo{height:126px}
   .auth-mobile-welcome h1{font-size:17px}
   .auth-form-wrap{padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}
   .auth-form{padding:20px 16px 14px;border-radius:18px}
@@ -77,7 +76,7 @@ body.dark .auth-theme-toggle .auth-theme-sun{display:block}
 @media screen and (max-width:960px) and (max-height:520px){
   .auth-story{padding-top:calc(10px + env(safe-area-inset-top));padding-bottom:26px}
   .auth-story>.auth-mobile-welcome{grid-template-columns:minmax(0,1fr) 134px;min-height:82px;margin-top:5px}
-  .auth-mobile-welcome img{height:86px}
+  .auth-mobile-welcome .auth-catatau-duo{height:86px}
   .auth-mobile-welcome .auth-greeting{padding:9px 12px}
   .auth-mobile-welcome h1{font-size:16px}
   .auth-mobile-welcome .auth-greeting p{margin-top:2px}

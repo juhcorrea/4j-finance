@@ -1,7 +1,7 @@
 {
-  "publishedAt": "2026-10-23T14:50:11.852756Z",
+  "publishedAt": "2026-10-23T17:08:16.725507Z",
   "productionUrl": "https://4jfinance.pages.dev",
-  "deploymentUrl": "https://6a10c17b.4jfinance.pages.dev",
+  "deploymentUrl": "https://ac9dfd92.4jfinance.pages.dev",
   "firebaseAuthorizedDomain": true,
   "firestoreRulesPublished": true,
   "productionPrivacyChecks": 38,
@@ -69,7 +69,7 @@
   "pixCloudflareTestWebhookDiagnosticsPublished": false,
   "pixCloudflareTestPaidStatusSmokeDeploymentUrl": "https://c685b5c9.4jfinance-pix-test.pages.dev",
   "catatauPlannerPublished": true,
-  "productionIndexSha256": "830253d4933879957fd302efbe32cad4945a8ca938b4cef06b2c5543e5fd13f2",
+  "productionIndexSha256": "ae16fc812900717989f54dfe4c76f8df01c0dd0da5d9dbfd163294709931725f",
   "pixLegacyFirebaseFunctionsVerified": false,
   "pixCloudflareTestFirebaseAuthenticationVerified": true,
   "pixProductionSecretsConfigured": true,
@@ -88,8 +88,8 @@
   "pixSandboxDirectApiWebhookVerified": false,
   "publicationPackage": "Allowlisted public files, bundled Worker and API routes",
   "pixProductionBackendReady": true,
-  "pixProductionDeploymentVerifiedAt": "2026-10-23T14:51:34.755Z",
-  "productionLastReadbackAt": "2026-10-23T14:51:34.755Z",
+  "pixProductionDeploymentVerifiedAt": "2026-10-23T17:08:25.278Z",
+  "productionLastReadbackAt": "2026-10-23T17:08:25.278Z",
   "pixProductionRealPaymentVerified": true,
   "pixFreeCpuBudgetVerified": true,
   "adsenseReviewLastConfirmedAt": "2026-10-19",
@@ -303,8 +303,8 @@
       "productionDeploymentChanged": false
     }
   },
-  "productionDeploymentId": "6a10c17b-508c-4b45-b954-092b88464e89",
-  "productionPublicationRecordedAt": "2026-10-23T14:51:34.755Z",
+  "productionDeploymentId": "ac9dfd92-21ea-4286-8e2d-a81097ee1651",
+  "productionPublicationRecordedAt": "2026-10-23T17:08:25.278Z",
   "productionPublicationHelperResult": {
     "ok": true,
     "canonicalConfirmed": true,
@@ -643,6 +643,56 @@
       }
     ],
     "readbackAttempts": 1,
+    "paidPlanChanged": false,
+    "financialOperationsPerformed": false
+  },
+  "catatauDuoWelcomePublication": {
+    "publishedAt": "2026-10-23T17:08:16.725507Z",
+    "verifiedAt": "2026-10-23T17:08:25.278Z",
+    "deploymentId": "ac9dfd92-21ea-4286-8e2d-a81097ee1651",
+    "htmlSha256": "ae16fc812900717989f54dfe4c76f8df01c0dd0da5d9dbfd163294709931725f",
+    "asset": "assets/catatau-duo-welcome.webp",
+    "assetSha256": "99426c1971650f342429f2930cd2e603cfcdfb7dbf4e1e02de048f8910c7bb58",
+    "assetBytes": 111256,
+    "scope": "Ilustração móvel conjunta: Catatau tradicional e xerife abraçados e acenando",
+    "uiCasesPassed": 51,
+    "executorUnchanged": true,
+    "configurationUnchanged": true,
+    "publicChecks": [
+      {
+        "origin": "https://4jfinance.pages.dev",
+        "htmlMatches": true,
+        "normalAssetMatches": true,
+        "sheriffAssetMatches": true,
+        "duoAssetMatches": true,
+        "httpIndex": 200,
+        "backendReady": true,
+        "anonymousRejected": true,
+        "httpHealth": 200,
+        "httpAnonymous": 401
+      },
+      {
+        "origin": "https://4jfinance.com.br",
+        "htmlMatches": true,
+        "normalAssetMatches": true,
+        "sheriffAssetMatches": true,
+        "duoAssetMatches": true,
+        "httpIndex": 200,
+        "backendReady": true,
+        "anonymousRejected": true,
+        "httpHealth": 200,
+        "httpAnonymous": 401
+      },
+      {
+        "origin": "https://ac9dfd92.4jfinance.pages.dev",
+        "htmlMatches": true,
+        "normalAssetMatches": true,
+        "sheriffAssetMatches": true,
+        "duoAssetMatches": true,
+        "httpIndex": 200
+      }
+    ],
+    "readbackAttempts": 0,
     "paidPlanChanged": false,
     "financialOperationsPerformed": false
   }
