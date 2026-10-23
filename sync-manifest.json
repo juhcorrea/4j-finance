@@ -44,8 +44,8 @@
     },
     {
       "path": "build.cjs",
-      "bytes": 4496,
-      "sha256": "6154e312d889169c8d372a30bb443bf23c895c3f870f6af75b8d19fe735d4b63"
+      "bytes": 4611,
+      "sha256": "73da109b62d6c2b081a15741f40f2d4677895ec1e0294c97ef208ef5817911c9"
     },
     {
       "path": "cloudflare/auth.cjs",
@@ -119,8 +119,8 @@
     },
     {
       "path": "DECISOES.txt",
-      "bytes": 31659,
-      "sha256": "cfaa65e74f1871517df1a844cf05c2a1c71f5ec4cbf4d8c79224297e04f59361"
+      "bytes": 32387,
+      "sha256": "15b5554a91795f3a4f0430eeaf6c7298d08d6a9e0fb8fe73d00541ca4896d883"
     },
     {
       "path": "docs/CATATAU-BOAS-VINDAS.md",
@@ -134,13 +134,18 @@
     },
     {
       "path": "docs/CATATAU-PLANEJAMENTO.md",
-      "bytes": 2427,
-      "sha256": "97a9bdddf41ee623ddb00ab591a0e6ced2c4decdad6363610f6ebca9e17da917"
+      "bytes": 2645,
+      "sha256": "29cbadc5def2f54aee8952d647257922faa44102415741c2075c35629039d529"
     },
     {
       "path": "docs/PIX-PILOTO.md",
       "bytes": 20349,
       "sha256": "584f3fbcedb3022b1302c2b8746142780dff1604c95fd6d0c9065cf76347e21c"
+    },
+    {
+      "path": "docs/PLANEJAR-E-RONDA.md",
+      "bytes": 2812,
+      "sha256": "62e30189e621ebcaaebd41673f2bc3d5fce4abee22f4744dd44be844c886ce94"
     },
     {
       "path": "docs/SINCRONIZACAO.md",
@@ -179,13 +184,13 @@
     },
     {
       "path": "frontend/catatau-planner.js",
-      "bytes": 30199,
-      "sha256": "3bed9c901eb286b568e6b84c4ca95ad05ad9890e1366df9e50ab987edf06075f"
+      "bytes": 30582,
+      "sha256": "04942d00f8cf6166df303b61ed181726ca2bd88f48c7678bd7a071e907d3aa19"
     },
     {
       "path": "frontend/catatau-planner.test.cjs",
-      "bytes": 10571,
-      "sha256": "eafd26daf342041ef5780bcea94e0086414116ef29cd6a4e76dcffbd30c38c11"
+      "bytes": 14254,
+      "sha256": "4404e189b52505d264565e46a7a080b306caaea93242010c43ca30f09f8fff98"
     },
     {
       "path": "frontend/consent.test.cjs",
@@ -216,6 +221,36 @@
       "path": "frontend/monetization.test.cjs",
       "bytes": 36399,
       "sha256": "e749a03a611ab48bcf0912b621f299bf67017241699ac022a7ec5a1460831b4d"
+    },
+    {
+      "path": "frontend/planning-navigation.css",
+      "bytes": 896,
+      "sha256": "679f8538bf95eda887bb3dc7a2e2ab864d8261ccd18374e4cde6ceb93a96e97e"
+    },
+    {
+      "path": "frontend/planning-page.css",
+      "bytes": 6713,
+      "sha256": "559adc24b1fbfb7240050833f3f1a6178188a23780b7e1dbc40196db9ccf1fef"
+    },
+    {
+      "path": "frontend/planning-page.js",
+      "bytes": 21026,
+      "sha256": "e7bf4eb8caf23685101c6c52a59644df68e67760412d2a6afe272d59fc7c1cb7"
+    },
+    {
+      "path": "frontend/planning-watch.css",
+      "bytes": 3542,
+      "sha256": "a0671eee0884f8ac9f7df8f43ffb40fa9515d44544a181733e3bb1663cd21fbd"
+    },
+    {
+      "path": "frontend/planning-watch.js",
+      "bytes": 12498,
+      "sha256": "b9e164e11289919cb2fd1661e0868425b21ff604e0dfc94e360aced5bea0d8ce"
+    },
+    {
+      "path": "frontend/planning-watch.test.cjs",
+      "bytes": 7893,
+      "sha256": "b92c2e7627f957c4d195293903efe6aaee2b948aaffd3cb0f3c18eea4c786e3a"
     },
     {
       "path": "frontend/public-ads.test.cjs",
@@ -279,8 +314,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 2825345,
-      "sha256": "e9828c304158a03c06beebb53f0ed679b25b944907e3ab4ad93cc91247ec60f3"
+      "bytes": 2871575,
+      "sha256": "748303500c57114091be0e58ac1be95b4579e110380786670e2d8fffcdbcf1e9"
     },
     {
       "path": "marketing/ABRA-O-PORTFOLIO.html",
@@ -829,13 +864,13 @@
     },
     {
       "path": "outputs/index.html",
-      "bytes": 2825345,
-      "sha256": "e9828c304158a03c06beebb53f0ed679b25b944907e3ab4ad93cc91247ec60f3"
+      "bytes": 2871575,
+      "sha256": "748303500c57114091be0e58ac1be95b4579e110380786670e2d8fffcdbcf1e9"
     },
     {
       "path": "package.json",
-      "bytes": 697,
-      "sha256": "fed14d756cbc658c37c920acdb639cbf732714d32359c83ff1f09e1a07a7a0c9"
+      "bytes": 731,
+      "sha256": "bc519bdf76907a7f6a626b7bf920100dc206700e0fcfe8e01913da2bb88a8cc6"
     },
     {
       "path": "pnpm-lock.yaml",
@@ -939,8 +974,8 @@
     },
     {
       "path": "public/index.html",
-      "bytes": 2825345,
-      "sha256": "e9828c304158a03c06beebb53f0ed679b25b944907e3ab4ad93cc91247ec60f3"
+      "bytes": 2871575,
+      "sha256": "748303500c57114091be0e58ac1be95b4579e110380786670e2d8fffcdbcf1e9"
     },
     {
       "path": "public/privacidade.html",
@@ -964,13 +999,13 @@
     },
     {
       "path": "PUBLICACAO.json",
-      "bytes": 30361,
-      "sha256": "5fbfe9068f61dd655fa7459d3516c671e14f35f7b047e6d2a4dd8ffffa0fbfde"
+      "bytes": 32002,
+      "sha256": "c8d3489caa97c4c220bb13151ca2cf5bf6675009814337fcb4c49a327aad22a6"
     },
     {
       "path": "PUBLICAR-NO-CLOUDFLARE.md",
-      "bytes": 28685,
-      "sha256": "1a93a320d7be5e76331e6120bcd075719f615c923721a8c8e4bf34c7b4b695a3"
+      "bytes": 29157,
+      "sha256": "be45afcafa7063c8dac7476c9ec3d00d5528c4241cadfabbf2d90da5cd41a66a"
     },
     {
       "path": "qa-production-ui.cjs",
@@ -984,13 +1019,18 @@
     },
     {
       "path": "qa/catatau-planner.test.cjs",
-      "bytes": 13331,
-      "sha256": "31e137a32ea4d5e75ce47305f3064eedaa5d2c02bcfc77a701cb2c0cfe69d58a"
+      "bytes": 13626,
+      "sha256": "86ba9eee99f9fab0d1eb6cee4be1a255f339f75ddf5e7219b36384138641dfb5"
     },
     {
       "path": "qa/pix-checkout.test.cjs",
       "bytes": 14730,
       "sha256": "24eda92eb75aa1db46bdaa872bdcaf2f77c20c8a3e6affda13ec36efdae27d72"
+    },
+    {
+      "path": "qa/planning-page.test.cjs",
+      "bytes": 21868,
+      "sha256": "07f192e5b7c4eddbdb3f0dddc77cd102100de2e0775c6d7b62e0e59bd1a6ff3e"
     },
     {
       "path": "qa/public-pages.test.cjs",
@@ -999,8 +1039,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 19424,
-      "sha256": "665b6dee3caa35edf5e2b4bb00d7d507d46dfd7fe63395ebc85bea1a71f268c9"
+      "bytes": 19896,
+      "sha256": "23622d84eaaa53e87dc1145f17d5edfc2a35c40b0302b01bced482d36860dcc0"
     },
     {
       "path": "scripts/build-cloudflare.cjs",
@@ -1099,8 +1139,8 @@
     },
     {
       "path": "scripts/sync-workspace.cjs",
-      "bytes": 5213,
-      "sha256": "e9609a408df96b915caaaa6adf127febfb269cd7512f06308c28e06afacefb30"
+      "bytes": 5238,
+      "sha256": "0ec3d827d1e5ef34e83c4f61b2e56401f471d441052f487e5576024152390573"
     },
     {
       "path": "scripts/testar-pix-cloudflare.cjs",
@@ -1119,8 +1159,8 @@
     },
     {
       "path": "source/base.html",
-      "bytes": 2757657,
-      "sha256": "badb5ab219c0c799e7a243d32124b6c26837d1347a13a80a5b12dcbec559425c"
+      "bytes": 2758824,
+      "sha256": "b89f0c63760d1b9e2d1244a24f0306bb48338b03ca42b527533e8c537cc800fc"
     },
     {
       "path": "source/README.md",
@@ -1129,8 +1169,8 @@
     },
     {
       "path": "TESTES.txt",
-      "bytes": 28545,
-      "sha256": "b71b8ffde23489e9922d13c373876fd7f68ec60eda174ad11f0080c99168137a"
+      "bytes": 30035,
+      "sha256": "82c61169d53cf51f95a6cb1ff2ea96da242de4906294f249181f85f176ab4fbf"
     },
     {
       "path": "ui-qa.cjs",

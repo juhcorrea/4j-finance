@@ -25,3 +25,5 @@ A simulação não cria lançamentos, não modifica o orçamento e não envia da
 ## Verificação
 
 A lógica possui testes em frontend/catatau-planner.test.cjs. A interface possui QA reproduzível em qa/catatau-planner.test.cjs, com dados fictícios, sem acesso ao Firebase real. O build injeta o módulo antes da inicialização da aplicação. A comparação financeira é orientação baseada nos dados informados, não garante saldo no vencimento ou aprovação do cartão.
+
+A partir de 23/10/2026, o mesmo cálculo também está disponível no formulário da aba Planejar. A Ronda do mês e os avisos voluntários no Início estão documentados em [Planejar e a ronda](PLANEJAR-E-RONDA.md).

@@ -115,3 +115,61 @@ test('real profile listeners reject delayed callbacks after switching, and wait 
   callbacks.get('other-b:receitas').next(empty);callbacks.get('other-b:despesas').next(empty);assert.equal(s.loading,true);
   callbacks.get('other-b:meta').next({exists:true,data:()=>({ownerUid:'alice'})});assert.equal(s.loading,false);assert.equal(s.profileDataScope.ready,true);assert.equal(s.profileDataScope.profile,'other-b');
 });
+
+function browserPlanner() {
+  const state = store(), listeners = new Map(), persisted = new Map(), events = [];
+  const context = {
+    Store: state, CATATAU_IMAGE: 'assets/catatau.webp',
+    document: { querySelector: () => null, querySelectorAll: () => [], body: { classList: { toggle() {} } } },
+    window: { addEventListener(type, fn) { listeners.set(type, fn); }, dispatchEvent(event) { events.push(event.type); listeners.get(event.type)?.(event); } },
+    Event: class { constructor(type) { this.type = type; } },
+    localStorage: { getItem: key => persisted.get(key) ?? null, setItem: (key, value) => persisted.set(key, value) },
+    Money: { today: () => today, format: value => 'R$ ' + value.toFixed(2) },
+    monthName: value => value, profileName: () => state.profile,
+    catatauReady: () => state.screen === 'app' && !!state.user && !!state.profile && !state.loading && !state.error,
+    allRows: () => [income('2026-01')],
+  };
+  vm.createContext(context);
+  vm.runInContext(fs.readFileSync(path.join(__dirname, 'catatau-planner.js'), 'utf8'), context);
+  return { api: context.CatatauPlanner, state, listeners, persisted, events, clock: context.Money };
+}
+
+test('shared firm control preserves only the current authorized profile preference', () => {
+  const runtime = browserPlanner(), { api, state, persisted, events } = runtime;
+  assert.equal(api.isFirm(), false); assert.equal(api.setFirm(true), true); assert.equal(api.isFirm(), true);
+  assert.deepEqual([...persisted.values()], ['true']); assert.deepEqual(events, ['catatau-firm-change']);
+  assert.equal([...persisted.keys()][0], '4j-catatau-firm-v1:["alice","own-a"]');
+  state.profile = 'other-b'; state.profileDataScope.profile = 'other-b';
+  assert.equal(api.isFirm(), false); assert.equal(api.setFirm(false), true);
+  state.profile = 'own-a'; state.profileDataScope.profile = 'own-a'; assert.equal(api.isFirm(), true);
+  state.meta.ownerUid = 'someone-else';
+  assert.equal(api.contextToken(), ''); assert.equal(api.setFirm(false), false); assert.equal(api.isFirm(), false);
+  assert.deepEqual([...persisted.values()], ['true', 'false']);
+});
+
+test('planning context token changes with finance updates and refuses stale or revoked access', () => {
+  const { api, state, listeners } = browserPlanner(), first = api.contextToken();
+  assert.ok(first); listeners.get('finance-update')(); assert.notEqual(api.contextToken(), first);
+  state.profileDataScope.ready = false; assert.equal(api.contextToken(), '');
+  state.profileDataScope.ready = true; state.userDoc.status = 'suspended'; assert.equal(api.contextToken(), '');
+  state.userDoc.status = 'approved'; state.screen = 'auth'; assert.equal(api.contextToken(), '');
+});
+
+test('planning token changes across a new day and month without a financial update', () => {
+  const { api, clock } = browserPlanner(), january = api.contextToken();
+  clock.today = () => '2026-02-01';
+  const february = api.contextToken();
+  assert.notEqual(february, january);
+  assert.equal(api.contextToken(), february);
+  clock.today = () => '2026-02-02';
+  assert.notEqual(api.contextToken(), february);
+});
+
+test('page and chat share result wording and the firm voice does not change arithmetic', () => {
+  const { api } = browserPlanner();
+  const plan = { name: 'Geladeira', finance: snapshot(), terms, assumptions };
+  const before = JSON.stringify(api.evaluate(plan.finance, plan.terms, plan.assumptions));
+  assert.doesNotMatch(api.describeResult(plan), /segura esse carrinho/);
+  api.setFirm(true); assert.match(api.describeResult(plan), /segura esse carrinho/);
+  assert.equal(JSON.stringify(api.evaluate(plan.finance, plan.terms, plan.assumptions)), before);
+});

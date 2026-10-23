@@ -688,6 +688,34 @@ body.dark .auth-theme-toggle .auth-theme-sun{display:block}
   .auth-mobile-welcome .auth-greeting p{margin-top:2px}
 }
 
+.planning-watch{margin:0 0 24px;padding:24px;border:1px solid var(--line);border-radius:22px;background:var(--paper);color:var(--ink)}
+.watch-heading-tools{display:flex;flex-direction:column;align-items:flex-end;gap:10px;min-width:0}.watch-heading-tools .month-picker{max-width:100%}
+.watch-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}.watch-heading h2,.watch-waiting h2{margin:7px 0;font-size:22px;line-height:1.3;letter-spacing:-.5px}.watch-heading p,.watch-waiting p{margin:0;color:var(--muted);font-size:12px;line-height:1.65}.watch-state{flex-shrink:0;padding:9px 11px;border-radius:12px;background:var(--pale);color:var(--blue);font-size:11px;font-weight:750}.watch-intro{max-width:760px;font-size:13px;line-height:1.7;margin:17px 0 18px;color:var(--muted)}
+.watch-numbers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:0 0 20px;padding:17px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.watch-numbers div{min-width:0}.watch-numbers dt{font-size:11px;line-height:1.5;color:var(--muted)}.watch-numbers dd{margin:6px 0 0;font-size:20px;line-height:1.3;font-weight:800;overflow-wrap:anywhere;letter-spacing:-.4px}
+.watch-findings{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.watch-finding{padding:17px 18px;border-radius:15px;background:var(--bg);border:1px solid var(--line);min-width:0;display:flex;flex-direction:column;align-items:flex-start}.watch-finding.watch-attention{border-left:4px solid var(--gold)}.watch-finding h3{margin:0;font-size:14px;line-height:1.5}.watch-finding p{margin:9px 0 6px;font-size:12px;line-height:1.7;color:var(--muted);overflow-wrap:anywhere}.watch-finding a,.watch-home a{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-size:12px;font-weight:750;color:var(--blue);text-decoration:underline;text-underline-offset:3px;margin-top:auto}.watch-finding a:focus-visible,.watch-home a:focus-visible,.watch-complete summary:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:4px}.watch-complete{margin-top:14px}.watch-complete summary{cursor:pointer;min-height:44px;align-content:center;font-size:12px;font-weight:700;color:var(--blue)}.watch-complete[open] summary{margin-bottom:8px}.watch-source{font-size:11px;line-height:1.7;margin:17px 0 0;color:var(--muted)}
+.watch-home{display:flex;align-items:center;gap:18px;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:18px;padding:18px 22px;margin:0 0 22px;background:var(--paper)}.watch-home img{object-fit:contain;flex-shrink:0}.watch-home h2{font-size:17px;margin:6px 0 7px;line-height:1.4}.watch-home p{font-size:12px;line-height:1.7;margin:0;color:var(--muted)}.watch-home>div{min-width:0}.watch-home .eyebrow{line-height:1.6}
+@media(max-width:640px){.planning-watch{padding:19px 16px;border-radius:18px}.watch-heading{flex-direction:column;gap:10px}.watch-heading-tools{width:100%;align-items:flex-start}.watch-heading h2{font-size:21px}.watch-numbers{gap:14px 10px;grid-template-columns:repeat(2,minmax(0,1fr))}.watch-numbers div:last-child{grid-column:1/-1}.watch-numbers dd{font-size:18px}.watch-findings{grid-template-columns:minmax(0,1fr)}.watch-finding{padding:14px 15px}.watch-home{align-items:flex-start;padding:15px 14px;gap:10px}.watch-home img{width:48px;height:60px}.watch-home h2{font-size:15px}.watch-home .eyebrow{font-size:9px}.watch-home p{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.planning-watch *,.watch-home *{scroll-behavior:auto}}
+
+.planning-page{max-width:1180px;margin:0 auto;padding-bottom:24px}.planning-heading{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:24px}.planning-heading h1{font-size:clamp(25px,3.2vw,36px);line-height:1.2;margin:10px 0 12px;letter-spacing:-1px}.planning-heading p{max-width:650px;line-height:1.7;color:var(--muted)}.planning-heading img{width:118px;height:136px;object-fit:contain;flex-shrink:0}.planning-mode{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:24px;border:1px solid var(--line);border-radius:20px;background:var(--pale);margin-bottom:24px}.planning-mode h2{font-size:17px;margin:0 0 8px}.planning-mode p{font-size:13px;line-height:1.7;margin:0 0 6px}.planning-mode small{font-size:11px;line-height:1.65;color:var(--muted)}.planning-firm-label,.planning-check{display:flex;align-items:center;gap:12px;font-size:14px;line-height:1.6;cursor:pointer;min-height:44px}.planning-firm-label{flex-shrink:0;font-weight:700;margin:0}.planning-page input[type=checkbox]{width:23px;height:23px;min-width:23px;min-height:23px;accent-color:var(--blue);margin:0;cursor:pointer}.planning-card{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:28px;margin-bottom:24px}.planning-card h2{font-size:22px;line-height:1.35;margin:0 0 14px}.planning-step{display:flex;align-items:center;gap:12px;margin-bottom:14px}.planning-step>span{background:var(--pale);border-radius:20px;font-size:11px;font-weight:700;padding:8px 12px;white-space:nowrap}.planning-step h2{margin:0}.planning-copy{color:var(--muted);font-size:13px;line-height:1.8;margin:0 0 22px}.planning-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 24px}.planning-field{display:flex;flex-direction:column;gap:8px;margin:0;font-size:13px;font-weight:600;min-width:0}.planning-field input,.planning-field select{font-family:inherit;font-size:16px;line-height:1.4;min-height:48px;width:100%;min-width:0;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);box-sizing:border-box}.planning-field small{font-size:11px;line-height:1.65;font-weight:400;color:var(--muted)}.planning-field input[aria-invalid=true]{border-color:var(--red)}.planning-field .planning-field-error,.planning-field-error{color:var(--red);font-size:12px;font-weight:600}.planning-check{margin:22px 0 12px;align-items:flex-start;padding:7px 0}.planning-check input{margin-top:2px!important}.planning-installments{border:1px solid var(--line);border-radius:14px;padding:20px;margin:12px 0 0;min-width:0}.planning-installments legend{font-size:13px;font-weight:700;padding:0 8px}.planning-form-actions{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:12px;margin-top:26px}.planning-form-actions .button{min-height:46px;line-height:1.5}.planning-footnote{font-size:11px;color:var(--muted);line-height:1.7;margin:16px 0 0}.planning-notice,.planning-form-error,.planning-pause{padding:16px 18px;border-radius:12px;background:var(--pale);font-size:13px;line-height:1.8;margin-bottom:20px}.planning-form-error{border-left:3px solid var(--red)}.planning-missing{padding:20px;background:var(--pale);border:1px solid var(--line);border-radius:14px;margin:0 0 24px}.planning-missing details{margin-bottom:16px}.planning-missing summary,.planning-projection summary{cursor:pointer;min-height:44px;align-content:center;font-weight:600;font-size:13px;line-height:1.7}.planning-missing p{font-size:12px;line-height:1.7;color:var(--muted)}.planning-confirm{font-size:12px;line-height:1.8}.planning-results{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px;margin:20px 0}.planning-option{border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px}.planning-option>span{font-size:12px;color:var(--muted)}.planning-option>strong{font-size:25px;line-height:1.3}.planning-option>small{font-size:11px;line-height:1.6}.planning-status{font-size:12px;line-height:1.6}.planning-option[data-status=over]{border-left-color:var(--red)}.planning-option[data-status=within]{border-left-color:var(--green,#377565)}.planning-option[data-status=insufficient]{border-left-color:var(--gold,#a97920)}.planning-result-copy{font-size:13px;line-height:1.9;white-space:pre-wrap;overflow-wrap:anywhere}.planning-pause{margin-top:20px}.planning-projection{border-top:1px solid var(--line);padding-top:14px;margin-top:24px}.planning-projection h3{font-size:15px;margin-top:20px}.planning-table-wrap{overflow-x:auto;max-width:100%;border:1px solid var(--line);border-radius:10px}.planning-table-wrap table{border-collapse:collapse;min-width:720px;width:100%;font-size:11px}.planning-table-wrap caption{text-align:left;font-size:11px;padding:12px;line-height:1.7;color:var(--muted)}.planning-table-wrap th,.planning-table-wrap td{padding:12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}.planning-table-wrap thead{background:var(--pale)}.planning-page [hidden]{display:none!important}.planning-page :is(input,select,button,summary,a):focus-visible{outline:3px solid var(--gold,#daa331);outline-offset:3px}.planning-page .eyebrow{font-size:10px;letter-spacing:1.5px;line-height:1.8}
+@media(max-width:700px){.planning-heading{gap:10px;margin-bottom:18px}.planning-heading img{width:82px;height:108px;align-self:flex-start}.planning-heading h1{font-size:26px;letter-spacing:-.7px}.planning-heading p{font-size:12px;line-height:1.7}.planning-mode{display:block;padding:20px;margin-bottom:20px}.planning-firm-label{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}.planning-card{padding:20px 16px;border-radius:16px}.planning-card h2{font-size:20px}.planning-step{align-items:flex-start;gap:9px}.planning-step>span{padding:7px 9px;font-size:10px}.planning-fields{grid-template-columns:minmax(0,1fr);gap:20px}.planning-installments{padding:16px 12px}.planning-form-actions{flex-direction:column-reverse}.planning-form-actions .button{width:100%}.planning-missing{padding:16px}.planning-copy{font-size:12px}.planning-result-copy{font-size:12px;line-height:1.9}.planning-heading .eyebrow{font-size:9px;letter-spacing:1px}}
+.planning-page{min-width:0;overflow-wrap:anywhere}.planning-heading>div,.planning-step h2{min-width:0}.planning-heading>div{flex:1}.planning-form-actions .button{white-space:normal;text-align:center;overflow-wrap:anywhere}.planning-start{min-height:44px;margin-top:8px}
+.planning-mode .planning-firm-label{display:flex;flex-direction:row;align-items:center;gap:12px}.planning-mode .planning-firm-label input{flex:0 0 23px}
+.planning-page .planning-check{flex-direction:row}
+
+/* A direct planning tab remains reachable without crowding the mobile bar. */
+.mobile-more-links{display:grid;gap:10px;margin:20px 0 8px}
+.mobile-more-links .nav-link{min-height:52px;background:var(--pale);margin:0;color:var(--blue);white-space:normal}
+.mobile-more-links .nav-link.active{background:var(--blue);color:white}
+@media screen and (min-width:961px){.sidebar{overflow-y:auto}}
+@media screen and (max-width:960px){
+  #bottom-nav{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+  #bottom-nav .nav-link{min-height:52px;min-width:0;font-size:10px;line-height:1.3;padding:6px 2px;justify-content:center}
+  #bottom-nav button.nav-link{background:transparent;font-weight:500;font-family:var(--font)}
+  #bottom-nav button.nav-link.active{background:var(--pale);color:var(--blue);font-weight:700}
+  body.dark #bottom-nav button.nav-link.active{background:var(--gold);color:#203f59}
+}
+
 </style>
 </head>
 <body>
@@ -1216,7 +1244,7 @@ Store.watchProfiles=function(){
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const paths={home:'M3 10 12 3l9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z',plus:'M12 5v14M5 12h14',wallet:'M20 8V5H4a1 1 0 0 0 0 4h17v11H4a2 2 0 0 1-2-2V7m19 5h-5v5h5',chart:'M4 3v17h17M8 15v-4m5 4V7m5 8V4',target:'M21 12a9 9 0 1 1-9-9m5 2-5 7m0-5a5 5 0 1 0 5 5m0-9v4h4',calendar:'M5 5h14v16H5ZM8 3v4m8-4v4M5 10h14',chat:'M4 4h16v12H9l-5 4Zm4 5h8m-8 3h5',settings:'M9 4 10 2h4l1 2 3 2 2 1v4l-1 1 1 2v4l-2 1-3 2h-5l-1-2-3-1-2-1v-4l1-1-1-2V7l2-1Zm6 8a3 3 0 1 0-6 0 3 3 0 0 0 6 0',help:'M9 9a3 3 0 1 1 4 3c-1 1-1 1-1 3m0 3h.01M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0',logout:'M9 3H3v18h6m5-14 5 5-5 5m-7-5h12',moon:'M20 15A9 9 0 0 1 9 4a9 9 0 1 0 11 11',income:'M7 7h10v10M17 7 7 17',expense:'M7 7v10h10M7 17 17 7',check:'M5 12l4 4L19 6',clock:'M12 8v5l3 2M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0',food:'M4 3v7h6V3M7 3v18m11-18v18m0-18c-5 5-5 10 0 10',health:'M9 3h6v6h6v6h-6v6H9v-6H3V9h6Z',car:'m3 10 3-6h12l3 6v9h-3v-3H6v3H3Zm0 0h18M6 13h2m8 0h2',education:'m2 8 10-5 10 5-10 5Zm4 3v6c4 3 8 3 12 0v-6m4-3v9',edit:'m4 15 11-11 5 5L9 20H4Zm9-9 5 5',trash:'M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7m4-7v7',download:'M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5',upload:'M12 16V4m-5 5 5-5 5 5M4 16v5h16v-5',search:'M21 21l-5-5m2-6a8 8 0 1 1-16 0 8 8 0 0 1 16 0',more:'M5 12h.01M12 12h.01M19 12h.01',spark:'m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z',shield:'m12 2 8 4v6c0 5-8 10-8 10S4 17 4 12V6Zm-4 10 3 3 5-6',leaf:'M4 20C3 10 8 3 21 3c0 13-7 18-15 14M4 20l11-11',print:'M6 8V3h12v5M6 17H3V8h18v9h-3M6 14h12v8H6Z'};
 const icon=name=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${paths[name]||paths.wallet}"/></svg>`;
-const nav=[['inicio','Início','home'],['lancamentos','Lançamentos','plus'],['relatorios','Relatórios','chart'],['acertos','Acertos','users'],['metas','Metas','target'],['ano','Meu ano','calendar']];
+const nav=[['inicio','Início','home'],['planejar','Planejar','shield'],['lancamentos','Lançamentos','plus'],['relatorios','Relatórios','chart'],['acertos','Acertos','users'],['metas','Metas','target'],['ano','Meu ano','calendar']];
 const state={page:location.hash.slice(1)||'inicio',month:Money.today().slice(0,7),year:Money.today().slice(0,4),type:'despesa',editId:null,search:'',category:'Todas',filterType:'todos',authMode:'login',busy:false};
 const incomeCats=['Salário','Reembolso Corporativo','Freelance/Extra','Investimentos','Outros'],expenseCats=['Moradia','Alimentação','Transporte','Saúde','Educação','Lazer','Assinaturas','Viagem Corporativa','Outros'],payments=['Pix','Débito','Cartão de Crédito','Boleto','Dinheiro','Transferência'];
 const fmt=Money.format,sum=rows=>rows.reduce((a,r)=>a+Money.cents(r.value),0)/100;
@@ -1656,10 +1684,12 @@ function rowActions(r){
     return ordinaryRowActions(r)+extra;
   }
 function chart(months,annual=false,filter=null){const values=months.map(m=>totals(filter?filter(monthRows(m)):monthRows(m))),max=Math.max(100,...values.flatMap(v=>[v.income,v.expense])),w=640,h=210,left=80,bottom=177,top=12,plot=w-left-15,step=plot/months.length;let svg=`<svg class="chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="Receitas e despesas de ${esc(monthName(months[0]))} a ${esc(monthName(months.at(-1)))}"><title>Receitas e despesas mensais em reais. Consulte os valores no resumo e no relatório.</title>`;for(let i=0;i<4;i++){const y=top+(bottom-top)*i/3;svg+=`<line class="axis" x1="${left}" y1="${y}" x2="${w-8}" y2="${y}"/><text x="0" y="${y+3}">${Math.round(max*(1-i/3)/1000*10)/10} mil</text>`;}values.forEach((v,i)=>{const x=left+step*(i+.5),bw=Math.min(annual?12:23,step*.26),a=(bottom-top)*v.income/max,b=(bottom-top)*v.expense/max;svg+=`<rect x="${x-bw-3}" y="${bottom-a}" width="${bw}" height="${a}" rx="3" fill="#2e5372"><title>${monthName(months[i])}: receitas ${fmt(v.income)}</title></rect><rect x="${x+3}" y="${bottom-b}" width="${bw}" height="${b}" rx="3" fill="#e8797e"><title>${monthName(months[i])}: despesas ${fmt(v.expense)}</title></rect><text x="${x}" y="202" text-anchor="middle">${monthName(months[i],true).replace('.','')}</text>`;});return svg+'</svg>';}
-function homePage(){const t=totals(),gs=goals(),saved=gs.reduce((a,g)=>a+Number(g.saved||0),0),months=Array.from({length:6},(_,i)=>Money.addMonth(state.month+'-01',i-5).slice(0,7)),due=monthRows().filter(r=>r.type==='despesa'&&!r.paid).sort((a,b)=>a.date.localeCompare(b.date));return `${pageTop('Cada plano começa com cuidado.','Uma visão tranquila das finanças da sua família.',monthPicker()+addButton())}<section class="welcome"><div><span class="eyebrow">SEU COMPANHEIRO DE CONQUISTAS</span><h2>Oi, família! Cada passo<br>aproxima um sonho.</h2><p>${gs.length?`Vamos cuidar do presente e acompanhar os próximos planos?`:'Eu sou o Catatau. Posso ajudar a organizar seus gastos e transformar os planos da família em metas.'}</p><button class="text-button" data-action="catatau">Ver as dicas do Catatau ${icon('chat')}</button></div><div class="mascot-stage"><span class="hello-bubble">Pode contar comigo!</span><img data-catatau src="${CatatauPlanner.image()}" alt="Catatau, seu castor companheiro de planos"></div></section><div class="metrics">${metric('Receitas do mês',t.income,'income','Tudo o que entrou neste mês','income')}${metric('Despesas do mês',t.expense,'expense','Pagas e previstas para o mês','expense')}${metric('Saldo previsto',t.balance,'balance','Receitas menos todas as despesas','wallet')}${metric('Guardado em metas',saved,'goal',gs.length+' planos para o futuro','target')}</div><div class="content-grid"><section class="card"><div class="card-head"><div><h2>Um olhar para a sua evolução</h2><p>Receitas e despesas nos últimos 6 meses</p></div><a class="text-button" href="#relatorios">Ver relatório</a></div><div class="legend"><span><i></i> Receitas</span><span><i class="coral"></i> Despesas</span></div>${chart(months)}<div class="chart-summary"><span>Em ${esc(monthName(state.month,true))}, o saldo previsto é</span><b class="${t.balance<0?'negative':''}">${fmt(t.balance)}</b></div></section><section class="card"><div class="card-head"><div><h2>Contas para acompanhar</h2><p>Vencimentos do mês selecionado</p></div><span class="badge pending">${due.length} a pagar</span></div>${due.length?due.slice(0,3).map(r=>transaction(r)).join(''):empty('Tudo em dia por aqui','Nenhuma despesa pendente neste mês.')}<div class="due-footer">${icon('clock')} ${due.length?'Reserve '+fmt(t.pending)+' para essas contas.':'Continue registrando suas despesas.'}</div></section></div><div class="content-grid"><section class="card"><div class="card-head"><div><h2>Últimos lançamentos</h2><p>Os movimentos mais recentes do mês</p></div><a class="text-button" href="#lancamentos">Ver lançamentos</a></div>${monthRows().length?monthRows().sort((a,b)=>b.date.localeCompare(a.date)).slice(0,3).map(r=>transaction(r)).join(''):empty('Seu novo começo','Registre uma receita ou despesa para começar.',addButton())}</section><section class="card"><div class="card-head"><div><h2>Sonhos que ganham forma</h2><p>Uma conquista de cada vez</p></div><a class="text-button" href="#metas">Ver metas</a></div>${gs.length?gs.slice(0,2).map(miniGoal).join(''):empty('Qual é o próximo plano?','Uma viagem, a reserva ou um novo cantinho.',`<a class="button secondary" href="#metas">Criar uma meta</a>`)}</section></div>`;}
+function homePage(){const t=totals(),gs=goals(),saved=gs.reduce((a,g)=>a+Number(g.saved||0),0),months=Array.from({length:6},(_,i)=>Money.addMonth(state.month+'-01',i-5).slice(0,7)),due=monthRows().filter(r=>r.type==='despesa'&&!r.paid).sort((a,b)=>a.date.localeCompare(b.date));return `${pageTop('Cada plano começa com cuidado.','Uma visão tranquila das finanças da sua família.',monthPicker()+addButton())}${PlanningWatch.home()}<section class="welcome"><div><span class="eyebrow">SEU COMPANHEIRO DE CONQUISTAS</span><h2>Oi, família! Cada passo<br>aproxima um sonho.</h2><p>${gs.length?`Vamos cuidar do presente e acompanhar os próximos planos?`:'Eu sou o Catatau. Posso ajudar a organizar seus gastos e transformar os planos da família em metas.'}</p><button class="text-button" data-action="catatau">Ver as dicas do Catatau ${icon('chat')}</button></div><div class="mascot-stage"><span class="hello-bubble">Pode contar comigo!</span><img data-catatau src="${CatatauPlanner.image()}" alt="Catatau, seu castor companheiro de planos"></div></section><div class="metrics">${metric('Receitas do mês',t.income,'income','Tudo o que entrou neste mês','income')}${metric('Despesas do mês',t.expense,'expense','Pagas e previstas para o mês','expense')}${metric('Saldo previsto',t.balance,'balance','Receitas menos todas as despesas','wallet')}${metric('Guardado em metas',saved,'goal',gs.length+' planos para o futuro','target')}</div><div class="content-grid"><section class="card"><div class="card-head"><div><h2>Um olhar para a sua evolução</h2><p>Receitas e despesas nos últimos 6 meses</p></div><a class="text-button" href="#relatorios">Ver relatório</a></div><div class="legend"><span><i></i> Receitas</span><span><i class="coral"></i> Despesas</span></div>${chart(months)}<div class="chart-summary"><span>Em ${esc(monthName(state.month,true))}, o saldo previsto é</span><b class="${t.balance<0?'negative':''}">${fmt(t.balance)}</b></div></section><section class="card"><div class="card-head"><div><h2>Contas para acompanhar</h2><p>Vencimentos do mês selecionado</p></div><span class="badge pending">${due.length} a pagar</span></div>${due.length?due.slice(0,3).map(r=>transaction(r)).join(''):empty('Tudo em dia por aqui','Nenhuma despesa pendente neste mês.')}<div class="due-footer">${icon('clock')} ${due.length?'Reserve '+fmt(t.pending)+' para essas contas.':'Continue registrando suas despesas.'}</div></section></div><div class="content-grid"><section class="card"><div class="card-head"><div><h2>Últimos lançamentos</h2><p>Os movimentos mais recentes do mês</p></div><a class="text-button" href="#lancamentos">Ver lançamentos</a></div>${monthRows().length?monthRows().sort((a,b)=>b.date.localeCompare(a.date)).slice(0,3).map(r=>transaction(r)).join(''):empty('Seu novo começo','Registre uma receita ou despesa para começar.',addButton())}</section><section class="card"><div class="card-head"><div><h2>Sonhos que ganham forma</h2><p>Uma conquista de cada vez</p></div><a class="text-button" href="#metas">Ver metas</a></div>${gs.length?gs.slice(0,2).map(miniGoal).join(''):empty('Qual é o próximo plano?','Uma viagem, a reserva ou um novo cantinho.',`<a class="button secondary" href="#metas">Criar uma meta</a>`)}</section></div>`;}
 function render(){
   renderUpdates.begin();
   syncCatatauContext();
+  PlanningPage.sync();
+  PlanningWatch.sync();
   $('#catatau-launcher').hidden=Store.screen!=='app';MobileShell.sync();
   if(Store.screen!=='app'){$('#modal').close();$('#modal-content').innerHTML='';closeCatatau(false);$('#chat-answer').textContent='';}
   if(render.profile!==Store.profile){closeCatatau(false);state.editId=null;state.familyDraft=false;state.category='Todas';state.search='';Report.set(Report.defaults);render.wasRendered=false;render.profile=Store.profile;}
@@ -1670,13 +1700,17 @@ function render(){
   const roleButton=$('#account-role');roleButton.textContent=accountRoleLabel();roleButton.classList.toggle('is-admin',accountIsAdmin());roleButton.setAttribute('aria-label','Seu acesso: '+accountRoleLabel()+'. Abrir Família e ajustes');roleButton.title=accountIsAdmin()?'Administrador da plataforma: gerencia contas; finanças somente com compartilhamento':Store.demo?'Demonstração com dados fictícios':'Conta de membro da família';
   if(!nav.some(n=>n[0]===state.page))state.page='inicio';document.title=nav.find(n=>n[0]===state.page)[1]+' · 4J Finance';
   updateShell('family-access-context',EmailPrivacy.markup()+familyMembershipMarkup());$('#demo-banner').hidden=!Store.demo;updateShell('profile',profileOptions());$('#user-name').textContent=Store.userDoc?.name||'Sua família';$('#user-avatar').textContent=(Store.userDoc?.name||'F').slice(0,1).toUpperCase();$('#save-status').textContent=Store.demo?'Modo demonstração':Store.loading?'Carregando...':Store.error?'Verificar conexão':'Conectado à sua conta';$('#header-profile').textContent=profileName()||'Seu espaço';$('#crumb').textContent=nav.find(n=>n[0]===state.page)[1];
-  for(const id of ['side-nav','bottom-nav'])updateShell(id,nav.map(([key,title,ic])=>`<a href="#${key}" aria-label="${title}" class="nav-link ${state.page===key?'active':''}" ${state.page===key?'aria-current="page"':''}>${icon(ic)}<span>${id==='bottom-nav'&&key==='lancamentos'?'Lançar':title}</span></a>`).join(''));
+  for(const id of ['side-nav','bottom-nav']){
+    const shown=id==='bottom-nav'?['inicio','lancamentos','planejar','relatorios'].map(key=>nav.find(n=>n[0]===key)):nav;
+    const links=shown.map(([key,title,ic])=>`<a href="#${key}" aria-label="${title}" class="nav-link ${state.page===key?'active':''}" ${state.page===key?'aria-current="page"':''}>${icon(ic)}<span>${id==='bottom-nav'&&key==='lancamentos'?'Lançar':title}</span></a>`).join('');
+    updateShell(id,links+(id==='bottom-nav'?`<button type="button" class="nav-link ${['acertos','metas','ano'].includes(state.page)?'active':''}" data-action="mobile-more" aria-label="Mais páginas" aria-haspopup="dialog" aria-controls="modal">${icon('more')}<span>Mais</span></button>`:''));
+  }
   if(Store.error){$('#main').innerHTML=pageTop('Vamos reconectar seu espaço','Seus registros continuam na sua conta.')+empty('Não foi possível carregar',esc(Store.error),'<button class="button primary" data-action="reload">Tentar novamente</button>');return;}
   if(!Store.profile){$('#main').innerHTML=pageTop('Bem-vindo ao seu espaço.','Organize o que é pessoal e, quando quiser, os planos em família.')+empty('Comece com um perfil só seu','Você também pode criar uma família separada para os planos em comum.', '<button class="button primary" data-action="create-profile">Criar perfil pessoal</button>');return;}
-  const pages={inicio:homePage,lancamentos:typeof entriesPage==='function'?entriesPage:homePage,relatorios:typeof reportsPage==='function'?reportsPage:homePage,acertos:familyPage,metas:typeof goalsPage==='function'?goalsPage:homePage,ano:typeof yearPage==='function'?yearPage:homePage};
+  const pages={inicio:homePage,planejar:()=>PlanningPage.page(),lancamentos:typeof entriesPage==='function'?entriesPage:homePage,relatorios:typeof reportsPage==='function'?reportsPage:homePage,acertos:familyPage,metas:typeof goalsPage==='function'?goalsPage:homePage,ano:typeof yearPage==='function'?yearPage:homePage};
   if(Store.loading){$('#main').innerHTML='<div class="loading-inline" role="status">Carregando os registros da família...</div>';render.wasRendered=false;return;}
   const focus=document.activeElement;const isTyping=(focus&&$('#main').contains(focus)&&/INPUT|SELECT|TEXTAREA/.test(focus.tagName))||(state.page==='lancamentos'&&!!$('#entry-form'));
-  if(!isTyping||!render.wasRendered){$('#main').innerHTML=pages[state.page]();render.wasRendered=true;}paintIcons();if(state.page==='lancamentos'){syncEntrySchedule();syncFamilyFields();InstallmentUI.sync($('#entry-form'));InstallmentUI.remember($('#entry-form'));}
+  if(!isTyping||!render.wasRendered){$('#main').innerHTML=pages[state.page]();render.wasRendered=true;}paintIcons();PlanningPage.sync();PlanningWatch.sync();if(state.page==='lancamentos'){syncEntrySchedule();syncFamilyFields();InstallmentUI.sync($('#entry-form'));InstallmentUI.remember($('#entry-form'));}
 }
 const financeRowsState={scope:'',receitas:null,despesas:null};
 window.addEventListener('finance-update',()=>{
@@ -1860,7 +1894,24 @@ var CatatauPlanner = (() => {
   const firmNote = 'Ativo: o xerife vai dizer “Não compre agora” se a compra comprometer o plano informado. Registrar despesas continua liberado.';
   const answer = text => ({ text, scope: 'Planejamento local · ' + profileName() });
   function currentScope() { return Store.screen === 'app' && Store.user?.uid && Store.profile ? JSON.stringify([Store.user.uid, Store.profile]) : ''; }
-  function fingerprint() { return JSON.stringify([revision, Store.loading, Store.error, Store.userDoc?.status, Store.user?.emailVerified, Store.meta.ownerUid]); }
+  function fingerprint() { return JSON.stringify([revision, Money.today(), Store.loading, Store.error, Store.userDoc?.status, Store.user?.emailVerified, Store.meta?.ownerUid]); }
+  function contextToken() {
+    try {
+      // Check the same authorization as the financial snapshot, without reading rows.
+      snapshot({ store: Store, fromMonth: Money.today().slice(0, 7), months: 1, today: Money.today(), rowsForWindow: () => [] });
+      return JSON.stringify([currentScope(), fingerprint()]);
+    } catch { return ''; }
+  }
+  function isFirm() { sync(); return !!contextToken() && firm; }
+  function setFirm(selected) {
+    sync();
+    if (typeof selected !== 'boolean' || !contextToken()) return false;
+    firm = selected;
+    try { localStorage.setItem(preferenceKey(scope), String(firm)); } catch { /* session preference still works */ }
+    sync();
+    window.dispatchEvent(new Event('catatau-firm-change'));
+    return true;
+  }
   function preferences() {
     try { firm = !!scope && localStorage.getItem(preferenceKey(scope)) === 'true'; } catch { firm = false; }
   }
@@ -1957,8 +2008,8 @@ var CatatauPlanner = (() => {
       '.\n• Dinheiro livre na compra: ' + absent(a.spendableCashCents) + '.' + (draft.terms.count ? '\n• Limite disponível do cartão: ' + absent(a.cardLimitCents) + '.' : '') +
       '\n\nOs registros podem estar incompletos. Confirme também os gastos e as rendas já cadastrados. Digite confirmar para calcular, ou recomeçar. Nada será salvo nas suas finanças.';
   }
-  function resultText() {
-    const results = evaluate(draft.finance, draft.terms, draft.assumptions), lines = [draft.name + ' · projeção de ' + draft.finance.months.length + ' meses, somente deste perfil.'];
+  function describeResult(plan) {
+    const results = evaluate(plan.finance, plan.terms, plan.assumptions), lines = [plan.name + ' · projeção de ' + plan.finance.months.length + ' meses, somente deste perfil.'];
     for (const option of results) {
       const title = option.key === 'cash' ? 'À vista' : 'Parcelado no cartão';
       lines.push('\n' + title + ' — ' + currency(option.totalCents));
@@ -2053,21 +2104,291 @@ var CatatauPlanner = (() => {
           draft.assumptions.cardLimitCents = unknown ? null : cents; draft.step = 'confirm'; controls(); return answer(assumptionsSummary());
         case 'confirm': {
           if (command !== 'confirmar') return answer(assumptionsSummary());
-          const text = resultText(); clear(); return answer(text);
+          const text = describeResult(draft); clear(); return answer(text);
         }
       }
     } catch { clear(); return answer('Não foi possível calcular com segurança. Confira os dados e comece novamente. Nenhum lançamento foi criado.'); }
     return null;
   }
   document.querySelector('#catatau-firm')?.addEventListener('change', event => {
-    const selected = event.target.checked; sync(); if (!scope || !catatauReady()) return; firm = selected; event.target.checked = selected;
-    try { if (scope) localStorage.setItem(preferenceKey(scope), String(firm)); } catch { /* preference remains in this session */ }
-    const note = document.querySelector('#catatau-firm-note'); if (note) note.textContent = firm ? firmNote : 'Opcional e só neste perfil. Não bloqueia banco, cartão ou registro de despesas.';
-    appearance();
+    setFirm(event.target.checked);
   });
   window.addEventListener('finance-update', () => { revision++; sync(); });
   window.addEventListener('pagehide', clear);
-  return { ...core, sync, clear, handle, appearance, image, voice };
+  return { ...core, sync, clear, handle, appearance, image, voice, setFirm, isFirm, contextToken, describeResult };
+})();
+
+/* A local reading of the authorized profile; no bank monitoring or financial writes. */
+var PlanningWatch = (() => {
+  'use strict';
+  const integer = value => Number.isSafeInteger(value) && value >= 0;
+  function analyze(finance, budget, rows) {
+    const month = finance?.months?.[0];
+    if (!month || finance.months.length !== 1 || budget?.month !== month.month || !Array.isArray(rows) ||
+        !['incomeCents', 'expenseCents', 'unpaidCents'].every(key => integer(month[key])) ||
+        budget.income !== month.incomeCents || !Array.isArray(budget.groups)) throw Error('invalid-watch-data');
+    const groups = Object.fromEntries(budget.groups.map(group => [group.key, group]));
+    if (!['fixed', 'variable', 'reserve'].every(key => groups[key] && integer(groups[key].actual) && integer(groups[key].limit)) ||
+        groups.fixed.actual + groups.variable.actual !== month.expenseCents) throw Error('invalid-watch-data');
+    const expenses = rows.filter(row => row.type === 'despesa' && row.date.startsWith(month.month));
+    const pending = expenses.filter(row => !row.paid);
+    const overdue = pending.filter(row => row.date < finance.today);
+    const end = new Date(finance.today + 'T12:00:00Z'); end.setUTCDate(end.getUTCDate() + 7);
+    const endDate = end.toISOString().slice(0, 10);
+    const soon = pending.filter(row => row.date >= finance.today && row.date <= endDate);
+    const cents = list => list.reduce((sum, row) => sum + Math.round(row.value * 100), 0);
+    const recorded = month.recordedReserveCents;
+    const reserveKnown = recorded !== null && integer(recorded);
+    const protectedCents = month.incomeKnown && finance.planKnown ? Math.max(recorded || 0, groups.reserve.limit) : reserveKnown ? recorded : null;
+    const findings = [];
+    const add = (kind, values = {}, attention = false) => findings.push({ kind, ...values, attention });
+    if (overdue.length) add('overdue', { count: overdue.length, cents: cents(overdue) }, true);
+    if (!month.incomeKnown) add('income-missing', { cents: month.expenseCents }, expenses.length > 0);
+    else if (month.expenseCents > month.incomeCents) add('expense-gap', { cents: month.expenseCents - month.incomeCents }, true);
+    else if (protectedCents !== null && month.expenseCents + protectedCents > month.incomeCents) {
+      add('reserve-gap', { cents: month.expenseCents + protectedCents - month.incomeCents }, true);
+    }
+    if (soon.length) add('due-soon', { count: soon.length, cents: cents(soon), through: endDate }, true);
+    if (month.incomeKnown && month.incomeCents > 0 && finance.planKnown) {
+      const variable = groups.variable;
+      if (variable.actual > variable.limit) add('variable-over', { cents: variable.actual - variable.limit, limit: variable.limit }, true);
+      else if (variable.limit > 0 && variable.actual >= variable.limit * 0.8) {
+        add('variable-near', { cents: variable.limit - variable.actual, limit: variable.limit, percent: Math.floor(variable.actual * 100 / variable.limit) }, true);
+      }
+      const fixed = groups.fixed;
+      if (fixed.actual > fixed.limit) add('fixed-over', { cents: fixed.actual - fixed.limit, limit: fixed.limit }, true);
+    }
+    if (!expenses.length) add('expense-missing');
+    if (month.incomeKnown && !reserveKnown) add('reserve-missing');
+    if (!finance.planKnown) add('plan-missing');
+    if (!findings.length) add('within');
+    return { month: month.month, today: finance.today, incomeKnown: month.incomeKnown, incomeCents: month.incomeCents,
+      expenseCents: month.expenseCents, protectedCents, reserveKnown, planKnown: finance.planKnown,
+      pendingCents: month.unpaidCents, suggested: budget.suggested, findings, primary: findings.find(item => item.attention) || null };
+  }
+  const core = { analyze };
+  if (typeof module === 'object' && module.exports) module.exports = core;
+  if (typeof document === 'undefined' || typeof Store === 'undefined') return core;
+  const money = cents => Money.format(cents / 100);
+  function collect() {
+    try {
+      let rows;
+      const finance = CatatauPlanner.snapshot({ store: Store, fromMonth: state.month, months: 1, today: Money.today(),
+        rowsForWindow: (from, to) => (rows = allRows(from, to)) });
+      return analyze(finance, Budget.analyze(rows, Store.meta, state.month), rows);
+    } catch { return null; }
+  }
+  function words(item, firm) {
+    const value = item.cents === undefined ? '' : money(item.cents);
+    switch (item.kind) {
+      case 'overdue': return { title: 'Primeiro, os vencimentos', text: `${firm ? 'Ronda dos boletos, sô! ' : ''}${item.count} ${item.count === 1 ? 'despesa está marcada como pendente após o vencimento' : 'despesas estão marcadas como pendentes após o vencimento'} neste mês: ${value}. Confira se já pagou antes de acertar o registro.`, action: 'Conferir pendências', href: '#relatorios' };
+      case 'income-missing': return { title: 'Falta uma peça: a renda', text: `${item.cents ? 'Há ' + value + ' em despesas, mas nenhuma receita registrada neste mês. ' : ''}${firm ? 'Sem essa pista, o xerife não dá sinal verde. ' : ''}Inclua as receitas do mês para comparar. Ausência de registro não significa renda zero.`, action: 'Conferir lançamentos', href: '#lancamentos' };
+      case 'expense-gap': return { title: 'As despesas passaram da renda', text: `${firm ? 'Opa, sô: vamos cuidar disso primeiro. ' : ''}As despesas pagas e previstas superam a renda registrada em ${value}, antes da reserva. Revise os valores e escolha o que pode ajustar.`, action: 'Revisar despesas', href: '#relatorios' };
+      case 'reserve-gap': return { title: 'A reserva ficou apertada', text: `${firm ? 'Segura esse carrinho, sô! ' : ''}Faltam ${value} para cobrir as despesas e preservar a maior entre a meta de reserva e o valor já separado. Confira o plano antes de assumir outra compra.`, action: 'Rever meu plano', href: '#metas' };
+      case 'due-soon': return { title: 'No radar dos próximos 7 dias', text: `${item.count} ${item.count === 1 ? 'despesa pendente deste mês vence' : 'despesas pendentes deste mês vencem'} de hoje até ${Money.date(item.through)}: ${value}. Confira o dinheiro disponível nas datas.`, action: 'Ver vencimentos', href: '#relatorios' };
+      case 'variable-over': return { title: 'Variáveis acima do combinado', text: `${firm ? 'Uai, esse grupo passou da porteira! ' : ''}Os gastos variáveis superam o limite de ${money(item.limit)} em ${value}. Veja os maiores itens e decida quais próximos gastos podem esperar.`, action: 'Conferir categorias', href: '#relatorios' };
+      case 'variable-near': return { title: 'O limite das variáveis está perto', text: `${item.percent}% do limite planejado já está comprometido com despesas pagas e previstas. Restam ${value} nesse limite, sem garantir dinheiro livre no banco.`, action: 'Conferir meu orçamento', href: '#metas' };
+      case 'fixed-over': return { title: 'Fixas acima do planejado', text: `Os compromissos fixos superam o limite de ${money(item.limit)} em ${value}. Confira os maiores itens e o que pode renegociar; também vale ajustar os percentuais à sua realidade.`, action: 'Rever meu plano', href: '#metas' };
+      case 'expense-missing': return { title: 'Vamos completar o mapa', text: 'Ainda não há despesas registradas neste mês. Inclua contas, parcelas e gastos do dia a dia para a ronda fazer sentido.', action: 'Conferir lançamentos', href: '#lancamentos' };
+      case 'reserve-missing': return { title: 'Quanto já foi separado?', text: 'A reserva deste mês ainda não foi informada. Conte em Metas quanto você já separou; pode ser zero. Não use o acumulado de outros meses.', action: 'Informar a reserva', href: '#metas' };
+      case 'plan-missing': return { title: 'Um combinado do seu tamanho', text: 'Você ainda não definiu os percentuais do perfil. Em Metas, confira a sugestão inicial e ajuste o plano à sua realidade.', action: 'Definir meu plano', href: '#metas' };
+      default: return { title: firm ? 'Ô trem bão: seguimos de olho!' : 'Nenhum ponto de atenção nesta leitura', text: 'Não encontrei atraso, vencimento próximo ou pressão nos limites acompanhados. Continue incluindo os gastos: registros incompletos podem mudar esta leitura.', action: 'Conferir registros', href: '#relatorios' };
+    }
+  }
+  function finding(item, firm) {
+    const view = words(item, firm);
+    return `<article class="watch-finding ${item.attention ? 'watch-attention' : ''}" data-watch-kind="${item.kind}"><h3>${esc(view.title)}</h3><p>${esc(view.text)}</p><a href="${view.href}">${esc(view.action)} <span aria-hidden="true">→</span></a></article>`;
+  }
+  function pageContent(model) {
+    if (!model) return '<div class="watch-waiting"><h2>Ronda do mês</h2><p>Aguarde os dados do perfil e a confirmação do acesso para acompanhar o mês.</p></div>';
+    const firm = CatatauPlanner.isFirm();
+    const urgent = model.findings.filter(item => item.attention), others = model.findings.filter(item => !item.attention);
+    const ordered = [...urgent, ...others], visible = ordered.slice(0, 2), remaining = ordered.slice(2);
+    return `<header class="watch-heading"><div><span class="eyebrow">${firm ? 'XERIFE CATATAU DE PLANTÃO' : 'UM OLHAR PARA OS SEUS REGISTROS'}</span><h2>Ronda do mês</h2><p>${esc(monthName(model.month))} · somente este perfil</p></div><div class="watch-heading-tools">${monthPicker()}<span class="watch-state">${urgent.length ? urgent.length + (urgent.length === 1 ? ' ponto de atenção' : ' pontos de atenção') : 'Passo a passo'}</span></div></header>
+      <p class="watch-intro">${firm ? 'Uai, sô… uma coisa de cada vez. Eu aponto o que merece cuidado e você decide o próximo passo.' : 'Comece pelo que mais precisa de cuidado. Ao atualizar seus registros, esta leitura acompanha você.'}</p>
+      <dl class="watch-numbers"><div><dt>Receitas registradas</dt><dd>${model.incomeKnown ? money(model.incomeCents) : 'A informar'}</dd></div><div><dt>Despesas pagas + previstas</dt><dd>${money(model.expenseCents)}</dd></div><div><dt>Reserva a preservar</dt><dd>${model.protectedCents === null ? 'A definir' : money(model.protectedCents)}</dd></div></dl>
+      <div class="watch-findings">${visible.map(item => finding(item, firm)).join('')}</div>
+      ${remaining.length ? `<details class="watch-complete"><summary>Ver ${remaining.length === 1 ? 'outro ponto' : 'outros ' + remaining.length + ' pontos'} da ronda</summary><div class="watch-findings">${remaining.map(item => finding(item, firm)).join('')}</div></details>` : ''}
+      <p class="watch-source">Leitura das contas pagas e previstas do mês selecionado, atualizada ao mudar seus registros no 4J. ${model.protectedCents !== null ? 'A reserva a preservar considera o maior valor entre a meta definida e o total separado informado. ' : ''}${model.suggested ? 'Algumas categorias estão na divisão sugerida; confira-as em Metas. ' : ''}Registros podem estar incompletos. O Catatau não consulta seu banco nem envia alertas com o site fechado.</p>`;
+  }
+  function homeContent(model) {
+    if (!model?.primary || !CatatauPlanner.isFirm()) return '';
+    const view = words(model.primary, true);
+    return `<aside class="watch-home" aria-label="Ronda do Catatau"><img src="assets/catatau-sheriff.webp" alt="" width="72" height="84"><div><span class="eyebrow">RONDA DO CATATAU · ${esc(monthName(model.month, true))}</span><h2>${esc(view.title)}</h2><p>${esc(view.text)}</p><a href="#planejar">Ver minha ronda <span aria-hidden="true">→</span></a></div></aside>`;
+  }
+  function page() { return `<section class="planning-watch" data-planning-watch="page">${pageContent(collect())}</section>`; }
+  function home() { return `<div data-planning-watch="home">${homeContent(collect())}</div>`; }
+  function sync() {
+    const hosts = [...document.querySelectorAll('[data-planning-watch]')];
+    if (!hosts.length) return;
+    const model = collect();
+    for (const host of hosts) {
+      const next = host.dataset.planningWatch === 'home' ? homeContent(model) : pageContent(model);
+      if (host.innerHTML !== next) host.innerHTML = next;
+    }
+  }
+  window.addEventListener('finance-update', sync);
+  window.addEventListener('catatau-firm-change', sync);
+  window.addEventListener('pagehide', () => { for (const host of document.querySelectorAll('[data-planning-watch]')) host.replaceChildren(); });
+  window.addEventListener('pageshow', sync);
+  return { ...core, collect, page, home, sync };
+})();
+
+/* Purchase planning stays in memory and uses the same guarded calculator as chat. */
+var PlanningPage = (() => {
+  'use strict';
+  const names = ['name', 'cash', 'purchaseDate', 'compare', 'count', 'total', 'down', 'firstDue', 'income', 'extra', 'reserveMode', 'reserve', 'cashAvailable', 'cardLimit', 'confirm'];
+  const assumptionNames = ['income', 'extra', 'reserveMode', 'reserve', 'cashAvailable', 'cardLimit', 'confirm'];
+  const escape = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+  const cash = value => Money.format(value / 100);
+  const month = value => monthName(value);
+  const index = value => Number(value.slice(0, 4)) * 12 + Number(value.slice(5, 7)) - 1;
+  let scope = '', token = '', step = 'terms', values = {}, errors = {}, notice = '', plan = null, results = null, version = 0;
+
+  function reset() {
+    scope = ''; token = ''; step = 'terms'; values = {}; errors = {}; notice = ''; plan = null; results = null; version++;
+  }
+  function context() {
+    const nextToken = CatatauPlanner.contextToken();
+    const nextScope = nextToken ? JSON.stringify([Store.user.uid, Store.profile]) : '';
+    if (nextScope !== scope || !nextToken) {
+      reset(); scope = nextScope; token = nextToken;
+      if (nextToken) values.purchaseDate = Money.today();
+      return;
+    }
+    if (token !== nextToken) {
+      const hadDraft = !!(plan || results || ['name', 'cash', 'compare', 'count', 'total', 'down', 'firstDue'].some(name => values[name]) || (values.purchaseDate && values.purchaseDate !== Money.today()));
+      token = nextToken; step = 'terms'; plan = null; results = null; errors = {};
+      for (const name of assumptionNames) delete values[name];
+      notice = hadDraft ? 'Os registros deste perfil mudaram. Mantive os dados da compra; confira as hipóteses novamente para calcular com o orçamento atualizado.' : '';
+      version++;
+    }
+  }
+  function errorMarkup(name) { return errors[name] ? `<small class="planning-field-error" id="planning-${name}-error">${escape(errors[name])}</small>` : ''; }
+  function input(name, title, options = {}) {
+    const { type = 'text', hint = '', required = false, placeholder = '', min, max, maxLength = 24 } = options;
+    return `<label class="planning-field" for="planning-${name}"><span>${escape(title)}</span><input id="planning-${name}" name="${name}" type="${type}" value="${escape(values[name] || '')}" ${required ? 'required' : ''} ${type === 'text' && name !== 'name' ? 'inputmode="decimal"' : ''} ${min !== undefined ? `min="${escape(min)}"` : ''} ${max !== undefined ? `max="${escape(max)}"` : ''} maxlength="${maxLength}" placeholder="${escape(placeholder)}" autocomplete="off" ${errors[name] ? 'aria-invalid="true"' : ''} aria-describedby="planning-${name}-hint${errors[name] ? ` planning-${name}-error` : ''}"><small id="planning-${name}-hint">${escape(hint)}</small>${errorMarkup(name)}</label>`;
+  }
+  function alertMarkup() { return Object.keys(errors).length ? '<p class="planning-form-error" role="alert">Confira os campos sinalizados para continuar.</p>' : ''; }
+  function termsForm() {
+    return `<form id="planning-terms-form" class="planning-card" novalidate><div class="planning-step"><span>1 de 2</span><h2>O que está nos seus planos?</h2></div><p class="planning-copy">Pode ser uma compra ou uma despesa que você está considerando. Vamos olhar o custo inteiro, antes de decidir.</p>${alertMarkup()}<div class="planning-fields">${input('name', 'Nome da compra', { required: true, maxLength: 80, placeholder: 'Ex.: uma geladeira' })}${input('cash', 'Preço total à vista (R$)', { required: true, placeholder: '0,00', hint: 'Inclua frete e taxas.' })}${input('purchaseDate', 'Quando pretende comprar?', { required: true, type: 'date', min: Money.today(), hint: 'Hoje ou uma data nos próximos 24 meses.' })}</div><label class="planning-check"><input name="compare" type="checkbox" ${values.compare ? 'checked' : ''} aria-controls="planning-installments" aria-expanded="${!!values.compare}"><span>Comparar com parcelamento no cartão</span></label><fieldset id="planning-installments" class="planning-fields planning-installments" ${values.compare ? '' : 'hidden'}><legend>Condições do parcelamento</legend>${input('count', 'Quantidade de parcelas', { type: 'number', min: 2, max: 24, hint: 'De 2 a 24 parcelas.' })}${input('total', 'Total final parcelado (R$)', { hint: 'Entrada + todas as parcelas, juros, frete e taxas.' })}${input('down', 'Entrada (R$)', { hint: 'Digite 0 se não houver entrada.' })}${input('firstDue', 'Primeiro vencimento', { type: 'date', hint: 'Informe a data real da primeira parcela.' })}</fieldset><div class="planning-form-actions"><button class="button primary" type="submit">Conferir meu cenário <span aria-hidden="true">→</span></button></div><p class="planning-footnote">Esta simulação não cria uma despesa nem realiza uma compra.</p></form>`;
+  }
+  function assumptionsForm() {
+    const missing = plan.finance.months.filter(item => !item.incomeKnown).map(item => item.month);
+    return `<form id="planning-assumptions-form" class="planning-card" novalidate><div class="planning-step"><span>2 de 2</span><h2>Vamos conferir as pistas, sô?</h2></div><p class="planning-copy"><strong>${escape(plan.name)}</strong> · ${cash(plan.terms.cashCents)} à vista${plan.terms.count ? ` · comparação com ${plan.terms.count} parcelas, total ${cash(plan.terms.totalCents)}` : ''}. Projeção de ${escape(month(plan.finance.fromMonth))} a ${escape(month(plan.finance.toMonth))}.</p><p class="planning-copy">Os registros do perfil entram na conta. Complete só o que você sabe: <strong>campo vazio significa “não sei”</strong>. Digite 0 apenas quando tiver certeza de que não haverá esse valor.</p>${alertMarkup()}${missing.length ? `<div class="planning-missing"><details><summary>Falta renda registrada em ${missing.length} ${missing.length === 1 ? 'mês' : 'meses'}</summary><p>${escape(missing.map(month).join(', '))}.</p></details>${input('income', 'Renda líquida prevista por mês sem registro (R$)', { hint: 'O valor que você informar será aplicado a cada mês listado acima, só nesta simulação. Não repetimos seu salário automaticamente.' })}</div>` : '<p class="planning-copy">Há renda registrada em todos os meses da projeção. Usaremos o valor de cada mês.</p>'}<div class="planning-fields">${input('extra', 'Outros gastos mensais previstos (R$)', { hint: 'Mercado, transporte e outras despesas que ainda não estão nos lançamentos. 0 confirma que já incluiu tudo.' })}<label class="planning-field" for="planning-reserveMode"><span>Quanto preservar para a reserva?</span><select id="planning-reserveMode" name="reserveMode" aria-describedby="planning-reserveMode-hint"><option value="" ${!values.reserveMode ? 'selected' : ''}>Ainda não sei</option><option value="plan" ${values.reserveMode === 'plan' ? 'selected' : ''}>Meta de ${plan.finance.plan.reserve}% da renda</option><option value="fixed" ${values.reserveMode === 'fixed' ? 'selected' : ''}>Informar um valor mensal</option><option value="unknown" ${values.reserveMode === 'unknown' ? 'selected' : ''}>Não sei informar agora</option></select><small id="planning-reserveMode-hint">${plan.finance.planKnown ? 'Meta do plano deste perfil.' : 'A meta de 50/20/30 é o padrão; só será usada se você escolher essa opção.'} Preservamos o maior valor entre a escolha e a reserva registrada no mês.</small></label><div id="planning-fixed-reserve" ${values.reserveMode === 'fixed' ? '' : 'hidden'}>${input('reserve', 'Reserva mensal a preservar (R$)', { hint: 'Não é o total já acumulado nas metas.' })}</div>${input('cashAvailable', 'Dinheiro livre no dia da compra (R$)', { hint: 'Depois de separar contas, reserva e metas. O saldo projetado do app não é o saldo do banco.' })}${plan.terms.count ? input('cardLimit', 'Limite disponível do cartão (R$)', { hint: 'Conferimos o total financiado, e não só uma parcela.' }) : ''}</div><label class="planning-check planning-confirm"><input name="confirm" type="checkbox" ${values.confirm ? 'checked' : ''} ${errors.confirm ? 'aria-invalid="true" aria-describedby="planning-confirm-error"' : ''}><span>Conferi os valores e datas da compra, os registros do perfil e as hipóteses acima. Entendi quais dados ainda faltam.</span></label>${errorMarkup('confirm')}<div class="planning-form-actions"><button class="button secondary" type="button" data-planning-action="back">Voltar à compra</button><button class="button primary" type="submit">Ver a análise do Catatau</button></div><p class="planning-footnote">Nada deste formulário é salvo nos lançamentos. As hipóteses valem somente para esta simulação.</p></form>`;
+  }
+  function resultMarkup() {
+    const overall = results.some(item => item.status === 'over') ? 'over' : results.some(item => item.status === 'insufficient') ? 'insufficient' : 'within';
+    const labels = { over: 'Melhor ajustar antes', insufficient: 'Ainda faltam pistas', within: 'Cabe no cenário informado' };
+    return `<section id="planning-result" class="planning-card" data-status="${overall}" aria-labelledby="planning-result-title"><span class="eyebrow">ANÁLISE DESTA SIMULAÇÃO</span><h2 id="planning-result-title" tabindex="-1">${escape(plan.name)}</h2><div class="planning-results">${results.map(item => `<article class="planning-option" data-status="${item.status}"><span>${item.key === 'cash' ? 'À vista' : 'Parcelado no cartão'}</span><strong>${cash(item.totalCents)}</strong><b class="planning-status">${labels[item.status]}</b>${item.key === 'card' ? `<small>${plan.terms.count} parcelas · entrada ${cash(item.upfrontCents)}</small>` : ''}</article>`).join('')}</div><div id="planning-result-copy" class="planning-result-copy">${escape(CatatauPlanner.describeResult(plan))}</div>${overall === 'over' ? '<p class="planning-pause">Dê uma pausa antes de decidir. Você pode ajustar o valor ou refazer a análise quando o orçamento mudar. O Catatau cuida do plano com você, sem bronca.</p>' : ''}<details class="planning-projection"><summary>Ver a conta mês a mês</summary>${results.map(item => `<h3>${item.key === 'cash' ? 'À vista' : 'Parcelado'}</h3><div class="planning-table-wrap" tabindex="0" aria-label="Projeção mensal ${item.key === 'cash' ? 'à vista' : 'parcelada'}"><table><caption>Valores projetados em reais. “Falta informar” não significa zero.</caption><thead><tr><th scope="col">Mês</th><th scope="col">Renda</th><th scope="col">Despesas já registradas</th><th scope="col">Outros gastos</th><th scope="col">Reserva</th><th scope="col">Compra</th><th scope="col">Sobra</th></tr></thead><tbody>${item.rows.map(row => `<tr><th scope="row">${escape(month(row.month))}</th>${['incomeCents', 'existingCents', 'extraCents', 'reserveCents', 'purchaseCents', 'afterCents'].map(key => `<td>${row[key] === null ? 'Falta informar' : cash(row[key])}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`).join('')}</details><div class="planning-form-actions"><button class="button secondary" type="button" data-planning-action="back">Ajustar esta compra</button><button class="button primary" type="button" data-planning-action="new">Planejar outra compra</button></div></section>`;
+  }
+  function page() {
+    context();
+    const ready = !!token, firm = ready && CatatauPlanner.isFirm();
+    return `<div id="planning-page" class="planning-page" data-planning-version="${version}"><header class="planning-heading"><div><span class="eyebrow">UM PASSO ANTES DE COMPRAR</span><h1>Planejar com o Catatau</h1><p>Seu orçamento merece companhia. Vamos cuidar do mês e pensar nas próximas compras juntos.</p>${ready ? '<button type="button" class="text-button planning-start" data-planning-action="start">Ir para a compra <span aria-hidden="true">↓</span></button>' : ''}</div><img data-catatau src="${escape(CatatauPlanner.image())}" width="128" height="128" alt="Catatau, seu companheiro de planos"></header>${ready ? `<section class="planning-mode" aria-label="Modo de orientação"><div><h2>Um xerife do seu lado</h2><p id="planning-mode-note">${firm ? 'Ronda ligada: avisos no Início e orientação firme antes de assumir uma compra.' : 'Ative para ver avisos do Catatau no Início quando os registros pedirem atenção.'}</p><small>Preferência só deste perfil e deste navegador. Não bloqueia banco, cartão nem o registro de uma despesa.</small></div><label class="planning-firm-label"><input id="planning-firm" type="checkbox" ${firm ? 'checked' : ''} aria-describedby="planning-mode-note"><span>Modo firme</span></label></section>${typeof PlanningWatch !== 'undefined' ? PlanningWatch.page() : ''}<p id="planning-notice" class="planning-notice" role="status" ${notice ? '' : 'hidden'}>${escape(notice)}</p>${step === 'terms' ? termsForm() : step === 'assumptions' ? assumptionsForm() : resultMarkup()}` : '<section class="planning-card"><h2>Vamos esperar este perfil carregar</h2><p>Selecione um perfil ao qual você tenha acesso. As informações de outra conta não entram nesta análise.</p></section>'}</div>`;
+  }
+  function repaint(focus) {
+    const root = document.querySelector('#planning-page');
+    if (!root) return;
+    root.outerHTML = page();
+    if (typeof PlanningWatch !== 'undefined') PlanningWatch.sync();
+    if (focus) document.querySelector(focus)?.focus({ preventScroll: false });
+  }
+  function sync() {
+    context();
+    const root = document.querySelector('#planning-page');
+    if (!root) return;
+    if (root.dataset.planningVersion !== String(version)) { repaint(); return; }
+    const firm = CatatauPlanner.isFirm(), checkbox = root.querySelector('#planning-firm');
+    if (checkbox) { checkbox.checked = firm; checkbox.disabled = !token; }
+    const note = root.querySelector('#planning-mode-note');
+    if (note) note.textContent = firm ? 'Ronda ligada: avisos no Início e orientação firme antes de assumir uma compra.' : 'Ative para ver avisos do Catatau no Início quando os registros pedirem atenção.';
+    const copy = root.querySelector('#planning-result-copy');
+    if (copy && plan && results) copy.textContent = CatatauPlanner.describeResult(plan);
+  }
+  function remember(form) {
+    if (!token || !form) return;
+    for (const field of form.elements) if (names.includes(field.name)) values[field.name] = field.type === 'checkbox' ? field.checked : field.value.slice(0, field.name === 'name' ? 80 : 24);
+  }
+  function fail() { version++; repaint(errors.confirm ? '[name="confirm"]' : '#planning-' + Object.keys(errors)[0]); }
+  function readMoney(name, required = false) {
+    const value = String(values[name] || '').trim();
+    if (!value && !required) return null;
+    const cents = CatatauPlanner.moneyInput(value);
+    if (cents === null) errors[name] = required ? 'Informe um valor em reais, como 150,00.' : 'Use um valor em reais ou deixe vazio se não souber.';
+    return cents;
+  }
+  function submitTerms() {
+    errors = {};
+    const name = String(values.name || '').trim(), terms = { cashCents: readMoney('cash', true), purchaseDate: CatatauPlanner.dateInput(values.purchaseDate), count: 0 };
+    if (!name || name.length > 80) errors.name = 'Dê um nome de até 80 caracteres para esta compra.';
+    if (terms.cashCents === 0) errors.cash = 'O preço precisa ser maior que zero.';
+    if (!terms.purchaseDate || terms.purchaseDate < Money.today() || index(terms.purchaseDate) - index(Money.today()) > 23) errors.purchaseDate = 'Escolha hoje ou uma data nos próximos 24 meses.';
+    if (values.compare) {
+      terms.count = Number(values.count); terms.totalCents = readMoney('total', true); terms.downCents = readMoney('down', true); terms.firstDue = CatatauPlanner.dateInput(values.firstDue);
+      if (!/^\d{1,2}$/.test(values.count || '') || terms.count < 2 || terms.count > 24) errors.count = 'Informe de 2 a 24 parcelas.';
+      if (terms.totalCents !== null && terms.downCents !== null && terms.totalCents - terms.downCents < terms.count) errors.down = 'A entrada deve deixar pelo menos um centavo por parcela.';
+      if (!terms.firstDue || terms.firstDue < terms.purchaseDate) errors.firstDue = 'O vencimento deve ser na data da compra ou depois dela.';
+    }
+    if (Object.keys(errors).length) { fail(); return; }
+    try {
+      const schedules = CatatauPlanner.schedules(terms), last = schedules.flatMap(item => item.events).map(item => item.date).sort().at(-1), months = Math.max(12, index(last) - index(Money.today()) + 1);
+      if (months > 24) { errors.firstDue = 'A última parcela precisa ficar dentro dos próximos 24 meses.'; fail(); return; }
+      const finance = CatatauPlanner.snapshot({ store: Store, fromMonth: Money.today().slice(0, 7), months, today: Money.today(), rowsForWindow: allRows });
+      plan = { name, terms, finance, assumptions: {} }; results = null; step = 'assumptions'; notice = ''; values.confirm = false; version++; repaint('#planning-assumptions-form input, #planning-assumptions-form select');
+    } catch { errors.cash = 'Não foi possível calcular com estes dados. Confira os valores e o acesso ao perfil.'; fail(); }
+  }
+  function submitAssumptions() {
+    errors = {};
+    if (!plan) { step = 'terms'; version++; repaint(); return; }
+    const missing = plan.finance.months.filter(item => !item.incomeKnown), income = missing.length ? readMoney('income') : null;
+    const assumptions = { incomes: {}, extraMonthlyCents: readMoney('extra'), spendableCashCents: readMoney('cashAvailable'), reserveMode: ['plan', 'fixed'].includes(values.reserveMode) ? values.reserveMode : 'unknown' };
+    for (const item of missing) assumptions.incomes[item.month] = income;
+    if (assumptions.reserveMode === 'fixed') assumptions.reserveMonthlyCents = readMoney('reserve');
+    if (plan.terms.count) assumptions.cardLimitCents = readMoney('cardLimit');
+    if (!values.confirm) errors.confirm = 'Confira as informações e marque a confirmação para calcular.';
+    if (Object.keys(errors).length) { fail(); return; }
+    try { plan.assumptions = assumptions; results = CatatauPlanner.evaluate(plan.finance, plan.terms, assumptions); step = 'result'; version++; repaint('#planning-result-title'); }
+    catch { notice = 'Não foi possível concluir a análise. Confira os dados da compra e tente novamente.'; step = 'terms'; plan = null; results = null; version++; repaint('#planning-name'); }
+  }
+  document.addEventListener('input', event => {
+    const form = event.target.closest('#planning-terms-form, #planning-assumptions-form');
+    if (!form) return;
+    const oldToken = token; context(); if (!token || token !== oldToken) { sync(); return; }
+    remember(form);
+    if (event.target.name !== 'confirm') { values.confirm = false; const checkbox = form.querySelector('[name="confirm"]'); if (checkbox) checkbox.checked = false; }
+  });
+  document.addEventListener('change', event => {
+    if (event.target.id === 'planning-firm') { CatatauPlanner.setFirm(event.target.checked); sync(); return; }
+    const form = event.target.closest('#planning-terms-form, #planning-assumptions-form');
+    if (!form) return;
+    const oldToken = token; context(); if (!token || token !== oldToken) { sync(); return; }
+    remember(form);
+    if (event.target.name === 'compare') { document.querySelector('#planning-installments').hidden = !values.compare; event.target.setAttribute('aria-expanded', String(!!values.compare)); }
+    if (event.target.name === 'reserveMode') document.querySelector('#planning-fixed-reserve').hidden = values.reserveMode !== 'fixed';
+    if (event.target.name !== 'confirm') { values.confirm = false; const checkbox = form.querySelector('[name="confirm"]'); if (checkbox) checkbox.checked = false; }
+  });
+  document.addEventListener('submit', event => {
+    if (!['planning-terms-form', 'planning-assumptions-form'].includes(event.target.id)) return;
+    event.preventDefault();
+    const oldToken = token; context(); if (!token || token !== oldToken) { sync(); return; }
+    remember(event.target);
+    if (event.target.id === 'planning-terms-form') submitTerms(); else submitAssumptions();
+  });
+  document.addEventListener('click', event => {
+    const action = event.target.closest('[data-planning-action]')?.dataset.planningAction;
+    if (!action) return;
+    context(); if (!token) { sync(); return; }
+    if (action === 'start') { document.querySelector('#planning-terms-form input, #planning-assumptions-form input, #planning-result-title')?.focus({ preventScroll: false }); return; }
+    if (action === 'new') { reset(); context(); }
+    else if (action === 'back') { step = 'terms'; plan = null; results = null; errors = {}; values.confirm = false; }
+    version++; repaint('#planning-name');
+  });
+  window.addEventListener('finance-update', sync);
+  window.addEventListener('catatau-firm-change', sync);
+  window.addEventListener('pagehide', reset);
+  window.addEventListener('pageshow', sync);
+  return { page, sync, reset };
 })();
 
 /* Catatau: consultas locais, sem serviços de IA ou envio de mensagens. */
@@ -2136,7 +2457,7 @@ function catatauReply(question,context){
 const catatauMemory={user:'',key:'',histories:new Map()};
 const catatauSuggestions=['Quero planejar uma compra','Como estão meus acertos da família?','Como estou no meu orçamento?','Onde estou desviando?','Como está minha reserva do mês?','Como cadastrar uma despesa recorrente?','Como registrar uma compra antiga?','Como está meu saldo?','Contas atrasadas','O que preciso pagar?','Gastos por categoria','Meu maior gasto','Como estão minhas metas?','Comparar com o mês anterior','Próximas parcelas','Quanto entrou em receitas?','Reembolsos pendentes','Como transferir dados?','Como registrar um gasto?'];
 function catatauReady(){return Store.screen==='app'&&!!Store.user&&!!Store.profile&&!Store.loading&&!Store.error;}
-function resetCatatau(){if(typeof CatatauPlanner!=='undefined')CatatauPlanner.clear();catatauMemory.histories.clear();catatauMemory.user='';catatauMemory.key='';$('#chat-log').replaceChildren();$('#chat-input').value='';closeCatatau(false);}
+function resetCatatau(){if(typeof PlanningPage!=='undefined')PlanningPage.reset();if(typeof CatatauPlanner!=='undefined')CatatauPlanner.clear();catatauMemory.histories.clear();catatauMemory.user='';catatauMemory.key='';$('#chat-log').replaceChildren();$('#chat-input').value='';closeCatatau(false);}
 function syncCatatauContext(){
   const user=Store.screen==='app'?Store.user?.uid||'':'';
   if(user!==catatauMemory.user){resetCatatau();catatauMemory.user=user;}
@@ -2674,8 +2995,9 @@ async function extendedAction(action,el){
   }
   if(action==='new-goal')goalForm();if(action==='edit-goal')goalForm(el.dataset.id);if(action==='contribute')contribution(el.dataset.id);
   if(action==='delete-goal'){const id=el.dataset.id,g=goals().find(x=>x.id===id);confirmAction('Excluir esta meta?',`O plano <b>${esc(g.name)}</b> e seu progresso serão removidos. Isso não altera os lançamentos.`,'Excluir meta',async()=>{await Store.saveGoals(gs=>gs.filter(g=>g.id!==id));toast('Meta excluída.');});}
+  if(action==='mobile-more'){modal('Mais do seu 4J',`<nav class="mobile-more-links" aria-label="Outras páginas">${nav.filter(([key])=>['acertos','metas','ano'].includes(key)).map(([key,title,ic])=>`<a href="#${key}" data-action="close-modal" class="nav-link ${state.page===key?'active':''}" ${state.page===key?'aria-current="page"':''}>${icon(ic)}<span>${title}</span></a>`).join('')}</nav>`);return;}
   if(action==='catatau-tip'){const prompts={month:'Como está meu saldo?',goals:'Como estão minhas metas?',bills:'O que preciso pagar?',start:'Como registrar um gasto?'};askCatatau(prompts[el.dataset.tip]||'Ajuda');}
-  if(action==='firebase-signup-help')firebaseSignupHelp();if(action==='settings')settings();if(action==='help')modal('É mais fácil com um passo a passo',`<ol class="steps"><li><b>Lançamentos:</b> registre uma entrada ou saída de dinheiro.</li><li><b>Início:</b> confira o mês e as contas que ainda faltam pagar.</li><li><b>Relatórios:</b> entenda os gastos por categoria, edite e marque pagamentos.</li><li><b>Acertos:</b> acompanhe os repasses da família, inclusive compras no cartão de outra pessoa.</li><li><b>Metas:</b> acompanhe seu plano 50 / 20 / 30, confira fixas e variáveis, registre a reserva do mês e crie objetivos.</li><li><b>Meu ano:</b> acompanhe o ano inteiro e salve o relatório em PDF.</li></ol><button class="button primary full" data-action="catatau">Quero uma dica do Catatau</button>`);
+  if(action==='firebase-signup-help')firebaseSignupHelp();if(action==='settings')settings();if(action==='help')modal('É mais fácil com um passo a passo',`<ol class="steps"><li><b>Lançamentos:</b> registre uma entrada ou saída de dinheiro.</li><li><b>Início:</b> confira o mês e as contas que ainda faltam pagar.</li><li><b>Relatórios:</b> entenda os gastos por categoria, edite e marque pagamentos.</li><li><b>Acertos:</b> acompanhe os repasses da família, inclusive compras no cartão de outra pessoa.</li><li><b>Metas:</b> acompanhe seu plano 50 / 20 / 30, confira fixas e variáveis, registre a reserva do mês e crie objetivos.</li><li><b>Planejar:</b> confira a ronda do mês, ative o modo firme e avalie uma compra antes de gastar.</li><li><b>Meu ano:</b> acompanhe o ano inteiro e salve o relatório em PDF.</li></ol><button class="button primary full" data-action="catatau">Quero uma dica do Catatau</button>`);
   if(action==='create-profile')createSpaceForm('personal');
   if(action==='share')shareForm();if(action==='revoke-share')confirmAction('Remover acesso?',`Retirar o acesso de <b>${esc(el.dataset.email)}</b> a este perfil?`,'Remover acesso',async()=>{await Store.share(el.dataset.email,'none');toast('Acesso removido.');});
   if(action==='print'){document.title=`4J Finance - ${state.page==='ano'?state.year:state.month}`;window.print();}

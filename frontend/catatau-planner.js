@@ -136,7 +136,24 @@ var CatatauPlanner = (() => {
   const firmNote = 'Ativo: o xerife vai dizer “Não compre agora” se a compra comprometer o plano informado. Registrar despesas continua liberado.';
   const answer = text => ({ text, scope: 'Planejamento local · ' + profileName() });
   function currentScope() { return Store.screen === 'app' && Store.user?.uid && Store.profile ? JSON.stringify([Store.user.uid, Store.profile]) : ''; }
-  function fingerprint() { return JSON.stringify([revision, Store.loading, Store.error, Store.userDoc?.status, Store.user?.emailVerified, Store.meta.ownerUid]); }
+  function fingerprint() { return JSON.stringify([revision, Money.today(), Store.loading, Store.error, Store.userDoc?.status, Store.user?.emailVerified, Store.meta?.ownerUid]); }
+  function contextToken() {
+    try {
+      // Check the same authorization as the financial snapshot, without reading rows.
+      snapshot({ store: Store, fromMonth: Money.today().slice(0, 7), months: 1, today: Money.today(), rowsForWindow: () => [] });
+      return JSON.stringify([currentScope(), fingerprint()]);
+    } catch { return ''; }
+  }
+  function isFirm() { sync(); return !!contextToken() && firm; }
+  function setFirm(selected) {
+    sync();
+    if (typeof selected !== 'boolean' || !contextToken()) return false;
+    firm = selected;
+    try { localStorage.setItem(preferenceKey(scope), String(firm)); } catch { /* session preference still works */ }
+    sync();
+    window.dispatchEvent(new Event('catatau-firm-change'));
+    return true;
+  }
   function preferences() {
     try { firm = !!scope && localStorage.getItem(preferenceKey(scope)) === 'true'; } catch { firm = false; }
   }
@@ -233,8 +250,8 @@ var CatatauPlanner = (() => {
       '.\n• Dinheiro livre na compra: ' + absent(a.spendableCashCents) + '.' + (draft.terms.count ? '\n• Limite disponível do cartão: ' + absent(a.cardLimitCents) + '.' : '') +
       '\n\nOs registros podem estar incompletos. Confirme também os gastos e as rendas já cadastrados. Digite confirmar para calcular, ou recomeçar. Nada será salvo nas suas finanças.';
   }
-  function resultText() {
-    const results = evaluate(draft.finance, draft.terms, draft.assumptions), lines = [draft.name + ' · projeção de ' + draft.finance.months.length + ' meses, somente deste perfil.'];
+  function describeResult(plan) {
+    const results = evaluate(plan.finance, plan.terms, plan.assumptions), lines = [plan.name + ' · projeção de ' + plan.finance.months.length + ' meses, somente deste perfil.'];
     for (const option of results) {
       const title = option.key === 'cash' ? 'À vista' : 'Parcelado no cartão';
       lines.push('\n' + title + ' — ' + currency(option.totalCents));
@@ -329,19 +346,16 @@ var CatatauPlanner = (() => {
           draft.assumptions.cardLimitCents = unknown ? null : cents; draft.step = 'confirm'; controls(); return answer(assumptionsSummary());
         case 'confirm': {
           if (command !== 'confirmar') return answer(assumptionsSummary());
-          const text = resultText(); clear(); return answer(text);
+          const text = describeResult(draft); clear(); return answer(text);
         }
       }
     } catch { clear(); return answer('Não foi possível calcular com segurança. Confira os dados e comece novamente. Nenhum lançamento foi criado.'); }
     return null;
   }
   document.querySelector('#catatau-firm')?.addEventListener('change', event => {
-    const selected = event.target.checked; sync(); if (!scope || !catatauReady()) return; firm = selected; event.target.checked = selected;
-    try { if (scope) localStorage.setItem(preferenceKey(scope), String(firm)); } catch { /* preference remains in this session */ }
-    const note = document.querySelector('#catatau-firm-note'); if (note) note.textContent = firm ? firmNote : 'Opcional e só neste perfil. Não bloqueia banco, cartão ou registro de despesas.';
-    appearance();
+    setFirm(event.target.checked);
   });
   window.addEventListener('finance-update', () => { revision++; sync(); });
   window.addEventListener('pagehide', clear);
-  return { ...core, sync, clear, handle, appearance, image, voice };
+  return { ...core, sync, clear, handle, appearance, image, voice, setFirm, isFirm, contextToken, describeResult };
 })();

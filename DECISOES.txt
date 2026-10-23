@@ -1,3 +1,6 @@
+23/10/2026 — Aba Planejar e supervisão voluntária do Catatau
+A responsável percebeu que o planejamento aparecia só na conversa e pediu uma aba própria. Também pediu que o Catatau supervisione para ajudar quem perde o controle das despesas, deixando a solução por conta do projeto. Criar acesso direto Planejar, formulário de avaliação e Ronda do mês com alertas acionáveis baseados nos registros autorizados. Modo firme voluntário acompanha mudanças dos registros enquanto o app está aberto e mostra avisos no Início; orientar com humor leve, sem culpa. Não alegar integração bancária, impedir o registro de despesas ou enviar notificações externas. Preservar plano gratuito e isolamento entre perfis.
+
 23/10/2026 — Login do PC centralizado em duas partes
 A responsável explicou que gostava da composição de login centralizada, com uma parte amarelinha e a outra branca, e achou a versão do PC espalhada demais. Reunir apresentação e formulário num cartão central com largura limitada; usar também no PC a dupla de Catataus abraçada. Preservar a entrada móvel já aprovada e a opção de tema.
 

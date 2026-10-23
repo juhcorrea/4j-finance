@@ -7,6 +7,7 @@ const hook=`window.PlannerFixture={
  configure(){const m=Money.today().slice(0,7);Store.data={receitas:[{id:'qa-income',data:m+'-05',valor:3000,desc:'Renda sintética',cat:'Salário'}],despesas:[{id:'qa-expense',data:m+'-10',valor:1500,desc:'Compromisso sintético',cat:'Moradia',parcelas:1,jaPagas:0,recurrence:{frequency:'monthly',until:''},recurrencePaid:[]}]};Store.meta.budgetPlan={fixed:50,reserve:20,variable:30};Store.meta.budgetMonths={};Store.emit();},
  data(){return JSON.stringify(Store.data)},
  today(){return Money.today()},
+ baseImage(){return CATATAU_IMAGE},
  firstDue(){return Money.addMonth(Money.today(),1)},
  switchProfile(id){Store.selectProfile(id)},
  profile(){return Store.profile},
@@ -35,7 +36,8 @@ const server=http.createServer((req,res)=>{const pathname=new URL(req.url,'http:
    async function appearance(expected){
     await page.waitForFunction(active=>document.body.classList.contains('catatau-firm-active')===active,expected);
     const images=await page.locator('[data-catatau]').evaluateAll(elements=>elements.map(image=>({auth:!!image.closest('#auth'),src:image.getAttribute('src')})));
-    for(const image of images)assert.equal(image.src,expected&&!image.auth?'assets/catatau-sheriff.webp':originalImage,'all app mascots follow active profile; login remains original');
+    for(const image of images)assert.equal(image.src,expected&&!image.auth?'assets/catatau-sheriff.webp':originalImage,'all app mascots follow active profile');
+    const loginImages=await page.locator('#auth .auth-catatau-duo').evaluateAll(elements=>elements.map(image=>image.getAttribute('src')));assert.deepEqual(loginImages,['assets/catatau-duo-welcome.webp','assets/catatau-duo-welcome.webp'],'login duo stays illustrative regardless of firm mode');
     if(expected){await page.waitForFunction(()=>[...document.querySelectorAll('[data-catatau]')].filter(image=>!image.closest('#auth')).every(image=>image.complete&&image.naturalWidth>0));assert.match(await page.locator('#catatau-panel .chat-intro img').getAttribute('alt'),/chapéu de cowboy.*espora.*coldre/);}
    }
    await appearance(false);
@@ -90,7 +92,7 @@ const server=http.createServer((req,res)=>{const pathname=new URL(req.url,'http:
    const preferences=await page.evaluate(()=>Object.entries(localStorage).filter(([key])=>key.startsWith('4j-catatau-firm-v1:')).map(([,value])=>value));assert.deepEqual(preferences,['true']);
    await page.locator('[data-action=close-catatau]').click();await page.evaluate(()=>location.hash='lancamentos');await page.locator('#entry-form').waitFor({state:'visible'});assert.equal(await page.evaluate(()=>PlannerFixture.editable()),true);assert.equal(await page.locator('#entry-amount').isEnabled(),true);
    await appearance(true);
-   await page.reload({waitUntil:'networkidle'});originalImage=await page.locator('#auth [data-catatau]').getAttribute('src');await page.evaluate(()=>PlannerFixture.configure());await trigger.click();assert.equal(await page.locator('#catatau-firm').isChecked(),true);await appearance(true);
+   await page.reload({waitUntil:'networkidle'});originalImage=await page.evaluate(()=>PlannerFixture.baseImage());await page.evaluate(()=>PlannerFixture.configure());await trigger.click();assert.equal(await page.locator('#catatau-firm').isChecked(),true);await appearance(true);
    await page.evaluate(()=>PlannerFixture.loading(true));await appearance(false);assert.equal(await page.locator('#catatau-firm').isDisabled(),true);
    await page.evaluate(()=>PlannerFixture.loading(false));await appearance(true);
    await page.evaluate(()=>PlannerFixture.leaveApp());await appearance(false);

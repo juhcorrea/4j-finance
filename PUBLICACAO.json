@@ -1,7 +1,7 @@
 {
-  "publishedAt": "2026-10-23T17:20:53.564072Z",
+  "publishedAt": "2026-10-23T17:50:11.978077Z",
   "productionUrl": "https://4jfinance.pages.dev",
-  "deploymentUrl": "https://acac405d.4jfinance.pages.dev",
+  "deploymentUrl": "https://4122d058.4jfinance.pages.dev",
   "firebaseAuthorizedDomain": true,
   "firestoreRulesPublished": true,
   "productionPrivacyChecks": 38,
@@ -69,7 +69,7 @@
   "pixCloudflareTestWebhookDiagnosticsPublished": false,
   "pixCloudflareTestPaidStatusSmokeDeploymentUrl": "https://c685b5c9.4jfinance-pix-test.pages.dev",
   "catatauPlannerPublished": true,
-  "productionIndexSha256": "e9828c304158a03c06beebb53f0ed679b25b944907e3ab4ad93cc91247ec60f3",
+  "productionIndexSha256": "748303500c57114091be0e58ac1be95b4579e110380786670e2d8fffcdbcf1e9",
   "pixLegacyFirebaseFunctionsVerified": false,
   "pixCloudflareTestFirebaseAuthenticationVerified": true,
   "pixProductionSecretsConfigured": true,
@@ -88,8 +88,8 @@
   "pixSandboxDirectApiWebhookVerified": false,
   "publicationPackage": "Allowlisted public files, bundled Worker and API routes",
   "pixProductionBackendReady": true,
-  "pixProductionDeploymentVerifiedAt": "2026-10-23T17:21:01.385Z",
-  "productionLastReadbackAt": "2026-10-23T17:21:01.385Z",
+  "pixProductionDeploymentVerifiedAt": "2026-10-23T17:50:23.815Z",
+  "productionLastReadbackAt": "2026-10-23T17:50:23.815Z",
   "pixProductionRealPaymentVerified": true,
   "pixFreeCpuBudgetVerified": true,
   "adsenseReviewLastConfirmedAt": "2026-10-19",
@@ -303,8 +303,8 @@
       "productionDeploymentChanged": false
     }
   },
-  "productionDeploymentId": "acac405d-ecba-4662-8285-c5164e53dfe5",
-  "productionPublicationRecordedAt": "2026-10-23T17:21:01.385Z",
+  "productionDeploymentId": "4122d058-b23c-4a84-bb5d-3219aa9d10de",
+  "productionPublicationRecordedAt": "2026-10-23T17:50:23.815Z",
   "productionPublicationHelperResult": {
     "ok": true,
     "canonicalConfirmed": true,
@@ -740,6 +740,56 @@
       }
     ],
     "readbackAttempts": 0,
+    "paidPlanChanged": false,
+    "financialOperationsPerformed": false
+  },
+  "planningSupervisionPublication": {
+    "publishedAt": "2026-10-23T17:50:11.978077Z",
+    "verifiedAt": "2026-10-23T17:50:23.815Z",
+    "deploymentId": "4122d058-b23c-4a84-bb5d-3219aa9d10de",
+    "htmlSha256": "748303500c57114091be0e58ac1be95b4579e110380786670e2d8fffcdbcf1e9",
+    "scope": "Aba Planejar com formulário local, Ronda do mês e avisos voluntários no Início em modo firme",
+    "unitTestsPassed": 520,
+    "privacyMockTestsPassed": 16,
+    "planningViewportThemeCases": 6,
+    "chatViewportCases": 4,
+    "authCases": 56,
+    "executorUnchanged": true,
+    "configurationUnchanged": true,
+    "publicChecks": [
+      {
+        "origin": "https://4jfinance.pages.dev",
+        "htmlMatches": true,
+        "normalAssetMatches": true,
+        "sheriffAssetMatches": true,
+        "duoAssetMatches": true,
+        "httpIndex": 200,
+        "backendReady": true,
+        "anonymousRejected": true,
+        "httpHealth": 200,
+        "httpAnonymous": 401
+      },
+      {
+        "origin": "https://4jfinance.com.br",
+        "htmlMatches": true,
+        "normalAssetMatches": true,
+        "sheriffAssetMatches": true,
+        "duoAssetMatches": true,
+        "httpIndex": 200,
+        "backendReady": true,
+        "anonymousRejected": true,
+        "httpHealth": 200,
+        "httpAnonymous": 401
+      },
+      {
+        "origin": "https://4122d058.4jfinance.pages.dev",
+        "htmlMatches": true,
+        "normalAssetMatches": true,
+        "sheriffAssetMatches": true,
+        "duoAssetMatches": true,
+        "httpIndex": 200
+      }
+    ],
     "paidPlanChanged": false,
     "financialOperationsPerformed": false
   }

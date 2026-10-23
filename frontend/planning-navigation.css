@@ -1,0 +1,12 @@
+/* A direct planning tab remains reachable without crowding the mobile bar. */
+.mobile-more-links{display:grid;gap:10px;margin:20px 0 8px}
+.mobile-more-links .nav-link{min-height:52px;background:var(--pale);margin:0;color:var(--blue);white-space:normal}
+.mobile-more-links .nav-link.active{background:var(--blue);color:white}
+@media screen and (min-width:961px){.sidebar{overflow-y:auto}}
+@media screen and (max-width:960px){
+  #bottom-nav{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+  #bottom-nav .nav-link{min-height:52px;min-width:0;font-size:10px;line-height:1.3;padding:6px 2px;justify-content:center}
+  #bottom-nav button.nav-link{background:transparent;font-weight:500;font-family:var(--font)}
+  #bottom-nav button.nav-link.active{background:var(--pale);color:var(--blue);font-weight:700}
+  body.dark #bottom-nav button.nav-link.active{background:var(--gold);color:#203f59}
+}

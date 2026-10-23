@@ -1,5 +1,7 @@
 # 4J Finance
 
+Atualização mais recente — 23/10/2026: aba Planejar, com análise de compra em formulário, Ronda do mês e avisos no Início quando o modo firme está ligado. Supervisão baseada nos registros do perfil, sem conexão bancária ou serviço adicional. Publicação [4122d058](https://4122d058.4jfinance.pages.dev), 2026-10-23T17:50:11.978077Z, conferida em 2026-10-23T17:50:23.815Z. HTML e três imagens correspondentes; configurações e componentes Pix preservados.
+
 Atualização mais recente — 23/10/2026: login do computador reunido num cartão central, com apresentação amarelinha e formulário branco. A dupla abraçada também aparece no PC. A composição móvel e a escolha de tema foram preservadas. Publicação [acac405d](https://acac405d.4jfinance.pages.dev), 2026-10-23T17:20:53.564072Z, conferida em 2026-10-23T17:21:01.385Z. HTML e três WebP verificados no domínio oficial, alias e versão canônica; executor Pix e configurações preservados.
 
 Atualização mais recente — 23/10/2026: na entrada do celular, os dois Catataus agora ficam abraçados e acenam juntos numa única ilustração transparente. Desktop e seleção de tema preservados. Publicação [ac9dfd92](https://ac9dfd92.4jfinance.pages.dev) em 2026-10-23T17:08:16.725507Z, conferida em 2026-10-23T17:08:25.278Z; HTML e três imagens validados no domínio oficial, alias e versão canônica. Componentes Pix e configurações preservados. [Origem e prompt da ilustração](docs/CATATAU-BOAS-VINDAS.md).
