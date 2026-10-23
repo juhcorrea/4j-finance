@@ -30,3 +30,11 @@ O modo firme usa humor de xerife com sotaque mineiro/caipira leve. Exemplos: “
 O Catatau flutuante volta a aparecer no celular acima do menu inferior e fica oculto enquanto a conversa esta aberta. O atalho do cabecalho permanece. Na entrada mobile, um hero com Catatau xerife e fala de boas-vindas recupera a personalidade da versao desktop. Essa ilustracao e independente da preferencia opcional do perfil.
 
 Publicado e conferido em 23/10/2026, às 14:29 UTC, no deployment `b0e94af8-654b-46f9-8683-3d29d93810c0`. Login validado em 29 cenários; voz e flutuante verificados com dados fictícios em tamanhos móveis e desktop. A ilustração no login não ativa o modo firme. Preferência voluntária por perfil, cálculos e infraestrutura preservados.
+
+## Dois Catataus na entrada e escolha de tema — 23/10/2026
+
+Após conferir o primeiro login, a responsável pediu a presença conjunta das versões tradicional e xerife no celular e no computador. O desktop conserva a composição e as cores aprovadas; os dois mascotes dividem a área de boas-vindas. As imagens são fixas nessa tela e não alteram a preferência de modo firme.
+
+O botão de lua/sol junto da marca permite escolher modo claro ou noturno antes de entrar. A escolha usa a preferência local `dashTheme`, compartilhada com os ajustes existentes do site, e permanece após recarregar. O botão tem nome acessível, estado pressionado e foco visível; não envia o formulário nem muda os dados digitados.
+
+A atualização dos dois mascotes e do tema foi publicada no deployment `6a10c17b-508c-4b45-b954-092b88464e89` e conferida em 2026-10-23T14:51:34.755Z. QA de interface: 51 cenários aprovados. A publicação alterou somente o pacote Pages, mantendo os componentes Pix e a configuração financeira.

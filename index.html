@@ -587,21 +587,37 @@ body.dark .monetization-mark,body.dark .monetization-badge,body.dark .pix-price 
 
 .auth-public-links{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 18px;margin-top:18px}.auth-public-links a{display:inline-flex;align-items:center;min-height:44px;text-align:center;font-size:12px}
 
+.auth-story{display:flex;flex-direction:column}
+.auth-story>.auth-story-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:0;z-index:2}
+.auth-story-header .brand{min-width:0}
+.auth-theme-toggle{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:9px 12px;border:1px solid #d7cba8;border-radius:24px;background:#fffdf6;color:#2e5372;font-size:12px;font-weight:600;line-height:1.4;max-width:100%}
+.auth-theme-toggle svg{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.auth-theme-toggle .auth-theme-sun{display:none}
+.auth-theme-toggle:focus-visible{outline:3px solid #b37e11;outline-offset:3px}
+body.dark .auth-theme-toggle{background:#203f59;border-color:#6c8799;color:#ffda8f}
+body.dark .auth-theme-toggle .auth-theme-moon{display:none}
+body.dark .auth-theme-toggle .auth-theme-sun{display:block}
+.auth-story>.auth-desktop-pair{display:flex;align-items:flex-end;justify-content:flex-end;gap:0;width:min(100%,480px);margin:auto -24px -35px auto;padding-top:32px}
+.auth-desktop-pair img{display:block;width:50%;height:auto;aspect-ratio:14/15;object-fit:contain;filter:drop-shadow(0 8px 5px #503e1e12)}
+
 /* The phone gets the same welcoming character as the desktop, in less space. */
 .auth-mobile-welcome{display:none}
 @media screen and (max-width:960px){
   .auth-layout{display:flex;flex-direction:column;min-height:100dvh;background:var(--bg);padding-bottom:env(safe-area-inset-bottom)}
   .auth-story{display:block;min-height:0;width:100%;padding:calc(20px + env(safe-area-inset-top)) max(24px,env(safe-area-inset-right)) 32px max(24px,env(safe-area-inset-left));background:linear-gradient(135deg,#fff8e9,#f5e5b8)}
-  .auth-story>.brand{width:max-content;max-width:100%;margin:0 auto;min-height:44px;gap:7px}
-  .auth-story>.brand .brand-symbol{width:58px;height:35px;border-radius:6px}
-  .auth-story>.brand>span{font-size:22px;letter-spacing:-.7px;line-height:1.2}
-  .auth-story>.brand small{font-size:7px;letter-spacing:1px;margin-top:3px}
-  .auth-story>div:not(.auth-mobile-welcome),.auth-story>img{display:none}
-  .auth-story>.auth-mobile-welcome{display:grid;grid-template-columns:minmax(0,1fr) 116px;align-items:center;gap:2px;max-width:390px;margin:12px auto 0;min-height:130px}
+  .auth-story-header .brand{width:max-content;max-width:100%;min-height:44px;gap:7px}
+  .auth-story-header .brand .brand-symbol{width:58px;height:35px;border-radius:6px}
+  .auth-story-header .brand>span{font-size:22px;letter-spacing:-.7px;line-height:1.2}
+  .auth-story-header .brand small{font-size:7px;letter-spacing:1px;margin-top:3px}
+  .auth-story>.auth-story-copy,.auth-story>.auth-desktop-pair{display:none}
+  .auth-theme-toggle{gap:5px;font-size:11px;padding:8px 10px}
+  .auth-story>.auth-mobile-welcome{display:grid;grid-template-columns:minmax(0,1fr) 158px;align-items:center;gap:2px;max-width:430px;margin:12px auto 0;min-height:130px}
   .auth-mobile-welcome .auth-greeting{position:relative;padding:13px 12px;background:#fffdf7;border:1px solid #dfce99;border-radius:17px 17px 4px 17px;box-shadow:0 4px 12px #6a542508;color:#2e5372}
   .auth-mobile-welcome h1{font-size:18px;line-height:1.3;letter-spacing:-.4px;color:#2e5372;overflow-wrap:anywhere}
   .auth-mobile-welcome .auth-greeting p{display:block;font-size:12px;line-height:1.6;color:#6e644c;margin:5px 0 0;max-width:none}
-  .auth-mobile-welcome img{display:block;position:static;width:126px;height:136px;max-width:100%;object-fit:contain;filter:drop-shadow(0 5px 3px #503e1e15)}
+  .auth-mobile-welcome .auth-mascot-pair{display:flex;align-items:flex-end;justify-content:center;min-width:0}
+  .auth-mobile-welcome img{display:block;position:static;width:88px;height:136px;max-width:56%;object-fit:contain;filter:drop-shadow(0 5px 3px #503e1e15)}
+  .auth-mobile-welcome .auth-catatau-sheriff{margin-left:-16px}
   .auth-form-wrap{position:relative;min-height:0;align-items:flex-start;padding:0 max(16px,env(safe-area-inset-right)) 20px max(16px,env(safe-area-inset-left));margin-top:-20px;background:transparent}
   .auth-form{width:min(430px,100%);max-width:100%;padding:23px 20px 16px;border:1px solid var(--line);border-radius:22px;background:var(--paper);box-shadow:0 8px 28px #223e580a}
   .auth-form>.auth-brand,.auth-form>.eyebrow{display:none}
@@ -632,7 +648,7 @@ body.dark .monetization-mark,body.dark .monetization-badge,body.dark .pix-price 
 }
 @media screen and (max-width:359px){
   .auth-story{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
-  .auth-story>.auth-mobile-welcome{grid-template-columns:minmax(0,1fr) 104px;min-height:120px}
+  .auth-story>.auth-mobile-welcome{grid-template-columns:minmax(0,1fr) 134px;min-height:120px}
   .auth-mobile-welcome img{height:126px}
   .auth-mobile-welcome h1{font-size:17px}
   .auth-form-wrap{padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}
@@ -642,7 +658,7 @@ body.dark .monetization-mark,body.dark .monetization-badge,body.dark .pix-price 
 /* Short viewports include landscape phones and the on-screen keyboard. Keep scrolling native. */
 @media screen and (max-width:960px) and (max-height:520px){
   .auth-story{padding-top:calc(10px + env(safe-area-inset-top));padding-bottom:26px}
-  .auth-story>.auth-mobile-welcome{grid-template-columns:minmax(0,1fr) 84px;min-height:82px;margin-top:5px}
+  .auth-story>.auth-mobile-welcome{grid-template-columns:minmax(0,1fr) 134px;min-height:82px;margin-top:5px}
   .auth-mobile-welcome img{height:86px}
   .auth-mobile-welcome .auth-greeting{padding:9px 12px}
   .auth-mobile-welcome h1{font-size:16px}
@@ -671,7 +687,7 @@ body.dark .monetization-mark,body.dark .monetization-badge,body.dark .pix-price 
     <nav id="bottom-nav" class="bottom-nav" aria-label="Navegação no celular"></nav>
   </div>
   <section id="auth" class="auth-layout" hidden>
-    <div class="auth-story"><a class="brand" href="?"><img class="brand-symbol" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjEyIDEwIDYwIDM1IiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IjRKIj48cGF0aCBmaWxsPSIjMmU1MzcyIiBkPSJNMjggMTRoN0wyMyAyOWg4di03aDZ2N2g0djZoLTR2NWgtNnYtNUgxNXYtNnpNNDAgMTRoMTZ2MTdjMCA2LTMuNiA5LjUtOS4xIDkuNS00LjQgMC03LjUtMi4yLTktNS41bDUuMS0zLjJjLjggMS45IDIgMi44IDMuNyAyLjggMiAwIDMtMS4zIDMtNC4xVjIwSDQweiIvPjxjaXJjbGUgY3g9IjYzIiBjeT0iMjkuNSIgcj0iNS4zIiBmaWxsPSIjZjJhOTAwIi8+PC9zdmc+" width="76" height="45" alt="4J"><span>finance<small>JUNTOS, MAIS LONGE.</small></span></a><div><span class="eyebrow">O PRÓXIMO PLANO COMEÇA AQUI</span><h1>Uma família.<br>Muitos sonhos.<br><em>Um passo de cada vez.</em></h1><p>Organize o presente e construa o futuro de quem você ama.</p></div><img data-catatau src="" alt="Catatau, nosso simpático castor de lenço verde, acena para você."><div class="auth-mobile-welcome"><div class="auth-greeting"><h1>Uai, chega mais!</h1><p>Bora cuidar dos seus planos?</p></div><img src="assets/catatau-sheriff.webp" width="126" height="136" alt="Catatau de xerife dá as boas-vindas."></div></div>
+    <div class="auth-story"><div class="auth-story-header"><a class="brand" href="?"><img class="brand-symbol" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjEyIDEwIDYwIDM1IiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IjRKIj48cGF0aCBmaWxsPSIjMmU1MzcyIiBkPSJNMjggMTRoN0wyMyAyOWg4di03aDZ2N2g0djZoLTR2NWgtNnYtNUgxNXYtNnpNNDAgMTRoMTZ2MTdjMCA2LTMuNiA5LjUtOS4xIDkuNS00LjQgMC03LjUtMi4yLTktNS41bDUuMS0zLjJjLjggMS45IDIgMi44IDMuNyAyLjggMiAwIDMtMS4zIDMtNC4xVjIwSDQweiIvPjxjaXJjbGUgY3g9IjYzIiBjeT0iMjkuNSIgcj0iNS4zIiBmaWxsPSIjZjJhOTAwIi8+PC9zdmc+" width="76" height="45" alt="4J"><span>finance<small>JUNTOS, MAIS LONGE.</small></span></a><button type="button" class="auth-theme-toggle" data-action="theme" aria-pressed="false" aria-label="Ativar modo noturno" title="Ativar modo noturno"><svg class="auth-theme-moon" aria-hidden="true" viewBox="0 0 24 24"><path d="M20.7 13.1A9 9 0 0 1 10.9 3.3 9 9 0 1 0 20.7 13.1Z"/></svg><svg class="auth-theme-sun" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg><span data-auth-theme-label>Escuro</span></button></div><div class="auth-story-copy"><span class="eyebrow">O PRÓXIMO PLANO COMEÇA AQUI</span><h1>Uma família.<br>Muitos sonhos.<br><em>Um passo de cada vez.</em></h1><p>Organize o presente e construa o futuro de quem você ama.</p></div><div class="auth-desktop-pair"><img class="auth-catatau-normal" src="assets/catatau.webp" width="140" height="150" alt="Catatau de lenço verde dá as boas-vindas."><img class="auth-catatau-sheriff" src="assets/catatau-sheriff.webp" width="140" height="150" alt="Catatau xerife também está de plantão."></div><div class="auth-mobile-welcome"><div class="auth-greeting"><h1>Uai, chega mais!</h1><p>Parceria nos planos.<br>Xerife de olho nos impulsos.</p></div><div class="auth-mascot-pair"><img class="auth-catatau-normal" src="assets/catatau.webp" width="140" height="150" alt="Catatau de lenço verde dá as boas-vindas."><img class="auth-catatau-sheriff" src="assets/catatau-sheriff.webp" width="140" height="150" alt="Catatau xerife também está de plantão."></div></div></div>
     <div class="auth-form-wrap"><form id="auth-form" class="auth-form"><a class="brand auth-brand" href="?" aria-label="4J Finance"><img class="brand-symbol" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjEyIDEwIDYwIDM1IiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IjRKIj48cGF0aCBmaWxsPSIjMmU1MzcyIiBkPSJNMjggMTRoN0wyMyAyOWg4di03aDZ2N2g0djZoLTR2NWgtNnYtNUgxNXYtNnpNNDAgMTRoMTZ2MTdjMCA2LTMuNiA5LjUtOS4xIDkuNS00LjQgMC03LjUtMi4yLTktNS41bDUuMS0zLjJjLjggMS45IDIgMi44IDMuNyAyLjggMiAwIDMtMS4zIDMtNC4xVjIwSDQweiIvPjxjaXJjbGUgY3g9IjYzIiBjeT0iMjkuNSIgcj0iNS4zIiBmaWxsPSIjZjJhOTAwIi8+PC9zdmc+" width="76" height="45" alt="4J"><span>finance<small>JUNTOS, MAIS LONGE.</small></span></a><span class="eyebrow">BEM-VINDO AO 4J FINANCE</span><h2>Vamos cuidar dos seus planos?</h2><p>Entre para acessar as finanças da sua família.</p><div class="segmented"><button type="button" class="active" data-auth="login">Entrar</button><button type="button" data-auth="signup">Criar conta</button></div><label id="signup-name" hidden>Seu nome<input id="auth-name" autocomplete="name" maxlength="80"></label><label>E-mail<input id="auth-email" type="email" required autocomplete="email" placeholder="voce@exemplo.com"></label><label>Senha<input id="auth-password" type="password" required minlength="6" autocomplete="current-password" placeholder="Sua senha"></label><div class="auth-options"><label class="checkbox"><input id="remember" type="checkbox" checked> Lembrar de mim</label><button type="button" class="text-button" data-action="reset-password">Esqueci a senha</button></div><p id="auth-error" class="form-error" role="alert" hidden></p><button type="submit" class="button primary full" id="auth-submit">Entrar na minha conta</button><p class="auth-note" id="auth-note">Crie sua conta e comece na hora. Seus perfis pessoais continuam privados; compartilhar é uma escolha sua.</p><div class="or"><span>quer conhecer primeiro?</span></div><a class="button secondary full" href="?demo=1">Experimentar com o Catatau</a><small class="muted">A demonstração usa apenas dados fictícios.</small><nav class="auth-public-links" aria-label="Conheça o 4J Finance"><a class="text-button" href="sobre.html">Conheça o 4J</a><a class="text-button" href="guia.html">Guia financeiro</a><a class="text-button" href="privacidade.html">Privacidade e cookies</a><a class="text-button" href="contato.html">Atendimento</a></nav></form></div>
   </section>
   <div id="boot" class="boot"><img class="brand-symbol" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjEyIDEwIDYwIDM1IiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IjRKIj48cGF0aCBmaWxsPSIjMmU1MzcyIiBkPSJNMjggMTRoN0wyMyAyOWg4di03aDZ2N2g0djZoLTR2NWgtNnYtNUgxNXYtNnpNNDAgMTRoMTZ2MTdjMCA2LTMuNiA5LjUtOS4xIDkuNS00LjQgMC03LjUtMi4yLTktNS41bDUuMS0zLjJjLjggMS45IDIgMi44IDMuNyAyLjggMiAwIDMtMS4zIDMtNC4xVjIwSDQweiIvPjxjaXJjbGUgY3g9IjYzIiBjeT0iMjkuNSIgcj0iNS4zIiBmaWxsPSIjZjJhOTAwIi8+PC9zdmc+" width="76" height="45" alt="4J"><p>Preparando seu espaço...</p></div>
@@ -1650,7 +1666,15 @@ window.addEventListener('finance-update',()=>renderUpdates.request());
 window.addEventListener('hashchange',()=>{state.page=location.hash.slice(1)||'inicio';render.wasRendered=false;render();window.scrollTo({top:0});$('#main').focus({preventScroll:true});});
 document.addEventListener('change',e=>{if(e.target.id==='month-picker'){state.month=e.target.value||Money.today().slice(0,7);Report.set(Report.defaults);Report.refresh();}if(e.target.id==='profile')Store.selectProfile(e.target.value);});
 document.addEventListener('click',e=>{const el=e.target.closest('[data-action]');if(!el)return;handleAction(el.dataset.action,el);});
-function handleAction(action,el){if(action==='record-menu')openRecordMenu(el);if(action==='new-expense'){state.familyDraft=false;state.type='despesa';state.editId=null;location.hash='lancamentos';render.wasRendered=false;render();setTimeout(()=>$('#entry-amount')?.focus(),0);}if(action==='logout')Store.logout();if(action==='reload')location.reload();if(action==='text-size'){document.body.classList.toggle('large-text');localStorage.setItem('4j-large-text',document.body.classList.contains('large-text')?'1':'0');}if(action==='theme'){document.body.classList.toggle('dark');localStorage.setItem('dashTheme',document.body.classList.contains('dark')?'dark':'light');}if(action==='close-modal')$('#modal').close();if(action==='catatau')openCatatau(el);if(action==='toggle-catatau'){$('#catatau-panel').hidden?openCatatau(el):closeCatatau();}if(action==='close-catatau')closeCatatau();if(typeof extendedAction==='function')extendedAction(action,el);}
+function syncAuthTheme(){
+  const dark=document.body.classList.contains('dark');
+  document.querySelectorAll('.auth-theme-toggle').forEach(button=>{
+    const label=dark?'Ativar modo claro':'Ativar modo noturno';
+    button.setAttribute('aria-pressed',String(dark));button.setAttribute('aria-label',label);button.title=label;
+    button.querySelector('[data-auth-theme-label]').textContent=dark?'Claro':'Escuro';
+  });
+}
+function handleAction(action,el){if(action==='record-menu')openRecordMenu(el);if(action==='new-expense'){state.familyDraft=false;state.type='despesa';state.editId=null;location.hash='lancamentos';render.wasRendered=false;render();setTimeout(()=>$('#entry-amount')?.focus(),0);}if(action==='logout')Store.logout();if(action==='reload')location.reload();if(action==='text-size'){document.body.classList.toggle('large-text');localStorage.setItem('4j-large-text',document.body.classList.contains('large-text')?'1':'0');}if(action==='theme'){document.body.classList.toggle('dark');try{localStorage.setItem('dashTheme',document.body.classList.contains('dark')?'dark':'light');}catch{}syncAuthTheme();}if(action==='close-modal')$('#modal').close();if(action==='catatau')openCatatau(el);if(action==='toggle-catatau'){$('#catatau-panel').hidden?openCatatau(el):closeCatatau();}if(action==='close-catatau')closeCatatau();if(typeof extendedAction==='function')extendedAction(action,el);}
 /* Mobile Catatau stays available above the bottom navigation and in the header. */
 const MobileShell={
   chatState(open){
@@ -2652,7 +2676,7 @@ function download(text,name,type){const blob=new Blob(['\uFEFF',text],{type:type
 function csvCell(v){let s=String(v??'');if(/^[=+@\-]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"';}
 function exportCSV(year){let rows;if(year){rows=[['Mês','Receitas','Despesas','Saldo previsto'],...Array.from({length:12},(_,i)=>{const m=state.year+'-'+String(i+1).padStart(2,'0'),t=totals(monthRows(m));return[m,t.income.toFixed(2).replace('.',','),t.expense.toFixed(2).replace('.',','),t.balance.toFixed(2).replace('.',',')];})];}else rows=[['Vencimento/Recebimento','Descrição','Categoria','Tipo','Valor','Status','Parcela','Recorrência','Data da compra'],...filteredRows().map(r=>[r.date,r.desc,r.cat,r.type,r.value.toFixed(2).replace('.',','),r.paid?'Pago/Recebido':'Pendente',r.total>1?(r.idx+1)+'/'+r.total:'',r.recurring?'Mensal':'',r.purchaseDate||''])];download(rows.map(r=>r.map(csvCell).join(';')).join('\r\n'),'4J-'+(year?state.year:state.month)+'.csv','text/csv');toast('Planilha pronta para baixar.');}
 $('.skip').addEventListener('click',e=>{e.preventDefault();$('#main').focus();});
-document.body.classList.toggle('dark',localStorage.getItem('dashTheme')==='dark');document.body.classList.toggle('large-text',localStorage.getItem('4j-large-text')==='1');paintIcons();Store.init();
+document.body.classList.toggle('dark',localStorage.getItem('dashTheme')==='dark');syncAuthTheme();document.body.classList.toggle('large-text',localStorage.getItem('4j-large-text')==='1');paintIcons();Store.init();
 
 // Portable backups contain financial records only; account access stays unchanged.
 function financialBackup(){

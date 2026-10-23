@@ -1,7 +1,7 @@
 {
-  "publishedAt": "2026-10-23T14:29:18.545477Z",
+  "publishedAt": "2026-10-23T14:50:11.852756Z",
   "productionUrl": "https://4jfinance.pages.dev",
-  "deploymentUrl": "https://b0e94af8.4jfinance.pages.dev",
+  "deploymentUrl": "https://6a10c17b.4jfinance.pages.dev",
   "firebaseAuthorizedDomain": true,
   "firestoreRulesPublished": true,
   "productionPrivacyChecks": 38,
@@ -69,7 +69,7 @@
   "pixCloudflareTestWebhookDiagnosticsPublished": false,
   "pixCloudflareTestPaidStatusSmokeDeploymentUrl": "https://c685b5c9.4jfinance-pix-test.pages.dev",
   "catatauPlannerPublished": true,
-  "productionIndexSha256": "4e278ca80c1d7e95ca69c37b74b08aca57c1e5136bf9b66c164804203992aec8",
+  "productionIndexSha256": "830253d4933879957fd302efbe32cad4945a8ca938b4cef06b2c5543e5fd13f2",
   "pixLegacyFirebaseFunctionsVerified": false,
   "pixCloudflareTestFirebaseAuthenticationVerified": true,
   "pixProductionSecretsConfigured": true,
@@ -88,8 +88,8 @@
   "pixSandboxDirectApiWebhookVerified": false,
   "publicationPackage": "Allowlisted public files, bundled Worker and API routes",
   "pixProductionBackendReady": true,
-  "pixProductionDeploymentVerifiedAt": "2026-10-23T14:29:28.449Z",
-  "productionLastReadbackAt": "2026-10-23T14:29:28.449Z",
+  "pixProductionDeploymentVerifiedAt": "2026-10-23T14:51:34.755Z",
+  "productionLastReadbackAt": "2026-10-23T14:51:34.755Z",
   "pixProductionRealPaymentVerified": true,
   "pixFreeCpuBudgetVerified": true,
   "adsenseReviewLastConfirmedAt": "2026-10-19",
@@ -303,8 +303,8 @@
       "productionDeploymentChanged": false
     }
   },
-  "productionDeploymentId": "b0e94af8-654b-46f9-8683-3d29d93810c0",
-  "productionPublicationRecordedAt": "2026-10-23T14:29:28.449Z",
+  "productionDeploymentId": "6a10c17b-508c-4b45-b954-092b88464e89",
+  "productionPublicationRecordedAt": "2026-10-23T14:51:34.755Z",
   "productionPublicationHelperResult": {
     "ok": true,
     "canonicalConfirmed": true,
@@ -599,6 +599,50 @@
         "httpIndex": 200
       }
     ],
+    "paidPlanChanged": false,
+    "financialOperationsPerformed": false
+  },
+  "catatauPairThemePublication": {
+    "publishedAt": "2026-10-23T14:50:11.852756Z",
+    "verifiedAt": "2026-10-23T14:51:34.755Z",
+    "deploymentId": "6a10c17b-508c-4b45-b954-092b88464e89",
+    "htmlSha256": "830253d4933879957fd302efbe32cad4945a8ca938b4cef06b2c5543e5fd13f2",
+    "scope": "Catatau tradicional e xerife juntos no login mobile e desktop; escolha persistida de tema claro/noturno antes de entrar",
+    "uiCasesPassed": 51,
+    "executorUnchanged": true,
+    "configurationUnchanged": true,
+    "publicChecks": [
+      {
+        "origin": "https://4jfinance.pages.dev",
+        "htmlMatches": true,
+        "normalAssetMatches": true,
+        "sheriffAssetMatches": true,
+        "httpIndex": 200,
+        "backendReady": true,
+        "anonymousRejected": true,
+        "httpHealth": 200,
+        "httpAnonymous": 401
+      },
+      {
+        "origin": "https://4jfinance.com.br",
+        "htmlMatches": true,
+        "normalAssetMatches": true,
+        "sheriffAssetMatches": true,
+        "httpIndex": 200,
+        "backendReady": true,
+        "anonymousRejected": true,
+        "httpHealth": 200,
+        "httpAnonymous": 401
+      },
+      {
+        "origin": "https://6a10c17b.4jfinance.pages.dev",
+        "htmlMatches": true,
+        "normalAssetMatches": true,
+        "sheriffAssetMatches": true,
+        "httpIndex": 200
+      }
+    ],
+    "readbackAttempts": 1,
     "paidPlanChanged": false,
     "financialOperationsPerformed": false
   }
