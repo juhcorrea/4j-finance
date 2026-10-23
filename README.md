@@ -1,8 +1,13 @@
 # 4J Finance
 
+Atualizacao visual publicada em 23/10/2026: Catatau xerife no modo firme. Deployment [2e16fdf1](https://2e16fdf1.4jfinance.pages.dev), conferido no dominio oficial e no alias as 14:09:40 UTC. HTML e imagem correspondem ao pacote validado; Pix pronto (HTTP 200), acesso sem login recusado (HTTP 401), executor e configuracoes preservados. Nenhuma operacao financeira ou alteracao de plano.
+
+
+Catatau ganha visual de mini xerife ao ativar o modo firme: chapeu de cowboy, botinhas com espora e coldre, seguindo a preferencia de cada perfil. [Detalhes do visual](docs/CATATAU-MODO-FIRME.md).
+
 Pix público de R$ 5 publicado e conferido em 20/10/2026. A compra é única por login habilitado, com e-mail verificado e cadastro aprovado; quem já pagou conserva o benefício permanente e não precisa pagar novamente. O piloto privado foi encerrado, sem prazo de expiração aplicado às compras públicas. Anúncios continuam OFF, Firebase Spark e Cloudflare Free preservados, sem upgrade. Tarifas de recebimento do Mercado Pago são separadas da hospedagem.
 
-Produção: [906fac2d](https://906fac2d.4jfinance.pages.dev), publicada às 17:35:03 UTC e conferida às 17:36:08 UTC no domínio oficial, alias e versão canônica. O pedido real anterior e seu benefício permanecem ativos. Validação: 496 testes, 16 verificações de privacidade e 26 cenários locais de interface aprovados. Detalhes em [operação do Pix](docs/PIX-PILOTO.md).
+Liberacao publica do Pix em 20/10: [906fac2d](https://906fac2d.4jfinance.pages.dev), publicada às 17:35:03 UTC e conferida às 17:36:08 UTC no domínio oficial, alias e versão canônica. O pedido real anterior e seu benefício permanecem ativos. Validação: 496 testes, 16 verificações de privacidade e 26 cenários locais de interface aprovados. Detalhes em [operação do Pix](docs/PIX-PILOTO.md).
 
 ## Histórico do piloto validado — 20/10/2026
 

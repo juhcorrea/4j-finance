@@ -1,5 +1,8 @@
 # Publicar o 4J Finance no Cloudflare Pages
 
+Atualizacao visual publicada em 23/10/2026: Catatau xerife no modo firme. Deployment [2e16fdf1](https://2e16fdf1.4jfinance.pages.dev), conferido no dominio oficial e no alias as 14:09:40 UTC. HTML e imagem correspondem ao pacote validado; Pix pronto (HTTP 200), acesso sem login recusado (HTTP 401), executor e configuracoes preservados. Nenhuma operacao financeira ou alteracao de plano.
+
+
 ## Publicação conferida — Pix público de R$ 5
 
 Em 20/10/2026 foi autorizada a liberação pública para contas habilitadas, com e-mail verificado e cadastro aprovado. As verificações locais da liberação passaram: 496 testes, 16 verificações de privacidade, 26 cenários de interface, 12 self-tests do helper e preflight por leitura. Publicado em 2026-10-20T17:35:03.726306Z: Pages 906fac2d-3f35-4f0e-9bdf-49a3a834b42e e executor privado versão 75976ab1-bb58-47ee-a67e-a416e24979e3. Readback aprovado às 17:36:08.770 UTC; HTML SHA-256 f8dbc483f10c83810539bf25a7904950643f694ba738d4a142c6c7ba6a13c821 conferido no domínio oficial, alias e canonical. D1, namespace SQLite e segredos preservados; piloto removido, compras públicas ativas e anúncios OFF. Firebase billing desativado confirmado às 17:36:02.039 UTC, sem alteração de plano. O ambiente de TESTE foi preservado.

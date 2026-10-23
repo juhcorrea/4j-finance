@@ -119,8 +119,13 @@
     },
     {
       "path": "DECISOES.txt",
-      "bytes": 29443,
-      "sha256": "eb32766d0d5e421134ef20509438cd2c2d0ddbe037f66a4b98fc71165e3791db"
+      "bytes": 29847,
+      "sha256": "e986f8d8f231c8cb44e79293571da84b27c0b625912d44d71b336568cca2435f"
+    },
+    {
+      "path": "docs/CATATAU-MODO-FIRME.md",
+      "bytes": 2816,
+      "sha256": "1f98941b67a462f1ce0c26d9435c0fb9b8ff623e863b84050c1edfb5777a6217"
     },
     {
       "path": "docs/CATATAU-PLANEJAMENTO.md",
@@ -169,8 +174,8 @@
     },
     {
       "path": "frontend/catatau-planner.js",
-      "bytes": 28070,
-      "sha256": "f83b92c8befab62fb66aeee4b0bf189db9be4cad1344588f3bed94122dc6a3e3"
+      "bytes": 29126,
+      "sha256": "fb64d22719621dc7113d0b1027397a3ad890485970850772408e6b262e7f0f30"
     },
     {
       "path": "frontend/catatau-planner.test.cjs",
@@ -269,8 +274,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 2812205,
-      "sha256": "f8dbc483f10c83810539bf25a7904950643f694ba738d4a142c6c7ba6a13c821"
+      "bytes": 2814107,
+      "sha256": "2c7d93c6cb55d0009343e9fa652833be48ea4cd33953162d6b1acbf239c8bb20"
     },
     {
       "path": "marketing/ABRA-O-PORTFOLIO.html",
@@ -819,8 +824,8 @@
     },
     {
       "path": "outputs/index.html",
-      "bytes": 2812205,
-      "sha256": "f8dbc483f10c83810539bf25a7904950643f694ba738d4a142c6c7ba6a13c821"
+      "bytes": 2814107,
+      "sha256": "2c7d93c6cb55d0009343e9fa652833be48ea4cd33953162d6b1acbf239c8bb20"
     },
     {
       "path": "package.json",
@@ -893,6 +898,11 @@
       "sha256": "7fd2a84ce6301d4a2a3cbe3115acb5abed3e787e3c7272c5fc95d9d2f3a872df"
     },
     {
+      "path": "public/assets/catatau-sheriff.webp",
+      "bytes": 81016,
+      "sha256": "3d8f6486d91fadad75a1701e9c6ef2c2bc43c27d703c7835527e68d85a7a7608"
+    },
+    {
       "path": "public/assets/catatau.webp",
       "bytes": 55148,
       "sha256": "dbc490751b8cf81de79a22741146786895c9d2fa363168f06f494adf9660c12b"
@@ -919,8 +929,8 @@
     },
     {
       "path": "public/index.html",
-      "bytes": 2812205,
-      "sha256": "f8dbc483f10c83810539bf25a7904950643f694ba738d4a142c6c7ba6a13c821"
+      "bytes": 2814107,
+      "sha256": "2c7d93c6cb55d0009343e9fa652833be48ea4cd33953162d6b1acbf239c8bb20"
     },
     {
       "path": "public/privacidade.html",
@@ -944,13 +954,13 @@
     },
     {
       "path": "PUBLICACAO.json",
-      "bytes": 23032,
-      "sha256": "9f2132ca5729a2d5ef75433aa0ac2b20b4224aa49c26fedda5bb705e890175cf"
+      "bytes": 24353,
+      "sha256": "4da2ae57f8de252b85a7227b55694c128de664941df64e4a51fb99453ae69068"
     },
     {
       "path": "PUBLICAR-NO-CLOUDFLARE.md",
-      "bytes": 26146,
-      "sha256": "326d62cf6949f7733a84869cca9b2438107d08a6185cb0a2e902691fc4a250cd"
+      "bytes": 26537,
+      "sha256": "79d7762f08035de86b6f581aec44072ccfd7dfd6490f71a9071c50ca683a5b1a"
     },
     {
       "path": "qa-production-ui.cjs",
@@ -964,8 +974,8 @@
     },
     {
       "path": "qa/catatau-planner.test.cjs",
-      "bytes": 7509,
-      "sha256": "e30d1d80089699d6eb0d77f82b6801992e3def365424f91f3bd3376c6a6a36b9"
+      "bytes": 10509,
+      "sha256": "617fa786a7927536a86d3659ac09ab3c6912906500e1db482e747ebea26960b2"
     },
     {
       "path": "qa/pix-checkout.test.cjs",
@@ -979,18 +989,18 @@
     },
     {
       "path": "README.md",
-      "bytes": 16664,
-      "sha256": "70c96d9046727e96b07c4c4fb21881205c35c4fc20865be6a04c1b906cb21d48"
+      "bytes": 17276,
+      "sha256": "b12d2ef76c808a8522ccde787378e361f5038c04c2387aefcf34f0d86dc594a3"
     },
     {
       "path": "scripts/build-cloudflare.cjs",
-      "bytes": 9023,
-      "sha256": "6ff4fcd8144205038d8b28bcf50bafd11f0c4f5ab29cb1e5efe99b6d6f4d9ca8"
+      "bytes": 9054,
+      "sha256": "08f62d27e1627d1639ab8268b394065c7426a100c13d531b6ccff026bce930ef"
     },
     {
       "path": "scripts/build-static.cjs",
-      "bytes": 1507,
-      "sha256": "95e45ef53a45ccbe406489d17387bfd1e55d3c3ff0682363eeca34571c9cff43"
+      "bytes": 1537,
+      "sha256": "c0a1772ae025e966508df905d0f7b31876772934132b2f9400fc43930b02303f"
     },
     {
       "path": "scripts/check.cjs",
@@ -1099,8 +1109,8 @@
     },
     {
       "path": "source/base.html",
-      "bytes": 2754831,
-      "sha256": "b1657863c35c22c36bccd5b5d2ae775baadff7a2a7045e5b15356d5bfc255ad8"
+      "bytes": 2755677,
+      "sha256": "35a30d8f6ba4760f32f2ad8b7d9ae92b071476a2736eef9114b763b36580d196"
     },
     {
       "path": "source/README.md",
@@ -1109,8 +1119,8 @@
     },
     {
       "path": "TESTES.txt",
-      "bytes": 22521,
-      "sha256": "3fa2d533f560217c7c752b7b834b73055c48b3c1ed62efc89a3b89f271c61b20"
+      "bytes": 23277,
+      "sha256": "5519f3931a3f29ce601dcc4793b9ab93a12cbb89f3789c63896d36bf808552d0"
     },
     {
       "path": "ui-qa.cjs",

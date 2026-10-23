@@ -1,3 +1,6 @@
+23/10/2026 — Catatau xerife no modo firme
+A responsavel pediu que o Catatau use chapeu de cowboy, botinhas com espora e coldre ao ativar o modo firme, como um mini xerife que supervisiona os planos. O visual conserva a identidade original, volta ao normal ao desativar e segue a preferencia do perfil. Imagem estatica transparente, sem IA durante o uso. Prompt e origem em docs/CATATAU-MODO-FIRME.md.
+
 4J Finance — decisões confirmadas em 15/10/2026
 
 HOSPEDAGEM E DOMÍNIO

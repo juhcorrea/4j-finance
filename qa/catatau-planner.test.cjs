@@ -12,24 +12,38 @@ const hook=`window.PlannerFixture={
  profile(){return Store.profile},
  changed(){Store.data.receitas=[...Store.data.receitas];Store.emit();},
  editable(){return Store.editable},
- plannerClear(){CatatauPlanner.clear()}
+ plannerClear(){CatatauPlanner.clear()},
+ loading(value){Store.loading=value;Store.emit();},
+ leaveApp(){Store.screen="auth";Store.emit();}
 };`;
 let html=fs.readFileSync(path.join(root,'public/index.html'),'utf8');
 const marker='if(document.modelContext?.registerTool)';assert.equal(html.split(marker).length,2);html=html.replace(marker,hook+'\n'+marker);
-const server=http.createServer((req,res)=>{res.setHeader('Content-Type','text/html;charset=utf-8');res.end(html);});
+const server=http.createServer((req,res)=>{const pathname=new URL(req.url,'http://localhost').pathname;if(pathname==='/assets/catatau-sheriff.webp'){res.setHeader('Content-Type','image/webp');res.end(fs.readFileSync(path.join(root,'public/assets/catatau-sheriff.webp')));return;}res.setHeader('Content-Type','text/html;charset=utf-8');res.end(html);});
 (async()=>{
  fs.mkdirSync(out,{recursive:true});await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));const origin='http://127.0.0.1:'+server.address().port;
  const browser=await chromium.launch({headless:true,executablePath:process.env.PLAYWRIGHT_EXECUTABLE_PATH||undefined});
  const results=[],errors=[],forbidden=[];
  try{
-  for(const width of [320,390,1440]){
-   const context=await browser.newContext({viewport:{width,height:width<768?844:1000},isMobile:width<768,hasTouch:width<768});
+  for(const [width,height] of [[320,568],[320,844],[390,844],[1440,1000]]){
+   const context=await browser.newContext({viewport:{width,height},isMobile:width<768,hasTouch:width<768});
    await context.route('**/*',route=>{const u=new URL(route.request().url());if(u.origin===origin||['fonts.googleapis.com','fonts.gstatic.com'].includes(u.hostname))return route.continue();if(u.hostname==='www.gstatic.com'&&u.pathname.startsWith('/firebasejs/'))return route.fulfill({status:200,contentType:'application/javascript',body:''});forbidden.push({host:u.hostname,method:route.request().method()});return route.abort();});
    const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
    await page.goto(origin+'/?demo=1',{waitUntil:'networkidle'});await page.evaluate(()=>document.fonts.ready);await page.evaluate(()=>PlannerFixture.configure());
    const original=await page.evaluate(()=>PlannerFixture.data());
    const trigger=width<961?page.locator('#catatau-mobile-trigger'):page.locator('#catatau-launcher');await trigger.click();
-   await page.locator('#catatau-firm').check();assert.match(await page.locator('#catatau-firm-note').textContent(),/Ativo:/);
+   let originalImage=await page.locator('#catatau-panel .chat-intro img').getAttribute('src');
+   async function appearance(expected){
+    await page.waitForFunction(active=>document.body.classList.contains('catatau-firm-active')===active,expected);
+    const images=await page.locator('[data-catatau]').evaluateAll(elements=>elements.map(image=>({auth:!!image.closest('#auth'),src:image.getAttribute('src')})));
+    for(const image of images)assert.equal(image.src,expected&&!image.auth?'assets/catatau-sheriff.webp':originalImage,'all app mascots follow active profile; login remains original');
+    if(expected){await page.waitForFunction(()=>[...document.querySelectorAll('[data-catatau]')].filter(image=>!image.closest('#auth')).every(image=>image.complete&&image.naturalWidth>0));assert.match(await page.locator('#catatau-panel .chat-intro img').getAttribute('alt'),/chapéu de cowboy.*espora.*coldre/);}
+   }
+   await appearance(false);
+   await page.locator('#catatau-firm').check();assert.match(await page.locator('#catatau-firm-note').textContent(),/Ativo:/);await appearance(true);
+   if(height>660){const portrait=await page.locator('#catatau-panel .chat-intro img').evaluate(image=>{const frame=image.parentElement.getBoundingClientRect(),r=image.getBoundingClientRect();return {fit:getComputedStyle(image).objectFit,left:r.left,right:r.right,top:r.top,bottom:r.bottom,frameLeft:frame.left,frameRight:frame.right,frameTop:frame.top,frameBottom:frame.bottom};});assert.equal(portrait.fit,'contain');assert.ok(portrait.left>=portrait.frameLeft&&portrait.right<=portrait.frameRight+1&&portrait.top>=portrait.frameTop&&portrait.bottom<=portrait.frameBottom+1,'sheriff portrait fits entire body');}
+   await page.screenshot({path:path.join(out,'sheriff-'+width+'x'+height+'.png'),fullPage:false});
+   await page.locator('#catatau-firm').uncheck();await appearance(false);
+   await page.locator('#catatau-firm').check();await appearance(true);
    async function send(value){await page.locator('#chat-input').fill(value);await page.locator('#chat-input').press('Enter');}
    async function last(){return page.locator('#chat-log .from-catatau').last().textContent();}
    await page.getByRole('button',{name:'Planejar uma compra',exact:true}).click();
@@ -41,15 +55,20 @@ const server=http.createServer((req,res)=>{res.setHeader('Content-Type','text/ht
    assert.equal(await page.evaluate(()=>PlannerFixture.data()),original,'planning does not create or mutate expenses');
    await page.waitForFunction(()=>{const log=document.querySelector('#chat-log');return Math.abs(log.lastElementChild.getBoundingClientRect().top-log.getBoundingClientRect().top)<20;});
    const geometry=await page.evaluate(()=>{const panel=document.querySelector('#catatau-panel'),r=panel.getBoundingClientRect();return {width:innerWidth,height:innerHeight,root:document.documentElement.scrollWidth,left:r.left,right:r.right,top:r.top,bottom:r.bottom,client:panel.clientWidth,scroll:panel.scrollWidth,font:getComputedStyle(panel).fontFamily,firmHeight:panel.querySelector('.planner-settings label').getBoundingClientRect().height,logHeight:panel.querySelector('#chat-log').clientHeight,controls:[...panel.querySelectorAll('#planner-actions button,#chat-send,.planner-settings label')].filter(e=>e.getClientRects().length).map(e=>({height:e.getBoundingClientRect().height}))};});
-   assert.ok(geometry.root<=width+1&&geometry.left>=-1&&geometry.right<=width+1,'no horizontal overflow');assert.ok(geometry.top>=-1&&geometry.bottom<=geometry.height+1,'panel stays in viewport');assert.ok(geometry.scroll<=geometry.client+2,'no internal horizontal overflow');assert.match(geometry.font,/Montserrat/);assert.ok(geometry.firmHeight<=60,'compact firm control');assert.ok(geometry.logHeight>=100,'readable conversation area');for(const c of geometry.controls)assert.ok(c.height>=44,'readable touch control');
-   await page.screenshot({path:path.join(out,'planner-'+width+'.png'),fullPage:false});
+   assert.ok(geometry.root<=width+1&&geometry.left>=-1&&geometry.right<=width+1,'no horizontal overflow');assert.ok(geometry.top>=-1&&geometry.bottom<=geometry.height+1,'panel stays in viewport');assert.ok(geometry.scroll<=geometry.client+2,'no internal horizontal overflow');assert.match(geometry.font,/Montserrat/);assert.ok(geometry.firmHeight<=60,'compact firm control');assert.ok(geometry.logHeight>=100,'readable conversation area: '+JSON.stringify(geometry));for(const c of geometry.controls)assert.ok(c.height>=44,'readable touch control');
+   await page.screenshot({path:path.join(out,'planner-'+width+'x'+height+'.png'),fullPage:false});
    const initialProfile=await page.evaluate(()=>PlannerFixture.profile());
-   await page.evaluate(()=>PlannerFixture.switchProfile('Meu novo espaço'));await trigger.click();assert.equal(await page.locator('#catatau-firm').isChecked(),false);assert.doesNotMatch(await page.locator('#catatau-firm-note').textContent(),/Ativo:/);assert.doesNotMatch(await page.locator('#chat-log').textContent(),/Sofá sintético/);
-   await page.evaluate(id=>PlannerFixture.switchProfile(id),initialProfile);await trigger.click();assert.equal(await page.locator('#catatau-firm').isChecked(),true);
+   await page.evaluate(()=>PlannerFixture.switchProfile('Meu novo espaço'));await trigger.click();assert.equal(await page.locator('#catatau-firm').isChecked(),false);assert.doesNotMatch(await page.locator('#catatau-firm-note').textContent(),/Ativo:/);assert.doesNotMatch(await page.locator('#chat-log').textContent(),/Sofá sintético/);await appearance(false);
+   await page.evaluate(id=>PlannerFixture.switchProfile(id),initialProfile);await trigger.click();assert.equal(await page.locator('#catatau-firm').isChecked(),true);await appearance(true);
    await page.getByRole('button',{name:'Planejar uma compra',exact:true}).click();await send('Plano interrompido');await page.evaluate(()=>PlannerFixture.changed());await send('500');assert.match(await last(),/registros ou o acesso deste perfil mudaram/);
    const preferences=await page.evaluate(()=>Object.entries(localStorage).filter(([key])=>key.startsWith('4j-catatau-firm-v1:')).map(([,value])=>value));assert.deepEqual(preferences,['true']);
    await page.locator('[data-action=close-catatau]').click();await page.evaluate(()=>location.hash='lancamentos');await page.locator('#entry-form').waitFor({state:'visible'});assert.equal(await page.evaluate(()=>PlannerFixture.editable()),true);assert.equal(await page.locator('#entry-amount').isEnabled(),true);
-   await context.close();results.push({width,guidedComparison:true,firmOptInIsolated:true,recordsUnchanged:true,entryStillEnabled:true});
+   await appearance(true);
+   await page.reload({waitUntil:'networkidle'});originalImage=await page.locator('#auth [data-catatau]').getAttribute('src');await page.evaluate(()=>PlannerFixture.configure());await trigger.click();assert.equal(await page.locator('#catatau-firm').isChecked(),true);await appearance(true);
+   await page.evaluate(()=>PlannerFixture.loading(true));await appearance(false);assert.equal(await page.locator('#catatau-firm').isDisabled(),true);
+   await page.evaluate(()=>PlannerFixture.loading(false));await appearance(true);
+   await page.evaluate(()=>PlannerFixture.leaveApp());await appearance(false);
+   await context.close();results.push({width,height,guidedComparison:true,firmOptInIsolated:true,recordsUnchanged:true,entryStillEnabled:true,sheriffToggle:true,sheriffPersisted:true,sheriffProfileScoped:true,originalWithoutReadyProfile:true});
   }
   assert.deepEqual(errors,[]);assert.deepEqual(forbidden,[]);
   const result={ok:true,results,errors,forbidden,scope:'Built app with demo rows; Chromium at 320/390/1440, no Firebase backend, LLM, payment or deploy.'};fs.writeFileSync(path.join(out,'result.json'),JSON.stringify(result,null,2));console.log(JSON.stringify(result));

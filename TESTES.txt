@@ -1,3 +1,6 @@
+23/10/2026 — Visual de xerife no modo firme
+496 testes automatizados e 16 verificacoes mock/VM de privacidade aprovados; build reproduzivel com SHA-256 2c7d93c6cb55d0009343e9fa652833be48ea4cd33953162d6b1acbf239c8bb20. QA do app compilado em Chromium, com dados ficticios, passou em 320x568, 320x844, 390x844 e 1440x1000. Validou ativar/desativar visual, persistencia ao recarregar, isolamento por perfil, troca de pagina, restauracao durante carregamento/fora do app e ausencia de overflow. Nenhum erro de navegador ou chamada indevida. Screenshots revisadas: corpo inteiro com chapeu, coldre e botas. Pacote Cloudflare validado com imagem WebP de 81.016 bytes; codigo Pix e configuracoes preservados. Nao houve novos testes em dados financeiros reais.
+
 4J Finance — testes registrados e estado de publicação
 Atualização documental: 20/10/2026 — Pix público publicado e readback aprovado
 

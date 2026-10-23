@@ -1,7 +1,7 @@
 {
-  "publishedAt": "2026-10-20T17:35:03.726306Z",
+  "publishedAt": "2026-10-23T14:09:28.86053Z",
   "productionUrl": "https://4jfinance.pages.dev",
-  "deploymentUrl": "https://906fac2d.4jfinance.pages.dev",
+  "deploymentUrl": "https://2e16fdf1.4jfinance.pages.dev",
   "firebaseAuthorizedDomain": true,
   "firestoreRulesPublished": true,
   "productionPrivacyChecks": 38,
@@ -69,7 +69,7 @@
   "pixCloudflareTestWebhookDiagnosticsPublished": false,
   "pixCloudflareTestPaidStatusSmokeDeploymentUrl": "https://c685b5c9.4jfinance-pix-test.pages.dev",
   "catatauPlannerPublished": true,
-  "productionIndexSha256": "f8dbc483f10c83810539bf25a7904950643f694ba738d4a142c6c7ba6a13c821",
+  "productionIndexSha256": "2c7d93c6cb55d0009343e9fa652833be48ea4cd33953162d6b1acbf239c8bb20",
   "pixLegacyFirebaseFunctionsVerified": false,
   "pixCloudflareTestFirebaseAuthenticationVerified": true,
   "pixProductionSecretsConfigured": true,
@@ -88,8 +88,8 @@
   "pixSandboxDirectApiWebhookVerified": false,
   "publicationPackage": "Allowlisted public files, bundled Worker and API routes",
   "pixProductionBackendReady": true,
-  "pixProductionDeploymentVerifiedAt": "2026-10-20T17:36:08.770Z",
-  "productionLastReadbackAt": "2026-10-20T17:36:08.770Z",
+  "pixProductionDeploymentVerifiedAt": "2026-10-23T14:09:40.036Z",
+  "productionLastReadbackAt": "2026-10-23T14:09:40.036Z",
   "pixProductionRealPaymentVerified": true,
   "pixFreeCpuBudgetVerified": true,
   "adsenseReviewLastConfirmedAt": "2026-10-19",
@@ -303,8 +303,8 @@
       "productionDeploymentChanged": false
     }
   },
-  "productionDeploymentId": "906fac2d-3f35-4f0e-9bdf-49a3a834b42e",
-  "productionPublicationRecordedAt": "2026-10-20T17:36:08.770Z",
+  "productionDeploymentId": "2e16fdf1-6806-4b9b-8040-5be97e6df1e3",
+  "productionPublicationRecordedAt": "2026-10-23T14:09:40.036Z",
   "productionPublicationHelperResult": {
     "ok": true,
     "canonicalConfirmed": true,
@@ -521,5 +521,46 @@
     "firebaseBillingDisabled": true,
     "firebaseBillingCheckedAt": "2026-10-20T17:36:02.039Z",
     "billingPlanMutationPerformed": false
+  },
+  "catatauSheriffPublished": true,
+  "catatauSheriffPublication": {
+    "publishedAt": "2026-10-23T14:09:28.86053Z",
+    "verifiedAt": "2026-10-23T14:09:40.036Z",
+    "deploymentId": "2e16fdf1-6806-4b9b-8040-5be97e6df1e3",
+    "asset": "assets/catatau-sheriff.webp",
+    "assetSha256": "3d8f6486d91fadad75a1701e9c6ef2c2bc43c27d703c7835527e68d85a7a7608",
+    "scope": "Visual do modo firme, preferencia local por login e perfil",
+    "executorUnchanged": true,
+    "configurationUnchanged": true,
+    "publicChecks": [
+      {
+        "origin": "https://4jfinance.pages.dev",
+        "htmlMatches": true,
+        "sheriffAssetMatches": true,
+        "httpIndex": 200,
+        "backendReady": true,
+        "anonymousRejected": true,
+        "httpHealth": 200,
+        "httpAnonymous": 401
+      },
+      {
+        "origin": "https://4jfinance.com.br",
+        "htmlMatches": true,
+        "sheriffAssetMatches": true,
+        "httpIndex": 200,
+        "backendReady": true,
+        "anonymousRejected": true,
+        "httpHealth": 200,
+        "httpAnonymous": 401
+      },
+      {
+        "origin": "https://2e16fdf1.4jfinance.pages.dev",
+        "htmlMatches": true,
+        "sheriffAssetMatches": true,
+        "httpIndex": 200
+      }
+    ],
+    "paidPlanChanged": false,
+    "financialOperationsPerformed": false
   }
 }

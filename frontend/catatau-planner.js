@@ -132,11 +132,25 @@ var CatatauPlanner = (() => {
   const monthLabel = value => monthName(value);
   let scope = '', draft = null, notice = '', signature = '', firm = false, revision = 0;
   const preferenceKey = key => '4j-catatau-firm-v1:' + key;
+  const sheriffImage = 'assets/catatau-sheriff.webp';
   const answer = text => ({ text, scope: 'Planejamento local · ' + profileName() });
   function currentScope() { return Store.screen === 'app' && Store.user?.uid && Store.profile ? JSON.stringify([Store.user.uid, Store.profile]) : ''; }
   function fingerprint() { return JSON.stringify([revision, Store.loading, Store.error, Store.userDoc?.status, Store.user?.emailVerified, Store.meta.ownerUid]); }
   function preferences() {
     try { firm = !!scope && localStorage.getItem(preferenceKey(scope)) === 'true'; } catch { firm = false; }
+  }
+  function image() { return firm && !!scope && scope === currentScope() && catatauReady() ? sheriffImage : CATATAU_IMAGE; }
+  function appearance() {
+    const active = image() === sheriffImage;
+    document.body.classList.toggle('catatau-firm-active', active);
+    for (const image of document.querySelectorAll('[data-catatau]')) {
+      const selected = active && !image.closest('#auth') ? sheriffImage : CATATAU_IMAGE;
+      if (image.getAttribute('src') !== selected) image.setAttribute('src', selected);
+    }
+    const title = document.querySelector('#catatau-intro-title');
+    if (title) title.textContent = active ? 'Seu pequeno xerife dos planos.' : 'Um olhar atento aos seus planos.';
+    const portrait = document.querySelector('#catatau-panel .chat-intro img');
+    if (portrait) portrait.alt = active ? 'Catatau de chapéu de cowboy, botinhas com espora e coldre: modo firme ativo.' : '';
   }
   function sync() {
     const next = currentScope();
@@ -149,6 +163,7 @@ var CatatauPlanner = (() => {
     if (checkbox) { checkbox.checked = firm; checkbox.disabled = !catatauReady(); }
     const note = document.querySelector('#catatau-firm-note');
     if (note) note.textContent = firm ? 'Ativo: vou dizer “Não compre agora” se a compra comprometer o plano informado. Registrar despesas continua liberado.' : 'Opcional e só neste perfil. Não bloqueia banco, cartão ou registro de despesas.';
+    appearance();
     controls();
   }
   function clear() { draft = null; notice = ''; controls(); }
@@ -309,11 +324,12 @@ var CatatauPlanner = (() => {
     return null;
   }
   document.querySelector('#catatau-firm')?.addEventListener('change', event => {
-    const selected = event.target.checked; sync(); firm = selected; event.target.checked = selected;
+    const selected = event.target.checked; sync(); if (!scope || !catatauReady()) return; firm = selected; event.target.checked = selected;
     try { if (scope) localStorage.setItem(preferenceKey(scope), String(firm)); } catch { /* preference remains in this session */ }
     const note = document.querySelector('#catatau-firm-note'); if (note) note.textContent = firm ? 'Ativo: vou dizer “Não compre agora” se a compra comprometer o plano informado. Registrar despesas continua liberado.' : 'Opcional e só neste perfil. Não bloqueia banco, cartão ou registro de despesas.';
+    appearance();
   });
   window.addEventListener('finance-update', () => { revision++; sync(); });
   window.addEventListener('pagehide', clear);
-  return { ...core, sync, clear, handle };
+  return { ...core, sync, clear, handle, appearance, image };
 })();
