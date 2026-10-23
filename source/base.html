@@ -523,7 +523,8 @@ main:focus{outline:none}
 .top-actions .mobile-catatau,.family-invite-compact{display:none}
 @media(max-width:960px){
   html{scroll-padding-top:calc(74px + env(safe-area-inset-top))}
-  #catatau-launcher{display:none!important;visibility:hidden!important;pointer-events:none!important}
+  #catatau-launcher{right:max(14px,env(safe-area-inset-right));bottom:calc(83px + env(safe-area-inset-bottom))}
+  #catatau-launcher[aria-expanded="true"]{visibility:hidden;pointer-events:none}
   .topbar{position:sticky;top:0;z-index:55;min-height:calc(62px + env(safe-area-inset-top));height:calc(62px + env(safe-area-inset-top));padding-top:env(safe-area-inset-top);padding-bottom:0;padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right));gap:8px}
   .topbar .mobile-brand{min-width:0;display:flex;align-items:center;gap:4px;min-height:44px;flex-shrink:1}
   .topbar .mobile-brand .brand-symbol{width:47px;max-width:47px;height:34px}
@@ -548,7 +549,7 @@ main:focus{outline:none}
   .family-access-notice{gap:8px;margin-top:10px;padding:11px 13px}
   .family-access-notice b{font-size:12px}.family-access-notice p{font-size:11px;line-height:1.55}
   .family-access-notice .button{min-height:44px;font-size:12px}
-  .footer{padding-bottom:calc(98px + env(safe-area-inset-bottom))}
+  .footer{padding-bottom:calc(156px + env(safe-area-inset-bottom))}
   .catatau-panel{left:max(10px,env(safe-area-inset-left));right:max(10px,env(safe-area-inset-right));width:auto;bottom:calc(78px + env(safe-area-inset-bottom));max-height:calc(100dvh - 98px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}
   .chat-context-row button,.chat-form .button{min-height:44px}
 }
@@ -587,7 +588,7 @@ main:focus{outline:none}
     <nav id="bottom-nav" class="bottom-nav" aria-label="Navegação no celular"></nav>
   </div>
   <section id="auth" class="auth-layout" hidden>
-    <div class="auth-story"><a class="brand" href="?"><img class="brand-symbol" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjEyIDEwIDYwIDM1IiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IjRKIj48cGF0aCBmaWxsPSIjMmU1MzcyIiBkPSJNMjggMTRoN0wyMyAyOWg4di03aDZ2N2g0djZoLTR2NWgtNnYtNUgxNXYtNnpNNDAgMTRoMTZ2MTdjMCA2LTMuNiA5LjUtOS4xIDkuNS00LjQgMC03LjUtMi4yLTktNS41bDUuMS0zLjJjLjggMS45IDIgMi44IDMuNyAyLjggMiAwIDMtMS4zIDMtNC4xVjIwSDQweiIvPjxjaXJjbGUgY3g9IjYzIiBjeT0iMjkuNSIgcj0iNS4zIiBmaWxsPSIjZjJhOTAwIi8+PC9zdmc+" width="76" height="45" alt="4J"><span>finance<small>JUNTOS, MAIS LONGE.</small></span></a><div><span class="eyebrow">O PRÓXIMO PLANO COMEÇA AQUI</span><h1>Uma família.<br>Muitos sonhos.<br><em>Um passo de cada vez.</em></h1><p>Organize o presente e construa o futuro de quem você ama.</p></div><img data-catatau src="" alt="Catatau, nosso simpático castor de lenço verde, acena para você."></div>
+    <div class="auth-story"><a class="brand" href="?"><img class="brand-symbol" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjEyIDEwIDYwIDM1IiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IjRKIj48cGF0aCBmaWxsPSIjMmU1MzcyIiBkPSJNMjggMTRoN0wyMyAyOWg4di03aDZ2N2g0djZoLTR2NWgtNnYtNUgxNXYtNnpNNDAgMTRoMTZ2MTdjMCA2LTMuNiA5LjUtOS4xIDkuNS00LjQgMC03LjUtMi4yLTktNS41bDUuMS0zLjJjLjggMS45IDIgMi44IDMuNyAyLjggMiAwIDMtMS4zIDMtNC4xVjIwSDQweiIvPjxjaXJjbGUgY3g9IjYzIiBjeT0iMjkuNSIgcj0iNS4zIiBmaWxsPSIjZjJhOTAwIi8+PC9zdmc+" width="76" height="45" alt="4J"><span>finance<small>JUNTOS, MAIS LONGE.</small></span></a><div><span class="eyebrow">O PRÓXIMO PLANO COMEÇA AQUI</span><h1>Uma família.<br>Muitos sonhos.<br><em>Um passo de cada vez.</em></h1><p>Organize o presente e construa o futuro de quem você ama.</p></div><img data-catatau src="" alt="Catatau, nosso simpático castor de lenço verde, acena para você."><div class="auth-mobile-welcome"><div class="auth-greeting"><h1>Uai, chega mais!</h1><p>Bora cuidar dos seus planos?</p></div><img src="assets/catatau-sheriff.webp" width="126" height="136" alt="Catatau de xerife dá as boas-vindas."></div></div>
     <div class="auth-form-wrap"><form id="auth-form" class="auth-form"><a class="brand auth-brand" href="?" aria-label="4J Finance"><img class="brand-symbol" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjEyIDEwIDYwIDM1IiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IjRKIj48cGF0aCBmaWxsPSIjMmU1MzcyIiBkPSJNMjggMTRoN0wyMyAyOWg4di03aDZ2N2g0djZoLTR2NWgtNnYtNUgxNXYtNnpNNDAgMTRoMTZ2MTdjMCA2LTMuNiA5LjUtOS4xIDkuNS00LjQgMC03LjUtMi4yLTktNS41bDUuMS0zLjJjLjggMS45IDIgMi44IDMuNyAyLjggMiAwIDMtMS4zIDMtNC4xVjIwSDQweiIvPjxjaXJjbGUgY3g9IjYzIiBjeT0iMjkuNSIgcj0iNS4zIiBmaWxsPSIjZjJhOTAwIi8+PC9zdmc+" width="76" height="45" alt="4J"><span>finance<small>JUNTOS, MAIS LONGE.</small></span></a><span class="eyebrow">BEM-VINDO AO 4J FINANCE</span><h2>Vamos cuidar dos seus planos?</h2><p>Entre para acessar as finanças da sua família.</p><div class="segmented"><button type="button" class="active" data-auth="login">Entrar</button><button type="button" data-auth="signup">Criar conta</button></div><label id="signup-name" hidden>Seu nome<input id="auth-name" autocomplete="name" maxlength="80"></label><label>E-mail<input id="auth-email" type="email" required autocomplete="email" placeholder="voce@exemplo.com"></label><label>Senha<input id="auth-password" type="password" required minlength="6" autocomplete="current-password" placeholder="Sua senha"></label><div class="auth-options"><label class="checkbox"><input id="remember" type="checkbox" checked> Lembrar de mim</label><button type="button" class="text-button" data-action="reset-password">Esqueci a senha</button></div><p id="auth-error" class="form-error" role="alert" hidden></p><button type="submit" class="button primary full" id="auth-submit">Entrar na minha conta</button><p class="auth-note" id="auth-note">Novos cadastros aguardam aprovação. Seus perfis pessoais continuam privados; compartilhar é uma escolha sua.</p><div class="or"><span>quer conhecer primeiro?</span></div><a class="button secondary full" href="?demo=1">Experimentar com o Catatau</a><small class="muted">A demonstração usa apenas dados fictícios.</small></form></div>
   </section>
   <div id="boot" class="boot"><img class="brand-symbol" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjEyIDEwIDYwIDM1IiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IjRKIj48cGF0aCBmaWxsPSIjMmU1MzcyIiBkPSJNMjggMTRoN0wyMyAyOWg4di03aDZ2N2g0djZoLTR2NWgtNnYtNUgxNXYtNnpNNDAgMTRoMTZ2MTdjMCA2LTMuNiA5LjUtOS4xIDkuNS00LjQgMC03LjUtMi4yLTktNS41bDUuMS0zLjJjLjggMS45IDIgMi44IDMuNyAyLjggMiAwIDMtMS4zIDMtNC4xVjIwSDQweiIvPjxjaXJjbGUgY3g9IjYzIiBjeT0iMjkuNSIgcj0iNS4zIiBmaWxsPSIjZjJhOTAwIi8+PC9zdmc+" width="76" height="45" alt="4J"><p>Preparando seu espaço...</p></div>
@@ -1536,17 +1537,21 @@ window.addEventListener('finance-update',()=>renderUpdates.request());
 window.addEventListener('hashchange',()=>{state.page=location.hash.slice(1)||'inicio';render.wasRendered=false;render();window.scrollTo({top:0});$('#main').focus({preventScroll:true});});
 document.addEventListener('change',e=>{if(e.target.id==='month-picker'){state.month=e.target.value||Money.today().slice(0,7);Report.set(Report.defaults);Report.refresh();}if(e.target.id==='profile')Store.selectProfile(e.target.value);});
 document.addEventListener('click',e=>{const el=e.target.closest('[data-action]');if(!el)return;handleAction(el.dataset.action,el);});
-function handleAction(action,el){if(action==='record-menu')openRecordMenu(el);if(action==='new-expense'){state.familyDraft=false;state.type='despesa';state.editId=null;location.hash='lancamentos';render.wasRendered=false;render();setTimeout(()=>$('#entry-amount')?.focus(),0);}if(action==='logout')Store.logout();if(action==='reload')location.reload();if(action==='text-size'){document.body.classList.toggle('large-text');localStorage.setItem('4j-large-text',document.body.classList.contains('large-text')?'1':'0');}if(action==='theme'){document.body.classList.toggle('dark');localStorage.setItem('dashTheme',document.body.classList.contains('dark')?'dark':'light');}if(action==='close-modal')$('#modal').close();if(action==='catatau')openCatatau();if(action==='toggle-catatau'){$('#catatau-panel').hidden?openCatatau():closeCatatau();}if(action==='close-catatau')closeCatatau();if(typeof extendedAction==='function')extendedAction(action,el);}
-/* Mobile controls stay in the header so they never cover financial values. */
+function handleAction(action,el){if(action==='record-menu')openRecordMenu(el);if(action==='new-expense'){state.familyDraft=false;state.type='despesa';state.editId=null;location.hash='lancamentos';render.wasRendered=false;render();setTimeout(()=>$('#entry-amount')?.focus(),0);}if(action==='logout')Store.logout();if(action==='reload')location.reload();if(action==='text-size'){document.body.classList.toggle('large-text');localStorage.setItem('4j-large-text',document.body.classList.contains('large-text')?'1':'0');}if(action==='theme'){document.body.classList.toggle('dark');localStorage.setItem('dashTheme',document.body.classList.contains('dark')?'dark':'light');}if(action==='close-modal')$('#modal').close();if(action==='catatau')openCatatau(el);if(action==='toggle-catatau'){$('#catatau-panel').hidden?openCatatau(el):closeCatatau();}if(action==='close-catatau')closeCatatau();if(typeof extendedAction==='function')extendedAction(action,el);}
+/* Mobile Catatau stays available above the bottom navigation and in the header. */
 const MobileShell={
   chatState(open){
     const button=$('#catatau-mobile-trigger');if(!button)return;
     button.setAttribute('aria-expanded',String(open));button.setAttribute('aria-label',open?'Fechar Catatau':'Abrir Catatau, seu assistente');button.title=open?'Fechar Catatau':'Abrir Catatau';
   },
   sync(){const button=$('#catatau-mobile-trigger');if(button)button.hidden=Store.screen!=='app';this.chatState(!$('#catatau-panel').hidden);},
+  rememberChatFocus(trigger=document.activeElement){
+    this.chatOpener=trigger?.matches('[data-action="catatau"],[data-action="toggle-catatau"]')?trigger:null;
+  },
   restoreChatFocus(){
-    const button=matchMedia('(max-width:960px)').matches?$('#catatau-mobile-trigger'):$('#catatau-launcher');
-    if(button&&!button.hidden&&button.getClientRects().length)button.focus({preventScroll:true});
+    const button=[this.chatOpener,$('#catatau-launcher'),$('#catatau-mobile-trigger')].find(el=>el?.isConnected&&!el.hidden&&el.getClientRects().length&&getComputedStyle(el).visibility!=='hidden');
+    this.chatOpener=null;
+    if(button)button.focus({preventScroll:true});
   },
   familyInvite(full){
     const hasRecords=Store.data.receitas.length>0||Store.data.despesas.length>0||(Store.meta.goalsV2||[]).length>0;
@@ -1645,14 +1650,14 @@ function renderCatatauHistory(){
 function askCatatau(question){
   syncCatatauContext();if(!catatauReady())return;const text=String(question||'').trim().slice(0,400);if(!text)return;
   const history=catatauMemory.histories.get(catatauMemory.key)||[];
-  const planned=CatatauPlanner.handle(text),response=planned||catatauReply(text,{month:state.month,today:Money.today(),rows:allRows(),plans:goals(),budgetMeta:Store.meta});
+  const planned=CatatauPlanner.handle(text),response=planned||CatatauPlanner.voice(text,catatauReply(text,{month:state.month,today:Money.today(),rows:allRows(),plans:goals(),budgetMeta:Store.meta}));
   history.push({role:'user',text},{role:'assistant',text:response.text,scope:response.scope});
   catatauMemory.histories.set(catatauMemory.key,history.slice(-40));$('#chat-input').value='';renderCatatauHistory();
   if(planned){const log=$('#chat-log'),latest=log.lastElementChild;requestAnimationFrame(()=>{if(latest&&latest===log.lastElementChild)log.scrollTop+=latest.getBoundingClientRect().top-log.getBoundingClientRect().top;});}
 }
-function openCatatau(){
+function openCatatau(trigger=null){
   $('#toast').classList.remove('visible');
-  if(Store.screen!=='app')return;syncCatatauContext();$('#modal').close();$('#catatau-panel').hidden=false;$('#catatau-launcher').setAttribute('aria-expanded','true');$('#catatau-launcher').setAttribute('aria-label','Fechar assistente Catatau');$('#catatau-launcher').title='Fechar Catatau';MobileShell.chatState(true);
+  if(Store.screen!=='app')return;MobileShell.rememberChatFocus(trigger||document.activeElement);syncCatatauContext();$('#modal').close();$('#catatau-panel').hidden=false;$('#catatau-launcher').setAttribute('aria-expanded','true');$('#catatau-launcher').setAttribute('aria-label','Fechar assistente Catatau');$('#catatau-launcher').title='Fechar Catatau';MobileShell.chatState(true);
   const choices=$('#chat-choices');choices.replaceChildren();
   for(const question of catatauSuggestions){const button=document.createElement('button');button.type='button';button.textContent=question;button.addEventListener('click',()=>askCatatau(question));choices.append(button);}
   renderCatatauHistory();$('#chat-input').focus({preventScroll:true});

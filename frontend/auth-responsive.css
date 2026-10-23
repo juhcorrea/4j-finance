@@ -4,3 +4,65 @@
 .auth-form .text-button{white-space:normal;overflow-wrap:anywhere}
 
 .auth-public-links{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 18px;margin-top:18px}.auth-public-links a{display:inline-flex;align-items:center;min-height:44px;text-align:center;font-size:12px}
+
+/* The phone gets the same welcoming character as the desktop, in less space. */
+.auth-mobile-welcome{display:none}
+@media screen and (max-width:960px){
+  .auth-layout{display:flex;flex-direction:column;min-height:100dvh;background:var(--bg);padding-bottom:env(safe-area-inset-bottom)}
+  .auth-story{display:block;min-height:0;width:100%;padding:calc(20px + env(safe-area-inset-top)) max(24px,env(safe-area-inset-right)) 32px max(24px,env(safe-area-inset-left));background:linear-gradient(135deg,#fff8e9,#f5e5b8)}
+  .auth-story>.brand{width:max-content;max-width:100%;margin:0 auto;min-height:44px;gap:7px}
+  .auth-story>.brand .brand-symbol{width:58px;height:35px;border-radius:6px}
+  .auth-story>.brand>span{font-size:22px;letter-spacing:-.7px;line-height:1.2}
+  .auth-story>.brand small{font-size:7px;letter-spacing:1px;margin-top:3px}
+  .auth-story>div:not(.auth-mobile-welcome),.auth-story>img{display:none}
+  .auth-story>.auth-mobile-welcome{display:grid;grid-template-columns:minmax(0,1fr) 116px;align-items:center;gap:2px;max-width:390px;margin:12px auto 0;min-height:130px}
+  .auth-mobile-welcome .auth-greeting{position:relative;padding:13px 12px;background:#fffdf7;border:1px solid #dfce99;border-radius:17px 17px 4px 17px;box-shadow:0 4px 12px #6a542508;color:#2e5372}
+  .auth-mobile-welcome h1{font-size:18px;line-height:1.3;letter-spacing:-.4px;color:#2e5372;overflow-wrap:anywhere}
+  .auth-mobile-welcome .auth-greeting p{display:block;font-size:12px;line-height:1.6;color:#6e644c;margin:5px 0 0;max-width:none}
+  .auth-mobile-welcome img{display:block;position:static;width:126px;height:136px;max-width:100%;object-fit:contain;filter:drop-shadow(0 5px 3px #503e1e15)}
+  .auth-form-wrap{position:relative;min-height:0;align-items:flex-start;padding:0 max(16px,env(safe-area-inset-right)) 20px max(16px,env(safe-area-inset-left));margin-top:-20px;background:transparent}
+  .auth-form{width:min(430px,100%);max-width:100%;padding:23px 20px 16px;border:1px solid var(--line);border-radius:22px;background:var(--paper);box-shadow:0 8px 28px #223e580a}
+  .auth-form>.auth-brand,.auth-form>.eyebrow{display:none}
+  .auth-form h2{font-size:23px;line-height:1.3;letter-spacing:-.7px;max-width:330px}
+  .auth-form>p{font-size:12px;line-height:1.65;margin:8px 0 16px}
+  .auth-form>.segmented{margin:17px 0 18px;padding:4px;gap:4px;border:1px solid var(--line);border-radius:12px}
+  .auth-form .segmented button{min-height:44px;padding:8px;font-size:13px;white-space:normal}
+  .auth-form>label{font-size:12px;gap:6px;margin-bottom:14px}
+  .auth-form input:not([type=checkbox]):not([type=radio]){min-height:48px;font-size:16px;line-height:1.4;padding:11px 12px;border-radius:10px}
+  .auth-options{gap:6px 10px;flex-wrap:wrap;margin:0 0 12px}
+  .auth-options .checkbox,.auth-options .text-button{min-height:44px;font-size:11px}
+  .auth-options .checkbox{gap:7px}
+  .auth-form .button{min-height:48px;white-space:normal;text-align:center;padding:11px 12px;font-size:13px;line-height:1.5}
+  .auth-form .auth-note{font-size:11px;line-height:1.65;margin:13px 0}
+  .auth-form .or{display:flex;align-items:center;gap:10px;height:auto;border:0;margin:19px 0 16px;font-size:11px}
+  .auth-form .or:before,.auth-form .or:after{content:'';flex:1 0 14px;border-top:1px solid var(--line)}
+  .auth-form .or span{position:static;min-width:0;flex:0 1 auto;background:var(--paper);padding:0;line-height:1.5}
+  .auth-form>.muted{font-size:10px;line-height:1.6;margin-top:10px}
+  .auth-public-links{gap:0 16px;margin-top:10px}
+  .auth-public-links a{font-size:11px;min-height:44px}
+  body.dark .auth-story{background:linear-gradient(135deg,#203f59,#2e5372 72%,#544b37)}
+  body.dark .auth-mobile-welcome .auth-greeting{background:#203f59;border-color:#6c8799;color:#fff1cf;box-shadow:0 4px 12px #081d2c18}
+  body.dark .auth-mobile-welcome h1{color:#ffda8f}
+  body.dark .auth-mobile-welcome .auth-greeting p{color:#e3e3d8}
+  body.dark .auth-form-wrap{background:transparent}
+  body.dark .auth-form{background:#203f54;border-color:#506e82;box-shadow:0 8px 28px #081d2c24}
+  body.dark .auth-form .or span{background:#203f54}
+}
+@media screen and (max-width:359px){
+  .auth-story{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+  .auth-story>.auth-mobile-welcome{grid-template-columns:minmax(0,1fr) 104px;min-height:120px}
+  .auth-mobile-welcome img{height:126px}
+  .auth-mobile-welcome h1{font-size:17px}
+  .auth-form-wrap{padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}
+  .auth-form{padding:20px 16px 14px;border-radius:18px}
+  .auth-form h2{font-size:21px}
+}
+/* Short viewports include landscape phones and the on-screen keyboard. Keep scrolling native. */
+@media screen and (max-width:960px) and (max-height:520px){
+  .auth-story{padding-top:calc(10px + env(safe-area-inset-top));padding-bottom:26px}
+  .auth-story>.auth-mobile-welcome{grid-template-columns:minmax(0,1fr) 84px;min-height:82px;margin-top:5px}
+  .auth-mobile-welcome img{height:86px}
+  .auth-mobile-welcome .auth-greeting{padding:9px 12px}
+  .auth-mobile-welcome h1{font-size:16px}
+  .auth-mobile-welcome .auth-greeting p{margin-top:2px}
+}

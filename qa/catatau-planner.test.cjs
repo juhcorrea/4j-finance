@@ -45,21 +45,47 @@ const server=http.createServer((req,res)=>{const pathname=new URL(req.url,'http:
    await page.locator('#catatau-firm').uncheck();await appearance(false);
    await page.locator('#catatau-firm').check();await appearance(true);
    async function send(value){await page.locator('#chat-input').fill(value);await page.locator('#chat-input').press('Enter');}
-   async function last(){return page.locator('#chat-log .from-catatau').last().textContent();}
-   await page.getByRole('button',{name:'Planejar uma compra',exact:true}).click();
-   for(const value of ['Sofá sintético','10.000,00','hoje','3','10.500,00','500'])await send(value);
-   const due=await page.evaluate(()=>PlannerFixture.firstDue());await send(due);assert.match(await last(),/total.*10\.500,00/);
-   await send('confirmar');assert.match(await last(),/Não há renda registrada/);
-   await send('3000');await send('0');await send('confirmar');await send('100');await send('1000');assert.match(await last(),/Antes de calcular/);
-   await send('confirmar');const result=await last();assert.match(result,/Não compre agora/);assert.match(result,/500,00 a mais/);assert.match(result,/não bloqueia banco, cartão ou o registro/);
+   async function last(){return page.locator('#chat-log .from-catatau').last().locator('p').textContent();}
+   const financialDetails=text=>({amounts:text.match(/R\$\s*[\d.]+,\d{2}/g),details:text.split('\n').filter(line=>/^(•|A confirmar:|Para caber,|O parcelamento|Isso não garante|Este é um planejamento)/.test(line.trim()))});
+   async function scenario(kind){
+    await page.getByRole('button',{name:'Planejar uma compra',exact:true}).click();
+    const welcome=await last();assert.match(welcome,/não cria um lançamento/);
+    for(const value of ['Sofá sintético',kind==='over'?'10.000,00':'100','hoje',kind==='over'?'3':'não'])await send(value);
+    if(kind==='over'){for(const value of ['10.500,00','500'])await send(value);const due=await page.evaluate(()=>PlannerFixture.firstDue());await send(due);assert.match(await last(),/total.*10\.500,00/);}
+    await send('confirmar');assert.match(await last(),/Não há renda registrada/);
+    for(const value of ['3000','0','confirmar',kind==='missing'?'não sei':kind==='over'?'100':'1000'])await send(value);
+    if(kind==='over')await send('1000');
+    assert.match(await last(),/Antes de calcular/);await send('confirmar');
+    const result=await last();assert.match(result,/não bloqueia banco, cartão ou o registro/);
+    if(kind==='over'){assert.match(result,/9\.100,00 após despesas, reserva e compra/);assert.match(result,/9\.900,00 no dinheiro livre/);assert.match(result,/limite disponível em R\$\s*9\.000,00/);assert.match(result,/500,00 a mais/);}
+    if(kind==='missing'){assert.match(result,/A confirmar: Dinheiro livre na data da compra/);assert.doesNotMatch(result,/Cabe no orçamento informado/);}
+    if(kind==='within'){assert.match(result,/Cabe no orçamento informado, preservando a reserva escolhida/);assert.match(result,/800,00/);assert.match(result,/não garante saldo no dia do vencimento/);}
+    return {welcome,result};
+   }
+   const voiceChecks=[];
+   for(const kind of ['missing','within','over']){
+    await page.locator('#catatau-firm').uncheck();const normal=await scenario(kind);assert.doesNotMatch(normal.welcome+' '+normal.result,/xerife|carrinho|ronda|chapéu|uai|trem bão/i);
+    await page.locator('#catatau-firm').check();const sheriff=await scenario(kind);assert.match(sheriff.welcome,/Uai, chega mais! Xerife Catatau/);
+    assert.match(sheriff.result,kind==='over'?/Uai, sô.*segura esse carrinho.*Não compre agora/:kind==='missing'?/Uai, o xerife.*faltam dados/:/Ô trem bão.*ronda do orçamento/);
+    assert.deepEqual(financialDetails(sheriff.result),financialDetails(normal.result),'voice preserves amounts, missing facts, actionable reasons and limitations: '+kind);
+    voiceChecks.push(kind);
+   }
    assert.equal(await page.evaluate(()=>PlannerFixture.data()),original,'planning does not create or mutate expenses');
    await page.waitForFunction(()=>{const log=document.querySelector('#chat-log');return Math.abs(log.lastElementChild.getBoundingClientRect().top-log.getBoundingClientRect().top)<20;});
    const geometry=await page.evaluate(()=>{const panel=document.querySelector('#catatau-panel'),r=panel.getBoundingClientRect();return {width:innerWidth,height:innerHeight,root:document.documentElement.scrollWidth,left:r.left,right:r.right,top:r.top,bottom:r.bottom,client:panel.clientWidth,scroll:panel.scrollWidth,font:getComputedStyle(panel).fontFamily,firmHeight:panel.querySelector('.planner-settings label').getBoundingClientRect().height,logHeight:panel.querySelector('#chat-log').clientHeight,controls:[...panel.querySelectorAll('#planner-actions button,#chat-send,.planner-settings label')].filter(e=>e.getClientRects().length).map(e=>({height:e.getBoundingClientRect().height}))};});
    assert.ok(geometry.root<=width+1&&geometry.left>=-1&&geometry.right<=width+1,'no horizontal overflow');assert.ok(geometry.top>=-1&&geometry.bottom<=geometry.height+1,'panel stays in viewport');assert.ok(geometry.scroll<=geometry.client+2,'no internal horizontal overflow');assert.match(geometry.font,/Montserrat/);assert.ok(geometry.firmHeight<=60,'compact firm control');assert.ok(geometry.logHeight>=100,'readable conversation area: '+JSON.stringify(geometry));for(const c of geometry.controls)assert.ok(c.height>=44,'readable touch control');
    await page.screenshot({path:path.join(out,'planner-'+width+'x'+height+'.png'),fullPage:false});
+   for(const question of ['Oi','Como está meu saldo?','Como está minha reserva do mês?','Contas atrasadas','Como transferir dados?']){
+    await page.locator('#catatau-firm').uncheck();await send(question);const normal=await last();
+    await page.locator('#catatau-firm').check();await send(question);const sheriff=await last();
+    assert.ok(sheriff.endsWith(normal),'general answer keeps every fact and limitation: '+question);
+    if(question==='Como transferir dados?')assert.equal(sheriff,normal,'technical instructions are not embellished');else assert.notEqual(sheriff,normal,'contextual voice is active: '+question);
+   }
    const initialProfile=await page.evaluate(()=>PlannerFixture.profile());
    await page.evaluate(()=>PlannerFixture.switchProfile('Meu novo espaço'));await trigger.click();assert.equal(await page.locator('#catatau-firm').isChecked(),false);assert.doesNotMatch(await page.locator('#catatau-firm-note').textContent(),/Ativo:/);assert.doesNotMatch(await page.locator('#chat-log').textContent(),/Sofá sintético/);await appearance(false);
+   await send('Oi');assert.doesNotMatch(await last(),/Xerife Catatau/,'another profile does not inherit the voice');
    await page.evaluate(id=>PlannerFixture.switchProfile(id),initialProfile);await trigger.click();assert.equal(await page.locator('#catatau-firm').isChecked(),true);await appearance(true);
+   await send('Oi');assert.match(await last(),/Xerife Catatau/,'returning to the active profile restores the voice');
    await page.getByRole('button',{name:'Planejar uma compra',exact:true}).click();await send('Plano interrompido');await page.evaluate(()=>PlannerFixture.changed());await send('500');assert.match(await last(),/registros ou o acesso deste perfil mudaram/);
    const preferences=await page.evaluate(()=>Object.entries(localStorage).filter(([key])=>key.startsWith('4j-catatau-firm-v1:')).map(([,value])=>value));assert.deepEqual(preferences,['true']);
    await page.locator('[data-action=close-catatau]').click();await page.evaluate(()=>location.hash='lancamentos');await page.locator('#entry-form').waitFor({state:'visible'});assert.equal(await page.evaluate(()=>PlannerFixture.editable()),true);assert.equal(await page.locator('#entry-amount').isEnabled(),true);
@@ -68,7 +94,7 @@ const server=http.createServer((req,res)=>{const pathname=new URL(req.url,'http:
    await page.evaluate(()=>PlannerFixture.loading(true));await appearance(false);assert.equal(await page.locator('#catatau-firm').isDisabled(),true);
    await page.evaluate(()=>PlannerFixture.loading(false));await appearance(true);
    await page.evaluate(()=>PlannerFixture.leaveApp());await appearance(false);
-   await context.close();results.push({width,height,guidedComparison:true,firmOptInIsolated:true,recordsUnchanged:true,entryStillEnabled:true,sheriffToggle:true,sheriffPersisted:true,sheriffProfileScoped:true,originalWithoutReadyProfile:true});
+   await context.close();results.push({width,height,guidedComparison:true,voiceChecks,voiceKeepsFinancialDetails:true,generalRepliesKeepFacts:true,firmOptInIsolated:true,recordsUnchanged:true,entryStillEnabled:true,sheriffToggle:true,sheriffPersisted:true,sheriffProfileScoped:true,originalWithoutReadyProfile:true});
   }
   assert.deepEqual(errors,[]);assert.deepEqual(forbidden,[]);
   const result={ok:true,results,errors,forbidden,scope:'Built app with demo rows; Chromium at 320/390/1440, no Firebase backend, LLM, payment or deploy.'};fs.writeFileSync(path.join(out,'result.json'),JSON.stringify(result,null,2));console.log(JSON.stringify(result));

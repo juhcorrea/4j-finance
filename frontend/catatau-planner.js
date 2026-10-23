@@ -133,6 +133,7 @@ var CatatauPlanner = (() => {
   let scope = '', draft = null, notice = '', signature = '', firm = false, revision = 0;
   const preferenceKey = key => '4j-catatau-firm-v1:' + key;
   const sheriffImage = 'assets/catatau-sheriff.webp';
+  const firmNote = 'Ativo: o xerife vai dizer “Não compre agora” se a compra comprometer o plano informado. Registrar despesas continua liberado.';
   const answer = text => ({ text, scope: 'Planejamento local · ' + profileName() });
   function currentScope() { return Store.screen === 'app' && Store.user?.uid && Store.profile ? JSON.stringify([Store.user.uid, Store.profile]) : ''; }
   function fingerprint() { return JSON.stringify([revision, Store.loading, Store.error, Store.userDoc?.status, Store.user?.emailVerified, Store.meta.ownerUid]); }
@@ -140,6 +141,16 @@ var CatatauPlanner = (() => {
     try { firm = !!scope && localStorage.getItem(preferenceKey(scope)) === 'true'; } catch { firm = false; }
   }
   function image() { return firm && !!scope && scope === currentScope() && catatauReady() ? sheriffImage : CATATAU_IMAGE; }
+  function voice(question, response) {
+    if (image() !== sheriffImage) return response;
+    const command = normalize(question);
+    let opening = '';
+    if (response.scope === 'Conversa local') opening = 'Uai, chega mais! Xerife Catatau de plantão! 🤠';
+    else if (response.scope.endsWith(' · Seu orçamento')) opening = 'Vamos fazer uma ronda nesse orçamento, sô: de olho na reserva e nos compromissos.';
+    else if (response.scope.startsWith('Atrasos até ')) opening = 'Ronda dos vencimentos! Vamos conferir as datas com atenção.';
+    else if (/^(como esta meu saldo|qual e meu saldo|saldo|resumo do mes)\??$/.test(command)) opening = 'De chapéu e calculadora: vamos conferir os registros deste mês.';
+    return opening ? { ...response, text: opening + '\n\n' + response.text } : response;
+  }
   function appearance() {
     const active = image() === sheriffImage;
     document.body.classList.toggle('catatau-firm-active', active);
@@ -162,7 +173,7 @@ var CatatauPlanner = (() => {
     const checkbox = document.querySelector('#catatau-firm');
     if (checkbox) { checkbox.checked = firm; checkbox.disabled = !catatauReady(); }
     const note = document.querySelector('#catatau-firm-note');
-    if (note) note.textContent = firm ? 'Ativo: vou dizer “Não compre agora” se a compra comprometer o plano informado. Registrar despesas continua liberado.' : 'Opcional e só neste perfil. Não bloqueia banco, cartão ou registro de despesas.';
+    if (note) note.textContent = firm ? firmNote : 'Opcional e só neste perfil. Não bloqueia banco, cartão ou registro de despesas.';
     appearance();
     controls();
   }
@@ -197,6 +208,7 @@ var CatatauPlanner = (() => {
     };
     if (draft.step === 'income') return 'Não há renda registrada em ' + draft.missingIncome.map(monthLabel).join(', ') + '. Qual renda líquida mensal você espera nesses meses? O mesmo valor será usado apenas nesta simulação. Digite 0 se não haverá renda, ou não sei. Não vou repetir o salário automaticamente.';
     if (draft.step === 'reserve') return 'Vou preservar a maior entre a reserva já registrada no mês e a meta de ' + draft.finance.plan.reserve + '% da renda (' + (draft.finance.planKnown ? 'plano deste perfil' : 'plano padrão, que você pode ajustar') + '). Responda confirmar, informe um valor mensal fixo para preservar ou não sei. O acumulado das metas não será somado nem descontado novamente.';
+    if (firm && draft.step === 'name') return 'Uai, chega mais! Xerife Catatau de plantão! 🤠 Vamos conferir se essa compra cabe antes de abrir a carteira.\n\n' + prompts.name;
     return prompts[draft.step] || '';
   }
   function advance(step) { draft.step = step; controls(); return answer(prompt()); }
@@ -227,16 +239,16 @@ var CatatauPlanner = (() => {
       const title = option.key === 'cash' ? 'À vista' : 'Parcelado no cartão';
       lines.push('\n' + title + ' — ' + currency(option.totalCents));
       if (option.status === 'over') {
-        lines.push(firm ? 'Não compre agora nesta condição. Ela compromete o cenário informado.' : 'Esta condição não cabe no cenário informado. Vale adiar ou ajustar a compra.');
+        lines.push(firm ? 'Uai, sô… segura esse carrinho! 🤠 Não compre agora nesta condição: ela compromete o cenário informado.' : 'Esta condição não cabe no cenário informado. Vale adiar ou ajustar a compra.');
         for (const row of option.deficits.slice(0, 4)) lines.push('• ' + monthLabel(row.month) + ': faltariam ' + currency(-row.afterCents) + ' após despesas, reserva e compra' + (row.beforeCents < 0 ? '; o mês já estava negativo antes dela' : '') + '.');
         if (option.deficits.length > 4) lines.push('• Outros ' + (option.deficits.length - 4) + ' meses também ficariam negativos.');
         if (option.cashShortfallCents) lines.push('• Faltam ' + currency(option.cashShortfallCents) + ' no dinheiro livre informado para a compra/entrada.');
         if (option.limitShortfallCents) lines.push('• O total financiado supera o limite disponível em ' + currency(option.limitShortfallCents) + '.');
         lines.push('Para caber, reduza o custo ou ajuste as despesas/renda nos meses apontados. Adiar só ajuda se o cenário do novo mês permitir. Refaça a simulação depois de conferir.');
-      } else if (option.status === 'insufficient') lines.push(firm ? 'Não decida esta compra ainda. O Modo firme aguarda os dados que faltam.' : 'Ainda não dá para dizer se cabe: faltam dados.');
+      } else if (option.status === 'insufficient') lines.push(firm ? 'Uai, o xerife ainda está juntando as pistas. Não decida esta compra ainda: faltam dados para saber se cabe.' : 'Ainda não dá para dizer se cabe: faltam dados.');
       else {
         const lowest = option.rows.reduce((best, row) => row.afterCents < best.afterCents ? row : best);
-        lines.push('Cabe no orçamento informado, preservando a reserva escolhida. A menor sobra mensal projetada é ' + currency(lowest.afterCents) + ' em ' + monthLabel(lowest.month) + '.');
+        lines.push((firm ? 'Ô trem bão: essa passou pela ronda do orçamento! ' : '') + 'Cabe no orçamento informado, preservando a reserva escolhida. A menor sobra mensal projetada é ' + currency(lowest.afterCents) + ' em ' + monthLabel(lowest.month) + '.');
         lines.push('Isso não garante saldo no dia do vencimento nem aprovação do cartão. Confira se seus registros estão completos.');
       }
       if (option.missing.length) lines.push('A confirmar: ' + option.missing.slice(0, 4).join('; ') + (option.missing.length > 4 ? '; e outros ' + (option.missing.length - 4) + ' meses/dados' : '') + '.');
@@ -326,10 +338,10 @@ var CatatauPlanner = (() => {
   document.querySelector('#catatau-firm')?.addEventListener('change', event => {
     const selected = event.target.checked; sync(); if (!scope || !catatauReady()) return; firm = selected; event.target.checked = selected;
     try { if (scope) localStorage.setItem(preferenceKey(scope), String(firm)); } catch { /* preference remains in this session */ }
-    const note = document.querySelector('#catatau-firm-note'); if (note) note.textContent = firm ? 'Ativo: vou dizer “Não compre agora” se a compra comprometer o plano informado. Registrar despesas continua liberado.' : 'Opcional e só neste perfil. Não bloqueia banco, cartão ou registro de despesas.';
+    const note = document.querySelector('#catatau-firm-note'); if (note) note.textContent = firm ? firmNote : 'Opcional e só neste perfil. Não bloqueia banco, cartão ou registro de despesas.';
     appearance();
   });
   window.addEventListener('finance-update', () => { revision++; sync(); });
   window.addEventListener('pagehide', clear);
-  return { ...core, sync, clear, handle, appearance, image };
+  return { ...core, sync, clear, handle, appearance, image, voice };
 })();

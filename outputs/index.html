@@ -526,7 +526,8 @@ main:focus{outline:none}
 .top-actions .mobile-catatau,.family-invite-compact{display:none}
 @media(max-width:960px){
   html{scroll-padding-top:calc(74px + env(safe-area-inset-top))}
-  #catatau-launcher{display:none!important;visibility:hidden!important;pointer-events:none!important}
+  #catatau-launcher{right:max(14px,env(safe-area-inset-right));bottom:calc(83px + env(safe-area-inset-bottom))}
+  #catatau-launcher[aria-expanded="true"]{visibility:hidden;pointer-events:none}
   .topbar{position:sticky;top:0;z-index:55;min-height:calc(62px + env(safe-area-inset-top));height:calc(62px + env(safe-area-inset-top));padding-top:env(safe-area-inset-top);padding-bottom:0;padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right));gap:8px}
   .topbar .mobile-brand{min-width:0;display:flex;align-items:center;gap:4px;min-height:44px;flex-shrink:1}
   .topbar .mobile-brand .brand-symbol{width:47px;max-width:47px;height:34px}
@@ -551,7 +552,7 @@ main:focus{outline:none}
   .family-access-notice{gap:8px;margin-top:10px;padding:11px 13px}
   .family-access-notice b{font-size:12px}.family-access-notice p{font-size:11px;line-height:1.55}
   .family-access-notice .button{min-height:44px;font-size:12px}
-  .footer{padding-bottom:calc(98px + env(safe-area-inset-bottom))}
+  .footer{padding-bottom:calc(156px + env(safe-area-inset-bottom))}
   .catatau-panel{left:max(10px,env(safe-area-inset-left));right:max(10px,env(safe-area-inset-right));width:auto;bottom:calc(78px + env(safe-area-inset-bottom));max-height:calc(100dvh - 98px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}
   .chat-context-row button,.chat-form .button{min-height:44px}
 }
@@ -586,6 +587,68 @@ body.dark .monetization-mark,body.dark .monetization-badge,body.dark .pix-price 
 
 .auth-public-links{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 18px;margin-top:18px}.auth-public-links a{display:inline-flex;align-items:center;min-height:44px;text-align:center;font-size:12px}
 
+/* The phone gets the same welcoming character as the desktop, in less space. */
+.auth-mobile-welcome{display:none}
+@media screen and (max-width:960px){
+  .auth-layout{display:flex;flex-direction:column;min-height:100dvh;background:var(--bg);padding-bottom:env(safe-area-inset-bottom)}
+  .auth-story{display:block;min-height:0;width:100%;padding:calc(20px + env(safe-area-inset-top)) max(24px,env(safe-area-inset-right)) 32px max(24px,env(safe-area-inset-left));background:linear-gradient(135deg,#fff8e9,#f5e5b8)}
+  .auth-story>.brand{width:max-content;max-width:100%;margin:0 auto;min-height:44px;gap:7px}
+  .auth-story>.brand .brand-symbol{width:58px;height:35px;border-radius:6px}
+  .auth-story>.brand>span{font-size:22px;letter-spacing:-.7px;line-height:1.2}
+  .auth-story>.brand small{font-size:7px;letter-spacing:1px;margin-top:3px}
+  .auth-story>div:not(.auth-mobile-welcome),.auth-story>img{display:none}
+  .auth-story>.auth-mobile-welcome{display:grid;grid-template-columns:minmax(0,1fr) 116px;align-items:center;gap:2px;max-width:390px;margin:12px auto 0;min-height:130px}
+  .auth-mobile-welcome .auth-greeting{position:relative;padding:13px 12px;background:#fffdf7;border:1px solid #dfce99;border-radius:17px 17px 4px 17px;box-shadow:0 4px 12px #6a542508;color:#2e5372}
+  .auth-mobile-welcome h1{font-size:18px;line-height:1.3;letter-spacing:-.4px;color:#2e5372;overflow-wrap:anywhere}
+  .auth-mobile-welcome .auth-greeting p{display:block;font-size:12px;line-height:1.6;color:#6e644c;margin:5px 0 0;max-width:none}
+  .auth-mobile-welcome img{display:block;position:static;width:126px;height:136px;max-width:100%;object-fit:contain;filter:drop-shadow(0 5px 3px #503e1e15)}
+  .auth-form-wrap{position:relative;min-height:0;align-items:flex-start;padding:0 max(16px,env(safe-area-inset-right)) 20px max(16px,env(safe-area-inset-left));margin-top:-20px;background:transparent}
+  .auth-form{width:min(430px,100%);max-width:100%;padding:23px 20px 16px;border:1px solid var(--line);border-radius:22px;background:var(--paper);box-shadow:0 8px 28px #223e580a}
+  .auth-form>.auth-brand,.auth-form>.eyebrow{display:none}
+  .auth-form h2{font-size:23px;line-height:1.3;letter-spacing:-.7px;max-width:330px}
+  .auth-form>p{font-size:12px;line-height:1.65;margin:8px 0 16px}
+  .auth-form>.segmented{margin:17px 0 18px;padding:4px;gap:4px;border:1px solid var(--line);border-radius:12px}
+  .auth-form .segmented button{min-height:44px;padding:8px;font-size:13px;white-space:normal}
+  .auth-form>label{font-size:12px;gap:6px;margin-bottom:14px}
+  .auth-form input:not([type=checkbox]):not([type=radio]){min-height:48px;font-size:16px;line-height:1.4;padding:11px 12px;border-radius:10px}
+  .auth-options{gap:6px 10px;flex-wrap:wrap;margin:0 0 12px}
+  .auth-options .checkbox,.auth-options .text-button{min-height:44px;font-size:11px}
+  .auth-options .checkbox{gap:7px}
+  .auth-form .button{min-height:48px;white-space:normal;text-align:center;padding:11px 12px;font-size:13px;line-height:1.5}
+  .auth-form .auth-note{font-size:11px;line-height:1.65;margin:13px 0}
+  .auth-form .or{display:flex;align-items:center;gap:10px;height:auto;border:0;margin:19px 0 16px;font-size:11px}
+  .auth-form .or:before,.auth-form .or:after{content:'';flex:1 0 14px;border-top:1px solid var(--line)}
+  .auth-form .or span{position:static;min-width:0;flex:0 1 auto;background:var(--paper);padding:0;line-height:1.5}
+  .auth-form>.muted{font-size:10px;line-height:1.6;margin-top:10px}
+  .auth-public-links{gap:0 16px;margin-top:10px}
+  .auth-public-links a{font-size:11px;min-height:44px}
+  body.dark .auth-story{background:linear-gradient(135deg,#203f59,#2e5372 72%,#544b37)}
+  body.dark .auth-mobile-welcome .auth-greeting{background:#203f59;border-color:#6c8799;color:#fff1cf;box-shadow:0 4px 12px #081d2c18}
+  body.dark .auth-mobile-welcome h1{color:#ffda8f}
+  body.dark .auth-mobile-welcome .auth-greeting p{color:#e3e3d8}
+  body.dark .auth-form-wrap{background:transparent}
+  body.dark .auth-form{background:#203f54;border-color:#506e82;box-shadow:0 8px 28px #081d2c24}
+  body.dark .auth-form .or span{background:#203f54}
+}
+@media screen and (max-width:359px){
+  .auth-story{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+  .auth-story>.auth-mobile-welcome{grid-template-columns:minmax(0,1fr) 104px;min-height:120px}
+  .auth-mobile-welcome img{height:126px}
+  .auth-mobile-welcome h1{font-size:17px}
+  .auth-form-wrap{padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}
+  .auth-form{padding:20px 16px 14px;border-radius:18px}
+  .auth-form h2{font-size:21px}
+}
+/* Short viewports include landscape phones and the on-screen keyboard. Keep scrolling native. */
+@media screen and (max-width:960px) and (max-height:520px){
+  .auth-story{padding-top:calc(10px + env(safe-area-inset-top));padding-bottom:26px}
+  .auth-story>.auth-mobile-welcome{grid-template-columns:minmax(0,1fr) 84px;min-height:82px;margin-top:5px}
+  .auth-mobile-welcome img{height:86px}
+  .auth-mobile-welcome .auth-greeting{padding:9px 12px}
+  .auth-mobile-welcome h1{font-size:16px}
+  .auth-mobile-welcome .auth-greeting p{margin-top:2px}
+}
+
 </style>
 </head>
 <body>
@@ -608,7 +671,7 @@ body.dark .monetization-mark,body.dark .monetization-badge,body.dark .pix-price 
     <nav id="bottom-nav" class="bottom-nav" aria-label="Navegação no celular"></nav>
   </div>
   <section id="auth" class="auth-layout" hidden>
-    <div class="auth-story"><a class="brand" href="?"><img class="brand-symbol" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjEyIDEwIDYwIDM1IiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IjRKIj48cGF0aCBmaWxsPSIjMmU1MzcyIiBkPSJNMjggMTRoN0wyMyAyOWg4di03aDZ2N2g0djZoLTR2NWgtNnYtNUgxNXYtNnpNNDAgMTRoMTZ2MTdjMCA2LTMuNiA5LjUtOS4xIDkuNS00LjQgMC03LjUtMi4yLTktNS41bDUuMS0zLjJjLjggMS45IDIgMi44IDMuNyAyLjggMiAwIDMtMS4zIDMtNC4xVjIwSDQweiIvPjxjaXJjbGUgY3g9IjYzIiBjeT0iMjkuNSIgcj0iNS4zIiBmaWxsPSIjZjJhOTAwIi8+PC9zdmc+" width="76" height="45" alt="4J"><span>finance<small>JUNTOS, MAIS LONGE.</small></span></a><div><span class="eyebrow">O PRÓXIMO PLANO COMEÇA AQUI</span><h1>Uma família.<br>Muitos sonhos.<br><em>Um passo de cada vez.</em></h1><p>Organize o presente e construa o futuro de quem você ama.</p></div><img data-catatau src="" alt="Catatau, nosso simpático castor de lenço verde, acena para você."></div>
+    <div class="auth-story"><a class="brand" href="?"><img class="brand-symbol" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjEyIDEwIDYwIDM1IiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IjRKIj48cGF0aCBmaWxsPSIjMmU1MzcyIiBkPSJNMjggMTRoN0wyMyAyOWg4di03aDZ2N2g0djZoLTR2NWgtNnYtNUgxNXYtNnpNNDAgMTRoMTZ2MTdjMCA2LTMuNiA5LjUtOS4xIDkuNS00LjQgMC03LjUtMi4yLTktNS41bDUuMS0zLjJjLjggMS45IDIgMi44IDMuNyAyLjggMiAwIDMtMS4zIDMtNC4xVjIwSDQweiIvPjxjaXJjbGUgY3g9IjYzIiBjeT0iMjkuNSIgcj0iNS4zIiBmaWxsPSIjZjJhOTAwIi8+PC9zdmc+" width="76" height="45" alt="4J"><span>finance<small>JUNTOS, MAIS LONGE.</small></span></a><div><span class="eyebrow">O PRÓXIMO PLANO COMEÇA AQUI</span><h1>Uma família.<br>Muitos sonhos.<br><em>Um passo de cada vez.</em></h1><p>Organize o presente e construa o futuro de quem você ama.</p></div><img data-catatau src="" alt="Catatau, nosso simpático castor de lenço verde, acena para você."><div class="auth-mobile-welcome"><div class="auth-greeting"><h1>Uai, chega mais!</h1><p>Bora cuidar dos seus planos?</p></div><img src="assets/catatau-sheriff.webp" width="126" height="136" alt="Catatau de xerife dá as boas-vindas."></div></div>
     <div class="auth-form-wrap"><form id="auth-form" class="auth-form"><a class="brand auth-brand" href="?" aria-label="4J Finance"><img class="brand-symbol" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjEyIDEwIDYwIDM1IiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IjRKIj48cGF0aCBmaWxsPSIjMmU1MzcyIiBkPSJNMjggMTRoN0wyMyAyOWg4di03aDZ2N2g0djZoLTR2NWgtNnYtNUgxNXYtNnpNNDAgMTRoMTZ2MTdjMCA2LTMuNiA5LjUtOS4xIDkuNS00LjQgMC03LjUtMi4yLTktNS41bDUuMS0zLjJjLjggMS45IDIgMi44IDMuNyAyLjggMiAwIDMtMS4zIDMtNC4xVjIwSDQweiIvPjxjaXJjbGUgY3g9IjYzIiBjeT0iMjkuNSIgcj0iNS4zIiBmaWxsPSIjZjJhOTAwIi8+PC9zdmc+" width="76" height="45" alt="4J"><span>finance<small>JUNTOS, MAIS LONGE.</small></span></a><span class="eyebrow">BEM-VINDO AO 4J FINANCE</span><h2>Vamos cuidar dos seus planos?</h2><p>Entre para acessar as finanças da sua família.</p><div class="segmented"><button type="button" class="active" data-auth="login">Entrar</button><button type="button" data-auth="signup">Criar conta</button></div><label id="signup-name" hidden>Seu nome<input id="auth-name" autocomplete="name" maxlength="80"></label><label>E-mail<input id="auth-email" type="email" required autocomplete="email" placeholder="voce@exemplo.com"></label><label>Senha<input id="auth-password" type="password" required minlength="6" autocomplete="current-password" placeholder="Sua senha"></label><div class="auth-options"><label class="checkbox"><input id="remember" type="checkbox" checked> Lembrar de mim</label><button type="button" class="text-button" data-action="reset-password">Esqueci a senha</button></div><p id="auth-error" class="form-error" role="alert" hidden></p><button type="submit" class="button primary full" id="auth-submit">Entrar na minha conta</button><p class="auth-note" id="auth-note">Crie sua conta e comece na hora. Seus perfis pessoais continuam privados; compartilhar é uma escolha sua.</p><div class="or"><span>quer conhecer primeiro?</span></div><a class="button secondary full" href="?demo=1">Experimentar com o Catatau</a><small class="muted">A demonstração usa apenas dados fictícios.</small><nav class="auth-public-links" aria-label="Conheça o 4J Finance"><a class="text-button" href="sobre.html">Conheça o 4J</a><a class="text-button" href="guia.html">Guia financeiro</a><a class="text-button" href="privacidade.html">Privacidade e cookies</a><a class="text-button" href="contato.html">Atendimento</a></nav></form></div>
   </section>
   <div id="boot" class="boot"><img class="brand-symbol" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjEyIDEwIDYwIDM1IiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IjRKIj48cGF0aCBmaWxsPSIjMmU1MzcyIiBkPSJNMjggMTRoN0wyMyAyOWg4di03aDZ2N2g0djZoLTR2NWgtNnYtNUgxNXYtNnpNNDAgMTRoMTZ2MTdjMCA2LTMuNiA5LjUtOS4xIDkuNS00LjQgMC03LjUtMi4yLTktNS41bDUuMS0zLjJjLjggMS45IDIgMi44IDMuNyAyLjggMiAwIDMtMS4zIDMtNC4xVjIwSDQweiIvPjxjaXJjbGUgY3g9IjYzIiBjeT0iMjkuNSIgcj0iNS4zIiBmaWxsPSIjZjJhOTAwIi8+PC9zdmc+" width="76" height="45" alt="4J"><p>Preparando seu espaço...</p></div>
@@ -1587,17 +1650,21 @@ window.addEventListener('finance-update',()=>renderUpdates.request());
 window.addEventListener('hashchange',()=>{state.page=location.hash.slice(1)||'inicio';render.wasRendered=false;render();window.scrollTo({top:0});$('#main').focus({preventScroll:true});});
 document.addEventListener('change',e=>{if(e.target.id==='month-picker'){state.month=e.target.value||Money.today().slice(0,7);Report.set(Report.defaults);Report.refresh();}if(e.target.id==='profile')Store.selectProfile(e.target.value);});
 document.addEventListener('click',e=>{const el=e.target.closest('[data-action]');if(!el)return;handleAction(el.dataset.action,el);});
-function handleAction(action,el){if(action==='record-menu')openRecordMenu(el);if(action==='new-expense'){state.familyDraft=false;state.type='despesa';state.editId=null;location.hash='lancamentos';render.wasRendered=false;render();setTimeout(()=>$('#entry-amount')?.focus(),0);}if(action==='logout')Store.logout();if(action==='reload')location.reload();if(action==='text-size'){document.body.classList.toggle('large-text');localStorage.setItem('4j-large-text',document.body.classList.contains('large-text')?'1':'0');}if(action==='theme'){document.body.classList.toggle('dark');localStorage.setItem('dashTheme',document.body.classList.contains('dark')?'dark':'light');}if(action==='close-modal')$('#modal').close();if(action==='catatau')openCatatau();if(action==='toggle-catatau'){$('#catatau-panel').hidden?openCatatau():closeCatatau();}if(action==='close-catatau')closeCatatau();if(typeof extendedAction==='function')extendedAction(action,el);}
-/* Mobile controls stay in the header so they never cover financial values. */
+function handleAction(action,el){if(action==='record-menu')openRecordMenu(el);if(action==='new-expense'){state.familyDraft=false;state.type='despesa';state.editId=null;location.hash='lancamentos';render.wasRendered=false;render();setTimeout(()=>$('#entry-amount')?.focus(),0);}if(action==='logout')Store.logout();if(action==='reload')location.reload();if(action==='text-size'){document.body.classList.toggle('large-text');localStorage.setItem('4j-large-text',document.body.classList.contains('large-text')?'1':'0');}if(action==='theme'){document.body.classList.toggle('dark');localStorage.setItem('dashTheme',document.body.classList.contains('dark')?'dark':'light');}if(action==='close-modal')$('#modal').close();if(action==='catatau')openCatatau(el);if(action==='toggle-catatau'){$('#catatau-panel').hidden?openCatatau(el):closeCatatau();}if(action==='close-catatau')closeCatatau();if(typeof extendedAction==='function')extendedAction(action,el);}
+/* Mobile Catatau stays available above the bottom navigation and in the header. */
 const MobileShell={
   chatState(open){
     const button=$('#catatau-mobile-trigger');if(!button)return;
     button.setAttribute('aria-expanded',String(open));button.setAttribute('aria-label',open?'Fechar Catatau':'Abrir Catatau, seu assistente');button.title=open?'Fechar Catatau':'Abrir Catatau';
   },
   sync(){const button=$('#catatau-mobile-trigger');if(button)button.hidden=Store.screen!=='app';this.chatState(!$('#catatau-panel').hidden);},
+  rememberChatFocus(trigger=document.activeElement){
+    this.chatOpener=trigger?.matches('[data-action="catatau"],[data-action="toggle-catatau"]')?trigger:null;
+  },
   restoreChatFocus(){
-    const button=matchMedia('(max-width:960px)').matches?$('#catatau-mobile-trigger'):$('#catatau-launcher');
-    if(button&&!button.hidden&&button.getClientRects().length)button.focus({preventScroll:true});
+    const button=[this.chatOpener,$('#catatau-launcher'),$('#catatau-mobile-trigger')].find(el=>el?.isConnected&&!el.hidden&&el.getClientRects().length&&getComputedStyle(el).visibility!=='hidden');
+    this.chatOpener=null;
+    if(button)button.focus({preventScroll:true});
   },
   familyInvite(full){
     const hasRecords=Store.data.receitas.length>0||Store.data.despesas.length>0||(Store.meta.goalsV2||[]).length>0;
@@ -1743,6 +1810,7 @@ var CatatauPlanner = (() => {
   let scope = '', draft = null, notice = '', signature = '', firm = false, revision = 0;
   const preferenceKey = key => '4j-catatau-firm-v1:' + key;
   const sheriffImage = 'assets/catatau-sheriff.webp';
+  const firmNote = 'Ativo: o xerife vai dizer “Não compre agora” se a compra comprometer o plano informado. Registrar despesas continua liberado.';
   const answer = text => ({ text, scope: 'Planejamento local · ' + profileName() });
   function currentScope() { return Store.screen === 'app' && Store.user?.uid && Store.profile ? JSON.stringify([Store.user.uid, Store.profile]) : ''; }
   function fingerprint() { return JSON.stringify([revision, Store.loading, Store.error, Store.userDoc?.status, Store.user?.emailVerified, Store.meta.ownerUid]); }
@@ -1750,6 +1818,16 @@ var CatatauPlanner = (() => {
     try { firm = !!scope && localStorage.getItem(preferenceKey(scope)) === 'true'; } catch { firm = false; }
   }
   function image() { return firm && !!scope && scope === currentScope() && catatauReady() ? sheriffImage : CATATAU_IMAGE; }
+  function voice(question, response) {
+    if (image() !== sheriffImage) return response;
+    const command = normalize(question);
+    let opening = '';
+    if (response.scope === 'Conversa local') opening = 'Uai, chega mais! Xerife Catatau de plantão! 🤠';
+    else if (response.scope.endsWith(' · Seu orçamento')) opening = 'Vamos fazer uma ronda nesse orçamento, sô: de olho na reserva e nos compromissos.';
+    else if (response.scope.startsWith('Atrasos até ')) opening = 'Ronda dos vencimentos! Vamos conferir as datas com atenção.';
+    else if (/^(como esta meu saldo|qual e meu saldo|saldo|resumo do mes)\??$/.test(command)) opening = 'De chapéu e calculadora: vamos conferir os registros deste mês.';
+    return opening ? { ...response, text: opening + '\n\n' + response.text } : response;
+  }
   function appearance() {
     const active = image() === sheriffImage;
     document.body.classList.toggle('catatau-firm-active', active);
@@ -1772,7 +1850,7 @@ var CatatauPlanner = (() => {
     const checkbox = document.querySelector('#catatau-firm');
     if (checkbox) { checkbox.checked = firm; checkbox.disabled = !catatauReady(); }
     const note = document.querySelector('#catatau-firm-note');
-    if (note) note.textContent = firm ? 'Ativo: vou dizer “Não compre agora” se a compra comprometer o plano informado. Registrar despesas continua liberado.' : 'Opcional e só neste perfil. Não bloqueia banco, cartão ou registro de despesas.';
+    if (note) note.textContent = firm ? firmNote : 'Opcional e só neste perfil. Não bloqueia banco, cartão ou registro de despesas.';
     appearance();
     controls();
   }
@@ -1807,6 +1885,7 @@ var CatatauPlanner = (() => {
     };
     if (draft.step === 'income') return 'Não há renda registrada em ' + draft.missingIncome.map(monthLabel).join(', ') + '. Qual renda líquida mensal você espera nesses meses? O mesmo valor será usado apenas nesta simulação. Digite 0 se não haverá renda, ou não sei. Não vou repetir o salário automaticamente.';
     if (draft.step === 'reserve') return 'Vou preservar a maior entre a reserva já registrada no mês e a meta de ' + draft.finance.plan.reserve + '% da renda (' + (draft.finance.planKnown ? 'plano deste perfil' : 'plano padrão, que você pode ajustar') + '). Responda confirmar, informe um valor mensal fixo para preservar ou não sei. O acumulado das metas não será somado nem descontado novamente.';
+    if (firm && draft.step === 'name') return 'Uai, chega mais! Xerife Catatau de plantão! 🤠 Vamos conferir se essa compra cabe antes de abrir a carteira.\n\n' + prompts.name;
     return prompts[draft.step] || '';
   }
   function advance(step) { draft.step = step; controls(); return answer(prompt()); }
@@ -1837,16 +1916,16 @@ var CatatauPlanner = (() => {
       const title = option.key === 'cash' ? 'À vista' : 'Parcelado no cartão';
       lines.push('\n' + title + ' — ' + currency(option.totalCents));
       if (option.status === 'over') {
-        lines.push(firm ? 'Não compre agora nesta condição. Ela compromete o cenário informado.' : 'Esta condição não cabe no cenário informado. Vale adiar ou ajustar a compra.');
+        lines.push(firm ? 'Uai, sô… segura esse carrinho! 🤠 Não compre agora nesta condição: ela compromete o cenário informado.' : 'Esta condição não cabe no cenário informado. Vale adiar ou ajustar a compra.');
         for (const row of option.deficits.slice(0, 4)) lines.push('• ' + monthLabel(row.month) + ': faltariam ' + currency(-row.afterCents) + ' após despesas, reserva e compra' + (row.beforeCents < 0 ? '; o mês já estava negativo antes dela' : '') + '.');
         if (option.deficits.length > 4) lines.push('• Outros ' + (option.deficits.length - 4) + ' meses também ficariam negativos.');
         if (option.cashShortfallCents) lines.push('• Faltam ' + currency(option.cashShortfallCents) + ' no dinheiro livre informado para a compra/entrada.');
         if (option.limitShortfallCents) lines.push('• O total financiado supera o limite disponível em ' + currency(option.limitShortfallCents) + '.');
         lines.push('Para caber, reduza o custo ou ajuste as despesas/renda nos meses apontados. Adiar só ajuda se o cenário do novo mês permitir. Refaça a simulação depois de conferir.');
-      } else if (option.status === 'insufficient') lines.push(firm ? 'Não decida esta compra ainda. O Modo firme aguarda os dados que faltam.' : 'Ainda não dá para dizer se cabe: faltam dados.');
+      } else if (option.status === 'insufficient') lines.push(firm ? 'Uai, o xerife ainda está juntando as pistas. Não decida esta compra ainda: faltam dados para saber se cabe.' : 'Ainda não dá para dizer se cabe: faltam dados.');
       else {
         const lowest = option.rows.reduce((best, row) => row.afterCents < best.afterCents ? row : best);
-        lines.push('Cabe no orçamento informado, preservando a reserva escolhida. A menor sobra mensal projetada é ' + currency(lowest.afterCents) + ' em ' + monthLabel(lowest.month) + '.');
+        lines.push((firm ? 'Ô trem bão: essa passou pela ronda do orçamento! ' : '') + 'Cabe no orçamento informado, preservando a reserva escolhida. A menor sobra mensal projetada é ' + currency(lowest.afterCents) + ' em ' + monthLabel(lowest.month) + '.');
         lines.push('Isso não garante saldo no dia do vencimento nem aprovação do cartão. Confira se seus registros estão completos.');
       }
       if (option.missing.length) lines.push('A confirmar: ' + option.missing.slice(0, 4).join('; ') + (option.missing.length > 4 ? '; e outros ' + (option.missing.length - 4) + ' meses/dados' : '') + '.');
@@ -1936,12 +2015,12 @@ var CatatauPlanner = (() => {
   document.querySelector('#catatau-firm')?.addEventListener('change', event => {
     const selected = event.target.checked; sync(); if (!scope || !catatauReady()) return; firm = selected; event.target.checked = selected;
     try { if (scope) localStorage.setItem(preferenceKey(scope), String(firm)); } catch { /* preference remains in this session */ }
-    const note = document.querySelector('#catatau-firm-note'); if (note) note.textContent = firm ? 'Ativo: vou dizer “Não compre agora” se a compra comprometer o plano informado. Registrar despesas continua liberado.' : 'Opcional e só neste perfil. Não bloqueia banco, cartão ou registro de despesas.';
+    const note = document.querySelector('#catatau-firm-note'); if (note) note.textContent = firm ? firmNote : 'Opcional e só neste perfil. Não bloqueia banco, cartão ou registro de despesas.';
     appearance();
   });
   window.addEventListener('finance-update', () => { revision++; sync(); });
   window.addEventListener('pagehide', clear);
-  return { ...core, sync, clear, handle, appearance, image };
+  return { ...core, sync, clear, handle, appearance, image, voice };
 })();
 
 /* Catatau: consultas locais, sem serviços de IA ou envio de mensagens. */
@@ -2032,14 +2111,14 @@ function renderCatatauHistory(){
 function askCatatau(question){
   syncCatatauContext();if(!catatauReady())return;const text=String(question||'').trim().slice(0,400);if(!text)return;
   const history=catatauMemory.histories.get(catatauMemory.key)||[];
-  const planned=CatatauPlanner.handle(text),response=planned||catatauReply(text,{month:state.month,today:Money.today(),rows:allRows(),plans:goals(),budgetMeta:Store.meta});
+  const planned=CatatauPlanner.handle(text),response=planned||CatatauPlanner.voice(text,catatauReply(text,{month:state.month,today:Money.today(),rows:allRows(),plans:goals(),budgetMeta:Store.meta}));
   history.push({role:'user',text},{role:'assistant',text:response.text,scope:response.scope});
   catatauMemory.histories.set(catatauMemory.key,history.slice(-40));$('#chat-input').value='';renderCatatauHistory();
   if(planned){const log=$('#chat-log'),latest=log.lastElementChild;requestAnimationFrame(()=>{if(latest&&latest===log.lastElementChild)log.scrollTop+=latest.getBoundingClientRect().top-log.getBoundingClientRect().top;});}
 }
-function openCatatau(){
+function openCatatau(trigger=null){
   $('#toast').classList.remove('visible');
-  if(Store.screen!=='app')return;syncCatatauContext();$('#modal').close();$('#catatau-panel').hidden=false;$('#catatau-launcher').setAttribute('aria-expanded','true');$('#catatau-launcher').setAttribute('aria-label','Fechar assistente Catatau');$('#catatau-launcher').title='Fechar Catatau';MobileShell.chatState(true);
+  if(Store.screen!=='app')return;MobileShell.rememberChatFocus(trigger||document.activeElement);syncCatatauContext();$('#modal').close();$('#catatau-panel').hidden=false;$('#catatau-launcher').setAttribute('aria-expanded','true');$('#catatau-launcher').setAttribute('aria-label','Fechar assistente Catatau');$('#catatau-launcher').title='Fechar Catatau';MobileShell.chatState(true);
   const choices=$('#chat-choices');choices.replaceChildren();
   for(const question of catatauSuggestions){const button=document.createElement('button');button.type='button';button.textContent=question;button.addEventListener('click',()=>askCatatau(question));choices.append(button);}
   renderCatatauHistory();$('#chat-input').focus({preventScroll:true});

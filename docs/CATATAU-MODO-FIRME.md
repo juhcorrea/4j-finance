@@ -22,3 +22,11 @@ Genuinely transparent background with clean alpha edges; no scene, floor, text, 
 ## Validacao e publicacao
 
 Publicado em 23/10/2026 no deployment 2e16fdf1. QA em Chromium: 320x568, 320x844, 390x844 e 1440x1000, com alternancia, persistencia, perfis e imagens carregadas. 496 testes e 16 checks mock/VM de privacidade aprovados. Hashes do HTML e do WebP conferidos no dominio oficial, alias e versao canonica; Pix e configuracoes preservados.
+
+## Voz e acesso no celular — 23/10/2026
+
+O modo firme usa humor de xerife com sotaque mineiro/caipira leve. Exemplos: “Uai, sô… segura esse carrinho!” quando a condicao compromete o cenario informado; “Uai, o xerife ainda esta juntando as pistas” se faltam dados; e “Ô trem bão: essa passou pela ronda do orçamento!” quando a compra cabe. Valores, meses, reserva, limites e ressalvas continuam vindos do mesmo calculo local. O modo normal conserva suas respostas.
+
+O Catatau flutuante volta a aparecer no celular acima do menu inferior e fica oculto enquanto a conversa esta aberta. O atalho do cabecalho permanece. Na entrada mobile, um hero com Catatau xerife e fala de boas-vindas recupera a personalidade da versao desktop. Essa ilustracao e independente da preferencia opcional do perfil.
+
+Publicado e conferido em 23/10/2026, às 14:29 UTC, no deployment `b0e94af8-654b-46f9-8683-3d29d93810c0`. Login validado em 29 cenários; voz e flutuante verificados com dados fictícios em tamanhos móveis e desktop. A ilustração no login não ativa o modo firme. Preferência voluntária por perfil, cálculos e infraestrutura preservados.

@@ -1,3 +1,6 @@
+23/10/2026 — Voz do xerife e experiencia no celular
+A responsavel pediu humor de xerife no Modo firme, com jeitinho mineiro/caipira leve, alertando quando a compra nao fizer sentido sem constranger a pessoa. As falas devem conservar os motivos e numeros da avaliacao; fora do modo firme, a voz original permanece. Pediu tambem o retorno do icone flutuante no celular e uma entrada mais bonita, com Catatau xerife e uma recepcao divertida. O xerife da tela de login e ilustrativo e nao ativa o Modo firme. Preservar o login desktop, o plano gratuito e as configuracoes financeiras.
+
 23/10/2026 — Catatau xerife no modo firme
 A responsavel pediu que o Catatau use chapeu de cowboy, botinhas com espora e coldre ao ativar o modo firme, como um mini xerife que supervisiona os planos. O visual conserva a identidade original, volta ao normal ao desativar e segue a preferencia do perfil. Imagem estatica transparente, sem IA durante o uso. Prompt e origem em docs/CATATAU-MODO-FIRME.md.
 

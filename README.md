@@ -1,5 +1,7 @@
 # 4J Finance
 
+Atualização publicada em 23/10/2026: voz mineira leve do Catatau no modo firme, botão flutuante restaurado no celular e login móvel com o xerife. Deployment [b0e94af8](https://b0e94af8.4jfinance.pages.dev), publicado às 14:29:18 UTC e conferido às 14:29:28 UTC no domínio oficial, alias e versão canônica. HTML e imagem correspondem ao pacote validado. Health HTTP 200/backendReady:true e acesso anônimo HTTP 401; executor, configurações e planos preservados. Sem operações financeiras. [Detalhes do Catatau](docs/CATATAU-MODO-FIRME.md).
+
 Atualizacao visual publicada em 23/10/2026: Catatau xerife no modo firme. Deployment [2e16fdf1](https://2e16fdf1.4jfinance.pages.dev), conferido no dominio oficial e no alias as 14:09:40 UTC. HTML e imagem correspondem ao pacote validado; Pix pronto (HTTP 200), acesso sem login recusado (HTTP 401), executor e configuracoes preservados. Nenhuma operacao financeira ou alteracao de plano.
 
 
