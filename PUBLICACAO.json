@@ -1,7 +1,7 @@
 {
-  "publishedAt": "2026-10-23T17:08:16.725507Z",
+  "publishedAt": "2026-10-23T17:20:53.564072Z",
   "productionUrl": "https://4jfinance.pages.dev",
-  "deploymentUrl": "https://ac9dfd92.4jfinance.pages.dev",
+  "deploymentUrl": "https://acac405d.4jfinance.pages.dev",
   "firebaseAuthorizedDomain": true,
   "firestoreRulesPublished": true,
   "productionPrivacyChecks": 38,
@@ -69,7 +69,7 @@
   "pixCloudflareTestWebhookDiagnosticsPublished": false,
   "pixCloudflareTestPaidStatusSmokeDeploymentUrl": "https://c685b5c9.4jfinance-pix-test.pages.dev",
   "catatauPlannerPublished": true,
-  "productionIndexSha256": "ae16fc812900717989f54dfe4c76f8df01c0dd0da5d9dbfd163294709931725f",
+  "productionIndexSha256": "e9828c304158a03c06beebb53f0ed679b25b944907e3ab4ad93cc91247ec60f3",
   "pixLegacyFirebaseFunctionsVerified": false,
   "pixCloudflareTestFirebaseAuthenticationVerified": true,
   "pixProductionSecretsConfigured": true,
@@ -88,8 +88,8 @@
   "pixSandboxDirectApiWebhookVerified": false,
   "publicationPackage": "Allowlisted public files, bundled Worker and API routes",
   "pixProductionBackendReady": true,
-  "pixProductionDeploymentVerifiedAt": "2026-10-23T17:08:25.278Z",
-  "productionLastReadbackAt": "2026-10-23T17:08:25.278Z",
+  "pixProductionDeploymentVerifiedAt": "2026-10-23T17:21:01.385Z",
+  "productionLastReadbackAt": "2026-10-23T17:21:01.385Z",
   "pixProductionRealPaymentVerified": true,
   "pixFreeCpuBudgetVerified": true,
   "adsenseReviewLastConfirmedAt": "2026-10-19",
@@ -303,8 +303,8 @@
       "productionDeploymentChanged": false
     }
   },
-  "productionDeploymentId": "ac9dfd92-21ea-4286-8e2d-a81097ee1651",
-  "productionPublicationRecordedAt": "2026-10-23T17:08:25.278Z",
+  "productionDeploymentId": "acac405d-ecba-4662-8285-c5164e53dfe5",
+  "productionPublicationRecordedAt": "2026-10-23T17:21:01.385Z",
   "productionPublicationHelperResult": {
     "ok": true,
     "canonicalConfirmed": true,
@@ -685,6 +685,53 @@
       },
       {
         "origin": "https://ac9dfd92.4jfinance.pages.dev",
+        "htmlMatches": true,
+        "normalAssetMatches": true,
+        "sheriffAssetMatches": true,
+        "duoAssetMatches": true,
+        "httpIndex": 200
+      }
+    ],
+    "readbackAttempts": 0,
+    "paidPlanChanged": false,
+    "financialOperationsPerformed": false
+  },
+  "authDesktopCenteredPublication": {
+    "publishedAt": "2026-10-23T17:20:53.564072Z",
+    "verifiedAt": "2026-10-23T17:21:01.385Z",
+    "deploymentId": "acac405d-ecba-4662-8285-c5164e53dfe5",
+    "htmlSha256": "e9828c304158a03c06beebb53f0ed679b25b944907e3ab4ad93cc91247ec60f3",
+    "scope": "Login do PC num cartão central de até 1120px; boas-vindas amarelinhas, formulário branco e dupla abraçada",
+    "uiCasesPassed": 56,
+    "executorUnchanged": true,
+    "configurationUnchanged": true,
+    "publicChecks": [
+      {
+        "origin": "https://4jfinance.pages.dev",
+        "htmlMatches": true,
+        "normalAssetMatches": true,
+        "sheriffAssetMatches": true,
+        "duoAssetMatches": true,
+        "httpIndex": 200,
+        "backendReady": true,
+        "anonymousRejected": true,
+        "httpHealth": 200,
+        "httpAnonymous": 401
+      },
+      {
+        "origin": "https://4jfinance.com.br",
+        "htmlMatches": true,
+        "normalAssetMatches": true,
+        "sheriffAssetMatches": true,
+        "duoAssetMatches": true,
+        "httpIndex": 200,
+        "backendReady": true,
+        "anonymousRejected": true,
+        "httpHealth": 200,
+        "httpAnonymous": 401
+      },
+      {
+        "origin": "https://acac405d.4jfinance.pages.dev",
         "htmlMatches": true,
         "normalAssetMatches": true,
         "sheriffAssetMatches": true,

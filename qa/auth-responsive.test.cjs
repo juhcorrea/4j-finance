@@ -15,7 +15,7 @@ const server=http.createServer((req,res)=>{
  const browser=await chromium.launch({headless:true,executablePath});
  const results=[];
  try{
-  const viewports=[{width:320,height:844},{width:390,height:844},{width:430,height:932},{width:768,height:1000},{width:844,height:390},{width:390,height:420},{width:961,height:900},{width:961,height:620},{width:1440,height:1000},{width:1920,height:1080}];
+  const viewports=[{width:320,height:844},{width:390,height:844},{width:430,height:932},{width:768,height:1000},{width:844,height:390},{width:390,height:420},{width:961,height:900},{width:961,height:620},{width:1440,height:900},{width:1920,height:1080},{width:2291,height:908}];
   for(const {width,height} of viewports){
    const context=await browser.newContext({viewport:{width,height},deviceScaleFactor:1});
    const page=await context.newPage();
@@ -68,7 +68,8 @@ const server=http.createServer((req,res)=>{
      const pair=innerWidth<=960?mobile.querySelector('.auth-mascot-pair'):desktop;
      const mascots=[...pair.querySelectorAll('img')].map(image=>({normal:image.classList.contains('auth-catatau-normal'),sheriff:image.classList.contains('auth-catatau-sheriff'),duo:image.classList.contains('auth-catatau-duo'),alt:image.alt,loaded:image.complete&&image.naturalWidth>0,fixed:!image.hasAttribute('data-catatau'),src:image.getAttribute('src'),visible:!!image.getClientRects().length,bounds:image.getBoundingClientRect().toJSON()}));
      const headline=document.querySelector('.auth-story-copy').getBoundingClientRect();
-     return {viewport:innerWidth,body:document.body.scrollWidth,root:document.documentElement.scrollWidth,form:f.getBoundingClientRect().toJSON(),submitTop:document.querySelector('#auth-submit').getBoundingClientRect().top+scrollY,mobileWelcomeVisible:!!mobile.getClientRects().length,desktopMascotVisible:!!desktop.getClientRects().length,mascots,pairBounds:pair.getBoundingClientRect().toJSON(),headlineBounds:headline.toJSON(),controls:visible.map(e=>({id:e.id||e.dataset.auth||e.textContent.trim().slice(0,30),tag:e.tagName,type:e.type,left:e.getBoundingClientRect().left,right:e.getBoundingClientRect().right,width:e.getBoundingClientRect().width,height:e.getBoundingClientRect().height,fontSize:parseFloat(getComputedStyle(e).fontSize),scroll:e.scrollWidth,client:e.clientWidth})),montserrat:[...document.fonts].some(f=>f.family==='Montserrat'&&f.status==='loaded')};
+     const shell=document.querySelector('#auth .auth-shell'),story=document.querySelector('#auth .auth-story'),formWrap=document.querySelector('#auth .auth-form-wrap');
+     return {viewport:innerWidth,scrollY,body:document.body.scrollWidth,root:document.documentElement.scrollWidth,shell:shell.getBoundingClientRect().toJSON(),story:story.getBoundingClientRect().toJSON(),formWrap:formWrap.getBoundingClientRect().toJSON(),storyBackground:getComputedStyle(story).backgroundImage,storyColor:getComputedStyle(story).backgroundColor,formColor:getComputedStyle(formWrap).backgroundColor,form:f.getBoundingClientRect().toJSON(),submitTop:document.querySelector('#auth-submit').getBoundingClientRect().top+scrollY,mobileWelcomeVisible:!!mobile.getClientRects().length,desktopMascotVisible:!!desktop.getClientRects().length,mascots,pairBounds:pair.getBoundingClientRect().toJSON(),headlineBounds:headline.toJSON(),controls:visible.map(e=>({id:e.id||e.dataset.auth||e.textContent.trim().slice(0,30),tag:e.tagName,type:e.type,left:e.getBoundingClientRect().left,right:e.getBoundingClientRect().right,width:e.getBoundingClientRect().width,height:e.getBoundingClientRect().height,fontSize:parseFloat(getComputedStyle(e).fontSize),scroll:e.scrollWidth,client:e.clientWidth})),montserrat:[...document.fonts].some(f=>f.family==='Montserrat'&&f.status==='loaded')};
     });
     assert.ok(geometry.body<=width+1&&geometry.root<=width+1,mode+' '+width+' page overflow '+JSON.stringify(geometry));
     assert.ok(geometry.form.left>=-1&&geometry.form.right<=width+1,mode+' '+width+' form clipped');
@@ -81,30 +82,41 @@ const server=http.createServer((req,res)=>{
     }
     assert.equal(geometry.mobileWelcomeVisible,width<=960,'Mobile welcome matches layout');
     assert.equal(geometry.desktopMascotVisible,width>960,'Desktop mascot pair matches its layout');
-    if(width<=960){
-     assert.equal(geometry.mascots.length,1,'Mobile welcome uses one illustration containing both Catatau versions');
-     assert.ok(geometry.mascots[0].duo&&geometry.mascots[0].src==='assets/catatau-duo-welcome.webp','Mobile welcome uses the side-by-side waving duo');
-     assert.match(geometry.mascots[0].alt,/abra[cç]|abra[sç]ad/i,'Duo alternative text describes their embrace');
-     assert.match(geometry.mascots[0].alt,/acen|dando tchau/i,'Duo alternative text describes their greeting');
-    }else{
-     assert.equal(geometry.mascots.length,2,'Desktop welcome preserves both individual versions of Catatau');
-     assert.ok(geometry.mascots.some(image=>image.normal&&image.src==='assets/catatau.webp'),'Normal Catatau is included in the desktop welcome');
-     assert.ok(geometry.mascots.some(image=>image.sheriff&&image.src==='assets/catatau-sheriff.webp'),'Sheriff Catatau is included in the desktop welcome');
-    }
+    assert.equal(geometry.mascots.length,1,'Welcome uses one illustration containing both Catatau versions');
+    assert.ok(geometry.mascots[0].duo&&geometry.mascots[0].src==='assets/catatau-duo-welcome.webp','Welcome uses the side-by-side waving duo');
+    assert.match(geometry.mascots[0].alt,/abra[cç]|abra[sç]ad/i,'Duo alternative text describes their embrace');
+    assert.match(geometry.mascots[0].alt,/acen|dando tchau/i,'Duo alternative text describes their greeting');
     assert.ok(geometry.mascots.every(image=>image.loaded&&image.fixed&&image.visible),'Both welcome mascots load without choosing firm mode');
     for(const image of geometry.mascots)assert.ok(image.bounds.left>=-1&&image.bounds.right<=width+1&&image.bounds.width>40&&image.bounds.height>40,'Both Catatau versions remain visible inside the viewport');
-    if(width>960)assert.ok(geometry.pairBounds.top>=geometry.headlineBounds.bottom,'Desktop Catatau pair must not overlap its welcome copy');
+    if(width>960){
+     const {shell,story,formWrap}=geometry;
+     assert.ok(shell.width<=1121,'Desktop login card remains compact on wide screens');
+     assert.ok(Math.abs(shell.left+shell.width/2-width/2)<=1,'Desktop login card is horizontally centered');
+     assert.ok(story.left>=shell.left-1&&formWrap.right<=shell.right+1,'Both desktop panels remain inside the login card');
+     assert.ok(Math.abs(story.right-formWrap.left)<=1,'Welcome and form panels meet without a gap or overlap');
+     assert.ok(Math.abs(story.top-formWrap.top)<=1&&Math.abs(story.bottom-formWrap.bottom)<=1,'Desktop panels share the card height');
+     assert.ok(geometry.form.left>=formWrap.left-1&&geometry.form.right<=formWrap.right+1,'Desktop form stays inside the right panel');
+     assert.ok(shell.top+geometry.scrollY>=0,'Desktop card starts within the reachable document');
+     if(width>=1440&&height>=900&&mode==='login')assert.ok(shell.height<=height-64+1,'Desktop login card fits vertically with comfortable outer margins');
+     if(shell.height<=height-64)assert.ok(Math.abs(shell.top+geometry.scrollY+shell.height/2-height/2)<=1,'Desktop card is vertically centered when it fits');
+     assert.ok(geometry.pairBounds.top>=geometry.headlineBounds.bottom,'Desktop Catatau duo must not overlap its welcome copy');
+     if(theme==='light'){
+      assert.equal(geometry.formColor,'rgb(255, 255, 255)','Light desktop form panel remains white');
+      assert.equal(geometry.storyColor,'rgb(255, 246, 222)','Light desktop welcome retains the warm yellow panel');
+     }
+    }
     if(width>=390&&width<=430&&height>=844&&mode==='login')assert.ok(geometry.submitTop<height,'Login action must be visible before scrolling on a regular iPhone');
     if(width===390&&height===844)await page.screenshot({path:path.join(qa,'auth-'+mode+'-'+theme+'-390.png'),fullPage:true});
     if(width===320&&mode==='login')await page.screenshot({path:path.join(qa,'auth-login-'+theme+'-320.png'),fullPage:true});
     if(width===1440&&mode==='login')await page.screenshot({path:path.join(qa,'auth-desktop-'+theme+'.png'),fullPage:true});
+    if(width===2291&&mode==='login')await page.screenshot({path:path.join(qa,'auth-desktop-wide-'+theme+'.png'),fullPage:true});
     if(width===390&&height===420&&mode==='login'){
      await page.locator('#auth-password').focus();
      await page.locator('#auth-password').scrollIntoViewIfNeeded();
      const field=await page.locator('#auth-password').boundingBox();
      assert.ok(field.y>=0&&field.y+field.height<=height,'Password remains reachable with a short keyboard-sized viewport');
     }
-    results.push({width,height,theme,mode,noOverflow:true,controlsInsideViewport:true,inputsAtLeast200px:true,mobileWelcomeVisible:geometry.mobileWelcomeVisible,bothMascotsVisible:true,themeToggleAccessible:true,montserratLoaded:geometry.montserrat});
+    results.push({width,height,theme,mode,noOverflow:true,controlsInsideViewport:true,inputsAtLeast200px:true,mobileWelcomeVisible:geometry.mobileWelcomeVisible,bothMascotsVisible:true,themeToggleAccessible:true,montserratLoaded:geometry.montserrat,...(width>960?{desktopCard:{width:geometry.shell.width,height:geometry.shell.height,left:geometry.shell.left,top:geometry.shell.top+geometry.scrollY,storyWidth:geometry.story.width,formPanelWidth:geometry.formWrap.width},cardCentered:true,panelsAdjacent:true}:{})});
    }
    }
    await page.locator('[data-auth="login"]').click();

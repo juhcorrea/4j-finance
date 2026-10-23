@@ -119,13 +119,13 @@
     },
     {
       "path": "DECISOES.txt",
-      "bytes": 31254,
-      "sha256": "eadb7ed192254638131acfdc67898639b47a79792567993bd333b65d6fc37960"
+      "bytes": 31659,
+      "sha256": "cfaa65e74f1871517df1a844cf05c2a1c71f5ec4cbf4d8c79224297e04f59361"
     },
     {
       "path": "docs/CATATAU-BOAS-VINDAS.md",
-      "bytes": 2857,
-      "sha256": "04e892dc03f0ac6464d32a186989e49c971c9064c8599cc72c5a1d6a8c712bfa"
+      "bytes": 3552,
+      "sha256": "8914e4310c1568814bf08d66cc9e9d511d5deda39b80886a2dec300c473e070a"
     },
     {
       "path": "docs/CATATAU-MODO-FIRME.md",
@@ -174,8 +174,8 @@
     },
     {
       "path": "frontend/auth-responsive.css",
-      "bytes": 7118,
-      "sha256": "324cb62ca734affd3e903311364d987a062473a5e3dd143d6a851072ae93cbc4"
+      "bytes": 8606,
+      "sha256": "de29c636f1196be22acc4a3f99070a557d749b2fe1c6fcdf5c3f24ed34a41406"
     },
     {
       "path": "frontend/catatau-planner.js",
@@ -279,8 +279,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 2823937,
-      "sha256": "ae16fc812900717989f54dfe4c76f8df01c0dd0da5d9dbfd163294709931725f"
+      "bytes": 2825345,
+      "sha256": "e9828c304158a03c06beebb53f0ed679b25b944907e3ab4ad93cc91247ec60f3"
     },
     {
       "path": "marketing/ABRA-O-PORTFOLIO.html",
@@ -829,8 +829,8 @@
     },
     {
       "path": "outputs/index.html",
-      "bytes": 2823937,
-      "sha256": "ae16fc812900717989f54dfe4c76f8df01c0dd0da5d9dbfd163294709931725f"
+      "bytes": 2825345,
+      "sha256": "e9828c304158a03c06beebb53f0ed679b25b944907e3ab4ad93cc91247ec60f3"
     },
     {
       "path": "package.json",
@@ -939,8 +939,8 @@
     },
     {
       "path": "public/index.html",
-      "bytes": 2823937,
-      "sha256": "ae16fc812900717989f54dfe4c76f8df01c0dd0da5d9dbfd163294709931725f"
+      "bytes": 2825345,
+      "sha256": "e9828c304158a03c06beebb53f0ed679b25b944907e3ab4ad93cc91247ec60f3"
     },
     {
       "path": "public/privacidade.html",
@@ -964,13 +964,13 @@
     },
     {
       "path": "PUBLICACAO.json",
-      "bytes": 28803,
-      "sha256": "59f6da1cf070aeec0898f520fc96a1eaf4114df60e711884eddc7c6056f64680"
+      "bytes": 30361,
+      "sha256": "5fbfe9068f61dd655fa7459d3516c671e14f35f7b047e6d2a4dd8ffffa0fbfde"
     },
     {
       "path": "PUBLICAR-NO-CLOUDFLARE.md",
-      "bytes": 28185,
-      "sha256": "8a3154fbe3912a92313fea807e211f36e782a028de30432d0aa4a0e384c7d7b5"
+      "bytes": 28685,
+      "sha256": "1a93a320d7be5e76331e6120bcd075719f615c923721a8c8e4bf34c7b4b695a3"
     },
     {
       "path": "qa-production-ui.cjs",
@@ -979,8 +979,8 @@
     },
     {
       "path": "qa/auth-responsive.test.cjs",
-      "bytes": 12841,
-      "sha256": "b6d892fe98c26462bd061a11afe94551c9fd1430d1d588e85543cc8218e71c5c"
+      "bytes": 14690,
+      "sha256": "abc00349bfab1adff15862cf653cf1469f8c38b03bb41aeadf41d4b864c06086"
     },
     {
       "path": "qa/catatau-planner.test.cjs",
@@ -999,8 +999,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 18924,
-      "sha256": "dbfa9866398727fd7ff244eb7bbd868335a5100b783ed86ead2d0c760c9c3061"
+      "bytes": 19424,
+      "sha256": "665b6dee3caa35edf5e2b4bb00d7d507d46dfd7fe63395ebc85bea1a71f268c9"
     },
     {
       "path": "scripts/build-cloudflare.cjs",
@@ -1119,8 +1119,8 @@
     },
     {
       "path": "source/base.html",
-      "bytes": 2757737,
-      "sha256": "d83a58309eb3fc8c513216d0e02fa4e8f1321ee165570558e077f660e5b858ef"
+      "bytes": 2757657,
+      "sha256": "badb5ab219c0c799e7a243d32124b6c26837d1347a13a80a5b12dcbec559425c"
     },
     {
       "path": "source/README.md",
@@ -1129,8 +1129,8 @@
     },
     {
       "path": "TESTES.txt",
-      "bytes": 27332,
-      "sha256": "f9b083362179bc936feef00f18304ab7b3b5800bb2c144a9225fd8328d9fd456"
+      "bytes": 28545,
+      "sha256": "b71b8ffde23489e9922d13c373876fd7f68ec60eda174ad11f0080c99168137a"
     },
     {
       "path": "ui-qa.cjs",
