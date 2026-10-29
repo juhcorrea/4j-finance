@@ -1,7 +1,7 @@
 'use strict';
 const fs = require('node:fs'), path = require('node:path');
 const esbuild = require('esbuild');
-const PUBLIC_FILES = Object.freeze(['_headers', 'ads.txt', 'index.html', 'sobre.html', 'guia.html', 'privacidade.html', 'contato.html', 'public-site.css', 'public-ads.js', 'consent.css', 'consent.js', 'assets/4j-symbol.svg', 'assets/catatau.webp', 'assets/catatau-sheriff.webp', 'assets/catatau-duo-welcome.webp']);
+const PUBLIC_FILES = Object.freeze(['_headers', 'ads.txt', 'robots.txt', 'sitemap.xml', '404.html', 'index.html', 'conheca.html', 'conheca.css', 'ferramentas.html', 'ferramentas.css', 'ferramentas.js', 'ferramentas-core.js', 'sobre.html', 'guia.html', 'privacidade.html', 'contato.html', 'public-site.css', 'public-ads.js', 'consent.css', 'consent.js', 'assets/4j-symbol.svg', 'assets/catatau.webp', 'assets/catatau-sheriff.webp', 'assets/catatau-duo-welcome.webp']);
 const PUBLIC_VARS = Object.freeze(['FIREBASE_PROJECT_ID', 'FIREBASE_WEB_API_KEY', 'MP_COLLECTOR_ID', 'MP_APPLICATION_ID', 'MP_LIVE_MODE', 'MP_TEST_FIREBASE_PROJECT_ID', 'MP_PRODUCTION_FIREBASE_PROJECT_ID', 'PAYMENTS_ENABLED', 'ALLOWED_ORIGINS']);
 const EXECUTOR_FILES = Object.freeze(['index.mjs']);
 const TEST_HTML = '<!doctype html><html lang="pt-BR"><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><title>4J Finance — teste Pix</title><h1>Ambiente de teste do Pix</h1><p>Usado apenas para validar pagamentos fictícios. Nenhum valor real é cobrado aqui.</p></html>';

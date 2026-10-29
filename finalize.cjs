@@ -2,7 +2,7 @@
 // Public pages are maintained as source. This replaces the historical one-off generator,
 // so running finalize never overwrites reviewed copy or cookie controls.
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),assert=require('node:assert/strict');
-const pub=path.join(__dirname,'public'),names=['sobre.html','guia.html','privacidade.html','contato.html'];
+const pub=path.join(__dirname,'public'),names=['conheca.html','ferramentas.html','sobre.html','guia.html','privacidade.html','contato.html'];
 for(const name of names){
  const html=fs.readFileSync(path.join(pub,name),'utf8');
  assert.equal((html.match(/<h1\b/g)||[]).length,1,name+' must have one heading');
@@ -23,6 +23,6 @@ const expectedMonetization=readPublicConfig(__dirname);
 assert.deepEqual(embeddedConfig(app),expectedMonetization);
 assert.equal(expectedMonetization.publicPayments&&expectedMonetization.pilotEnabled,false);
 assert.equal(expectedMonetization.adsEnabled,false);
-for(const name of ['public-ads.js','consent.js'])new vm.Script(fs.readFileSync(path.join(pub,name),'utf8'));
+for(const name of ['public-ads.js','consent.js','ferramentas.js','ferramentas-core.js'])new vm.Script(fs.readFileSync(path.join(pub,name),'utf8'));
 console.log(JSON.stringify({publicPages:names.length,scriptsValid:true,adsEnabled:false,paymentsEnabled:expectedMonetization.publicPayments,pixPilotEnabled:expectedMonetization.pilotEnabled}));
 

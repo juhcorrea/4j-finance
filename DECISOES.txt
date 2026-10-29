@@ -1,3 +1,6 @@
+29/10/2026 — Correções para nova revisão do AdSense
+A responsável informou a recusa por Conteúdo de baixo valor e autorizou fazer o necessário. Melhorar a utilidade pública antes do login com apresentação, calculadoras sem cadastro e exemplos próprios; corrigir informações do Pix e rastreamento. Preservar identidade, dados privados, benefício sem anúncios e plano gratuito. Validar, sincronizar o GitHub e publicar as melhorias na Cloudflare. Aprovação ainda não concedida; nenhuma garantia de aprovação e anúncios permanecem desativados.
+
 23/10/2026 — Aba Planejar e supervisão voluntária do Catatau
 A responsável percebeu que o planejamento aparecia só na conversa e pediu uma aba própria. Também pediu que o Catatau supervisione para ajudar quem perde o controle das despesas, deixando a solução por conta do projeto. Criar acesso direto Planejar, formulário de avaliação e Ronda do mês com alertas acionáveis baseados nos registros autorizados. Modo firme voluntário acompanha mudanças dos registros enquanto o app está aberto e mostra avisos no Início; orientar com humor leve, sem culpa. Não alegar integração bancária, impedir o registro de despesas ou enviar notificações externas. Preservar plano gratuito e isolamento entre perfis.
 

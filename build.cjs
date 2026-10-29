@@ -17,7 +17,11 @@ replaceOnce(plannerMarker,['catatau-planner.js','planning-watch.js','planning-pa
 const marker='if(document.modelContext?.registerTool)';
 replaceOnce(marker,fs.readFileSync(path.join(base,'frontend/monetization.js'),'utf8')+'\n'+marker);
 const note='<small class="muted">A demonstração usa apenas dados fictícios.</small>';
-replaceOnce(note,note+'<nav class="auth-public-links" aria-label="Conheça o 4J Finance"><a class="text-button" href="sobre.html">Conheça o 4J</a><a class="text-button" href="guia.html">Guia financeiro</a><a class="text-button" href="privacidade.html">Privacidade e cookies</a><a class="text-button" href="contato.html">Atendimento</a></nav>');
+replaceOnce(note,note+'<nav class="auth-public-links" aria-label="Conheça o 4J Finance"><a class="text-button" href="conheca.html">Conheça o 4J</a><a class="text-button" href="ferramentas.html">Ferramentas gratuitas</a><a class="text-button" href="guia.html">Guia financeiro</a><a class="text-button" href="privacidade.html">Privacidade e cookies</a><a class="text-button" href="contato.html">Atendimento</a></nav>');
+const authIntro='<p>Entre para acessar as finanças da sua família.</p>';
+replaceOnce(authIntro,authIntro+'<nav class="auth-open-access" aria-label="Explore sem cadastro"><a href="conheca.html">Conhecer o 4J</a><span aria-hidden="true">·</span><a href="ferramentas.html">Calcular sem cadastro</a></nav>');
+const storyIntro='<p>Organize o presente e construa o futuro de quem você ama.</p>';
+replaceOnce(storyIntro,storyIntro+'<nav class="auth-discover-links" aria-label="Explore sem cadastro"><a href="conheca.html">Conhecer o 4J →</a><a href="ferramentas.html">Calcular sem cadastro →</a></nav>');
 let inlineScripts=0;for(const match of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)){if(match[2].trim()){new vm.Script(match[2]);inlineScripts++;}}
 if(/adsbygoogle\.js/.test(html))throw new Error('AdSense script must not execute in the private finance application');
 if(JSON.stringify(embeddedConfig(html))!==JSON.stringify(monetizationConfig)||monetizationConfig.adsEnabled!==false)throw new Error('Pix must match the reviewed build mode and ads must remain disabled');

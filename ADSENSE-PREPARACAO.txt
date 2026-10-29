@@ -1,3 +1,7 @@
+ATUALIZAÇÃO DE 29/10/2026 — STATUS ATUAL
+O AdSense recusou esta revisão por Conteúdo de baixo valor. Propriedade verificada; aprovação ainda não concedida. A responsável autorizou as melhorias públicas. Apresentação, calculadoras sem cadastro, guia revisado e correções técnicas estão documentados em docs/ADSENSE-CONTEUDO-PUBLICO.md. Pix está ativo e é opcional; anúncios continuam OFF. As menções abaixo a Pix futuro são histórico das etapas anteriores, não o estado atual. Nova revisão deve ocorrer após a validação e conferência das mudanças publicadas.
+
+HISTÓRICO DA PREPARAÇÃO
 4J Finance — preparação do AdSense (atualizada em 19/10/2026)
 
 ENTREGA DESTA ETAPA

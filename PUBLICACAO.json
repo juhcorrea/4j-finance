@@ -1,7 +1,7 @@
 {
-  "publishedAt": "2026-10-23T17:50:11.978077Z",
+  "publishedAt": "2026-10-29T11:33:48.457586Z",
   "productionUrl": "https://4jfinance.pages.dev",
-  "deploymentUrl": "https://4122d058.4jfinance.pages.dev",
+  "deploymentUrl": "https://0ae3010b.4jfinance.pages.dev",
   "firebaseAuthorizedDomain": true,
   "firestoreRulesPublished": true,
   "productionPrivacyChecks": 38,
@@ -13,6 +13,8 @@
   "customDomainStatus": "active",
   "publicCookiesPublished": true,
   "publicPages": [
+    "conheca",
+    "ferramentas",
     "sobre",
     "guia",
     "privacidade",
@@ -25,8 +27,8 @@
   "customDomainPublicPagesVerified": true,
   "adsenseReviewRequested": true,
   "adsenseReviewRequestedAt": "2026-10-15T14:10:00-03:00",
-  "adsenseReviewStatus": "preparando",
-  "adsenseReviewEvidence": "Captura do painel enviada pela usuaria em 19/10/2026: status Preparando, propriedade verificada e revisao solicitada em 15/10/2026 14:10.",
+  "adsenseReviewStatus": "reprovado_conteudo_de_baixo_valor",
+  "adsenseReviewEvidence": "Capturas do painel enviadas pela responsável em 29/10/2026: propriedade verificada; site não pronto para anúncios; Conteúdo de baixo valor. Nenhuma nova revisão solicitada nesta etapa.",
   "googleCmpMessagePublished": true,
   "googleCmpMessagePublishedDate": "2026-10-15",
   "googleCmpMessageEvidence": "Captura enviada pela usuaria: mensagem de regulamentacoes europeias para 4jfinance.com.br com status Gravacao publicada e chave Publicar ativa.",
@@ -69,7 +71,7 @@
   "pixCloudflareTestWebhookDiagnosticsPublished": false,
   "pixCloudflareTestPaidStatusSmokeDeploymentUrl": "https://c685b5c9.4jfinance-pix-test.pages.dev",
   "catatauPlannerPublished": true,
-  "productionIndexSha256": "748303500c57114091be0e58ac1be95b4579e110380786670e2d8fffcdbcf1e9",
+  "productionIndexSha256": "03d2b2f06f4613e0baaf2ddaf2203785bef052e90162ad8d713ddd57ed7e3524",
   "pixLegacyFirebaseFunctionsVerified": false,
   "pixCloudflareTestFirebaseAuthenticationVerified": true,
   "pixProductionSecretsConfigured": true,
@@ -105,7 +107,7 @@
   "pixPollingFailureBackoffPrepared": true,
   "pixPollingFailureBackoffTestsPassed": 62,
   "pixPollingFailureBackoffPublished": true,
-  "preparedIndexSha256": "f8dbc483f10c83810539bf25a7904950643f694ba738d4a142c6c7ba6a13c821",
+  "preparedIndexSha256": "03d2b2f06f4613e0baaf2ddaf2203785bef052e90162ad8d713ddd57ed7e3524",
   "pixCloudflareTestMcpTemporaryOAuthRead": {
     "date": "2026-10-19",
     "scope": "read",
@@ -303,7 +305,7 @@
       "productionDeploymentChanged": false
     }
   },
-  "productionDeploymentId": "4122d058-b23c-4a84-bb5d-3219aa9d10de",
+  "productionDeploymentId": "0ae3010b-390e-400e-9625-f0b2c67b5d32",
   "productionPublicationRecordedAt": "2026-10-23T17:50:23.815Z",
   "productionPublicationHelperResult": {
     "ok": true,
@@ -792,5 +794,20 @@
     ],
     "paidPlanChanged": false,
     "financialOperationsPerformed": false
+  },
+  "adsenseLastResultReceivedDate": "2026-10-29",
+  "adsenseApprovalConfirmed": false,
+  "publicContentImprovement": {
+    "published": true,
+    "date": "2026-10-29",
+    "verifiedAt": "2026-10-29T11:34:25.492Z",
+    "deploymentId": "0ae3010b-390e-400e-9625-f0b2c67b5d32",
+    "publicPages": 6,
+    "noLoginTools": 3,
+    "publicFilesVerified": 23,
+    "pixConfigurationPreserved": true,
+    "executorPreserved": true,
+    "adsEnabled": false,
+    "newReviewRequested": false
   }
 }

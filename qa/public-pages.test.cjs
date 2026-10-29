@@ -37,7 +37,7 @@ const server=http.createServer((req,res)=>{
    assert.match(g.font,/Montserrat/,label+' typeface');
  }
  try{
-  for(const width of [320,390,1440])for(const name of ['sobre','guia','privacidade','contato']){
+  for(const width of [320,390,1440])for(const name of ['conheca','ferramentas','sobre','guia','privacidade','contato']){
     const ctx=await context(width),page=await ctx.newPage();await open(page,name);await fit(page,width,name);
     assert.equal(await page.locator('main h1').count(),1);
     assert.equal(await page.locator('.fourj-consent-banner').isVisible(),true);
@@ -95,7 +95,8 @@ const server=http.createServer((req,res)=>{
   {
     const ctx=await context(320),page=await ctx.newPage();await page.goto(origin+'/index.html',{waitUntil:'networkidle'});
     await page.locator('#auth-form').waitFor();await fit(page,320,'app login');
-    assert.equal(await page.locator('.auth-public-links a').count(),4);
+    assert.equal(await page.locator('.auth-public-links a').count(),5);
+    assert.equal(await page.locator('.auth-open-access a').count(),2);
     assert.equal(await page.evaluate(()=>typeof window.FourJPublicAds),'undefined');
     results.push({case:'private app login links and no ad loader',passed:true});await ctx.close();
   }

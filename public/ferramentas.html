@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#2E5372">
+<meta name="description" content="Planeje o mês, calcule o prazo de uma meta e compare parcelas com o preço à vista. Ferramentas gratuitas do 4J Finance, com exemplos e sem cadastro.">
+<meta name="google-adsense-account" content="ca-pub-9462093834252455">
+<link rel="canonical" href="https://4jfinance.com.br/ferramentas">
+<title>Ferramentas para planejar seu dinheiro · 4J Finance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="./assets/4j-symbol.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./public-site.css">
+<link rel="stylesheet" href="./ferramentas.css">
+<link rel="stylesheet" href="./consent.css">
+<script defer src="./consent.js"></script>
+<script defer src="./ferramentas-core.js"></script>
+<script defer src="./ferramentas.js"></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<header class="site-header"><div class="top wrap"><a class="brand" href="./conheca.html" aria-label="4J Finance, início público"><img src="./assets/4j-symbol.svg" width="52" height="34" alt="4J"><span>finance<small>JUNTOS, MAIS LONGE.</small></span></a><nav class="main-nav" aria-label="Navegação principal"><a href="./conheca.html">Conheça</a><a href="./guia.html">Guia</a><a href="./ferramentas.html" aria-current="page">Ferramentas</a><a href="./sobre.html">Sobre</a><a href="./contato.html">Contato</a><a class="button" href="./index.html">Entrar no 4J</a></nav></div></header>
+<main id="conteudo" class="wrap">
+<section class="tools-hero" aria-labelledby="titulo-ferramentas"><div><p class="eyebrow">UM PLANO COMEÇA COM UMA BOA PERGUNTA</p><h1 id="titulo-ferramentas">Antes de decidir,<br><em>faça as contas com o Catatau.</em></h1><p class="lead">Quanto sobra no plano do mês? Em quanto tempo chego à minha meta? Quanto vou pagar de verdade? Explore três contas que ajudam a enxergar o próximo passo.</p><nav class="tools-index" aria-label="Escolha uma ferramenta"><a href="#orcamento">01 · Meu mês</a><a href="#objetivo">02 · Minha meta</a><a href="#parcelamento">03 · Minha compra</a></nav></div><div class="tools-mascot"><img src="./assets/catatau.webp" width="245" height="310" alt="Catatau acenando para você"></div></section>
+<p class="tools-note"><strong>Gratuito e sem cadastro.</strong> Os valores digitados são calculados neste navegador, não são enviados ao 4J nem salvos na sua conta. Use “Limpar” ao terminar. Os exemplos são fictícios e você pode alterá-los.</p>
+<noscript><div class="status"><p>Ative o JavaScript para usar as calculadoras. Os campos ficam desativados até que o cálculo local esteja disponível. As explicações e os exemplos abaixo continuam acessíveis.</p></div></noscript>
+
+<section id="orcamento" class="tool-section" aria-labelledby="titulo-orcamento"><div class="tool-title"><span class="section-number" aria-hidden="true">01</span><div><h2 id="titulo-orcamento">O que cabe no plano do mês?</h2><p>Monte uma visão completa do mês. Use valores totais do período, incluindo o que já pagou e o que ainda pretende pagar.</p></div></div><div class="tool-layout">
+<form class="tool-form" data-tool="budget" autocomplete="off" novalidate>
+<fieldset data-tool-controls disabled><legend class="tool-legend">Valores do mesmo mês, em reais</legend><div class="tool-fields">
+<div class="tool-field"><label for="budget-income">Renda do mês (R$)</label><input id="budget-income" name="income" type="text" inputmode="decimal" placeholder="Ex.: 3.000,00" aria-describedby="budget-income-help"><small id="budget-income-help">Considere a renda líquida que você escolheu usar neste plano.</small></div>
+<div class="tool-field"><label for="budget-bills">Contas e parcelas (R$)</label><input id="budget-bills" name="bills" type="text" inputmode="decimal" placeholder="Ex.: 1.650,00" aria-describedby="budget-bills-help"><small id="budget-bills-help">Aluguel, serviços e parcelas, sem repetir os gastos do campo seguinte.</small></div>
+<div class="tool-field"><label for="budget-daily">Gastos do dia a dia (R$)</label><input id="budget-daily" name="daily" type="text" inputmode="decimal" placeholder="Ex.: 850,00" aria-describedby="budget-daily-help"><small id="budget-daily-help">Mercado, transporte e outros gastos previstos para o mês inteiro.</small></div>
+<div class="tool-field"><label for="budget-goals">Valor separado para objetivos (R$)</label><input id="budget-goals" name="goals" type="text" inputmode="decimal" placeholder="Ex.: 300,00" aria-describedby="budget-goals-help"><small id="budget-goals-help">Reserva ou meta deste mês. Digite 0 se não houver valor separado.</small></div>
+</div><div class="tool-actions"><button class="button" type="submit">Calcular meu plano</button></div><div class="tool-secondary-actions"><button type="button" data-example>Carregar exemplo fictício</button><button type="reset">Limpar campos</button></div></fieldset>
+<p class="tool-input-status" role="status" aria-live="polite"></p><p class="tool-error" role="alert" tabindex="-1" hidden></p>
+<div id="budget-result" class="tool-result" role="region" aria-label="Resultado do plano mensal" tabindex="-1" hidden></div>
+</form>
+<div class="tool-explanation"><h3>Primeiro, combine o que cada número significa</h3><p>A conta é: renda menos contas e parcelas, menos gastos do dia a dia, menos o que você separou para objetivos. A diferença descreve apenas esse conjunto de valores; não equivale ao saldo da sua conta bancária.</p><ol><li>Use o mesmo mês em todos os campos. Não misture a renda do mês inteiro com apenas os gastos de uma semana.</li><li>Se as compras do cartão já estão em “Gastos do dia a dia”, não some a fatura inteira novamente em “Contas e parcelas”.</li><li>Uma renda prevista pode chegar depois de uma conta vencer. Confira também as datas, especialmente se recebe por trabalhos ou comissões.</li></ol><div class="example"><p><strong>Exemplo fictício:</strong> R$ 3.000 de renda − R$ 1.650 de contas − R$ 850 do dia a dia − R$ 300 para objetivos = R$ 200 de diferença. Uma despesa esquecida de R$ 250 já faria o plano faltar R$ 50.</p></div></div>
+</div></section>
+
+<section id="objetivo" class="tool-section" aria-labelledby="titulo-objetivo"><div class="tool-title"><span class="section-number" aria-hidden="true">02</span><div><h2 id="titulo-objetivo">Quantos passos faltam para minha meta?</h2><p>Escolha um valor e uma contribuição mensal possível. O resultado mostra quantas contribuições são necessárias, sem supor rendimentos.</p></div></div><div class="tool-layout">
+<form class="tool-form" data-tool="goal" autocomplete="off" novalidate>
+<fieldset data-tool-controls disabled><legend class="tool-legend">Seu objetivo, em reais</legend><div class="tool-fields">
+<div class="tool-field"><label for="goal-target">Valor do objetivo (R$)</label><input id="goal-target" name="target" type="text" inputmode="decimal" placeholder="Ex.: 1.200,00"></div>
+<div class="tool-field"><label for="goal-saved">Quanto já está guardado (R$)</label><input id="goal-saved" name="saved" type="text" inputmode="decimal" placeholder="Ex.: 250,00" aria-describedby="goal-saved-help"><small id="goal-saved-help">Use somente o que está reservado para essa meta.</small></div>
+<div class="tool-field"><label for="goal-monthly">Contribuição por mês (R$)</label><input id="goal-monthly" name="monthly" type="text" inputmode="decimal" placeholder="Ex.: 150,00" aria-describedby="goal-monthly-help"><small id="goal-monthly-help">Confira no plano do mês se esse compromisso cabe.</small></div>
+</div><div class="tool-actions"><button class="button" type="submit">Calcular minha meta</button></div><div class="tool-secondary-actions"><button type="button" data-example>Carregar exemplo fictício</button><button type="reset">Limpar campos</button></div></fieldset>
+<p class="tool-input-status" role="status" aria-live="polite"></p><p class="tool-error" role="alert" tabindex="-1" hidden></p>
+<div id="goal-result" class="tool-result" role="region" aria-label="Resultado da meta" tabindex="-1" hidden></div>
+</form>
+<div class="tool-explanation"><h3>Um prazo possível vale mais que uma promessa apertada</h3><p>Subtraímos o valor guardado do objetivo e dividimos o restante pela contribuição mensal. Se não der um número inteiro, arredondamos a quantidade de contribuições para cima. A última pode ser menor.</p><div class="example"><p><strong>Exemplo fictício:</strong> para uma meta de R$ 1.200, com R$ 250 guardados, faltam R$ 950. Contribuindo R$ 150 por mês, são seis contribuições de R$ 150 e uma última de R$ 50: sete contribuições no total.</p></div><p>O calendário depende de quando você fará a primeira contribuição. Este cálculo não promete uma data nem considera juros, inflação ou retiradas. Se o preço subir ou algum mês ficar apertado, atualize o valor guardado e refaça o plano.</p><p>Não conte o mesmo dinheiro para duas metas diferentes. Uma reserva para imprevistos e o valor destinado a uma compra precisam ter destinos claros.</p></div>
+</div></section>
+
+<section id="parcelamento" class="tool-section" aria-labelledby="titulo-parcelamento"><div class="tool-title"><span class="section-number" aria-hidden="true">03</span><div><h2 id="titulo-parcelamento">À vista ou parcelado: qual é o total?</h2><p>Compare a mesma compra nas duas condições, incluindo entrada e todos os encargos que já estiverem nas parcelas.</p></div></div><div class="tool-layout">
+<form class="tool-form" data-tool="installments" autocomplete="off" novalidate>
+<fieldset data-tool-controls disabled><legend class="tool-legend">Condições oferecidas para a mesma compra</legend><div class="tool-fields">
+<div class="tool-field"><label for="installments-cash">Preço à vista (R$)</label><input id="installments-cash" name="cash" type="text" inputmode="decimal" placeholder="Ex.: 900,00"></div>
+<div class="tool-field"><label for="installments-down">Entrada do parcelamento (R$)</label><input id="installments-down" name="down" type="text" inputmode="decimal" placeholder="Ex.: 100,00" aria-describedby="installments-down-help"><small id="installments-down-help">Se não houver entrada, digite 0.</small></div>
+<div class="tool-field"><label for="installments-payment">Valor de cada parcela (R$)</label><input id="installments-payment" name="payment" type="text" inputmode="decimal" placeholder="Ex.: 90,00"></div>
+<div class="tool-field"><label for="installments-count">Quantidade de parcelas</label><input id="installments-count" name="installments" type="text" inputmode="numeric" placeholder="Ex.: 10" aria-describedby="installments-count-help"><small id="installments-count-help">De 1 a 360 parcelas de mesmo valor.</small></div>
+</div><div class="tool-actions"><button class="button" type="submit">Comparar os preços</button></div><div class="tool-secondary-actions"><button type="button" data-example>Carregar exemplo fictício</button><button type="reset">Limpar campos</button></div></fieldset>
+<p class="tool-input-status" role="status" aria-live="polite"></p><p class="tool-error" role="alert" tabindex="-1" hidden></p>
+<div id="installments-result" class="tool-result" role="region" aria-label="Comparação do custo da compra" tabindex="-1" hidden></div>
+</form>
+<div class="tool-explanation"><h3>Uma parcela pequena também deixa um compromisso</h3><p>Multiplicamos o valor da parcela pela quantidade e somamos a entrada. Depois comparamos esse total com o preço à vista. Para a comparação fazer sentido, use o mesmo produto, quantidade, frete e serviços nas duas condições.</p><div class="example"><p><strong>Exemplo fictício:</strong> R$ 100 de entrada e dez parcelas de R$ 90 somam R$ 1.000. Diante do preço à vista de R$ 900, o parcelamento custa R$ 100 a mais, cerca de 11,11% sobre o preço à vista.</p></div><p>Essa diferença percentual não é a taxa de juros mensal nem o custo efetivo total (CET). Se houver tarifas separadas, seguros ou parcelas de valores diferentes, esta conta simples não representa todo o contrato.</p><p>Mesmo quando o total é igual, confira se cada parcela cabe nos meses seguintes. Pagar à vista também pode deixar pouco para contas próximas. O cálculo ajuda a comparar preços; a decisão depende do seu plano e das condições reais da compra.</p></div>
+</div></section>
+
+<section class="tools-method" aria-labelledby="titulo-metodo"><h2 id="titulo-metodo">Como o Catatau faz essas contas</h2><p>As ferramentas usam aritmética em centavos, sem consultar banco, renda ou registros do aplicativo. Campos vazios ficam pendentes: eles não são tratados como zero. Digite 0 quando esse for realmente o valor. Os resultados mudam apenas quando você calcula novamente.</p><p>As contas são educativas e dependem das informações digitadas. Não avaliam crédito, não recomendam investimentos e não autorizam uma compra. Para acompanhar receitas, despesas e metas ao longo do tempo, o aplicativo oferece registros por perfil e a aba Planejar.</p><p>Se perceber um erro de cálculo, envie a situação com <strong>valores fictícios</strong> pelo <a href="./contato.html">Atendimento</a>. Para aprender a organizar recorrências, parcelas e acertos sem duplicidade, continue no <a href="./guia.html">guia do 4J Finance</a>.</p></section>
+<p class="tools-date">Ferramentas e exemplos preparados pelo 4J Finance · Atualização: 29 de outubro de 2026.</p>
+<div class="bottom-cta tools-bottom"><p><strong>Agora experimente um mês organizado.</strong><br>Conheça o aplicativo com dados fictícios, sem criar conta.</p><a class="button" href="./index.html?demo=1">Experimentar com o Catatau</a></div>
+</main>
+<footer class="site-footer"><div class="wrap"><div class="footer-top"><div><strong>4J Finance</strong><br>Juntos, mais longe.</div><nav class="footer-nav" aria-label="Links do rodapé"><a href="./conheca.html">Conheça</a><a href="./guia.html">Guia</a><a href="./ferramentas.html">Ferramentas</a><a href="./sobre.html">Sobre</a><a href="./contato.html">Contato</a><a href="./privacidade.html">Privacidade</a><button type="button" data-cookie-settings>Preferências de cookies</button></nav></div><p class="footer-note">Organização financeira para o dia a dia. Os exemplos são fictícios; adapte os planos à sua realidade.</p></div></footer>
+</body>
+</html>
