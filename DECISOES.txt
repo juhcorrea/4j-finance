@@ -1,3 +1,11 @@
+30/10/2026 — Botão de senha publicado e conferido
+
+Login/cadastro com mostrar/ocultar senha publicado em 1ac188f7-dd08-4512-b516-7cb3d69090ef; conferência independente do domínio oficial concluída em 2026-10-30T19:06:23.804Z. Passaram 528 testes, 16 verificações de privacidade, 56 cenários da interface e reprodução do build. Pix ativo, anúncios desativados, executor/configurações preservados. Nenhuma conta real foi alterada, nenhum e-mail de senha foi enviado e nenhum plano foi contratado. Gestão de nome/e-mail/redefinição segue em preparação separada.
+
+30/10/2026 — Senha visível e gestão de contas
+
+A responsável pediu um botão para mostrar/ocultar a senha no login e na criação de conta. A visibilidade começa oculta, não persiste e volta a ocultar ao enviar ou trocar de formulário. Preservar teclado, seleção e rascunho; não registrar senhas. Também solicitou editar nome/e-mail e enviar redefinição de senha na administração da plataforma. Essa segunda etapa exige atualização na autenticação, confirmação explícita por ação e preservação do isolamento financeiro; não representa autorização para alterar contas reais durante testes.
+
 29/10/2026 — Correções para nova revisão do AdSense
 A responsável informou a recusa por Conteúdo de baixo valor e autorizou fazer o necessário. Melhorar a utilidade pública antes do login com apresentação, calculadoras sem cadastro e exemplos próprios; corrigir informações do Pix e rastreamento. Preservar identidade, dados privados, benefício sem anúncios e plano gratuito. Validar, sincronizar o GitHub e publicar as melhorias na Cloudflare. Aprovação ainda não concedida; nenhuma garantia de aprovação e anúncios permanecem desativados.
 

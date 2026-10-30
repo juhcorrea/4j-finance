@@ -1,7 +1,7 @@
 {
-  "publishedAt": "2026-10-29T11:33:48.457586Z",
+  "publishedAt": "2026-10-30T19:06:03.195607Z",
   "productionUrl": "https://4jfinance.pages.dev",
-  "deploymentUrl": "https://0ae3010b.4jfinance.pages.dev",
+  "deploymentUrl": "https://1ac188f7.4jfinance.pages.dev",
   "firebaseAuthorizedDomain": true,
   "firestoreRulesPublished": true,
   "productionPrivacyChecks": 38,
@@ -809,5 +809,41 @@
     "executorPreserved": true,
     "adsEnabled": false,
     "newReviewRequested": false
+  },
+  "passwordVisibilityPublication": {
+    "publishedAt": "2026-10-30T19:06:03.195607Z",
+    "verifiedAt": "2026-10-30T19:06:23.804Z",
+    "deploymentId": "1ac188f7-dd08-4512-b516-7cb3d69090ef",
+    "htmlSha256": "47488481d6fc285fb3aca1b86be6f0c840be0468223019cd8b97c526a5e762c1",
+    "uiCasesPassed": 56,
+    "localTestsPassed": 528,
+    "privacyChecksPassed": 16,
+    "executorUnchanged": true,
+    "configurationUnchanged": true,
+    "publicChecks": [
+      {
+        "origin": "https://4jfinance.pages.dev",
+        "htmlMatches": true,
+        "publicFilesMatch": true,
+        "httpIndex": 200,
+        "backendReady": true,
+        "anonymousRejected": true
+      },
+      {
+        "origin": "https://4jfinance.com.br",
+        "htmlMatches": true,
+        "publicFilesMatch": true,
+        "httpIndex": 200,
+        "backendReady": true,
+        "anonymousRejected": true
+      },
+      {
+        "origin": "https://1ac188f7.4jfinance.pages.dev",
+        "htmlMatches": true,
+        "publicFilesMatch": true,
+        "httpIndex": 200
+      }
+    ],
+    "paidPlanChanged": false
   }
 }

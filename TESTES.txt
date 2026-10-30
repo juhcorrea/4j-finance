@@ -1,3 +1,11 @@
+30/10/2026 — Botão de senha publicado e conferido
+
+Login/cadastro com mostrar/ocultar senha publicado em 1ac188f7-dd08-4512-b516-7cb3d69090ef; conferência independente do domínio oficial concluída em 2026-10-30T19:06:23.804Z. Passaram 528 testes, 16 verificações de privacidade, 56 cenários da interface e reprodução do build. Pix ativo, anúncios desativados, executor/configurações preservados. Nenhuma conta real foi alterada, nenhum e-mail de senha foi enviado e nenhum plano foi contratado. Gestão de nome/e-mail/redefinição segue em preparação separada.
+
+30/10/2026 — Mostrar/ocultar senha
+
+QA local aprovado em 56 cenários de login/cadastro, temas claro/escuro e telas de 320 a 2291 pixels. Conferidos nome acessível do botão, teclado, preservação de valor/seleção, ausência de envio acidental e ocultação ao trocar formulário. Captura móvel conferida visualmente. Somente valores fictícios, sem autenticação ou escrita em contas reais. Validação consolidada, publicação e Git serão registrados após confirmação.
+
 29/10/2026 — Conteúdo público para nova revisão do AdSense
 528/528 testes Node (incluindo 8 de cálculo) e 16/16 verificações mock/VM de privacidade; build reproduzível SHA-256 03d2b2f06f4613e0baaf2ddaf2203785bef052e90162ad8d713ddd57ed7e3524. QA pública 23/23 cenários em 320/390/1440 px; login 56/56 incluindo claro/escuro, texto200% e altura curta; calculadoras testadas em 3 larguras com entradas incompletas, edição, exemplo fictício, recarga e ausência de envio dos valores. Capturas de desktop/celular inspecionadas. Não houve teste em Safari/iPhone físico.
 Publicado em 0ae3010b-390e-400e-9625-f0b2c67b5d32 às 2026-10-29T11:33:48.457586Z; conferido em 2026-10-29T11:34:25.492Z. Arquivos públicos correspondentes no domínio oficial, alias e deployment; saúde Pix200 e status anônimo401. Configuração/executor preservados; nenhuma operação financeira nem mudança de plano. Após a primeira leitura pendente, houve apenas nova leitura, sem repetir a publicação.

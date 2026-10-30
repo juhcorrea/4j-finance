@@ -55,12 +55,38 @@ const server=http.createServer((req,res)=>{
    await assertTheme('dark');
    await themeToggle.click();
    await assertTheme('light');
+   await page.evaluate(()=>{window.__qaPasswordSubmits=0;document.querySelector('#auth-form').addEventListener('submit',event=>{event.preventDefault();window.__qaPasswordSubmits++;},true);});
    results.push({width,height,mode:'theme-toggle',keyboardOperable:true,persistsOnReload:true,preservesDraft:true,noFormSubmission:true});
    for(const theme of ['light','dark']){
     if(await page.evaluate(()=>document.body.classList.contains('dark'))!==(theme==='dark'))await themeToggle.click();
     await assertTheme(theme);
    for(const mode of ['login','signup']){
     await page.locator('[data-auth="'+mode+'"]').click();
+    const password=page.locator('#auth-password'),passwordToggle=page.locator('#auth-password-toggle');
+    assert.equal(await password.getAttribute('type'),'password','Changing login/signup starts with the password concealed');
+    assert.equal(await passwordToggle.getAttribute('type'),'button','Visibility control never submits the form');
+    assert.equal(await passwordToggle.getAttribute('aria-label'),'Mostrar senha');
+    assert.equal(await passwordToggle.getAttribute('aria-controls'),'auth-password');
+    await password.fill('local-password-qa');
+    await password.focus();
+    await password.evaluate(el=>el.setSelectionRange(2,8));
+    await passwordToggle.click();
+    assert.equal(await password.getAttribute('type'),'text');
+    assert.equal(await passwordToggle.getAttribute('aria-label'),'Ocultar senha');
+    assert.equal(await password.inputValue(),'local-password-qa','Toggling preserves typed value');
+    assert.deepEqual(await password.evaluate(el=>({focused:document.activeElement===el,start:el.selectionStart,end:el.selectionEnd})),{focused:true,start:2,end:8},'Pointer toggle preserves field focus and selection');
+    await passwordToggle.focus();await page.keyboard.press('Space');
+    assert.equal(await password.getAttribute('type'),'password','Keyboard can conceal password');
+    await page.keyboard.press('Enter');
+    assert.equal(await password.getAttribute('type'),'text','Keyboard can reveal password');
+    assert.equal(await page.evaluate(()=>window.__qaPasswordSubmits),0,'Visibility clicks/keys never submit');
+    const otherMode=mode==='login'?'signup':'login';
+    await page.locator('[data-auth="'+otherMode+'"]').click();
+    assert.equal(await password.getAttribute('type'),'password','Switching mode conceals the field');
+    await page.locator('[data-auth="'+mode+'"]').click();
+    assert.equal(await password.getAttribute('autocomplete'),mode==='login'?'current-password':'new-password');
+    assert.equal(await password.inputValue(),'local-password-qa','Mode changes preserve the draft');
+    await password.fill('');
     const geometry=await page.evaluate(()=>{
      const f=document.querySelector('#auth-form');
      const visible=[...f.querySelectorAll('input,button'),document.querySelector('#auth .auth-theme-toggle')].filter(e=>e.getClientRects().length&&getComputedStyle(e).visibility!=='hidden');
