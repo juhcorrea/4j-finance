@@ -1,5 +1,7 @@
 # 4J Finance
 
+Publicado em 30/10/2026: administração de contas com edição de nome/e-mail e recuperação de senha, preservando UID, benefício e isolamento financeiro. [Versão c9b28988](https://c9b28988.4jfinance.pages.dev) conferida no domínio oficial em 2026-10-30T19:20:27.508Z. Worker e regras publicados separadamente; sem mudança de plano. [Operação, validação e limites](docs/ADMIN-CONTAS.md).
+
 Atualização de 29/10/2026: [apresentação pública](https://4jfinance.com.br/conheca), [calculadoras sem cadastro](https://4jfinance.com.br/ferramentas), guia e termos do Pix atualizados, robots/sitemap/404 corretos. Publicação [0ae3010b](https://0ae3010b.4jfinance.pages.dev) conferida em 2026-10-29T11:34:25.492Z. AdSense recusou a revisão anterior por Conteúdo de baixo valor; anúncios continuam desativados e nova revisão ainda não solicitada. [Detalhes e limites](docs/ADSENSE-CONTEUDO-PUBLICO.md).
 
 Atualização mais recente — 23/10/2026: aba Planejar, com análise de compra em formulário, Ronda do mês e avisos no Início quando o modo firme está ligado. Supervisão baseada nos registros do perfil, sem conexão bancária ou serviço adicional. Publicação [4122d058](https://4122d058.4jfinance.pages.dev), 2026-10-23T17:50:11.978077Z, conferida em 2026-10-23T17:50:23.815Z. HTML e três imagens correspondentes; configurações e componentes Pix preservados.

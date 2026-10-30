@@ -3,10 +3,22 @@ service cloud.firestore {
   match /databases/{database}/documents {
     function signedIn() { return request.auth != null; }
     function accountPath() { return /databases/$(database)/documents/users/$(request.auth.uid); }
-    function active() { return signedIn() && exists(accountPath()) && get(accountPath()).data.status == 'approved'; }
+    function currentIdentitySession(account) {
+      return !('authValidAfter' in account) || request.auth.token.get('auth_time', 0) > account.authValidAfter;
+    }
+    function active() {
+      return signedIn() && exists(accountPath()) && get(accountPath()).data.status == 'approved'
+        && currentIdentitySession(get(accountPath()).data);
+    }
     function platformAdmin() { return active() && get(accountPath()).data.role == 'admin'; }
     function verifiedEmail() { return signedIn() && request.auth.token.get('email_verified', false) == true && request.auth.token.get('email', '') != ''; }
     function email() { return request.auth.token.email.lower(); }
+    function recentAdminIdentity() {
+      return platformAdmin() && verifiedEmail()
+        && request.auth.token.get('auth_time', 0) is int
+        && request.time.toMillis() / 1000 - request.auth.token.get('auth_time', 0) >= -60
+        && request.time.toMillis() / 1000 - request.auth.token.get('auth_time', 0) <= 600;
+    }
     function owns(profile) { return signedIn() && profile.ownerUid == request.auth.uid; }
     function invited(profile, key) { return verifiedEmail() && email() in profile.get(key, []); }
     function canRead(profile) { return active() && (owns(profile) || invited(profile, 'sharedView') || invited(profile, 'sharedEdit')); }
@@ -63,6 +75,24 @@ service cloud.firestore {
           && request.resource.data.role in ['member','admin']
           && request.resource.data.status in ['approved','pending']
           && (request.resource.data.role != 'admin' || resource.data.role == 'admin' || request.resource.data.status == 'approved'))
+      );
+      // Account identity only: no role/status or family-data access is granted here.
+      allow update: if signedIn() && (
+        (request.auth.uid == uid
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['email'])
+          && currentIdentitySession(resource.data)
+          && request.resource.data.email == email())
+        || (recentAdminIdentity() && request.auth.uid != uid
+          && resource.data.role == 'member'
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['name','email','authValidAfter'])
+          && validName(request.resource.data.name)
+          && request.resource.data.email is string
+          && request.resource.data.email.size() > 3
+          && request.resource.data.email.size() <= 254
+          && request.resource.data.email == request.resource.data.email.lower()
+          && request.resource.data.get('authValidAfter', 0) is int
+          && request.resource.data.get('authValidAfter', 0) >= resource.data.get('authValidAfter', 0)
+          && request.resource.data.get('authValidAfter', 0) <= request.time.toMillis() / 1000)
       );
       allow delete: if false;
     }

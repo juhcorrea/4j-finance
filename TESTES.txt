@@ -1,3 +1,8 @@
+30/10/2026 — Administração de contas: validação e publicação
+
+554/554 testes Node e 16/16 verificações mock/VM de privacidade. QA da interface: 56/56 cenários de login/senha e 22/22 administrativos. Emuladores locais: 34 cenários de privacidade e 26 de identidade, com dados sintéticos. A suíte de backend inclui 26 testes novos e fluxo Miniflare Worker → Durable Object. Build reproduzível SHA-256 8605084fc1aeb85f6d8b19b4926dc603334277d8240c60a42fa42710adea8275.
+Publicação c9b28988-685b-4781-96c0-7ffd1f1c3458 em 2026-10-30T19:20:18.811952Z; readback concluído em 2026-10-30T19:20:27.508Z: arquivos correspondentes no domínio oficial, alias e deployment, Pix health 200 e acesso anônimo 401. Worker administrativo habilitado: acesso anônimo 401 e origem proibida 403; regras remotas correspondem à fonte. Executor/configuração Pix e planos preservados. Nenhuma edição autenticada de conta real nem envio real de recuperação nesta validação; o smoke público não substitui esse teste. Não houve teste em Safari/iPhone físico.
+
 30/10/2026 — Botão de senha publicado e conferido
 
 Login/cadastro com mostrar/ocultar senha publicado em 1ac188f7-dd08-4512-b516-7cb3d69090ef; conferência independente do domínio oficial concluída em 2026-10-30T19:06:23.804Z. Passaram 528 testes, 16 verificações de privacidade, 56 cenários da interface e reprodução do build. Pix ativo, anúncios desativados, executor/configurações preservados. Nenhuma conta real foi alterada, nenhum e-mail de senha foi enviado e nenhum plano foi contratado. Gestão de nome/e-mail/redefinição segue em preparação separada.

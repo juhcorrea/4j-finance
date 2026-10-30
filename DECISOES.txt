@@ -1,3 +1,8 @@
+30/10/2026 — Administração de contas publicada
+
+A responsável solicitou gestão de nome/e-mail e recuperação de senha e autorizou a configuração restrita necessária. Somente membros podem ser editados neste fluxo; contas ADMIN ficam protegidas. Redefinição envia link do Firebase após confirmação, sem mostrar senhas. Edição de e-mail preserva UID/benefício e aplica corte de sessões antes de atualizar a identidade. Worker administrativo separado, conta de serviço com apenas consulta/edição Auth, sem acesso Firestore ou financeiro. Mantidos os serviços gratuitos, o Pix ativo e o Netlify pausado.
+Publicação c9b28988-685b-4781-96c0-7ffd1f1c3458 conferida no domínio oficial, alias e deployment em 2026-10-30T19:20:27.508Z. Regras e Worker também tiveram readback. Nenhuma conta real foi modificada e nenhum e-mail real de recuperação foi enviado na validação. Detalhes em docs/ADMIN-CONTAS.md.
+
 30/10/2026 — Botão de senha publicado e conferido
 
 Login/cadastro com mostrar/ocultar senha publicado em 1ac188f7-dd08-4512-b516-7cb3d69090ef; conferência independente do domínio oficial concluída em 2026-10-30T19:06:23.804Z. Passaram 528 testes, 16 verificações de privacidade, 56 cenários da interface e reprodução do build. Pix ativo, anúncios desativados, executor/configurações preservados. Nenhuma conta real foi alterada, nenhum e-mail de senha foi enviado e nenhum plano foi contratado. Gestão de nome/e-mail/redefinição segue em preparação separada.

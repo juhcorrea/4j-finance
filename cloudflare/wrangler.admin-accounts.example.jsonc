@@ -1,0 +1,26 @@
+{
+  // Separate Worker; never add the Auth service-account secret to Pix or public assets.
+  "name": "4jfinance-admin-accounts",
+  "main": "admin-accounts-worker.mjs",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": true,
+  "observability": { "enabled": false },
+  "durable_objects": {
+    "bindings": [
+      { "name": "ADMIN_ACCOUNTS_EXECUTOR", "class_name": "AdminAccountsExecutor" }
+    ]
+  },
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["AdminAccountsExecutor"] }
+  ],
+  "vars": {
+    "FIREBASE_PROJECT_ID": "financas-familia-9480b",
+    "FIREBASE_WEB_API_KEY": "CONFIGURE_THE_PUBLIC_FIREBASE_WEB_API_KEY",
+    "ADMIN_AUTH_SERVICE_ACCOUNT_EMAIL": "fourj-admin-accounts@financas-familia-9480b.iam.gserviceaccount.com",
+    "ADMIN_ACCOUNTS_ENABLED": "false"
+  }
+  // Secret FIREBASE_ADMIN_SERVICE_ACCOUNT: dedicated service-account JSON key.
+  // Custom IAM role: firebaseauth.users.get, firebaseauth.users.update ONLY.
+  // No Firestore IAM role, no operator token, no paid plan, no D1/Pix binding.
+  // Enable only after credential installation, Firestore rules and verification.
+}

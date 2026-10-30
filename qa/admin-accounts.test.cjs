@@ -1,0 +1,61 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const {chromium}=require('playwright');
+const prepared=path.resolve(__dirname,'..'),project=prepared;
+const moduleText=fs.readFileSync(path.join(prepared,'frontend/admin-accounts.js'),'utf8');
+const styles=[...fs.readFileSync(path.join(project,'public/index.html'),'utf8').matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi)].map(match=>match[1]).join('\n')+fs.readFileSync(path.join(prepared,'frontend/admin-accounts.css'),'utf8');
+const setup=String.raw`
+const $=selector=>document.querySelector(selector),$$=selector=>[...document.querySelectorAll(selector)];
+const esc=value=>String(value??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;');
+let openAdmin=()=>{};
+window.messages=[];const toast=message=>messages.push(message),friendlyError=error=>error.message,adminError=error=>error,adminOwnedProfiles=()=>'';
+const assertAdminAccess=()=>{if(Store.demo||Store.userDoc.role!=='admin'||Store.userDoc.status!=='approved')throw new Error('Admin necessario');return Store.user.uid;};
+const modal=(title,body)=>{$('#modal-content').innerHTML='<h2>'+title+'</h2>'+body;if(!$('#modal').open)$('#modal').showModal();};
+const confirmAdminChange=()=>{};
+const AccountSignup={apply:()=>{}};
+window.records={admin:{name:'Admin QA',email:'admin@example.invalid',role:'admin',status:'approved'},member:{name:'Pessoa QA',email:'member@example.invalid',role:'member',status:'approved'},otheradmin:{name:'Outro ADMIN',email:'otheradmin@example.invalid',role:'admin',status:'approved'}};
+window.calls=[];window.sent=[];window.reauthenticated=0;window.stale=false;window.nextError=null;window.mirrorPending=false;
+window.authAccount={uid:'member',email:'member@example.invalid',displayName:'Pessoa QA',emailVerified:true};
+const snapshot=id=>({exists:!!records[id],id,data:()=>records[id]});
+const user={uid:'admin',email:'admin@example.invalid',emailVerified:true,getIdToken:async()=>'synthetic-token',getIdTokenResult:async()=>({claims:{email:'admin@example.invalid',auth_time:Math.floor(Date.now()/1000)-(window.stale?1000:0)}}),reauthenticateWithCredential:async credential=>{if(credential.password!=='synthetic-admin-password')throw Object.assign(new Error(),{code:'auth/wrong-password'});window.reauthenticated++;window.stale=false;}};
+const Store={demo:false,user,userDoc:records.admin,profiles:[],auth:{currentUser:user,sendPasswordResetEmail:async email=>{sent.push(email);}},db:{collection:name=>({doc:id=>({get:async()=>snapshot(id)}),get:async()=>({docs:Object.keys(records).map(snapshot)})})}};
+const firebase={auth:{EmailAuthProvider:{credential:(email,password)=>({email,password})}}};
+window.fetch=async(url,options)=>{const body=JSON.parse(options.body);calls.push({url,body,headers:options.headers});if(nextError){const status=nextError.status,code=nextError.code,targetReauthRequired=nextError.targetReauthRequired===true;nextError=null;return {ok:false,status,json:async()=>({error:{code,targetReauthRequired}})};}if(url.endsWith('/update')){authAccount={...authAccount,email:body.email,displayName:body.displayName,changed:true};if(!mirrorPending)records.member={...records.member,email:body.email,name:body.displayName};}return {ok:true,status:200,json:async()=>({account:authAccount,authUpdated:url.endsWith('/update'),mirrorPending})};};
+window.ADMIN_ACCOUNTS_CONFIG={enabled:true,apiBase:'https://4jfinance-admin-accounts.qa.workers.dev/api/admin/accounts'};
+window.__store=Store;
+`;
+(async()=>{
+ const browser=await chromium.launch({headless:true,executablePath:process.env.PLAYWRIGHT_EXECUTABLE_PATH||undefined});let checks=0;
+ try{
+  const page=await browser.newPage({viewport:{width:390,height:844}});await page.route('**/*',route=>route.abort());
+  await page.setContent('<style>'+styles+'</style><dialog id="modal"><div id="modal-content"></div></dialog>');
+  await page.addScriptTag({content:setup});await page.addScriptTag({content:moduleText+'\nwindow.__admin=AdminAccounts;window.__open=openAdmin;'});
+  const open=()=>page.evaluate(()=>__open());
+  await open();assert.equal(await page.locator('[data-account-id]').count(),2);checks++;
+  assert.equal(await page.locator('[data-account-id="otheradmin"]').count(),0);assert.equal(await page.locator('[data-account-id="admin"]').count(),0);checks++;
+  await page.locator('#admin-search').fill('pessoa');assert.equal(await page.locator('[data-account-id]').count(),2);checks++;
+  await page.locator('[data-account-operation="edit"]').click();await page.locator('#admin-edit-form').waitFor();
+  assert.equal(await page.locator('#admin-edit-email').inputValue(),'member@example.invalid');checks++;
+  await page.locator('#admin-edit-name').fill('Pessoa Atualizada');await page.locator('#admin-edit-email').fill('new@example.invalid');await page.locator('#admin-edit-email-confirm').fill('different@example.invalid');await page.locator('#admin-edit-form button[type="submit"]').click();
+  await page.locator('#admin-edit-error').waitFor({state:'visible'});assert.equal(await page.evaluate(()=>calls.filter(call=>call.url.endsWith('/update')).length),0);checks++;
+  await page.locator('#admin-edit-email-confirm').fill('new@example.invalid');await page.locator('#admin-edit-form button[type="submit"]').click();await page.locator('#admin-list').waitFor();
+  const update=await page.evaluate(()=>calls.find(call=>call.url.endsWith('/update')));assert.deepEqual(Object.keys(update.body).sort(),['displayName','email','expectedEmail','uid']);assert.equal(update.body.expectedEmail,'member@example.invalid');checks++;
+  assert.equal(await page.evaluate(()=>records.member.name),'Pessoa Atualizada');assert.equal(await page.evaluate(()=>records.member.role),'member');checks++;
+  await page.locator('[data-account-operation="reset"]').click();await page.locator('#admin-reset-form').waitFor();assert.equal(await page.evaluate(()=>sent.length),0);checks++;
+  await page.locator('#admin-reset-form button[type="submit"]').click();await page.getByText('Solicitação enviada',{exact:true}).waitFor();assert.deepEqual(await page.evaluate(()=>sent),['new@example.invalid']);checks++;
+  await open();await page.locator('[data-account-operation="reset"]').click();await page.locator('#admin-reset-form').waitFor();await page.evaluate(()=>{authAccount.email='changed@example.invalid';});await page.locator('#admin-reset-form button[type="submit"]').click();await page.locator('#admin-reset-error').waitFor({state:'visible'});assert.equal(await page.evaluate(()=>sent.length),1);checks++;
+  await page.evaluate(()=>{window.stale=true;});await open();await page.locator('[data-account-operation="edit"]').click();await page.locator('#admin-reauth-form').waitFor();assert.equal(await page.locator('#admin-reauth-password').getAttribute('type'),'password');checks++;
+  await page.locator('#admin-reauth-password').fill('synthetic-admin-password');await page.locator('#admin-reauth-form button[type="submit"]').click();await page.locator('#admin-edit-form').waitFor();assert.equal(await page.evaluate(()=>reauthenticated),1);checks++;
+  await page.evaluate(()=>{window.mirrorPending=true;});await page.locator('#admin-edit-name').fill('Nome Pendencia');await page.locator('#admin-edit-form button[type="submit"]').click();await page.getByText(/O login já foi atualizado/).waitFor();assert.equal(await page.locator('#admin-edit-email').inputValue(),'changed@example.invalid');checks++;
+  await page.evaluate(()=>{window.mirrorPending=false;});await page.locator('#admin-edit-form button[type="submit"]').click();await page.locator('#admin-list').waitFor();assert.equal(await page.evaluate(()=>records.member.email),'changed@example.invalid');checks++;
+  await page.locator('[data-account-operation="edit"]').click();await page.locator('#admin-edit-form').waitFor();await page.evaluate(()=>{window.nextError={status:409,code:'email-already-in-use'};});await page.locator('#admin-edit-form button[type="submit"]').click();await page.locator('#admin-edit-error').waitFor({state:'visible'});assert.match(await page.locator('#admin-edit-error').innerText(),/já está ligado/);checks++;
+  const successBeforeCutoff=await page.evaluate(()=>messages.filter(message=>message==='Cadastro atualizado.').length);
+  await page.evaluate(()=>{window.nextError={status:503,code:'unavailable',targetReauthRequired:true};});await page.locator('#admin-edit-form button[type="submit"]').click();await page.locator('#admin-edit-error').waitFor({state:'visible'});assert.match(await page.locator('#admin-edit-error').innerText(),/poderá precisar entrar novamente/);assert.match(await page.locator('#admin-edit-error').innerText(),/Confira o cadastro na lista antes de repetir/);assert.equal(await page.evaluate(()=>messages.filter(message=>message==='Cadastro atualizado.').length),successBeforeCutoff);checks++;
+  await page.evaluate(()=>{window.nextError={status:409,code:'email-already-in-use',targetReauthRequired:true};});await page.locator('#admin-edit-form button[type="submit"]').click();await page.locator('#admin-edit-error').waitFor({state:'visible'});assert.match(await page.locator('#admin-edit-error').innerText(),/já está ligado/);assert.match(await page.locator('#admin-edit-error').innerText(),/poderá precisar entrar novamente/);assert.equal(await page.evaluate(()=>messages.filter(message=>message==='Cadastro atualizado.').length),successBeforeCutoff);checks++;
+  for(const viewport of [{width:390,height:844},{width:1440,height:900}]){await page.setViewportSize(viewport);await open();const geometry=await page.locator('#modal').evaluate(el=>({left:el.getBoundingClientRect().left,right:el.getBoundingClientRect().right,overflow:el.scrollWidth>el.clientWidth+2,width:innerWidth}));assert.ok(geometry.left>=0&&geometry.right<=geometry.width+1&&!geometry.overflow);checks++;await page.screenshot({path:path.join(prepared,'qa/admin-accounts-'+viewport.width+'.png')});}
+  await page.evaluate(()=>{__store.userDoc={...records.admin,role:'member'};});const before=await page.evaluate(()=>calls.length);await open();assert.equal(await page.evaluate(()=>calls.length),before);assert.match(await page.evaluate(()=>messages.at(-1)),/Admin/);checks++;
+  await page.evaluate(()=>{__store.userDoc={...records.admin,status:'pending'};});await open();assert.equal(await page.evaluate(()=>calls.length),before);checks++;
+  await page.evaluate(()=>{__store.userDoc=records.admin;});await page.evaluate(()=>__admin.prepare({...records.otheradmin,id:'otheradmin'},'','edit'));assert.equal(await page.evaluate(()=>calls.length),before);checks++;
+  console.log(JSON.stringify({passed:checks,realEmailsSent:0,productionTouched:false}));
+ }finally{await browser.close();}
+})().catch(error=>{console.error(error);process.exitCode=1;});

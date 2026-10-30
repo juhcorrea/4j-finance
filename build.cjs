@@ -3,6 +3,7 @@ const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),cryp
 const base=__dirname,source=process.argv[2]||path.join(base,'source/base.html');
 const {readPublicConfig,embeddedConfig}=require('./frontend/monetization-build-config.cjs');
 const monetizationConfig=readPublicConfig(base);
+const adminAccountsConfig={enabled:true,apiBase:'https://4jfinance-admin-accounts.juliana07correa.workers.dev/api/admin/accounts'};
 const original=fs.readFileSync(source,'utf8');
 const transformed=require('./privacy/apply-privacy.cjs').applyPrivacy(original);
 let html=transformed.html;
@@ -10,12 +11,12 @@ function replaceOnce(from,to){if(html.split(from).length!==2)throw new Error('Ex
 const publisher='ca-pub-9462093834252455';
 replaceOnce('<meta charset="utf-8">','<meta charset="utf-8">\n<meta name="google-adsense-account" content="'+publisher+'">');
 const firestoreSdk='<script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>';
-replaceOnce(firestoreSdk,firestoreSdk+'\n<script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-functions-compat.js"></script>\n<script>window.MONETIZATION_CONFIG='+JSON.stringify(monetizationConfig)+';</script>');
-replaceOnce('</head>','<style>\n'+['monetization.css','auth-responsive.css','planning-watch.css','planning-page.css','planning-navigation.css'].map(file=>fs.readFileSync(path.join(base,'frontend',file),'utf8')).join('\n')+'\n</style>\n</head>');
+replaceOnce(firestoreSdk,firestoreSdk+'\n<script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-functions-compat.js"></script>\n<script>window.MONETIZATION_CONFIG='+JSON.stringify(monetizationConfig)+';window.ADMIN_ACCOUNTS_CONFIG='+JSON.stringify(adminAccountsConfig)+';</script>');
+replaceOnce('</head>','<style>\n'+['monetization.css','auth-responsive.css','admin-accounts.css','planning-watch.css','planning-page.css','planning-navigation.css'].map(file=>fs.readFileSync(path.join(base,'frontend',file),'utf8')).join('\n')+'\n</style>\n</head>');
 const plannerMarker='/* Catatau: consultas locais, sem serviços de IA ou envio de mensagens. */';
 replaceOnce(plannerMarker,['catatau-planner.js','planning-watch.js','planning-page.js'].map(file=>fs.readFileSync(path.join(base,'frontend',file),'utf8')).join('\n')+'\n'+plannerMarker);
 const marker='if(document.modelContext?.registerTool)';
-replaceOnce(marker,fs.readFileSync(path.join(base,'frontend/auth-password.js'),'utf8')+'\n'+fs.readFileSync(path.join(base,'frontend/monetization.js'),'utf8')+'\n'+marker);
+replaceOnce(marker,fs.readFileSync(path.join(base,'frontend/auth-password.js'),'utf8')+'\n'+fs.readFileSync(path.join(base,'frontend/admin-accounts.js'),'utf8')+'\n'+fs.readFileSync(path.join(base,'frontend/monetization.js'),'utf8')+'\n'+marker);
 const passwordField='<label>Senha<input id="auth-password" type="password" required minlength="6" autocomplete="current-password" placeholder="Sua senha"></label>';
 replaceOnce(passwordField,'<div class="auth-password-field"><label for="auth-password">Senha</label><div class="auth-password-control"><input id="auth-password" type="password" required minlength="6" autocomplete="current-password" placeholder="Sua senha"><button type="button" id="auth-password-toggle" class="auth-password-toggle" aria-label="Mostrar senha" title="Mostrar senha" aria-controls="auth-password" hidden><span class="password-eye-open"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></span><span class="password-eye-closed" hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 3 18 18M10.6 5.1A12 12 0 0 1 12 5c6.5 0 10 7 10 7a18 18 0 0 1-3 3.8M6.1 6.1A22 22 0 0 0 2 12s3.5 7 10 7a13 13 0 0 0 5.2-1.2M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></span></button></div></div>');
 const note='<small class="muted">A demonstração usa apenas dados fictícios.</small>';

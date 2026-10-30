@@ -22,8 +22,8 @@ for(const dir of ['public','frontend','source','scripts','docs','cloudflare','.g
 for(const file of ['README.md','AGENTS.md','.gitignore','.gitattributes','.nvmrc','netlify.toml','package.json','pnpm-lock.yaml','pnpm-workspace.yaml','build.cjs','finalize.cjs','firebase.json','firebase-rules-deploy.json','PUBLICACAO.json','COMECE-AQUI.md','PUBLICAR-NO-CLOUDFLARE.md','ADSENSE-PREPARACAO.txt','DOMINIO-OFICIAL.txt','DECISOES.txt','TESTES.txt','ui-qa.cjs','qa-production-ui.cjs'])collect(path.join(source,file),file);
 for(const file of ['index.js','payment-core.js','package.json','package-lock.json','.env.example','.gitignore','CONFIGURAR.md','firestore-billing.rules.fragment'])collect(path.join(source,'functions',file),'functions/'+file);
 collect(path.join(source,'functions/test'),'functions/test');
-for(const file of ['apply-privacy.cjs','email-privacy.js','firestore.rules','privacy.test.cjs','firestore-emulator.test.cjs','firebase-emulator.json','package.json','VERIFICACAO.txt'])collect(path.join(source,'privacy',file),'privacy/'+file);
-for(const file of ['public-pages.test.cjs','auth-responsive.test.cjs','pix-checkout.test.cjs','catatau-planner.test.cjs','planning-page.test.cjs','ferramentas.test.cjs'])collect(path.join(source,'qa',file),'qa/'+file);
+for(const file of ['apply-privacy.cjs','email-privacy.js','firestore.rules','privacy.test.cjs','firestore-emulator.test.cjs','admin-accounts-emulator.test.cjs','firebase-emulator.json','package.json','VERIFICACAO.txt'])collect(path.join(source,'privacy',file),'privacy/'+file);
+for(const file of ['public-pages.test.cjs','auth-responsive.test.cjs','pix-checkout.test.cjs','catatau-planner.test.cjs','planning-page.test.cjs','ferramentas.test.cjs','admin-accounts.test.cjs'])collect(path.join(source,'qa',file),'qa/'+file);
 const marketing=path.join(workspace,'4j-finance-marketing-2026-10');
 for(const dir of ['assets','capas','capturas','carrossel','legendas','posts','stories','videos'])collect(path.join(marketing,dir),'marketing/'+dir);
 for(const file of ['ABRA-O-PORTFOLIO.html','conteudo.json','GUIA-DE-PUBLICACAO.txt','LEIA-ME.txt'])collect(path.join(marketing,file),'marketing/'+file);

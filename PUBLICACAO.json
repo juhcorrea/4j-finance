@@ -1,7 +1,7 @@
 {
-  "publishedAt": "2026-10-30T19:06:03.195607Z",
+  "publishedAt": "2026-10-30T19:20:18.811952Z",
   "productionUrl": "https://4jfinance.pages.dev",
-  "deploymentUrl": "https://1ac188f7.4jfinance.pages.dev",
+  "deploymentUrl": "https://c9b28988.4jfinance.pages.dev",
   "firebaseAuthorizedDomain": true,
   "firestoreRulesPublished": true,
   "productionPrivacyChecks": 38,
@@ -71,7 +71,7 @@
   "pixCloudflareTestWebhookDiagnosticsPublished": false,
   "pixCloudflareTestPaidStatusSmokeDeploymentUrl": "https://c685b5c9.4jfinance-pix-test.pages.dev",
   "catatauPlannerPublished": true,
-  "productionIndexSha256": "03d2b2f06f4613e0baaf2ddaf2203785bef052e90162ad8d713ddd57ed7e3524",
+  "productionIndexSha256": "8605084fc1aeb85f6d8b19b4926dc603334277d8240c60a42fa42710adea8275",
   "pixLegacyFirebaseFunctionsVerified": false,
   "pixCloudflareTestFirebaseAuthenticationVerified": true,
   "pixProductionSecretsConfigured": true,
@@ -91,7 +91,7 @@
   "publicationPackage": "Allowlisted public files, bundled Worker and API routes",
   "pixProductionBackendReady": true,
   "pixProductionDeploymentVerifiedAt": "2026-10-23T17:50:23.815Z",
-  "productionLastReadbackAt": "2026-10-23T17:50:23.815Z",
+  "productionLastReadbackAt": "2026-10-30T19:20:27.508Z",
   "pixProductionRealPaymentVerified": true,
   "pixFreeCpuBudgetVerified": true,
   "adsenseReviewLastConfirmedAt": "2026-10-19",
@@ -107,7 +107,7 @@
   "pixPollingFailureBackoffPrepared": true,
   "pixPollingFailureBackoffTestsPassed": 62,
   "pixPollingFailureBackoffPublished": true,
-  "preparedIndexSha256": "03d2b2f06f4613e0baaf2ddaf2203785bef052e90162ad8d713ddd57ed7e3524",
+  "preparedIndexSha256": "8605084fc1aeb85f6d8b19b4926dc603334277d8240c60a42fa42710adea8275",
   "pixCloudflareTestMcpTemporaryOAuthRead": {
     "date": "2026-10-19",
     "scope": "read",
@@ -305,7 +305,7 @@
       "productionDeploymentChanged": false
     }
   },
-  "productionDeploymentId": "0ae3010b-390e-400e-9625-f0b2c67b5d32",
+  "productionDeploymentId": "c9b28988-685b-4781-96c0-7ffd1f1c3458",
   "productionPublicationRecordedAt": "2026-10-23T17:50:23.815Z",
   "productionPublicationHelperResult": {
     "ok": true,
@@ -844,6 +844,34 @@
         "httpIndex": 200
       }
     ],
+    "paidPlanChanged": false
+  },
+  "adminAccountsPublication": {
+    "publishedAt": "2026-10-30T19:20:18.811952Z",
+    "verifiedAt": "2026-10-30T19:20:27.508Z",
+    "deploymentId": "c9b28988-685b-4781-96c0-7ffd1f1c3458",
+    "deploymentUrl": "https://c9b28988.4jfinance.pages.dev",
+    "indexSha256": "8605084fc1aeb85f6d8b19b4926dc603334277d8240c60a42fa42710adea8275",
+    "enabled": true,
+    "workerUrl": "https://4jfinance-admin-accounts.juliana07correa.workers.dev",
+    "workerVersion": "2307d217-4a67-4f13-8695-c9ba2fe6014e",
+    "workerBundleSha256": "c534e10ccfca1e3a61c0f9e99fb4e9e3cccebdf3c879a0d503e7fad62eeb86e5",
+    "firestoreRulesSha256": "60ea94b3c8abd4c15f03347abb1b5afbd06c87daa00f7e1dae1a2da22b9dff65",
+    "firestoreRulesExactReadback": true,
+    "workerAnonymousStatus": 401,
+    "workerForbiddenOriginStatus": 403,
+    "logicTestsPassed": 554,
+    "privacyMockChecksPassed": 16,
+    "authUiScenariosPassed": 56,
+    "adminUiScenariosPassed": 22,
+    "localEmulatorPrivacyTestsPassed": 34,
+    "localEmulatorIdentityTestsPassed": 26,
+    "reproducibleBuild": true,
+    "realAccountsChanged": 0,
+    "realRecoveryEmailsSent": 0,
+    "authenticatedProductionEditTested": false,
+    "pixExecutorUnchanged": true,
+    "pagesConfigurationUnchanged": true,
     "paidPlanChanged": false
   }
 }

@@ -44,8 +44,18 @@
     },
     {
       "path": "build.cjs",
-      "bytes": 6451,
-      "sha256": "98b65e4eb28681d368c71520a3c83f5367b9549d155fd0319a0c415abffde763"
+      "bytes": 6747,
+      "sha256": "aecd69b2a9ae81d1c687d6fafd75890ce2ef6ec37dacf846a4b292859e48efc9"
+    },
+    {
+      "path": "cloudflare/admin-accounts-worker.mjs",
+      "bytes": 5977,
+      "sha256": "c834fcc3c1666fe9ed6dac32f919b75f08d96d491f408df12890308c98d2449f"
+    },
+    {
+      "path": "cloudflare/admin-accounts.cjs",
+      "bytes": 18993,
+      "sha256": "42482c80f9fff8745dc0398fd373a7268f0ecd7b0b995169509faebf1ca65dbc"
     },
     {
       "path": "cloudflare/auth.cjs",
@@ -78,6 +88,11 @@
       "sha256": "093793e38f30ccdbf22dd013fbd2340139efb572bc41494255f68ec33a116d7a"
     },
     {
+      "path": "cloudflare/test/admin-accounts.test.cjs",
+      "bytes": 26157,
+      "sha256": "b92fffe4b02a4420df1c3740e537ed72b2afcfa27896db43a08eb121474df8f8"
+    },
+    {
       "path": "cloudflare/test/auth.test.cjs",
       "bytes": 16017,
       "sha256": "21d6e05a6f28dd2f3681432ea87041cbc5a0514c3b46ded229617be37c51c145"
@@ -103,6 +118,11 @@
       "sha256": "bf4b17114db48e63eaf4683ca4a2359978a4e92da25daecd652585ddf10f393c"
     },
     {
+      "path": "cloudflare/wrangler.admin-accounts.example.jsonc",
+      "bytes": 1110,
+      "sha256": "3d673c8a50f99cf9a9edbe5fa34d7910fb597362396a4a35a107fc0f1bbbd418"
+    },
+    {
       "path": "cloudflare/wrangler.production.json",
       "bytes": 1061,
       "sha256": "9d62040e8cd68306f0ca287576b690a99bd31cfa25ea92a72e4c1d27fb0b2da0"
@@ -119,8 +139,13 @@
     },
     {
       "path": "DECISOES.txt",
-      "bytes": 34150,
-      "sha256": "66fd03c2d951c7205fdf54b3fad190ca8cd9c9243737e0ed1256c1a16ddfbfd3"
+      "bytes": 35079,
+      "sha256": "8d9e0c80ba4c729423580fccd9962ee4bcd72e7f98119168f2a0ebbecaa5ebaf"
+    },
+    {
+      "path": "docs/ADMIN-CONTAS.md",
+      "bytes": 13197,
+      "sha256": "f04d63f81119783208e2885a1c826f1ec5ac54e90a36f2b42179bf402d3bdd89"
     },
     {
       "path": "docs/ADSENSE-CONTEUDO-PUBLICO.md",
@@ -181,6 +206,16 @@
       "path": "firebase.json",
       "bytes": 730,
       "sha256": "ba113e8016bdf9cc2b60d344df19d541362f9f006a8173056c1169836ac4bdd5"
+    },
+    {
+      "path": "frontend/admin-accounts.css",
+      "bytes": 872,
+      "sha256": "686647098455cb6a4a254460f6b8e9132f7746ed53b0d82b9a2010f19ae31511"
+    },
+    {
+      "path": "frontend/admin-accounts.js",
+      "bytes": 19660,
+      "sha256": "4647369c69e474c6b8caae44358f33d4a64106a6a886064f4892d4715187d624"
     },
     {
       "path": "frontend/auth-password.js",
@@ -329,8 +364,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 2875674,
-      "sha256": "47488481d6fc285fb3aca1b86be6f0c840be0468223019cd8b97c526a5e762c1"
+      "bytes": 2896344,
+      "sha256": "8605084fc1aeb85f6d8b19b4926dc603334277d8240c60a42fa42710adea8275"
     },
     {
       "path": "marketing/ABRA-O-PORTFOLIO.html",
@@ -879,8 +914,8 @@
     },
     {
       "path": "outputs/index.html",
-      "bytes": 2875674,
-      "sha256": "47488481d6fc285fb3aca1b86be6f0c840be0468223019cd8b97c526a5e762c1"
+      "bytes": 2896344,
+      "sha256": "8605084fc1aeb85f6d8b19b4926dc603334277d8240c60a42fa42710adea8275"
     },
     {
       "path": "package.json",
@@ -896,6 +931,11 @@
       "path": "pnpm-workspace.yaml",
       "bytes": 45,
       "sha256": "5f5605b3f08ade6af3333cbc40478b15183eedb7e63db7e73d587b4794e1ddd6"
+    },
+    {
+      "path": "privacy/admin-accounts-emulator.test.cjs",
+      "bytes": 5707,
+      "sha256": "e73a1ad2cf5c903819c096e329e230fc83557a9c7e2d877cf0283d2cb7a0c747"
     },
     {
       "path": "privacy/apply-privacy.cjs",
@@ -919,8 +959,8 @@
     },
     {
       "path": "privacy/firestore.rules",
-      "bytes": 7308,
-      "sha256": "dd50b6f94100aa2ea3d22d9e051a13704f9ebabcc764943a7f1beaa79a5d21bd"
+      "bytes": 9002,
+      "sha256": "60ea94b3c8abd4c15f03347abb1b5afbd06c87daa00f7e1dae1a2da22b9dff65"
     },
     {
       "path": "privacy/package.json",
@@ -1024,8 +1064,8 @@
     },
     {
       "path": "public/index.html",
-      "bytes": 2875674,
-      "sha256": "47488481d6fc285fb3aca1b86be6f0c840be0468223019cd8b97c526a5e762c1"
+      "bytes": 2896344,
+      "sha256": "8605084fc1aeb85f6d8b19b4926dc603334277d8240c60a42fa42710adea8275"
     },
     {
       "path": "public/privacidade.html",
@@ -1059,8 +1099,8 @@
     },
     {
       "path": "PUBLICACAO.json",
-      "bytes": 33683,
-      "sha256": "48fb74b42fb051f0940c1f9ba6a1ce7ae21339d39bba85be76e0a94dc423824e"
+      "bytes": 34956,
+      "sha256": "6086b7cf98588fb30d4c0b5322951f483ab16b672e5fd964b263340f6b6e2b5f"
     },
     {
       "path": "PUBLICAR-NO-CLOUDFLARE.md",
@@ -1071,6 +1111,11 @@
       "path": "qa-production-ui.cjs",
       "bytes": 4313,
       "sha256": "811383f41560f2d1826d72a41fd67d63bfa0f4e8070a2719cbf4ea2c403e0029"
+    },
+    {
+      "path": "qa/admin-accounts.test.cjs",
+      "bytes": 10835,
+      "sha256": "c708567f08418daeb3a6202cfd1e4df5185d07283f9aa605475973a8b0c7b418"
     },
     {
       "path": "qa/auth-responsive.test.cjs",
@@ -1104,8 +1149,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 20411,
-      "sha256": "9756af4a89d31808496d89b024ce183d7f3ac4679b596b1febbb77cce51427a8"
+      "bytes": 20810,
+      "sha256": "7e84af72d20b5d7771af8be2742ae0b75a902f2172d32b7ce341dd86a526bea6"
     },
     {
       "path": "scripts/build-cloudflare.cjs",
@@ -1204,8 +1249,8 @@
     },
     {
       "path": "scripts/sync-workspace.cjs",
-      "bytes": 5261,
-      "sha256": "7056f0cb08b61e0bd174a9101fcfdbc14ae439db2d6d1438ea50c73ca22b462b"
+      "bytes": 5322,
+      "sha256": "440672ca384d9bdfe8fcc043e2a11b1c581941ed5ae8462370c90d9face4385d"
     },
     {
       "path": "scripts/testar-pix-cloudflare.cjs",
@@ -1234,8 +1279,8 @@
     },
     {
       "path": "TESTES.txt",
-      "bytes": 32094,
-      "sha256": "93b5f3f83bf360b3b0203aa4bcac2a5eac65bcdabad5d0a31b1c622b3db6e2b1"
+      "bytes": 33158,
+      "sha256": "b790fe3e534e8e39fd40939655a505e1e6a7e9645f2e7c3cc1ec9e578a5560ef"
     },
     {
       "path": "ui-qa.cjs",
